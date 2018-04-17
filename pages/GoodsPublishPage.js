@@ -30,8 +30,7 @@ export default class GoodsPublishPage extends Component {
             const { routeName } = navigation.state;
             let iconPath;
             if (routeName === 'GoodsPublishPage') {
-                //FIXME: 改成加号
-                iconPath = require("../img/tabPublish.png");
+                iconPath = require("../app/images/tabPublish.png");
             }
 
             return <Image source={iconPath} style={{

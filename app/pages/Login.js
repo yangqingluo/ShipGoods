@@ -8,53 +8,29 @@ import {
     View,
     StyleSheet,
     ToastAndroid,
-    Button,
-    Alert,
     Picker,
     TouchableHighlight,
+    TouchableOpacity,
 } from 'react-native'
 import PropTypes from 'prop-types';
+import { NavigationActions } from 'react-navigation'
 
 const checkNum = (num) => {
     if (num) {
-        //// 1. 全手机号验证
-        // if(num.length === 1) {
-        //     if (num[0] == "1") {
-        //         return num;
-        //     } else {
-        //         return "";
-        //     }
-        // }
-        // else if (num.length === 2) {
-        //     // var phoneReg = /[3,4,5,7,8]/;
-        //     if (num[0] == "1" 
-        //     && 
-        //     (num[1] == "3" || num[1] == "4" || num[1] == "5" || num[1] == "7" || num[1] == "8") ) {
-        //         return num;
-        //     } else {
-        //         // Alert.alert(num);
-        //         return num.slice(0, num.length - 1);
-        //     }
-        // }
-        // else if (num.length >= 3 && num.length <= 11) {
-        //     // Alert.alert('ok?');
-        //     return num;
-        // }
-        // else if (num.length > 11) {
-        //     return num.slice(0, 11);
-        // }
-
-        //// 2. 手机号长度验证
         if (num.length > 11) {
             return num.slice(0, 11);
         }
         else {
             return num;
         }
-
     }
-
 }
+const resetAction = NavigationActions.reset({
+    index: 0,
+    actions: [
+        NavigationActions.navigate({ routeName: 'Main'})
+    ]
+});
 
 export default class Login extends Component {
     static propTypes = {
@@ -98,20 +74,19 @@ export default class Login extends Component {
     }
 
     onLoginBtnPress = () => {
-        this.props.navigation.navigate('GoodsPage')
-        //Alert.alert('登陆按钮被按下！');
+      this.props.navigation.navigate('Main');
+      this.props.navigation.dispatch(resetAction);
     }
 
     onRegBtnPress = () => {
         this.props.navigation.navigate('Register')
-        //Alert.alert('注册按钮被按下！');
     }
 
     render() {
         var { style } = this.props
         return (
             <View style={styles.container}>
-                <Image style={styles.img} source={require('../img/role.png')} />
+                <Image style={styles.img} source={require('../images/role.png')} />
 
                 <View style={styles.wrapper}>
                     <View style={styles.txtBorder}>
@@ -154,32 +129,23 @@ export default class Login extends Component {
                             value={this.state.password}
                         />
                         {/* <Text style={styles.sendChk}>眼睛</Text> */}
-                        <TouchableHighlight style={styles.eyeImgWrap} onPress={this.onEyeBtnPress}>
+                        <TouchableOpacity style={styles.eyeImgWrap} onPress={this.onEyeBtnPress}>
                             {
                                 this.state.ispassword ?
-                                    <Image style={styles.eyeImg} source={require('../img/eye-close.png')} ></Image>
-                                    : <Image style={styles.eyeImg} source={require('../img/eye-open.png')} ></Image>
+                                    <Image style={styles.eyeImg} source={require('../images/eye-close.png')} ></Image>
+                                    : <Image style={styles.eyeImg} source={require('../images/eye-open.png')} ></Image>
                             }
-                        </TouchableHighlight >
+                        </TouchableOpacity>
                     </View>
                 </View>
 
-                <View style={styles.cfmButton}>
-                    {/* <Text
-                        style={styles.cfmBtn}
-                        onPress={onCfmButtonPress}
-                        title="确定"
-                        accessibilityLabel="pressed confirm button"
-                    >
-                    </Text> */}
-                    <Text
-                        style={styles.cfmBtn}
-                        onPress={this.onLoginBtnPress}
-                    >
-                        登陆
+                <TouchableOpacity style={styles.cfmButton} onPress={this.onLoginBtnPress}>
+                    <Text style={styles.btnText}>
+                        登录
                     </Text>
+                </TouchableOpacity>
 
-                </View>
+
 
                 {/* touchable是为了显示更好的点击效果，既然是要支持ios就算了 */}
                 {/* <Touchable></Touchable> */}
@@ -188,21 +154,12 @@ export default class Login extends Component {
                     <Text>
                         or
                     </Text>
-                    {/* <Text>
-                        {'&nbsp'}
-                    </Text> */}
                     <Text
                         style={styles.backTxt}
                         onPress={this.onRegBtnPress}
                     >
                         注册一个
                     </Text>
-                    {/* <Button
-                        onPress={onCfmButtonPress}
-                        title="返回登陆"
-                        accessibilityLabel="pressed back button"
-                    >
-                    </Button> */}
                 </View>
 
             </View >
@@ -211,37 +168,13 @@ export default class Login extends Component {
 }
 
 const styles = StyleSheet.create({
-    test: {
-        borderWidth: 1,
-        borderColor: '#999',
-        //borderRadius: 20,
-
-        alignSelf: 'center',
-        flex: 1,
-        alignItems: 'center',
-        flexDirection: 'column',
-
-        marginTop: 60,
-        marginBottom: 20,
-
-        width: 100,
-        height: 100,
-
-        color: '#3EA3FC',
-        fontSize: 15,
-        opacity: .6,
-
-        backgroundColor: "#60BBFE",
-
-    },
-
     container: {
         flex: 1,
         alignItems: 'center',
         flexDirection: 'column',
     },
     img: {
-        marginTop: 60,
+        marginTop: 20,
         marginBottom: 20,
         width: 100,
         height: 100,
@@ -295,7 +228,9 @@ const styles = StyleSheet.create({
         backgroundColor: "#60BBFE",
         borderRadius: 20,
         //borderWidth: 1,
-
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
     },
     cfmBtn: {
         //width: 35,
@@ -311,11 +246,12 @@ const styles = StyleSheet.create({
     },
     backBtn: {
         flexDirection: 'row',
-        marginTop: 10,
+        marginTop: 15,
     },
     backTxt: {
         color: '#3EA3FC',
     },
+    btnText: {
+        color: '#FFFFFF',
+    },
 })
-
-{/* module.exports = Register; */}

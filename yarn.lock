@@ -4666,7 +4666,7 @@ react-native@0.55.1:
     xmldoc "^0.4.0"
     yargs "^9.0.0"
 
-react-navigation@^1.5.8:
+react-navigation@^1.4.0:
   version "1.5.11"
   resolved "http://registry.npm.taobao.org/react-navigation/download/react-navigation-1.5.11.tgz#fba6ab45d7b9987c1763a5aaac53b4f6d62b7f5c"
   dependencies:

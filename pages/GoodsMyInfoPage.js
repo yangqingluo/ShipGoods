@@ -34,10 +34,6 @@ export default class GoodsMyInfoPage extends Component {
         }
     }
 
-    onXxxBtnPress = () => {
-        Alert.alert('xx按钮被按下！');
-    }
-
     render() {
         var { style } = this.props
         return (

@@ -133,7 +133,7 @@ class Register extends Component {
         var { style } = this.props
         return (
             <View style={styles.container}>
-                <Image style={styles.img} source={require('../img/role.png')} />
+                <Image style={styles.img} source={require('../images/role.png')} />
 
                 <View style={styles.wrapper}>
                     <View style={styles.txtBorder}>
@@ -198,8 +198,8 @@ class Register extends Component {
                         <TouchableHighlight style={styles.eyeImgWrap} onPress={this.onEyeBtnPress}>
                             {
                                 this.state.ispassword? 
-                                    <Image style={styles.eyeImg} source={require('../img/eye-close.png')} ></Image>
-                                    : <Image style={styles.eyeImg} source={require('../img/eye-open.png')} ></Image>
+                                    <Image style={styles.eyeImg} source={require('../images/eye-close.png')} ></Image>
+                                    : <Image style={styles.eyeImg} source={require('../images/eye-open.png')} ></Image>
                             }
                         </TouchableHighlight >
                     </View>
@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
     },
     img: {
-        marginTop: 60,
+        marginTop: 20,
         marginBottom: 20,
         width: 100,
         height: 100,
@@ -392,7 +392,7 @@ const styles = StyleSheet.create({
     },
     backBtn: {
         flexDirection: 'row',
-        marginTop: 10,
+        marginTop: 15,
     },
     backTxt: {
         color: '#3EA3FC',
