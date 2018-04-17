@@ -29,8 +29,6 @@ import InfoCard from '../../pages/InfoCard'
 import TabTop from '../../pages/TabTop';
 
 
-
-
 const tabTitles = ['空船', '我的货'];
 
 //顶部右边的图标，这段代码不可复用，但是可以复制修改使用。
@@ -93,7 +91,7 @@ export default class HomeVC extends Component {
 
     static navigationOptions = ({ navigation }) => ({
         headerLeft: <Text style={{marginLeft: 10}}>友船友货</Text>,
-        headerRight: <RightHeader navigation={navigation}></RightHeader>,
+        headerRight: <RightHeader navigation={navigation} />,
         // headerTitle: <Text>物流圈</Text>,
         // title: 'Home',
         tabBarLabel: '物流圈',
