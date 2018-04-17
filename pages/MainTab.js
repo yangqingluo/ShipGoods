@@ -26,7 +26,7 @@ import { StackNavigator, TabNavigator, DrawerNavigator, TabBarBottom} from 'reac
 import Swiper from 'react-native-swiper'
 
 //物流圈/订单/发布/信息/我的
-import CirclePage from './CirclePage'
+import HomeVC from '../app/pages/HomeVC'
 import GoodsBillPage from './GoodsBillPage'
 import GoodsPublishPage from './GoodsPublishPage'
 import GoodsMessagePage from './GoodsMessagePage'
@@ -38,7 +38,7 @@ import TabTop from './TabTop';
 const HomePage = TabNavigator({
     //物流圈
     CirclePage: { 
-        screen: CirclePage,
+        screen: HomeVC,
         navigationOptions: {
             headerTitle: '标题',
             tabBarLabel: '物流圈',
@@ -78,7 +78,7 @@ const HomePage = TabNavigator({
             tabBarIcon: ({ focused, tintColor }) => {
                 const { routeName } = navigation.state;
                 let iconPath;
-                if (routeName === 'CirclePage') {
+                if (routeName === 'HomeVC') {
                     iconPath = focused ? require("../app/images/tabGoods.png") : require("../app/images/tabGoods-outline.png");
                 } else if (routeName === 'GoodsBillPage') {
                     iconPath = focused ? require("../app/images/tabOrders.png") : require("../app/images/tabOrders-outline.png");

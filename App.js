@@ -14,13 +14,13 @@ import {
 } from 'react-native';
 
 import Register from './app/pages/Register';
-import Login from './app/pages/Login';
+import LoginVC from './app/pages/LoginVC';
 import MainTab from './pages/MainTab';
 import { StackNavigator } from 'react-navigation';
 
 const HomePage = StackNavigator({
   Login: {
-      screen: Login,
+      screen: LoginVC,
       navigationOptions: {
           headerTitle: '登录',
       }
@@ -35,7 +35,7 @@ const HomePage = StackNavigator({
 },
     // {
     // // 首页先设置成注册页
-    // initialRouteName: 'Login',
+    // initialRouteName: 'LoginVC',
     // navigationOptions: {  // 屏幕导航的默认选项, 也可以在组件内用 static navigationOptions 设置(会覆盖此处的设置)
     //   headerStyle: { elevation: 0, shadowOpacity: 0, height: 44, backgroundColor: "#FFFFFF" },
     //   headerTitleStyle: { color: '#000', fontSize: 16 }, //alignSelf:'center'  文字居中

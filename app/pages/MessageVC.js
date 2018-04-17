@@ -13,14 +13,11 @@ import {
     TabNavigator
 } from "react-navigation";
 
-export default class FindVC extends Component {
+export default class MessageVC extends Component {
     static navigationOptions = {
-        headerTitle: '发现',
-        tabBarLabel: '发现',
-        tabBarIcon:
-            <View style={{height:30,width:30,backgroundColor:'red'}}>
-
-            </View> };
+        headerTitle: '消息',
+        tabBarLabel: '消息',
+    };
     render() {
         const { navigate } = this.props.navigation;
         return (

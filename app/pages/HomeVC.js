@@ -22,11 +22,11 @@ import Swiper from 'react-native-swiper'
 import ScrollableTabView,{ScrollableTabBar} from 'react-native-scrollable-tab-view'
 
 //货主船舶详情页，点击InfoCard显示
-import GoodsDetailsPage from './GoodsDetailsPage';
-import InfoCard from './InfoCard'
+import GoodsDetailsPage from '../../pages/GoodsDetailsPage';
+import InfoCard from '../../pages/InfoCard'
 
 //顶部tab样式分离。
-import TabTop from './TabTop';
+import TabTop from '../../pages/TabTop';
 
 
 
@@ -35,8 +35,13 @@ const tabTitles = ['空船', '我的货'];
 
 //顶部右边的图标，这段代码不可复用，但是可以复制修改使用。
 class RightHeader extends Component {
+    constructor(props) {
+        super(props)
+    }
     onSortBtnPress = () => {
-        Alert.alert("排序");
+        // Alert.alert("排序");
+        const { navigate } = this.props.navigation;
+        navigate('DetailVC', { title: '详情',des:'我是返回点击我' });
     }
     onScreenBtnPress = () => {
         Alert.alert("筛选");
@@ -46,29 +51,29 @@ class RightHeader extends Component {
     render() {
         return (
             <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
-                <TouchableHighlight
+                <TouchableOpacity
                     onPress={this.onSortBtnPress}
                 >
                     <Image
-                        source={require('../app/images/sort.png')}
+                        source={require('../images/sort.png')}
                         style={{ width: 18, height: 18, marginLeft: 10, marginRight: 10,}}
                     />
-                </TouchableHighlight>
+                </TouchableOpacity>
                 <View style={{ width: 0, height: 15, borderWidth: 1, opacity: .1 }} />
-                <TouchableHighlight
+                <TouchableOpacity
                     onPress={this.onScreenBtnPress}
                 >
                     <Image
-                        source={require('../app/images/screen.png')}
+                        source={require('../images/screen.png')}
                         style={{ width: 20, height: 20, marginLeft: 10, marginRight: 10, }}
                     />
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>
         )
     }
 }
 
-export default class CirclePage extends Component {
+export default class HomeVC extends Component {
     static propTypes = {
         // sendChkCode: PropTypes.string,
         // phoneNumPlh: PropTypes.string,
@@ -88,11 +93,11 @@ export default class CirclePage extends Component {
 
     static navigationOptions = ({ navigation }) => ({
         headerLeft: <Text style={{marginLeft: 10}}>友船友货</Text>,
-        headerRight: <RightHeader Navg={navigation}></RightHeader>,
+        headerRight: <RightHeader navigation={navigation}></RightHeader>,
         // headerTitle: <Text>物流圈</Text>,
         // title: 'Home',
         tabBarLabel: '物流圈',
-        tabBarIcon:<Image source={require("../app/images/tabGoods.png")} style={{width: 25, height:25}}></Image>,
+        // tabBarIcon:<Image source={require("../app/images/tabGoods.png")} style={{width: 25, height:25}}></Image>,
     });
 
     onXxxBtnPress = () => {
@@ -114,19 +119,19 @@ export default class CirclePage extends Component {
                     >
                         <View style={styles.swiperView}>
                             <Image
-                                source={require('../app/images/swiper.png')}
+                                source={require('../images/swiper.png')}
                                 style={styles.swiperImg}
                             />
                         </View>
                         <View style={styles.swiperView}>
                             <Image
-                                source={require('../app/images/swiper.png')}
+                                source={require('../images/swiper.png')}
                                 style={styles.swiperImg}
                             />
                         </View>
                         <View style={styles.swiperView}>
                             <Image
-                                source={require('../app/images/swiper.png')}
+                                source={require('../images/swiper.png')}
                                 style={styles.swiperImg}
                             />
                         </View>

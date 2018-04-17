@@ -1,29 +1,23 @@
-// import { AppRegistry } from 'react-native';
-// import App from './App';
-//
-// AppRegistry.registerComponent('ShipGoods', () => App);
-
-
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, Image, View, TouchableOpacity } from 'react-native';
 import {StackNavigator, TabBarBottom, TabNavigator} from 'react-navigation';
-import CirclePage from './pages/CirclePage'
 
-import FindVC from './app/pages/FindVC';
+import HomeVC from './app/pages/HomeVC'
+import BusinessVC from './app/pages/BusinessVC';
 import ReleaseVC from './app/pages/ReleaseVC';
-import NewsVC from './app/pages/NewsVC';
+import MessageVC from './app/pages/MessageVC';
 import MineVC from './app/pages/MineVC';
 import DetailVC from './app/pages/DetailVC';
 
-import LoginVC from './app/pages/Login';
+import LoginVC from './app/pages/LoginVC';
 
 // 通过TabNavigator做路由映射
-const MainScreentNavigator = TabNavigator(
+const MainScreenNavigator = TabNavigator(
     {
-        CirclePage:{screen:CirclePage},
-        FindVC:{screen:FindVC},
+        HomeVC:{screen:HomeVC},
+        BusinessVC:{screen:BusinessVC},
         ReleaseVC:{screen:ReleaseVC},
-        NewsVC:{screen:NewsVC},
+        MessageVC:{screen:MessageVC},
         MineVC:{screen:MineVC},
     },
     {
@@ -31,17 +25,17 @@ const MainScreentNavigator = TabNavigator(
             tabBarIcon: ({ focused, tintColor }) => {
                 const { routeName } = navigation.state;
                 let iconPath;
-                if (routeName === 'CirclePage') {
+                if (routeName === 'HomeVC') {
                     iconPath = focused ? require("./app/images/tabGoods.png") : require("./app/images/tabGoods-outline.png");
-                } else if (routeName === 'GoodsBillPage') {
+                } else if (routeName === 'BusinessVC') {
                     iconPath = focused ? require("./app/images/tabOrders.png") : require("./app/images/tabOrders-outline.png");
                 } else if (routeName === 'ReleaseVC') {
                     iconPath = require("./app/images/tabPublish.png");
                 }
-                else if (routeName === 'GoodsMessagePage') {
+                else if (routeName === 'MessageVC') {
                     iconPath = focused ? require("./app/images/tabMessage.png") : require("./app/images/tabMessage-outline.png");
                 }
-                else if (routeName === 'GoodsMyInfoPage') {
+                else if (routeName === 'MineVC') {
                     iconPath = focused ? require("./app/images/tabMyInfo.png") : require("./app/images/tabMyInfo-outline.png");
                 }
 
@@ -88,10 +82,10 @@ const MainScreentNavigator = TabNavigator(
 );
 
 //引入要用到的跳转页面
-const MyNavigatior = StackNavigator({
+const MyNavigator = StackNavigator({
     Login: {screen: LoginVC},
-    Main:{screen:MainScreentNavigator},
+    Main:{screen:MainScreenNavigator},
     DetailVC:{screen:DetailVC},
 });
 
-AppRegistry.registerComponent('ShipGoods', () => MyNavigatior);
+AppRegistry.registerComponent('ShipGoods', () => MyNavigator);

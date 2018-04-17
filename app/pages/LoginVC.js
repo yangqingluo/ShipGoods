@@ -32,7 +32,7 @@ const resetAction = NavigationActions.reset({
     ]
 });
 
-export default class Login extends Component {
+export default class LoginVC extends Component {
     static propTypes = {
         // sendChkCode: PropTypes.string,
         // phoneNumPlh: PropTypes.string,
