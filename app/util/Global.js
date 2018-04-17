@@ -77,16 +77,14 @@ global.storage = storage;
 
 
 //用户登录数据
-global.user = {
-    userData:null,//用户数据
-};
+global.userData = null;
 //刷新的时候重新获得用户数据
 storage.load({
     key: 'userData',
 }).then(ret => {
-    global.user.userData = ret;
+    global.userData = ret;
 }).catch(err => {
-    global.user.userData = null;
+    global.userData = null;
 })
 
 global.PublicLog = Log;

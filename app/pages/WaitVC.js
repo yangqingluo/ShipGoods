@@ -17,10 +17,10 @@ export default class WaitVC extends Component {
         storage.load({
             key: 'userData',
         }).then(ret => {
-            global.user.userData = ret;
+            global.userData = ret;
             this.props.navigation.dispatch(PublicResetAction('Main'));
         }).catch(err => {
-            global.user.userData = null;
+            global.userData = null;
             this.props.navigation.dispatch(PublicResetAction('Login'));
         })
     }

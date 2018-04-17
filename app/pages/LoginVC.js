@@ -13,7 +13,7 @@ import {
     TouchableOpacity,
 } from 'react-native'
 import PropTypes from 'prop-types';
-import { NavigationActions } from 'react-navigation'
+import Toast, {DURATION} from 'react-native-easy-toast';
 
 const checkNum = (num) => {
     if (num) {
@@ -24,6 +24,24 @@ const checkNum = (num) => {
             return num;
         }
     }
+}
+
+//带参数的POST请求
+function postRequest(url, data, callback) {
+    var opts = {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }
+
+    fetch(url, opts)
+        .then((resonse) => resonse.text())
+        .then((responseText) => {
+            //将返回的JSON字符串转成JSON对象，并传递到回调方法中
+            callback(JSON.parse(responseText));
+        });
 }
 
 export default class LoginVC extends Component {
@@ -68,23 +86,33 @@ export default class LoginVC extends Component {
     }
 
     onLoginBtnPress = () => {
-        // 使用key来保存数据。这些数据一般是全局独有的，常常需要调用的。
-        // 除非你手动移除，这些数据会被永久保存，而且默认不会过期。
-        storage.save({
-            key: 'userData', // 注意:请不要在key中使用_下划线符号!
-            data: {
-                userid: '1001',
-                userName:'userName',
-                token: 'token'
-            },
+        // // 使用key来保存数据。这些数据一般是全局独有的，常常需要调用的。
+        // // 除非你手动移除，这些数据会被永久保存，而且默认不会过期。
+        // storage.save({
+        //     key: 'userData', // 注意:请不要在key中使用_下划线符号!
+        //     data: {
+        //         userid: '1001',
+        //         userName:'lori',
+        //         token: 'token'
+        //     },
+        // });
+        // global.userData = { userid: '1001', userName:'yangqingluo', token: '572687236876321876'};//保存用户数据
+        // this.props.navigation.dispatch(PublicResetAction('Main'));
 
-            // 如果不指定过期时间，则会使用defaultExpires参数
-            // 如果设为null，则永不过期
-            // 8个小时后过期
-            expires: 1000 * 3600 * 8
-        });
-        global.user.userData = { userid: '1001', userName:'yangqingluo', token: '572687236876321876'};//保存用户数据
-        this.props.navigation.dispatch(PublicResetAction('Main'));
+        if (this.state.phoneNum.length !== 11) {
+            this.refs.toast.show("请输入正确的手机号", DURATION.LENGTH_SHORT);
+            return;
+        }
+        else if (this.state.password.length === 0) {
+            this.refs.toast.show("请输入密码", DURATION.LENGTH_SHORT);
+            return;
+        }
+
+        var data = {mobile:17681981616, password:123456, deviceid:'iPhone121334', devicetype:2};
+        postRequest('http://shiphire.com.cn/index.php/Mobile/User/login/', data, function(result){
+            alert(result);
+            console.log('***********' + result);
+        })
     }
 
     onRegBtnPress = () => {
@@ -171,6 +199,8 @@ export default class LoginVC extends Component {
                     </Text>
                 </View>
 
+                <Toast ref="toast" position={'center'}/>
+                <Toast ref="toastWithStyle" style={{backgroundColor:'red'}} position={this.state.position}/>
             </View >
         )
     }

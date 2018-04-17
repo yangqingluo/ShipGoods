@@ -13,12 +13,12 @@ class RightHeader extends Component {
         super(props)
     }
     onLogoutBtnPress = () => {
-        PublicAlert('Logout!');
+        PublicAlert(global.userData.userName);
         // 删除单个数据
         storage.remove({
             key: 'userData'
         });
-        global.user.userData = null;
+        global.userData = null;
 
         this.props.navigation.dispatch(PublicResetAction('Login'));
     };
@@ -28,7 +28,7 @@ class RightHeader extends Component {
                 <TouchableOpacity
                     onPress={this.onLogoutBtnPress}
                 >
-                    <Text>登出</Text>
+                    <Text style={{marginRight : 10}}>登出</Text>
                 </TouchableOpacity>
             </View>
         )
