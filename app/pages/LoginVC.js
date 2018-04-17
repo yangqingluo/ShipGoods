@@ -108,10 +108,10 @@ export default class LoginVC extends Component {
             return;
         }
 
-        var data = {mobile:17681981616, password:123456, deviceid:'iPhone121334', devicetype:2};
+        var data = {mobile:this.state.phoneNum, password:this.state.password, deviceid:'iPhone121334', devicetype:2};
         postRequest('http://shiphire.com.cn/index.php/Mobile/User/login/', data, function(result){
-            alert(result);
-            console.log('***********' + result);
+            alert(result.data);
+            console.log(result);
         })
     }
 
