@@ -14,6 +14,7 @@ import {
 } from 'react-native'
 import PropTypes from 'prop-types';
 import Toast, {DURATION} from 'react-native-easy-toast';
+import Spinner from 'react-native-spinkit';
 
 const checkNum = (num) => {
     if (num) {
@@ -26,23 +27,23 @@ const checkNum = (num) => {
     }
 }
 
-//带参数的POST请求
-function postRequest(url, data, callback) {
-    var opts = {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify(data)
-    }
-
-    fetch(url, opts)
-        .then((resonse) => resonse.text())
-        .then((responseText) => {
-            //将返回的JSON字符串转成JSON对象，并传递到回调方法中
-            callback(JSON.parse(responseText));
-        });
-}
+// //带参数的POST请求
+// function postRequest(url, data, callback) {
+//     var opts = {
+//         method: 'POST',
+//         headers: {
+//             'Accept': 'application/json'
+//         },
+//         body: JSON.stringify(data)
+//     }
+//
+//     fetch(url, opts)
+//         .then((resonse) => resonse.text())
+//         .then((responseText) => {
+//             //将返回的JSON字符串转成JSON对象，并传递到回调方法中
+//             callback(JSON.parse(responseText));
+//         });
+// }
 
 export default class LoginVC extends Component {
     static propTypes = {
@@ -51,17 +52,13 @@ export default class LoginVC extends Component {
         ispassword: PropTypes.bool
     }
 
-    static defaultProps = {
-        role: '选择用户角色',
-    }
     constructor(props) {
         super(props)
         this.state = {
             phoneNum: "",
             password: "",
-            role: "",
-
             ispassword: true,
+            isSpinnerVisible: false,
         }
     }
 
@@ -108,12 +105,40 @@ export default class LoginVC extends Component {
             return;
         }
 
+        this.setState({isSpinnerVisible : true});
         var data = {mobile:this.state.phoneNum, password:this.state.password, deviceid:'iPhone121334', devicetype:2};
-        postRequest('http://shiphire.com.cn/index.php/Mobile/User/login/', data, function(result){
-            alert(result.data);
-            console.log(result);
-        })
+        this.postRequest('http://shiphire.com.cn/' + 'index.php/Mobile/User/login/', data);
     }
+
+    //带参数的POST请求
+    postRequest = (url, data) => {
+        var opts = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }
+
+        fetch(url, opts)
+            .then((resonse) => resonse.text())
+            .then((responseText) => {
+                var result = JSON.parse(responseText);
+                this.setState({isSpinnerVisible : false});
+                if (result.code === 0) {
+                    storage.save({
+                        key: 'userData', // 注意:请不要在key中使用_下划线符号!
+                        data: result.data,
+                });
+                    global.userData = result.data;
+                    this.props.navigation.dispatch(PublicResetAction('Main'));
+                }
+                else {
+                    this.refs.toast.show(result.message, DURATION.LENGTH_SHORT);
+                }
+            });
+    }
+
 
     onRegBtnPress = () => {
         this.props.navigation.navigate('Register')
@@ -176,6 +201,16 @@ export default class LoginVC extends Component {
                     </View>
                 </View>
 
+                <View style={{height:0}}>
+                    <Spinner style={{
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        alignSelf: 'center',
+                        backgroundColor: "red",
+                    }} isVisible={this.state.isSpinnerVisible} size={40} type={'Arc'} color={"gray"}/>
+                </View>
+
                 <TouchableOpacity style={styles.cfmButton} onPress={this.onLoginBtnPress}>
                     <Text style={styles.btnText}>
                         登录
@@ -200,7 +235,8 @@ export default class LoginVC extends Component {
                 </View>
 
                 <Toast ref="toast" position={'center'}/>
-                <Toast ref="toastWithStyle" style={{backgroundColor:'red'}} position={this.state.position}/>
+
+
             </View >
         )
     }

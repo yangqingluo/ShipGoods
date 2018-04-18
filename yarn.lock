@@ -4588,6 +4588,12 @@ react-native-scrollable-tab-view@^0.8.0:
     prop-types "^15.6.0"
     react-timer-mixin "^0.13.3"
 
+react-native-spinkit@1.1.0:
+  version "1.1.0"
+  resolved "http://registry.npm.taobao.org/react-native-spinkit/download/react-native-spinkit-1.1.0.tgz#4a33557cc81ad730c6699983d5e66e119ebc25d3"
+  dependencies:
+    prop-types "^15.5.8"
+
 react-native-storage@0.2.2:
   version "0.2.2"
   resolved "http://registry.npm.taobao.org/react-native-storage/download/react-native-storage-0.2.2.tgz#4449197f122b2da0650e3704e1f050260ed58d9f"

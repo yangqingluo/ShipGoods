@@ -13,7 +13,7 @@ class RightHeader extends Component {
         super(props)
     }
     onLogoutBtnPress = () => {
-        PublicAlert(global.userData.userName);
+        // PublicAlert(global.userData.userName);
         // 删除单个数据
         storage.remove({
             key: 'userData'
