@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, Text, Image, View, TouchableOpacity } from 'react-native';
-import {StackNavigator, TabBarBottom, TabNavigator} from 'react-navigation';
+import {
+    Platform,
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    TouchableOpacity
+} from 'react-native';
+import {TabBarBottom, TabNavigator} from 'react-navigation';
 
 import HomeVC from './HomeVC'
 import BusinessVC from './BusinessVC';
@@ -23,12 +30,14 @@ const MainTabNavigator = TabNavigator(
             tabBarIcon: ({ focused, tintColor }) => {
                 const { routeName } = navigation.state;
                 let iconPath;
+                let radius = 25;
                 if (routeName === 'HomeVC') {
                     iconPath = focused ? require("../images/tabGoods.png") : require("../images/tabGoods-outline.png");
                 } else if (routeName === 'BusinessVC') {
                     iconPath = focused ? require("../images/tabOrders.png") : require("../images/tabOrders-outline.png");
                 } else if (routeName === 'ReleaseVC') {
                     iconPath = require("../images/tabPublish.png");
+                    radius = Platform.OS === 'ios' ? 60 : 40;
                 }
                 else if (routeName === 'MessageVC') {
                     iconPath = focused ? require("../images/tabMessage.png") : require("../images/tabMessage-outline.png");
@@ -39,7 +48,21 @@ const MainTabNavigator = TabNavigator(
 
                 // You can return any component that you like here! We usually use an
                 // icon component from react-native-vector-icons
-                return <Image source={iconPath} style={{width: 25, height:25}}></Image>;
+                return (routeName === 'ReleaseVC') ?
+                    <Image source={iconPath} style={{
+                        position: 'absolute',
+                        overflow: 'visible',
+                        bottom: Platform.OS === 'ios' ? 5 : -3,
+                        width: radius,
+                        height:radius
+                        }}>
+                    </Image>
+                    :
+                    <Image source={iconPath} style={{
+                        width: radius,
+                        height:radius
+                    }}>
+                    </Image>;
             },
         }),
         tabBarComponent: TabBarBottom,

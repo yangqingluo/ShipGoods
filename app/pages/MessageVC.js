@@ -7,16 +7,11 @@ import {
     TouchableOpacity
 } from 'react-native';
 
-import {
-    StackNavigator,
-    TabBarBottom,
-    TabNavigator
-} from "react-navigation";
-
 export default class MessageVC extends Component {
     static navigationOptions = {
         headerTitle: '消息',
         tabBarLabel: '消息',
+        headerLeft: <Text style={{marginLeft: 10}}>友船友货</Text>,
     };
     render() {
         const { navigate } = this.props.navigation;

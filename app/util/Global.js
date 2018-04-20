@@ -76,8 +76,9 @@ var storage = new Storage({
 global.storage = storage;
 
 
+let userData;
 //用户登录数据
-global.userData = null;
+global.userData = userData;
 //刷新的时候重新获得用户数据
 storage.load({
     key: 'userData',

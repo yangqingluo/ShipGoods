@@ -13,14 +13,15 @@ class RightHeader extends Component {
         super(props)
     }
     onLogoutBtnPress = () => {
-        // PublicAlert(global.userData.userName);
-        // 删除单个数据
-        storage.remove({
-            key: 'userData'
-        });
-        global.userData = null;
-
-        this.props.navigation.dispatch(PublicResetAction('Login'));
+        // PublicAlert(JSON.stringify(global.userData));
+        PublicAlert(global.userData.usertype);
+        // // 删除单个数据
+        // storage.remove({
+        //     key: 'userData'
+        // });
+        // global.userData = null;
+        //
+        // this.props.navigation.dispatch(PublicResetAction('Login'));
     };
     render() {
         return (
@@ -39,13 +40,17 @@ export default class MineVC extends Component {
     static navigationOptions = ({ navigation }) => ({
         headerTitle: '我的',
         tabBarLabel: '我的',
+        headerLeft: <Text style={{marginLeft: 10}}>友船友货</Text>,
         headerRight: <RightHeader navigation={navigation} />,
     });
 
     render() {
         return (
             <View style={styles.container}>
+                <View style={styles.topView}>
 
+
+                </View>
             </View>
         )
     }
@@ -54,5 +59,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F5FCFF',
+    },
+    topView: {
+        height: 200,
+        backgroundColor: '#fff',
     },
 });
