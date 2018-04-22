@@ -23,8 +23,8 @@ const MyNavigator = StackNavigator({
     , {
         navigationOptions: {
             headerTitleStyle: { color: '#000', fontSize: 16, alignSelf:'center'},
-            headerBackTitleStyle: { color: '#000', fontSize: 12 },
-            // headerTintColor:{},
+            headerBackTitleStyle: { color: '#fff', fontSize: 12},
+            headerTintColor:'#222',
             //gesturesEnabled: true,//是否支持滑动返回收拾，iOS默认支持，安卓默认关闭
         },
         mode: 'card',  // 页面切换模式, 左右是card(相当于iOS中的push效果), 上下是modal(相当于iOS中的modal效果)

@@ -152,7 +152,6 @@ export default class LoginVC extends Component {
 
                 <View style={styles.wrapper}>
                     <View style={styles.txtBorder}>
-
                         <TextInput
                             keyboardType={'numeric'}
                             underlineColorAndroid={'transparent'}
@@ -167,10 +166,6 @@ export default class LoginVC extends Component {
                             }}
                             value={this.state.phoneNum}
                         />
-                        {/* <Text
-                            style={styles.sendChk}
-                            onPress={this.onSendChkCodeBtnPress}
-                        >{this.state.sendChk.length == 5 ? this.state.sendChk : '              ' + this.state.sendChk}</Text> */}
                     </View>
                 </View>
                 

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {
     AsyncStorage,
-    Alert,
+    Alert, StyleSheet,
 } from 'react-native';
 import Storage from 'react-native-storage';
 import {NavigationActions} from "react-navigation";
@@ -91,3 +91,25 @@ storage.load({
 global.PublicLog = Log;
 global.PublicAlert = GlobalAlert;
 global.PublicResetAction = resetAction;
+
+
+
+let appData = {
+    appBlueColor: '#2D9BFD',
+    appGrayColor: '#f3f3f3',
+    appTextColor: '#000',
+    appSecondaryTextColor: '#c0c0c0',
+    appViewColor: '#fff',
+
+    appItemPaddingLeft: 16,
+}
+
+let appStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: appData.appViewColor,
+    },
+});
+
+global.appStyles = appStyles;
+global.appData = appData;

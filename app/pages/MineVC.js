@@ -15,7 +15,6 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons'
 import Item from '../components/Item'
 import px2dp from '../util';
-import appData from  '../AppData'
 let {width, height} = Dimensions.get('window')
 
 
@@ -84,11 +83,8 @@ export default class MineVC extends Component {
 
     }
 
-    onAuthTextPress() {
-        if (global.userData.authstate === '0') {
-            //审核中
-        }
-        else if (global.userData.authstate === '1') {
+    onAuthTextPress = () =>  {
+        if (global.userData.authstate === '1') {
             //审核通过
         }
         else {
@@ -126,7 +122,7 @@ export default class MineVC extends Component {
             </TouchableWithoutFeedback>
             <View style={styles.authShow}>
                 <Text style={{color: appData.appSecondaryTextColor, fontSize: px2dp(14), marginLeft: 40}}>{"资质认证"}</Text>
-                <Text style={{color: appData.appBlueColor, fontSize: px2dp(14), marginLeft: 10}} onPress={this.onAuthTextPress}>{(global.userData.authstate === '0') ? "审核中" : ((global.userData.authstate === '1') ? "已认证" : "未认证")}</Text>
+                <Text style={{color: appData.appBlueColor, fontSize: px2dp(14), marginLeft: 10}} onPress={this.onAuthTextPress}>{(global.userData.authstate === '0') ? "未认证" : ((global.userData.authstate === '1') ? "已认证" : "未认证")}</Text>
             </View>
             <View>
                 {this._renderListItem()}
