@@ -12,10 +12,10 @@ import {
     TouchableWithoutFeedback,
     RefreshControl
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons'
 import Item from '../components/Item'
 import px2dp from '../util';
-import Icon from 'react-native-vector-icons/Ionicons'
-
+import appData from  '../AppData'
 let {width, height} = Dimensions.get('window')
 
 
@@ -83,6 +83,20 @@ export default class MineVC extends Component {
     goProfile(){
 
     }
+
+    onAuthTextPress() {
+        if (global.userData.authstate === '0') {
+            //审核中
+        }
+        else if (global.userData.authstate === '1') {
+            //审核通过
+        }
+        else {
+            //未审核/审核不通过
+            this.props.navigation.navigate('AddAuth');
+        }
+    }
+
     componentDidMount(){
         // this._onRefresh()
     }
@@ -92,7 +106,35 @@ export default class MineVC extends Component {
         //     this.setState({isRefreshing: false});
         // }, 1500)
     }
-    _renderListItem(){
+
+    _renderHeader() {
+        return <View style={{minHeight: height - 64 - px2dp(46), paddingBottom: 100, backgroundColor: "#fff"}}>
+            <TouchableWithoutFeedback onPress={this.goProfile.bind(this)}>
+                <View style={styles.userHead}>
+                    <View style={{flex: 1,flexDirection: "row"}}>
+                        <Image source={require('../images/role.png')} style={{width: px2dp(60), height: px2dp(60), borderRadius: px2dp(30)}}/>
+                        <View style={{flex: 1, marginLeft: 10, paddingVertical: 5}}>
+                            <Text style={{color: "#000", fontSize: px2dp(18)}}>{global.userData.username}</Text>
+                            <View style={{marginTop: px2dp(10), flexDirection: "row"}}>
+                                <Icon name="ios-phone-portrait-outline" size={px2dp(14)} color="#000" />
+                                <Text style={{color: "#000", fontSize: 13, paddingLeft: 5}}>{global.userData.mobile}</Text>
+                            </View>
+                        </View>
+                    </View>
+                    <Icon name="ios-arrow-forward-outline" size={px2dp(22)} color="#fff" />
+                </View>
+            </TouchableWithoutFeedback>
+            <View style={styles.authShow}>
+                <Text style={{color: appData.appSecondaryTextColor, fontSize: px2dp(14), marginLeft: 40}}>{"资质认证"}</Text>
+                <Text style={{color: appData.appBlueColor, fontSize: px2dp(14), marginLeft: 10}} onPress={this.onAuthTextPress}>{(global.userData.authstate === '0') ? "审核中" : ((global.userData.authstate === '1') ? "已认证" : "未认证")}</Text>
+            </View>
+            <View>
+                {this._renderListItem()}
+            </View>
+        </View>
+    }
+
+    _renderListItem() {
         return this.config.map((item, i) => {
             // if(i%3==0){
             //     item.first = true
@@ -116,46 +158,7 @@ export default class MineVC extends Component {
                         />
                     }
                 >
-                    <View style={{minHeight: height - 64 - px2dp(46), paddingBottom: 100, backgroundColor: "#f3f3f3"}}>
-                        <TouchableWithoutFeedback onPress={this.goProfile.bind(this)}>
-                            <View style={styles.userHead}>
-                                <View style={{flex: 1,flexDirection: "row"}}>
-                                    <Image source={require('../images/role.png')} style={{width: px2dp(60), height: px2dp(60), borderRadius: px2dp(30)}}/>
-                                    <View style={{flex: 1, marginLeft: 10, paddingVertical: 5}}>
-                                        <Text style={{color: "#000", fontSize: px2dp(18)}}>{global.userData.username}</Text>
-                                        <View style={{marginTop: px2dp(10), flexDirection: "row"}}>
-                                            <Icon name="ios-phone-portrait-outline" size={px2dp(14)} color="#fff" />
-                                            <Text style={{color: "#000", fontSize: 13, paddingLeft: 5}}>{global.userData.mobile}</Text>
-                                        </View>
-                                    </View>
-                                </View>
-                                <Icon name="ios-arrow-forward-outline" size={px2dp(22)} color="#fff" />
-                            </View>
-                        </TouchableWithoutFeedback>
-                        <View style={styles.numbers}>
-                            {/*<TouchableWithoutFeedback>*/}
-                                {/*<View style={styles.numItem}>*/}
-                                    {/*<Text style={{color: "#f90", fontSize: 18, textAlign: "center", fontWeight: "bold"}}>{"999999.0元"}</Text>*/}
-                                    {/*<Text style={{color: "#333", fontSize: 12, textAlign: "center", paddingTop: 5}}>{"余额"}</Text>*/}
-                                {/*</View>*/}
-                            {/*</TouchableWithoutFeedback>*/}
-                            {/*<TouchableWithoutFeedback>*/}
-                                {/*<View style={[styles.numItem,{borderLeftWidth: 1, borderLeftColor: "#f5f5f5",borderRightWidth: 1, borderRightColor: "#f5f5f5"}]}>*/}
-                                    {/*<Text style={{color: "#ff5f3e", fontSize: 18, textAlign: "center", fontWeight: "bold"}}>{"1940个"}</Text>*/}
-                                    {/*<Text style={{color: "#333", fontSize: 12, textAlign: "center", paddingTop: 5}}>{"优惠"}</Text>*/}
-                                {/*</View>*/}
-                            {/*</TouchableWithoutFeedback>*/}
-                            {/*<TouchableWithoutFeedback>*/}
-                                {/*<View style={styles.numItem}>*/}
-                                    {/*<Text style={{color: "#6ac20b", fontSize: 18, textAlign: "center", fontWeight: "bold"}}>{"999999分"}</Text>*/}
-                                    {/*<Text style={{color: "#333", fontSize: 12, textAlign: "center", paddingTop: 5}}>{"积分"}</Text>*/}
-                                {/*</View>*/}
-                            {/*</TouchableWithoutFeedback>*/}
-                        </View>
-                        <View>
-                            {this._renderListItem()}
-                        </View>
-                    </View>
+                    {this._renderHeader()}
                 </ScrollView>
             </View>
         )
@@ -176,12 +179,13 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         paddingHorizontal: 20,
         paddingVertical: 20,
-        backgroundColor: "#fff"
+        backgroundColor: '#fff'
     },
-    numbers: {
+    authShow: {
         flexDirection: "row",
-        backgroundColor: "#fff",
-        height: 20
+        alignItems: "center",
+        backgroundColor: '#f3f3f3',
+        height: 30
     },
     numItem: {
         flex: 1,

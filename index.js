@@ -9,7 +9,7 @@ import MainTab from './app/pages/MainTab'
 import DetailVC from './app/pages/DetailVC';
 import LoginVC from './app/pages/LoginVC';
 import Register from './app/pages/Register';
-
+import AddAuth from './app/pages/AddAuth';
 
 //引入要用到的跳转页面
 const MyNavigator = StackNavigator({
@@ -17,7 +17,8 @@ const MyNavigator = StackNavigator({
     Login: {screen: LoginVC},
     Register: {screen: Register},
     Main:{screen: MainTab},
-    DetailVC:{screen:DetailVC}
+    DetailVC:{screen:DetailVC},
+    AddAuth:{screen: AddAuth}
     }
     , {
         navigationOptions: {

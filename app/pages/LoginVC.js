@@ -190,7 +190,6 @@ export default class LoginVC extends Component {
                             }}
                             value={this.state.password}
                         />
-                        {/* <Text style={styles.sendChk}>眼睛</Text> */}
                         <TouchableOpacity style={styles.eyeImgWrap} onPress={this.onEyeBtnPress}>
                             {
                                 this.state.ispassword ?
