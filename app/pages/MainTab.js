@@ -47,7 +47,7 @@ const MainTabNavigator = TabNavigator(
                 }
 
                 // You can return any component that you like here! We usually use an
-                // icon component from react-native-vector-icons
+                // logo component from react-native-vector-icons
                 return (routeName === 'ReleaseVC') ?
                     <Image source={iconPath} style={{
                         position: 'absolute',

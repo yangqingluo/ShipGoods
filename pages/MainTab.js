@@ -98,7 +98,7 @@ const HomePage = TabNavigator({
                     style={{ width: 18, height: 18, marginLeft: 10, marginRight: 10, }}
                 /> */}
                 // You can return any component that you like here! We usually use an
-                // icon component from react-native-vector-icons
+                // logo component from react-native-vector-icons
                 return <Image source={iconPath} style={{width: 25, height:25}}></Image>;
             },
         }),

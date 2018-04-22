@@ -49,7 +49,7 @@ export default class Item extends Component {
     super(props)
   }
   static propTypes = {
-    icon: PropTypes.string,
+    logo: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     subName: PropTypes.string,
     color: PropTypes.string,
@@ -61,12 +61,12 @@ export default class Item extends Component {
     onPress: PropTypes.func
   }
   _render(){
-    let {icon, iconSize, name, subName, color, first, avatar, disable, font} = this.props
+    let {logo, iconSize, name, subName, color, first, avatar, disable, font} = this.props
     font = font||"Ionicons"
     const Icon = Font[font]
     return (
       <View style={styles.listItem}>
-        {icon?(<Icon name={icon} size={px2dp(iconSize||20)} style={{width: 22, marginRight:5, textAlign:"center"}} color={color || "#4da6f0"} />):null}
+          <Image source={logo} style={styles.logo}/>
         <View style={[styles.listInfo, {borderTopWidth: !first?1:0}]}>
           <View style={{flex: 1}}><Text>{name}</Text></View>
           <View style={styles.listInfoRight}>
@@ -114,5 +114,10 @@ const styles = StyleSheet.create({
   listInfoRight: {
     flexDirection: "row",
     alignItems: "center"
-  }
+  },
+    logo: {
+        marginRight:5,
+        width: px2dp(20),
+        height: px2dp(20)
+    },
 })

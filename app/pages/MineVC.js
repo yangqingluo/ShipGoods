@@ -59,15 +59,15 @@ export default class MineVC extends Component {
     constructor(props){
         super(props)
         this.state = {
-            isRefreshing: true
+            isRefreshing: false
         }
         this.config = [
-            {icon:"ios-pin", name:"我的发布", onPress:this.goPage.bind(this, "Detail")},
-            {icon:"md-images", name:"我的船队", color:"#fc7b53", onPress:this.goPage.bind(this, "Detail")},
-            {icon:"ios-heart", name:"我的收藏", onPress:this.goPage.bind(this, "Detail")},
-            {icon:"ios-outlet", name:"分享到好友", subName:"", color:"#fc7b53", onPress:this.goPage.bind(this, "Detail")},
-            {icon:"md-flower", name:"一键客服", subName:"", color:"#94d94a", onPress:this.goPage.bind(this, "Detail")},
-            {icon:"md-contacts", name:"更多设置", subName:"", color:"#ffc636", onPress:this.goPage.bind(this, "Detail")},
+            {logo:require('../images/icon_back.png'), name:"我的发布", onPress:this.goPage.bind(this, "Detail")},
+            {logo:require('../images/icon_chuand.png'), name:"我的船队", color:"#fc7b53", onPress:this.goPage.bind(this, "Detail")},
+            {logo:require('../images/icon_colle.png'), name:"我的收藏", onPress:this.goPage.bind(this, "Detail")},
+            {logo:require('../images/icon_share.png'), name:"分享到好友", subName:"", color:"#fc7b53", onPress:this.goPage.bind(this, "Detail")},
+            {logo:require('../images/icon_share.png'), name:"一键客服", subName:"", color:"#94d94a", onPress:this.goPage.bind(this, "Detail")},
+            {logo:require('../images/icon_s.png'), name:"更多设置", subName:"", color:"#ffc636", onPress:this.goPage.bind(this, "Detail")},
         ]
     }
     goPage(key, data = {}){
@@ -84,13 +84,13 @@ export default class MineVC extends Component {
 
     }
     componentDidMount(){
-        this._onRefresh()
+        // this._onRefresh()
     }
     _onRefresh(){
-        this.setState({isRefreshing: true});
-        setTimeout(() => {
-            this.setState({isRefreshing: false});
-        }, 1500)
+        // this.setState({isRefreshing: true});
+        // setTimeout(() => {
+        //     this.setState({isRefreshing: false});
+        // }, 1500)
     }
     _renderListItem(){
         return this.config.map((item, i) => {
