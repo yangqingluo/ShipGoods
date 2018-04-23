@@ -122,7 +122,7 @@ export default class MineVC extends Component {
             </TouchableWithoutFeedback>
             <View style={styles.authShow}>
                 <Text style={{color: appData.appSecondaryTextColor, fontSize: px2dp(14), marginLeft: 40}}>{"资质认证"}</Text>
-                <Text style={{color: appData.appBlueColor, fontSize: px2dp(14), marginLeft: 10}} onPress={this.onAuthTextPress}>{(global.userData.authstate === '0') ? "未认证" : ((global.userData.authstate === '1') ? "已认证" : "未认证")}</Text>
+                <Text style={{color: appData.appBlueColor, fontSize: px2dp(14), marginLeft: 10}} onPress={this.onAuthTextPress}>{(global.userData.authstate === '0') ? "去认证" : ((global.userData.authstate === '1') ? "已认证" : "去认证")}</Text>
             </View>
             <View>
                 {this._renderListItem()}

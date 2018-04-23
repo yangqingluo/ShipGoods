@@ -12,6 +12,7 @@ import {
 import AddAuthItem from '../components/AddAuthItem'
 import px2dp from "../util";
 import Button from '../components/Button'
+import MyBottomSheet from '../components/MyBottomSheet'
 let {width, height} = Dimensions.get('window')
 
 export default class DetailVC extends Component {
@@ -45,7 +46,8 @@ export default class DetailVC extends Component {
 
     cellSelected(key, data = {}){
         if (key === 'AddShip') {
-            this.props.navigation.navigate(key);
+            // this.props.navigation.navigate(key);
+            this.refs._customSheet.showModal();
         }
         else {
             PublicAlert(key);
@@ -58,6 +60,11 @@ export default class DetailVC extends Component {
 
     _onPressButton(str, str2){
         PublicAlert(str2);
+    }
+
+    //弹出框确定按钮点击
+    _onModalRightPress(){
+
     }
 
     _renderListItem() {
@@ -77,6 +84,8 @@ export default class DetailVC extends Component {
         const { navigate } = this.props.navigation;
         return (
             <View style={appStyles.container}>
+                <MyBottomSheet ref="_customSheet" modalTitle={'请选择图片来源'} items={[{title: '相机', click:this.cellSelected.bind(this, "Detail")},
+                    {title: '相册', click:this.cellSelected.bind(this, "Detail")}]}/>
                 <ScrollView style={styles.scrollView}>
                     {this._renderListItem()}
                 </ScrollView>
