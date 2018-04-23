@@ -49,6 +49,7 @@ export default class AddAuthItem extends Component {
         super(props)
     }
     static propTypes = {
+        idKey: PropTypes.string,
         logo: PropTypes.string,
         name: PropTypes.string.isRequired,
         subName: PropTypes.string,
@@ -79,7 +80,7 @@ export default class AddAuthItem extends Component {
                                    placeholderTextColor="#aaa"
                                    editable={disable}
                                    onChangeText={(text) => {
-                                       this.props.callback(text, name);
+                                       this.props.callback(text, this.props.idKey);
                                    }}
                         >{name}
                         </TextInput>
