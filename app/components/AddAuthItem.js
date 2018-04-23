@@ -90,6 +90,7 @@ export default class AddAuthItem extends Component {
                         </Text>
                     }
                     {this.props.children}
+                    {subName?(<Text style={{color: "#000", fontSize:12}}>{subName}</Text>):null}
                     <Font.Ionicons style={{marginLeft: 10, paddingRight: 16, opacity: disable ? 0.0 : 1.0}} name="ios-arrow-forward-outline" size={px2dp(18)} color="#bbb" />
                 </View>
             </View>

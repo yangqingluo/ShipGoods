@@ -14,6 +14,7 @@ import px2dp from "../util";
 import Button from '../components/Button'
 import ActionSheet from 'react-native-actionsheet'
 import ImagePicker from 'react-native-image-picker';
+import {DURATION} from "react-native-easy-toast";
 let {width, height} = Dimensions.get('window')
 
 export default class DetailVC extends Component {
@@ -34,19 +35,19 @@ export default class DetailVC extends Component {
             invoice_type: PropTypes.int,//可开发票类型 1、增值税专用 2、增值税普通 3、其他
             invoice_remark: PropTypes.string,//发票备注  是/否(二选一)
 
-            bz_licence_source: PropTypes.string,
-    }
+            bz_licence_source: PropTypes.map,
+        }
         this.config = [
             {idKey:"corporation", name:"公司名称", color:"#4c6bff", disable:true},
             {idKey:"name", name:"联系人姓名", color:"#fc7b53", disable:true},
             {idKey:"contact", name:"联系人手机号", color:"#ffc636", disable:true, numeric:true},
-            {name:"上传公司营业执照", disable:false, subName:"", color:"#94d94a", onPress:this.cellSelected.bind(this, "bz_licence")},
-            {name:"上传法人身份证", disable:false, subName:"", color:"#ffc636", onPress:this.cellSelected.bind(this, "法人身份证")},
-            {name:"添加船舶", disable:false, subName:"", color:"#fc7b53", onPress:this.cellSelected.bind(this, "AddShip")},
-            {name:"可开发票类型", disable:false, subName:"", color:"#94d94a", onPress:this.cellSelected.bind(this, "invoice_type")},
+            {idKey:"bz_licence", name:"上传公司营业执照", disable:false, subName:"", color:"#94d94a", onPress:this.cellSelected.bind(this, "bz_licence")},
+            {name:"上传法人身份证", disable:false, subName:"123", color:"#ffc636", onPress:this.cellSelected.bind(this, "法人身份证")},
+            {name:"添加船舶", disable:false, subName:"324", color:"#fc7b53", onPress:this.cellSelected.bind(this, "AddShip")},
+            {name:"可开发票类型", disable:false, subName:"1", color:"#94d94a", onPress:this.cellSelected.bind(this, "invoice_type")},
         ]
 
-        this.invoiceTypes = ['增值税专用发票(11%)', '增值税普通发票', '其他发票', '取消'];
+        this.invoiceTypes = ['取消', '增值税专用发票(11%)', '增值税普通发票', '其他发票'];
     }
 
     cellSelected(key, data = {}){
@@ -65,11 +66,21 @@ export default class DetailVC extends Component {
     }
 
     submit(){
-
+        this.submitBZLicence()
     }
 
-    _onPressButton(text, key){
-        
+    textInputChanged(text, key){
+        this.setState({
+            key: text
+        });
+    }
+
+    onSelectInvoiceType(index) {
+        if (index > 0) {
+            this.setState({
+                invoice_type: index
+            });
+        }
     }
 
     toSelectBZLicencePhoto = () => {
@@ -99,7 +110,10 @@ export default class DetailVC extends Component {
                 console.log('User tapped custom button: ', response.customButton);
             }
             else {
-                let source = { uri: response.uri };
+                let source = {
+                    uri: response.uri,
+                    data: response.data
+                };
 
                 this.setState({
                     bz_licence_source: source
@@ -108,16 +122,39 @@ export default class DetailVC extends Component {
         });
     }
 
+    submitBZLicence = () => {
+        if (this.state.bz_licence_source) {
+            let formData = new FormData();
+            let file = {uri: this.state.bz_licence_source.uri, type: 'multipart/form-data', name: 'image.png'};
+            formData.append("filename", file);
+            formData.append("uid", userData.uid);
+            formData.append("deviceid", "iPhone121334");
+            formData.append("devicetype", "2");
+            NetUtil.postForm(appUrl + 'index.php/Mobile/Upload/upload_corporation/', formData)
+                .then(
+                    (result)=>{
+                        if (result.code === 0) {
+                            PublicAlert('上传成功');
+                        }
+                        else {
+                            PublicAlert(result.message);
+                        }
+                    },(error)=>{
+                        PublicAlert(error);
+                    });
+        }
+        else {
+            PublicAlert('请设置公司营业执照');
+        }
+    }
+
     _renderListItem() {
         return this.config.map((item, i) => {
-            // switch (i){
-            //     case 0:{
-            //         return (<AddAuthItem key={i} {...item} callback={this._onPressButton.bind(this)}>
-            //         </AddAuthItem>);
-            //     }
-            //     break;
-            // }
-            return (<AddAuthItem key={i} {...item} callback={this._onPressButton.bind(this)}/>)
+            return (<AddAuthItem key={i} {...item}
+                                 subName = {
+                                     (i == 6 && this.state.invoice_type > 0) ? this.invoiceTypes[this.state.invoice_type] : ''
+                                 }
+                                 callback={this.textInputChanged.bind(this)}/>)
         })
     }
 
@@ -129,13 +166,9 @@ export default class DetailVC extends Component {
                     ref={o => this.invoiceTypeActionSheet = o}
                     title={'请选择发票类型'}
                     options={this.invoiceTypes}
-                    cancelButtonIndex={3}
+                    cancelButtonIndex={0}
                     // destructiveButtonIndex={1}
-                    onPress={(index) => {
-                        if (index < 3) {
-
-                        }
-                    }}
+                    onPress={this.onSelectInvoiceType.bind(this)}
                 />
                 <ScrollView style={styles.scrollView}>
                     {this._renderListItem()}

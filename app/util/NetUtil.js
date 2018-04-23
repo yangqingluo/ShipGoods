@@ -21,16 +21,23 @@ export default class NetUtil extends Component {
                 url += '&' + paramsArray.join('&')
             }
     }
-        return this.request(url, 'get', undefined);
+        return this.request(url, 'get', undefined, null);
     }
 
     //pos请求
     static post(url, params) {
         var body = JSON.stringify(params);
-        return this.request(url, 'post', body);
+        return this.request(url, 'post', body, null);
     }
 
-    static async request(url, method, body) {
+    //pos请求
+    static postForm(url, formData) {
+        return this.request(url, 'post', formData, {
+            'Content-Type':'multipart/form-data',
+        });
+    }
+
+    static async request(url, method, body, headers) {
         // DEBUG && console.log("#REQUEST NetUtil# [" + method + "] url=" + url + ",body=" + body);
         // var timestamp = new Date().getTime()/1000;//当前时间毫秒值
         // var user = global.userData;
@@ -46,7 +53,7 @@ export default class NetUtil extends Component {
 
         var opts = {
             method: method,
-            headers: {
+            headers: headers ? headers : {
                 'Accept': 'application/json'
             },
             body: body
