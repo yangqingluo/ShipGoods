@@ -10,15 +10,17 @@ import DetailVC from './app/pages/DetailVC';
 import LoginVC from './app/pages/LoginVC';
 import Register from './app/pages/Register';
 import AddAuth from './app/pages/AddAuth';
+import AddShip from './app/pages/AddShip';
 
 //引入要用到的跳转页面
 const MyNavigator = StackNavigator({
-    Wait: {screen: WaitVC},
-    Login: {screen: LoginVC},
-    Register: {screen: Register},
-    Main:{screen: MainTab},
-    DetailVC:{screen:DetailVC},
-    AddAuth:{screen: AddAuth}
+        Wait: {screen: WaitVC},
+        Login: {screen: LoginVC},
+        Register: {screen: Register},
+        Main:{screen: MainTab},
+        DetailVC:{screen:DetailVC},
+        AddAuth:{screen: AddAuth},
+        AddShip:{screen: AddShip},
     }
     , {
         navigationOptions: {

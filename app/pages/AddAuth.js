@@ -38,13 +38,18 @@ export default class DetailVC extends Component {
             {name:"联系人手机号", color:"#ffc636", disable:true, numeric:true},
             {name:"上传公司营业执照", disable:false, subName:"", color:"#94d94a", onPress:this.cellSelected.bind(this, "公司营业执照")},
             {name:"上传法人身份证", disable:false, subName:"", color:"#ffc636", onPress:this.cellSelected.bind(this, "法人身份证")},
-            {name:"添加船舶", disable:false, subName:"", color:"#fc7b53", onPress:this.cellSelected.bind(this, "Detail")},
+            {name:"添加船舶", disable:false, subName:"", color:"#fc7b53", onPress:this.cellSelected.bind(this, "AddShip")},
             {name:"可开发票类型", disable:false, subName:"", color:"#94d94a", onPress:this.cellSelected.bind(this, "Detail")},
         ]
     }
 
     cellSelected(key, data = {}){
-        PublicAlert(key);
+        if (key === 'AddShip') {
+            this.props.navigation.navigate(key);
+        }
+        else {
+            PublicAlert(key);
+        }
     }
 
     submit(){
@@ -57,9 +62,6 @@ export default class DetailVC extends Component {
 
     _renderListItem() {
         return this.config.map((item, i) => {
-            // if(i%3==0){
-            //     item.first = true
-            // }
             switch (i){
                 case 0:{
                     return (<AddAuthItem key={i} {...item} callback={this._onPressButton.bind(this)}>
