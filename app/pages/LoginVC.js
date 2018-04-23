@@ -27,24 +27,6 @@ const checkNum = (num) => {
     }
 }
 
-// //带参数的POST请求
-// function postRequest(url, data, callback) {
-//     var opts = {
-//         method: 'POST',
-//         headers: {
-//             'Accept': 'application/json'
-//         },
-//         body: JSON.stringify(data)
-//     }
-//
-//     fetch(url, opts)
-//         .then((resonse) => resonse.text())
-//         .then((responseText) => {
-//             //将返回的JSON字符串转成JSON对象，并传递到回调方法中
-//             callback(JSON.parse(responseText));
-//         });
-// }
-
 export default class LoginVC extends Component {
     static propTypes = {
         // sendChkCode: PropTypes.string,
@@ -83,19 +65,6 @@ export default class LoginVC extends Component {
     }
 
     onLoginBtnPress = () => {
-        // // 使用key来保存数据。这些数据一般是全局独有的，常常需要调用的。
-        // // 除非你手动移除，这些数据会被永久保存，而且默认不会过期。
-        // storage.save({
-        //     key: 'userData', // 注意:请不要在key中使用_下划线符号!
-        //     data: {
-        //         userid: '1001',
-        //         userName:'lori',
-        //         token: 'token'
-        //     },
-        // });
-        // global.userData = { userid: '1001', userName:'yangqingluo', token: '572687236876321876'};//保存用户数据
-        // this.props.navigation.dispatch(PublicResetAction('Main'));
-
         if (this.state.phoneNum.length !== 11) {
             this.refs.toast.show("请输入正确的手机号", DURATION.LENGTH_SHORT);
             return;
@@ -107,38 +76,27 @@ export default class LoginVC extends Component {
 
         this.setState({isSpinnerVisible : true});
         var data = {mobile:this.state.phoneNum, password:this.state.password, deviceid:'iPhone121334', devicetype:2};
-        this.postRequest('http://shiphire.com.cn/' + 'index.php/Mobile/User/login/', data);
-    }
-
-    //带参数的POST请求
-    postRequest = (url, data) => {
-        var opts = {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }
-
-        fetch(url, opts)
-            .then((resonse) => resonse.text())
-            .then((responseText) => {
-                var result = JSON.parse(responseText);
+        // this.postRequest(appUrl + 'index.php/Mobile/User/login/', data);
+        NetUtil.post(appUrl + 'index.php/Mobile/User/login/', data)
+            .then(
+                (result)=>{
                 this.setState({isSpinnerVisible : false});
                 if (result.code === 0) {
                     storage.save({
                         key: 'userData', // 注意:请不要在key中使用_下划线符号!
                         data: result.data,
-                });
+                    });
                     global.userData = result.data;
                     this.props.navigation.dispatch(PublicResetAction('Main'));
                 }
                 else {
                     this.refs.toast.show(result.message, DURATION.LENGTH_SHORT);
                 }
+            },(error)=>{
+                this.setState({isSpinnerVisible : false});
+                this.refs.toast.show(error, DURATION.LENGTH_SHORT);
             });
     }
-
 
     onRegBtnPress = () => {
         this.props.navigation.navigate('Register')

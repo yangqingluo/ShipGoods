@@ -4,8 +4,8 @@ import {
     Alert, StyleSheet,
 } from 'react-native';
 import Storage from 'react-native-storage';
+import NetUtil from './NetUtil'
 import {NavigationActions} from "react-navigation";
-
 
 const KEY_USERDATA = 'ships_goods_user_data';
 const UI_STANDARD = 375;
@@ -113,3 +113,5 @@ let appStyles = StyleSheet.create({
 
 global.appStyles = appStyles;
 global.appData = appData;
+global.appUrl = 'http://shiphire.com.cn/';//服务器url
+global.NetUtil = NetUtil;

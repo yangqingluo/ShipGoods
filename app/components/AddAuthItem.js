@@ -56,6 +56,7 @@ export default class AddAuthItem extends Component {
         first: PropTypes.bool,
         avatar: PropTypes.number,
         disable: PropTypes.bool,
+        numeric: PropTypes.bool,
         iconSize: PropTypes.number,
         font: PropTypes.string,
         onPress: PropTypes.func
@@ -72,11 +73,14 @@ export default class AddAuthItem extends Component {
                     {color?(<View style={{width: radius, height:radius, marginRight:5, borderRadius: 0.5 * radius, backgroundColor:color || "#4da6f0"}} />):null}
                     {disable?
                         <TextInput underlineColorAndroid="transparent"
-                                   keyboardType={"numeric"}
+                                   keyboardType={this.props.numeric ? "numeric" : "default"}
                                    style={styles.textInput}
                                    placeholder={name}
                                    placeholderTextColor="#aaa"
                                    editable={disable}
+                                   onChangeText={(text) => {
+                                       this.props.callback(text, name);
+                                   }}
                         >{name}
                         </TextInput>
                     :
