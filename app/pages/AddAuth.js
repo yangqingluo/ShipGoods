@@ -13,6 +13,7 @@ import AddAuthItem from '../components/AddAuthItem'
 import px2dp from "../util";
 import Button from '../components/Button'
 import MyBottomSheet from '../components/MyBottomSheet'
+import ActionSheet from 'react-native-actionsheet'
 let {width, height} = Dimensions.get('window')
 
 export default class DetailVC extends Component {
@@ -47,7 +48,8 @@ export default class DetailVC extends Component {
     cellSelected(key, data = {}){
         if (key === 'AddShip') {
             // this.props.navigation.navigate(key);
-            this.refs._customSheet.showModal();
+            // this.refs._customSheet.showModal();
+            this.ActionSheet.show();
         }
         else {
             PublicAlert(key);
@@ -69,14 +71,14 @@ export default class DetailVC extends Component {
 
     _renderListItem() {
         return this.config.map((item, i) => {
-            switch (i){
-                case 0:{
-                    return (<AddAuthItem key={i} {...item} callback={this._onPressButton.bind(this)}>
-                    </AddAuthItem>);
-                }
-                break;
-            }
-            return (<AddAuthItem key={i} {...item}/>)
+            // switch (i){
+            //     case 0:{
+            //         return (<AddAuthItem key={i} {...item} callback={this._onPressButton.bind(this)}>
+            //         </AddAuthItem>);
+            //     }
+            //     break;
+            // }
+            return (<AddAuthItem key={i} {...item} callback={this._onPressButton.bind(this)}/>)
         })
     }
 
@@ -84,8 +86,16 @@ export default class DetailVC extends Component {
         const { navigate } = this.props.navigation;
         return (
             <View style={appStyles.container}>
-                <MyBottomSheet ref="_customSheet" modalTitle={'请选择图片来源'} items={[{title: '相机', click:this.cellSelected.bind(this, "Detail")},
-                    {title: '相册', click:this.cellSelected.bind(this, "Detail")}]}/>
+                {/*<MyBottomSheet ref="_customSheet" modalTitle={'请选择图片来源'} items={[{title: '相机', click:this.cellSelected.bind(this, "Detail")},*/}
+                    {/*{title: '相册', click:this.cellSelected.bind(this, "Detail")}]}/>*/}
+                <ActionSheet
+                    ref={o => this.ActionSheet = o}
+                    // title={'Which one do you like ?'}
+                    options={['Apple', 'Banana', 'cancel']}
+                    cancelButtonIndex={2}
+                    // destructiveButtonIndex={1}
+                    onPress={(index) => { /* do something */ }}
+                />
                 <ScrollView style={styles.scrollView}>
                     {this._renderListItem()}
                 </ScrollView>
