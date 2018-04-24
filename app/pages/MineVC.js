@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
 import Item from '../components/Item'
+import Communications from '../util/AKCommunications';
 import px2dp from '../util';
 let {width, height} = Dimensions.get('window')
 
@@ -65,13 +66,18 @@ export default class MineVC extends Component {
             {logo:require('../images/icon_chuand.png'), name:"我的船队", color:"#fc7b53", onPress:this.goPage.bind(this, "Detail")},
             {logo:require('../images/icon_colle.png'), name:"我的收藏", onPress:this.goPage.bind(this, "Detail")},
             {logo:require('../images/icon_share.png'), name:"分享到好友", subName:"", color:"#fc7b53", onPress:this.goPage.bind(this, "Detail")},
-            {logo:require('../images/icon_share.png'), name:"一键客服", subName:"", color:"#94d94a", onPress:this.goPage.bind(this, "Detail")},
+            {logo:require('../images/icon_share.png'), name:"一键客服", subName:"", color:"#94d94a", onPress:this.goPage.bind(this, "Call")},
             {logo:require('../images/icon_s.png'), name:"更多设置", subName:"", color:"#ffc636", onPress:this.goPage.bind(this, "Detail")},
         ]
     }
     goPage(key, data = {}){
-        const { navigate } = this.props.navigation;
-        navigate('DetailVC', { title: '详情',des:'我是返回点击我' });
+        if (key === 'Call') {
+            Communications.phonecall('18267811011', false);
+        }
+        else {
+            const { navigate } = this.props.navigation;
+            navigate('DetailVC', { title: '详情',des:'我是返回点击我' });
+        }
     }
     leftPress(){
 
