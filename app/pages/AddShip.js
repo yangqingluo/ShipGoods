@@ -54,8 +54,8 @@ export default class AddShip extends Component {
 
     cellSelected(key, data = {}){
         dismissKeyboard();
-        if (key === 'AddShip') {
-            this.props.navigation.navigate(key);
+        if (key === 'SelectGoods') {
+            this.props.navigation.navigate('MultipleSelectVC');
         }
         else if (key === 'area') {
             this.areaTypeActionSheet.show();
