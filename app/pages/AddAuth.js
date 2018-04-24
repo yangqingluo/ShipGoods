@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import {
     StyleSheet,
     Text,
@@ -50,7 +49,7 @@ export default class DetailVC extends Component {
             {idKey:"bz_licence", name:"上传公司营业执照", disable:false, subName:"", color:"#94d94a", onPress:this.cellSelected.bind(this, "bz_licence")},
             {name:"上传法人身份证", disable:false, subName:"123", color:"#ffc636", onPress:this.cellSelected.bind(this, "法人身份证")},
             {name:"添加船舶", disable:false, subName:"324", color:"#fc7b53", onPress:this.cellSelected.bind(this, "AddShip")},
-            {name:"可开发票类型", disable:false, subName:"1", color:"#94d94a", onPress:this.cellSelected.bind(this, "invoice_type")},
+            {name:"可开发票类型", disable:false, color:"#94d94a", onPress:this.cellSelected.bind(this, "invoice_type")},
         ]
 
         this.invoiceTypes = ['取消', '增值税专用发票(11%)', '增值税普通发票', '其他发票'];
