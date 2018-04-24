@@ -26,12 +26,23 @@ export default class NetUtil extends Component {
 
     //pos请求
     static post(url, params) {
-        var body = JSON.stringify(params);
+        if (userData!= null) {
+            if (userData.uid!= null) {
+                params.uid = userData.uid;
+            }
+        }
+        params.deviceid = 'iPhone121334';
+        params.devicetype = '2';
+
+        let body = JSON.stringify(params);
         return this.request(url, 'post', body, null);
     }
 
     //pos请求
     static postForm(url, formData) {
+        formData.append("uid", userData.uid);
+        formData.append("deviceid", "iPhone121334");
+        formData.append("devicetype", "2");
         return this.request(url, 'post', formData, {
             'Content-Type':'multipart/form-data',
         });
@@ -50,8 +61,7 @@ export default class NetUtil extends Component {
         // }
         // var sign= await Sign.createSign(params, timestamp);//获取签名
 
-
-        var opts = {
+        let opts = {
             method: method,
             headers: headers ? headers : {
                 'Accept': 'application/json'

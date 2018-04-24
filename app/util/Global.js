@@ -115,3 +115,16 @@ global.appStyles = appStyles;
 global.appData = appData;
 global.appUrl = 'http://shiphire.com.cn/';//服务器url
 global.NetUtil = NetUtil;
+
+export const imagePickerOptions = {
+    quality: 1.0,
+    maxWidth: 500,
+    maxHeight: 500,
+    title: null,
+    takePhotoButtonTitle: '选择相机',
+    chooseFromLibraryButtonTitle: '选择相片',
+    cancelButtonTitle: '取消',
+    storageOptions: {
+        skipBackup: true
+    }
+};

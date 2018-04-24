@@ -55,7 +55,7 @@ export default class AddAuthItem extends Component {
         subName: PropTypes.string,
         color: PropTypes.string,
         first: PropTypes.bool,
-        avatar: PropTypes.number,
+        avatar: PropTypes.object,
         disable: PropTypes.bool,
         numeric: PropTypes.bool,
         iconSize: PropTypes.number,
@@ -91,6 +91,7 @@ export default class AddAuthItem extends Component {
                     }
                     {this.props.children}
                     {subName?(<Text style={{color: "#000", fontSize:12}}>{subName}</Text>):null}
+                    {avatar?(<Image source={avatar} style={{width: 36, height: 36, resizeMode: "cover", overflow:"hidden", borderRadius: 18}}/>):null}
                     <Font.Ionicons style={{marginLeft: 10, paddingRight: 16, opacity: disable ? 0.0 : 1.0}} name="ios-arrow-forward-outline" size={px2dp(18)} color="#bbb" />
                 </View>
             </View>

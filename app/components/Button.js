@@ -9,6 +9,7 @@ import {
   View,
   Platform,
   TouchableHighlight,
+    TouchableOpacity,
   TouchableNativeFeedback
 } from 'react-native'
 
@@ -18,7 +19,7 @@ export default class Button extends Component {
   }
   render(){
     return Platform.OS === 'ios'?(
-      <TouchableHighlight {...this.props}>{this.props.children}</TouchableHighlight>
+      <TouchableOpacity {...this.props}>{this.props.children}</TouchableOpacity>
     ):(
       <View {...this.props}><TouchableNativeFeedback onPress={this.props.onPress}>{this.props.children}</TouchableNativeFeedback></View>
     )
