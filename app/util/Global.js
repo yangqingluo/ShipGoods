@@ -6,6 +6,7 @@ import {
 import Storage from 'react-native-storage';
 import NetUtil from './NetUtil'
 import {NavigationActions} from "react-navigation";
+import DeviceInfo from 'react-native-device-info';
 
 const KEY_USERDATA = 'ships_goods_user_data';
 const UI_STANDARD = 375;
@@ -115,6 +116,7 @@ global.appStyles = appStyles;
 global.appData = appData;
 global.appUrl = 'http://shiphire.com.cn/';//服务器url
 global.NetUtil = NetUtil;
+global.appDeviceId = DeviceInfo.getDeviceId();
 
 export const imagePickerOptions = {
     quality: 1.0,

@@ -31,17 +31,18 @@ export default class NetUtil extends Component {
                 params.uid = userData.uid;
             }
         }
-        params.deviceid = 'iPhone121334';
+        params.deviceid = appDeviceId;
         params.devicetype = '2';
 
         let body = JSON.stringify(params);
+        PublicAlert(body);
         return this.request(url, 'post', body, null);
     }
 
     //pos请求
     static postForm(url, formData) {
         formData.append("uid", userData.uid);
-        formData.append("deviceid", "iPhone121334");
+        formData.append("deviceid", appDeviceId);
         formData.append("devicetype", "2");
         return this.request(url, 'post', formData, {
             'Content-Type':'multipart/form-data',
