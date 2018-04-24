@@ -157,7 +157,7 @@ export default class DetailVC extends Component {
         }
     }
 
-    toSelectPhoto = (idKey) => {
+    toSelectPhoto(idKey) {
         ImagePicker.showImagePicker(imagePickerOptions, (response) => {
             console.log('Response = ', response);
 
@@ -179,7 +179,7 @@ export default class DetailVC extends Component {
         });
     }
 
-    submitImage = (source, idKey) => {
+    submitImage(source, idKey) {
         let formData = new FormData();
         let file = {uri: source.uri, type: 'multipart/form-data', name: 'image.png'};
         formData.append("filename", file);
