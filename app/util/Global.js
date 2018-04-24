@@ -115,7 +115,7 @@ global.appStyles = appStyles;
 global.appData = appData;
 global.appUrl = 'http://shiphire.com.cn/';//服务器url
 global.NetUtil = NetUtil;
-global.appDeviceId = 'iPhone1234';
+global.appDeviceId = DeviceInfo.getUniqueID();
 global.dismissKeyboard = require('dismissKeyboard');
 
 export const imagePickerOptions = {

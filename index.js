@@ -11,7 +11,7 @@ import LoginVC from './app/pages/LoginVC';
 import Register from './app/pages/Register';
 import AddAuth from './app/pages/AddAuth';
 import AddShip from './app/pages/AddShip';
-import MultipleSelectVC from './app/pages/MultipleSelectVC';
+// import MultipleSelectVC from './app/pages/MultipleSelectVC';
 
 //引入要用到的跳转页面
 const MyNavigator = StackNavigator({
@@ -22,7 +22,7 @@ const MyNavigator = StackNavigator({
         DetailVC:{screen:DetailVC},
         AddAuth:{screen: AddAuth},
         AddShip:{screen: AddShip},
-        MultipleSelectVC:{screen: MultipleSelectVC},
+        // MultipleSelectVC:{screen: MultipleSelectVC},
     }
     , {
         navigationOptions: {
