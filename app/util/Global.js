@@ -26,8 +26,8 @@ const Log = (...params) => { // 全局Log
     }
 }
 
-const GlobalAlert = (params) => { // 全局Log
-    Alert.alert(params);
+const GlobalAlert = (...params) => {
+    Alert.alert(...params);
 }
 
 const resetAction = (routeName) => NavigationActions.reset({
@@ -94,7 +94,6 @@ global.PublicAlert = GlobalAlert;
 global.PublicResetAction = resetAction;
 
 
-
 let appData = {
     appBlueColor: '#2D9BFD',
     appGrayColor: '#f3f3f3',
@@ -116,7 +115,8 @@ global.appStyles = appStyles;
 global.appData = appData;
 global.appUrl = 'http://shiphire.com.cn/';//服务器url
 global.NetUtil = NetUtil;
-global.appDeviceId = DeviceInfo.getDeviceId();
+global.appDeviceId = DeviceInfo.getUniqueID();
+global.dismissKeyboard = require('dismissKeyboard');
 
 export const imagePickerOptions = {
     quality: 1.0,
@@ -124,7 +124,7 @@ export const imagePickerOptions = {
     maxHeight: 500,
     title: null,
     takePhotoButtonTitle: '选择相机',
-    chooseFromLibraryButtonTitle: '选择相片',
+    chooseFromLibraryButtonTitle: '选择相册',
     cancelButtonTitle: '取消',
     storageOptions: {
         skipBackup: true

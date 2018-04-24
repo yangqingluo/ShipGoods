@@ -17,6 +17,7 @@ import AddAuthItem from '../components/AddAuthItem'
 import px2dp from "../util";
 import Button from '../components/Button'
 import {imagePickerOptions} from "../util/Global";
+import Toast, {DURATION} from "react-native-easy-toast";
 
 let {width, height} = Dimensions.get('window')
 
@@ -29,14 +30,14 @@ export default class DetailVC extends Component {
     constructor(props){
         super(props)
         this.state = {
-            bz_licence: PropTypes.string,//公司营业执照
-            idcard_front: PropTypes.string,//法人身份证正面
-            idcard_con: PropTypes.string,//法人身份证反面
-            corporation: PropTypes.string,//公司名称
-            name: PropTypes.string,//联系人姓名
-            contact: PropTypes.string,//联系人手机号
-            invoice_type: PropTypes.int,//可开发票类型 1、增值税专用 2、增值税普通 3、其他
-            invoice_remark: PropTypes.string,//发票备注  是/否(二选一)
+            bz_licence: '',//公司营业执照
+            idcard_front: '',//法人身份证正面
+            idcard_con: '',//法人身份证反面
+            corporation: '',//公司名称
+            name: '',//联系人姓名
+            contact: '',//联系人手机号
+            invoice_type: 0,//可开发票类型 1、增值税专用 2、增值税普通 3、其他
+            invoice_remark: '',//发票备注  是/否(二选一)
 
             bz_licence_source: null,
             idcard_front_source: null,
@@ -56,6 +57,7 @@ export default class DetailVC extends Component {
     }
 
     cellSelected(key, data = {}){
+        dismissKeyboard();
         if (key === 'AddShip') {
             this.props.navigation.navigate(key);
         }
@@ -70,14 +72,73 @@ export default class DetailVC extends Component {
         }
     }
 
-    submit(){
+    goBack() {
+        this.props.navigation.goBack();
+    }
 
+    submit() {
+        if (this.state.contact.length !== 11) {
+            this.refToast.show("请输入正确的联系人手机号", DURATION.LENGTH_SHORT);
+        }
+        else if (this.state.name.length === 0) {
+            this.refToast.show("请输入联系人姓名", DURATION.LENGTH_SHORT);
+        }
+        else if (this.state.corporation.length === 0) {
+            this.refToast.show("请输入公司名称", DURATION.LENGTH_SHORT);
+        }
+        else if (this.state.bz_licence.length === 0) {
+            this.refToast.show("请上传公司营业执照", DURATION.LENGTH_SHORT);
+        }
+        else if (this.state.idcard_front.length === 0 || this.state.idcard_con.length === 0) {
+            this.refToast.show("请上传法人身份证", DURATION.LENGTH_SHORT);
+        }
+        else if (this.state.invoice_type === 0) {
+            this.refToast.show("请选择发票类型", DURATION.LENGTH_SHORT);
+        }
+        else {
+            let data = {
+                contact:this.state.contact,
+                name:this.state.name,
+                corporation:this.state.corporation,
+                bz_licence:this.state.bz_licence,
+                idcard_front:this.state.idcard_front,
+                idcard_con:this.state.idcard_con,
+                invoice_type:this.state.invoice_type
+            };
+
+            NetUtil.post(appUrl + 'index.php/Mobile/Auth/add_auth/', data)
+                .then(
+                    (result)=>{
+                        if (result.code === 0) {
+                            PublicAlert('提交认证完成','请等待审核结果',
+                                [{text:"确定", onPress:this.goBack.bind(this)}]
+                            );
+                        }
+                        else {
+                            this.refToast.show(result.message, DURATION.LENGTH_SHORT);
+                        }
+                    },(error)=>{
+                        this.refToast.show(error, DURATION.LENGTH_SHORT);
+                    });
+        }
     }
 
     textInputChanged(text, key){
-        this.setState({
-            key: text
-        });
+        if (key === 'contact') {
+            this.setState({
+                contact: text
+            });
+        }
+        else if (key === 'name') {
+            this.setState({
+                name: text
+            });
+        }
+        else if (key === 'corporation') {
+            this.setState({
+                corporation: text
+            });
+        }
     }
 
     onSelectInvoiceType(index) {
@@ -209,6 +270,7 @@ export default class DetailVC extends Component {
                         </View>
                     </Button>
                 </View>
+                <Toast ref={o => this.refToast = o} position={'center'}/>
             </View> );
     }
 }

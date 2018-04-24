@@ -35,7 +35,6 @@ export default class NetUtil extends Component {
         params.devicetype = '2';
 
         let body = JSON.stringify(params);
-        PublicAlert(body);
         return this.request(url, 'post', body, null);
     }
 

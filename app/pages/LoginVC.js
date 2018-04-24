@@ -75,7 +75,7 @@ export default class LoginVC extends Component {
         }
 
         this.setState({isSpinnerVisible : true});
-        let data = {mobile:this.state.phoneNum, password:this.state.password, deviceid:'iPhone121334', devicetype:2};
+        let data = {mobile:this.state.phoneNum, password:this.state.password};
 
         NetUtil.post(appUrl + 'index.php/Mobile/User/login/', data)
             .then(
