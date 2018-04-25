@@ -11,9 +11,8 @@ import LoginVC from './app/pages/LoginVC';
 import Register from './app/pages/Register';
 import AddAuth from './app/pages/AddAuth';
 import AddShip from './app/pages/AddShip';
-// import MultipleSelectVC from './app/pages/MultipleSelectVC';
+import MultipleSelectVC from './app/pages/MultipleSelectVC';
 
-//引入要用到的跳转页面
 const MyNavigator = StackNavigator({
         Wait: {screen: WaitVC},
         Login: {screen: LoginVC},
@@ -22,12 +21,12 @@ const MyNavigator = StackNavigator({
         DetailVC:{screen:DetailVC},
         AddAuth:{screen: AddAuth},
         AddShip:{screen: AddShip},
-        // MultipleSelectVC:{screen: MultipleSelectVC},
+        MultipleSelectVC:{screen: MultipleSelectVC},
     }
     , {
         navigationOptions: {
-            headerTitleStyle: { color: '#000', fontSize: 16, alignSelf:'center'},
-            headerBackTitleStyle: { color: '#fff', fontSize: 12},
+            headerTitleStyle: { color: '#000', fontSize: 16, alignSelf:'center', justifyContent:'center'},
+            // headerBackTitleStyle: { color: '#000', fontSize: 12},
             headerTintColor:'#222',
             //gesturesEnabled: true,//是否支持滑动返回收拾，iOS默认支持，安卓默认关闭
         },

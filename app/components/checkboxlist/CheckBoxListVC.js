@@ -12,29 +12,28 @@ import PropTypes from 'prop-types';
 import Styles from './styles'
 import BaseComponent from  './BaseComponent'
 
-const propTypes = {
-    options: PropTypes.array.isRequired,
-    selectedOptions: PropTypes.array,
-    maxSelectedOptions: PropTypes.number,
-    onSelection: PropTypes.func,
-    renderIndicator: PropTypes.func,
-    renderSeparator: PropTypes.func,
-    renderRow: PropTypes.func,
-    renderText: PropTypes.func,
-    style: View.propTypes.style,
-    optionStyle: View.propTypes.style,
-    disabled: PropTypes.bool
-};
-const defaultProps = {
-    options: [],
-    selectedOptions: [],
-    onSelection(option){},
-    style:{},
-    optionStyle:{},
-    disabled: false
-};
-
-class CheckboxList extends BaseComponent {
+export default class CheckboxList extends BaseComponent {
+    static propTypes = {
+        options: PropTypes.array.isRequired,
+        selectedOptions: PropTypes.array,
+        maxSelectedOptions: PropTypes.number,
+        onSelection: PropTypes.func,
+        renderIndicator: PropTypes.func,
+        renderSeparator: PropTypes.func,
+        renderRow: PropTypes.func,
+        renderText: PropTypes.func,
+        style: View.propTypes.style,
+        optionStyle: View.propTypes.style,
+        disabled: PropTypes.bool
+    };
+    static defaultProps = {
+        options: [],
+        selectedOptions: [],
+        onSelection(option){},
+        style:{},
+        optionStyle:{},
+        disabled: false
+    };
 
     constructor(props) {
         super(props);
@@ -56,12 +55,12 @@ class CheckboxList extends BaseComponent {
         );
     }
 
-    componentWillReceiveProps(nextProps) {
-        this._updateSelectedOptions(nextProps.selectedOptions);
-        this.setState({
-            disabled: nextProps.disabled
-        });
-    }
+    // componentWillReceiveProps(nextProps) {
+    //     this._updateSelectedOptions(nextProps.selectedOptions);
+    //     this.setState({
+    //         disabled: nextProps.disabled
+    //     });
+    // }
     _updateSelectedOptions(selectedOptions) {
         this.setState({
             selectedOptions,
@@ -202,8 +201,3 @@ class CheckboxList extends BaseComponent {
         );
     }
 };
-
-CheckboxList.propTypes = propTypes;
-CheckboxList.defaultProps = defaultProps;
-
-module.exports = CheckboxList;
