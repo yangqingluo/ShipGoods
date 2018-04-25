@@ -11,7 +11,7 @@ import LoginVC from './app/pages/LoginVC';
 import Register from './app/pages/Register';
 import AddAuth from './app/pages/AddAuth';
 import AddShip from './app/pages/AddShip';
-import MultipleSelectVC from './app/pages/MultipleSelectVC';
+import CustomSelect from './app/components/CustomSelect';
 
 const MyNavigator = StackNavigator({
         Wait: {screen: WaitVC},
@@ -21,7 +21,7 @@ const MyNavigator = StackNavigator({
         DetailVC:{screen:DetailVC},
         AddAuth:{screen: AddAuth},
         AddShip:{screen: AddShip},
-        MultipleSelectVC:{screen: MultipleSelectVC},
+        CustomSelect:{screen: CustomSelect},
     }
     , {
         navigationOptions: {

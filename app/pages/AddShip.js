@@ -55,7 +55,13 @@ export default class AddShip extends Component {
     cellSelected(key, data = {}){
         dismissKeyboard();
         if (key === 'SelectGoods') {
-            this.props.navigation.navigate('MultipleSelectVC');
+            this.props.navigation.navigate(
+                'CustomSelect',
+                {
+                    title: '请选择可运油品',
+                    user:['甲','乙','丙','丁',],
+                    callBack:(backData)=>{PublicAlert(backData)}}
+                );
         }
         else if (key === 'area') {
             this.areaTypeActionSheet.show();

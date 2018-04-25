@@ -15,13 +15,13 @@ export default class DetailVC extends Component {
     render() {
         const { navigate } = this.props.navigation;
         return (
-            <View style={styles.container}>
-                <TouchableOpacity style={{ height:40, backgroundColor:'green', justifyContent: 'center'}}
-                                  onPress={() =>{this.backVC()}}>
-                    <Text>{this.props.navigation.state.params.des}
+            <View style={appStyles.container}>
+                {/*<TouchableOpacity style={{ height:40, backgroundColor:'green', justifyContent: 'center'}}*/}
+                                  {/*onPress={() =>{this.backVC()}}>*/}
+                    {/*<Text>{this.props.navigation.state.params.des}*/}
 
-                    </Text>
-                </TouchableOpacity>
+                    {/*</Text>*/}
+                {/*</TouchableOpacity>*/}
             </View> );
     }
 }
