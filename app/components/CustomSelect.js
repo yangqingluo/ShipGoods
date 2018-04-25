@@ -12,26 +12,42 @@ import SelectCell from './SelectCell'
 import {DURATION} from "react-native-easy-toast";
 import px2dp from "../util";
 
+
 export default class CustomSelect extends Component {
     static navigationOptions = ({ navigation }) => (
         {
-            title: navigation.state.params.title
+            title: navigation.state.params.title,
+            headerRight: <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
+                <TouchableOpacity
+                    onPress={navigation.state.params.clickParams}
+                >
+                    <Text style={{marginRight : 10}}>确定</Text>
+                </TouchableOpacity>
+            </View>,
         });
 
     constructor(props){
         super(props)
         this.state = {
-            selectedList: [2,3],
-            dataList: [],
+            selectedList: this.props.navigation.state.params.selectedList,
+            dataList: this.props.navigation.state.params.dataList,
+            maxSelectCount:this.props.navigation.state.params.maxSelectCount,
             refreshing: false,
         }
     }
 
-    back =(state,goBack)=>{ //把属性传递过来，然后进行使用
-        state.params.callBack('this is back data ') //回调传值
-        goBack() //点击POP上一个页面得方法
+    _btnClick=()=> {
+        if (this.state.selectedList.length === 0) {
+            PublicAlert('请至少选择一项');
+        }
+        else {
+            this.props.navigation.state.params.callBack(this.state.selectedList);
+            this.props.navigation.goBack();
+        }
+    };
+    componentDidMount() {
+        this.props.navigation.setParams({clickParams:this._btnClick})
     }
-
 
     requestData = () => {
         this.setState({refreshing: true})
@@ -72,12 +88,22 @@ export default class CustomSelect extends Component {
     }
 
     onCellSelected = (info: Object) => {
-        let index = this.state.selectedList.indexOf(info.item);
-        if (index === -1) {
-            this.state.selectedList.push(info.item);
+        if (this.state.maxSelectCount === 1) {
+            this.state.selectedList = [info.item];
         }
         else {
-            this.state.selectedList.splice(index, 1);
+            let index = this.state.selectedList.indexOf(info.item);
+            if (index === -1) {
+                if (this.state.selectedList.length >= this.state.maxSelectCount) {
+                    PublicAlert('最多只能选择' + this.state.maxSelectCount + '项');
+                }
+                else {
+                    this.state.selectedList.push(info.item);
+                }
+            }
+            else {
+                this.state.selectedList.splice(index, 1);
+            }
         }
         this.forceUpdate();
     }
@@ -87,8 +113,6 @@ export default class CustomSelect extends Component {
     }
 
     render() {
-        const {navigate,state,goBack,} = this.props.navigation;
-
         return (
             <View style={appStyles.container}>
                 <FlatList
@@ -97,8 +121,8 @@ export default class CustomSelect extends Component {
                     renderItem={this.renderCell}
 
                     keyExtractor={this.keyExtractor}
-                    onRefresh={this.requestData}
-                    refreshing={this.state.refreshing}
+                    // onRefresh={this.requestData}
+                    // refreshing={this.state.refreshing}
                     ItemSeparatorComponent={global.renderSeparator}
                     // ListHeaderComponent={this.renderHeader}
                 />

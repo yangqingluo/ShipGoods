@@ -130,6 +130,10 @@ global.renderSeparator = () => {
     return <View style={{height:px2dp(0.5),backgroundColor:appData.appSeparatorColor}}/>;
 }
 
+global.appAllGoods = [];
+
+
+
 export const imagePickerOptions = {
     quality: 1.0,
     maxWidth: 500,

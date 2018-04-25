@@ -34,6 +34,7 @@ export default class AddShip extends Component {
             gasoline: '',//可载汽油吨位
             area: 0,//航行区域 1：沿海 2：长江（可进川） 3：长江（不可进川)
             goods: '',//可运油品
+            goodsList: [],
 
             ship_licence_source: null,
         }
@@ -55,13 +56,7 @@ export default class AddShip extends Component {
     cellSelected(key, data = {}){
         dismissKeyboard();
         if (key === 'SelectGoods') {
-            this.props.navigation.navigate(
-                'CustomSelect',
-                {
-                    title: '请选择可运油品',
-                    user:['甲','乙','丙','丁','3', '9'],
-                    callBack:(backData)=>{PublicAlert(backData)}}
-                );
+            this.toGoToSelectGoodsVC();
         }
         else if (key === 'area') {
             this.areaTypeActionSheet.show();
@@ -72,6 +67,53 @@ export default class AddShip extends Component {
         else {
             PublicAlert(key);
         }
+    }
+
+    toGoToSelectGoodsVC() {
+        if (appAllGoods.length > 0) {
+            this.props.navigation.navigate(
+                'CustomSelect',
+                {
+                    title: '请选择可运油品',
+                    dataList: appAllGoods,
+                    selectedList:this.state.goodsList,
+                    maxSelectCount:5,
+                    callBack:this.callBackFromSelectGoodsVC.bind(this)
+                }
+            );
+        }
+        else {
+            let data = {pid:'0', deep:1};
+            NetUtil.post(appUrl + 'index.php/Mobile/Goods/get_all_goods/', data)
+                .then(
+                    (result)=>{
+                        if (result.code === 0) {
+                            appAllGoods = result.data;
+                            this.toGoToSelectGoodsVC();
+                        }
+                        else {
+                            this.setState({
+                                refreshing: false,
+                            })
+                        }
+                    },(error)=>{
+                        this.setState({
+                            refreshing: false,
+                        })
+                    });
+        }
+    }
+
+    callBackFromSelectGoodsVC(backData) {
+        let dataList = backData.map(
+            (info) => {
+                return info.goods_name;
+            }
+        )
+        this.setState({
+            goodsList: backData,
+            goods: dataList.join(',')
+        });
     }
 
     goBack() {
@@ -88,7 +130,7 @@ export default class AddShip extends Component {
         else if (this.state.storage.length === 0) {
             this.refToast.show("请输入仓容", DURATION.LENGTH_SHORT);
         }
-        else if (this.state.goods.length === 0) {
+        else if (this.state.goodsList.length === 0) {
             this.refToast.show("请选择可运油品", DURATION.LENGTH_SHORT);
         }
         else if (this.state.area === 0) {
@@ -210,7 +252,8 @@ export default class AddShip extends Component {
     _renderListItem() {
         return this.config.map((item, i) => {
             return (<AddAuthItem key={i} {...item} subName = {
-                (i === 6 && this.state.area > 0) ? this.areaTypes[this.state.area] : ''
+                (i === 6 && this.state.area > 0) ? this.areaTypes[this.state.area] :
+                    ((i === 3 && this.state.goods.length > 0) ? this.state.goods : '')
             }
                                  callback={this.textInputChanged.bind(this)}>
                 {(i === 7 && this.state.ship_licence_source != null)?(
