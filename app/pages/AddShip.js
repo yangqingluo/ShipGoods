@@ -59,7 +59,7 @@ export default class AddShip extends Component {
                 'CustomSelect',
                 {
                     title: '请选择可运油品',
-                    user:['甲','乙','丙','丁',],
+                    user:['甲','乙','丙','丁','3', '9'],
                     callBack:(backData)=>{PublicAlert(backData)}}
                 );
         }

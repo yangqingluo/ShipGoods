@@ -1,12 +1,17 @@
 import React, {Component} from 'react';
 import {
     AsyncStorage,
-    Alert, StyleSheet,
+    Alert,
+    View,
+    StyleSheet,
+    Dimensions,
 } from 'react-native';
 import Storage from 'react-native-storage';
 import NetUtil from './NetUtil'
 import {NavigationActions} from "react-navigation";
 import DeviceInfo from 'react-native-device-info';
+import px2dp from "./index";
+const {width,height}=Dimensions.get('window')
 
 const KEY_USERDATA = 'ships_goods_user_data';
 const UI_STANDARD = 375;
@@ -95,11 +100,13 @@ global.PublicResetAction = resetAction;
 
 
 let appData = {
-    appBlueColor: '#2D9BFD',
+    appBlueColor: '#4da6f0',
     appGrayColor: '#f3f3f3',
     appTextColor: '#000',
     appSecondaryTextColor: '#c0c0c0',
     appViewColor: '#fff',
+    appBorderColor: '#e0e0e0',
+    appSeparatorColor: 'rgba(192,192,192,0.6)',
 
     appItemPaddingLeft: 16,
 }
@@ -117,6 +124,11 @@ global.appUrl = 'http://shiphire.com.cn/';//服务器url
 global.NetUtil = NetUtil;
 global.appDeviceId = DeviceInfo.getUniqueID();
 global.dismissKeyboard = require('dismissKeyboard');
+global.screenWidth = width;
+global.screenHeight = height;
+global.renderSeparator = () => {
+    return <View style={{height:px2dp(0.5),backgroundColor:appData.appSeparatorColor}}/>;
+}
 
 export const imagePickerOptions = {
     quality: 1.0,
