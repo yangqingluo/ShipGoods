@@ -196,7 +196,7 @@ export default class AddShip extends Component {
         }
     }
 
-    onSelectInvoiceType(index) {
+    onSelectAreaType(index) {
         if (index > 0) {
             this.setState({
                 area: index
@@ -274,7 +274,7 @@ export default class AddShip extends Component {
                     options={this.areaTypes}
                     cancelButtonIndex={0}
                     // destructiveButtonIndex={1}
-                    onPress={this.onSelectInvoiceType.bind(this)}
+                    onPress={this.onSelectAreaType.bind(this)}
                 />
                 <ScrollView style={styles.scrollView}>
                     {this._renderListItem()}
