@@ -79,7 +79,7 @@ export default class HomeVC extends Component {
     }
 
     static defaultProps = {
-        //role: '',
+        //devicetype: '',
     }
     constructor(props) {
         super(props)

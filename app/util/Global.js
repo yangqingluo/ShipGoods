@@ -133,17 +133,18 @@ global.renderSeparator = () => {
 }
 global.judgeMobilePhone = function(object : String) : boolean {
     // /^1[3|4|5|7|8][0-9]{9}$/
-    let reg=/^1[0-9]{10}/;
+    let reg = /^1[0-9]{10}$/;
     return reg.test(object);
 };
 
 global.judgeVerifyCode = function(object : String) : boolean {
-    let reg=/^[0-9]{4}/;
+    let reg = /^[0-9]{4}$/;
     return reg.test(object);
 };
 
 global.judgePassword = function(object : String) : boolean {
-    return object.length >= 6;
+    let reg = /^[a-zA-Z0-9]{6,20}$/;
+    return reg.test(object);
 };
 
 global.appAllGoods = [];

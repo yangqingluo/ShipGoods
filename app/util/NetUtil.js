@@ -4,8 +4,6 @@
 'use strict'
 import React, {Component} from 'react';
 import Sign from './Sign'
-import {DURATION} from "react-native-easy-toast";
-const DEBUG = true;
 export default class NetUtil extends Component {
 
     //get请求

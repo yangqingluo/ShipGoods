@@ -47,7 +47,7 @@ class Register extends Component {
             phoneNum: "",
             chkCode: "",
             password: "",
-            role: "2",
+            usertype: "2",
             sendChk: "发送验证码",
 
             ispassword: true,
@@ -71,7 +71,7 @@ class Register extends Component {
         else if (!judgeVerifyCode(this.state.chkCode)) {
             this.refs.toast.show("请输入正确的验证码");
         }
-        else if (!judgeMobilePhone(this.state.password)) {
+        else if (!judgePassword(this.state.password)) {
             this.refs.toast.show("请输入正确长度的密码");
         }
         else {
@@ -79,22 +79,22 @@ class Register extends Component {
                 mobile: this.state.phoneNum,
                 code: this.state.chkCode,
                 password: this.state.password,
-                role: this.state.role
+                usertype: this.state.usertype
             };
 
             NetUtil.post(appUrl + 'index.php/Mobile/User/register/', data)
                 .then(
                     (result)=>{
                         if (result.code === 0) {
-                            PublicAlert('注册完成',
+                            PublicAlert('注册完成', '',
                                 [{text:"确定", onPress:this.goBack.bind(this)}]
                             );
                         }
                         else {
-                            this.refs.toast.show(result.message, DURATION.LENGTH_SHORT);
+                            this.refs.toast.show(result.message);
                         }
                     },(error)=>{
-                        this.refs.toast.show(error, DURATION.LENGTH_SHORT);
+                        this.refs.toast.show(error);
                     });
         }
     }
@@ -118,10 +118,10 @@ class Register extends Component {
                                 this.chkCodeCount();
                             }
                             else {
-                                this.refs.toast.show(result.message, DURATION.LENGTH_SHORT);
+                                this.refs.toast.show(result.message);
                             }
                         },(error)=>{
-                            this.refs.toast.show(error, DURATION.LENGTH_SHORT);
+                            this.refs.toast.show(error);
                         });
             }
             else {
@@ -143,7 +143,7 @@ class Register extends Component {
     }
 
     onRolePickeValueChanged = (myRole) => {
-        this.setState({ role: myRole })
+        this.setState({ usertype: myRole })
     }
 
     chkCodeCount = () => {
@@ -195,7 +195,9 @@ class Register extends Component {
                             style={styles.textInput}
                             placeholder={'请输入手机号'}
                             onChangeText={(text) => {
-                                this.state.phoneNum = checkNum(text);
+                                this.setState({
+                                    phoneNum : checkNum(text)
+                                })
                             }}
                             value={this.state.phoneNum}
                         />
@@ -214,7 +216,9 @@ class Register extends Component {
                             style={styles.textInput}
                             placeholder={'请输入验证码'}
                             onChangeText={(text) => {
-                                this.state.chkCode = text;
+                                this.setState({
+                                    chkCode: text
+                                })
                             }}
                             value={this.state.chkCode}
                         />
@@ -251,7 +255,7 @@ class Register extends Component {
                     <View style={styles.rolePicker}>
                         <Picker
                             mode= {"dropdown"}
-                            selectedValue={this.state.role}
+                            selectedValue={this.state.usertype}
                             onValueChange={this.onRolePickeValueChanged.bind(this)}>
                             <Picker.Item label="我是船主" value="2" />
                             <Picker.Item label="我是货主" value="1" />
@@ -331,7 +335,7 @@ const styles = StyleSheet.create({
         //backgroundColor: '#ff0',
         //flex: 1,
         height: 20,
-        width: 75,
+        width: 80,
         //justifyContent: 'space-between',
         
         //marginLeft: Platform.OS === 'ios' ? 20: -20,

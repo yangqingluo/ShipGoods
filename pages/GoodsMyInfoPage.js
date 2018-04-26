@@ -24,7 +24,7 @@ export default class GoodsMyInfoPage extends Component {
     }
 
     static defaultProps = {
-        //role: '',
+        //devicetype: '',
     }
     constructor(props) {
         super(props)

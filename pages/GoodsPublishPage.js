@@ -51,7 +51,7 @@ export default class GoodsPublishPage extends Component {
     })
 
     static defaultProps = {
-        //role: '',
+        //devicetype: '',
     }
     constructor(props) {
         super(props)

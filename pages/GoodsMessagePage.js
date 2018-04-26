@@ -24,7 +24,7 @@ export default class GoodsMessagePage extends Component {
     }
 
     static defaultProps = {
-        //role: '',
+        //devicetype: '',
     }
     constructor(props) {
         super(props)
