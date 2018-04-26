@@ -72,7 +72,7 @@ export default class MineVC extends Component {
     }
     goPage(key, data = {}){
         if (key === 'Call') {
-            Communications.phonecall('18267811011', false);
+            Communications.phonecall('18267811011', true);
         }
         else {
             const { navigate } = this.props.navigation;

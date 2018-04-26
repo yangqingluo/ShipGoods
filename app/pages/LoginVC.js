@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {
     Platform,
     Image,
+    ImageBackground,
     Text,
     TextInput,
     View,
@@ -160,9 +161,11 @@ export default class LoginVC extends Component {
                 </View>
 
                 <TouchableOpacity style={styles.cfmButton} onPress={this.onLoginBtnPress}>
-                    <Text style={styles.btnText}>
-                        登录
-                    </Text>
+                    <ImageBackground style={styles.cfmButtonImage} source={require('../images/button_login.png')}>
+                        <Text style={styles.btnText}>
+                            登录
+                        </Text>
+                    </ImageBackground>
                 </TouchableOpacity>
 
                 <View style={styles.backBtn}>
@@ -234,17 +237,27 @@ const styles = StyleSheet.create({
     },
     
     cfmButton: {
-        marginTop: Platform.OS === 'ios' ? 260 : 160,
+        marginTop: Platform.OS === 'ios' ? 260 : 360,
         marginBottom: 0,
-        width: 100,
-        height: 40,
-        backgroundColor: appData.appBlueColor,
-        borderRadius: 20,
+        width: 137,
+        height: 59,
+        // backgroundColor: appData.appBlueColor,
+        // borderRadius: 20,
         //borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',
     },
+
+    cfmButtonImage: {
+        flex: 1,
+        width: 137,
+        height: 59,
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
+    },
+
     cfmBtn: {
         //width: 35,
         height: 40,

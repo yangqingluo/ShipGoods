@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import {
     Platform,
     Image,
+    ImageBackground,
     Text,
     TextInput,
     View,
@@ -14,6 +15,7 @@ import {
 
 import PropTypes from 'prop-types';
 import Toast, {DURATION} from 'react-native-easy-toast';
+import px2dp from "../util";
 
 const checkNum = (num) => {
     if(num) {
@@ -258,9 +260,11 @@ class Register extends Component {
                 </View>
 
                 <TouchableOpacity style={styles.cfmButton} onPress={this.onCfmButtonPress}>
-                    <Text style={styles.btnText}>
-                        确定
-                    </Text>
+                    <ImageBackground style={styles.cfmButtonImage} source={require('../images/button_login.png')}>
+                        <Text style={styles.btnText}>
+                            确定
+                        </Text>
+                    </ImageBackground>
                 </TouchableOpacity>
 
                 <View style={styles.backBtn}>
@@ -360,17 +364,27 @@ const styles = StyleSheet.create({
 
     cfmButton: {
         //width:
-        marginTop: 80,
+        marginTop: Platform.OS === 'ios' ? 60 : 160,
         marginBottom: 0,
-        width: 100,
-        height: 40,
-        backgroundColor: appData.appBlueColor,
-        borderRadius: 20,
+        width: px2dp(137),
+        height: px2dp(59),
+        // backgroundColor: appData.appBlueColor,
+        // borderRadius: 20,
         //borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',
     },
+
+    cfmButtonImage: {
+        flex: 1,
+        width: px2dp(137),
+        height: px2dp(59),
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
+    },
+
     cfmBtn: {
         //width: 35,
         height: 40,
