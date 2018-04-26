@@ -67,7 +67,8 @@ export default class Item extends Component {
     return (
       <View style={styles.listItem}>
           <Image source={logo} style={styles.logo}/>
-        <View style={[styles.listInfo, {borderTopWidth: !first?10:0}]}>
+        <View style={styles.listInfo}>
+            {/*<View style={[styles.listInfo, {borderTopWidth: !first?1:0}]}>*/}
           <View style={{flex: 1}}><Text>{name}</Text></View>
           <View style={styles.listInfoRight}>
             {subName?(<Text style={{color: "#aaa", fontSize:12}}>{subName}</Text>):null}
