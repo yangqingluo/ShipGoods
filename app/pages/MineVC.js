@@ -18,8 +18,6 @@ import Communications from '../util/AKCommunications';
 import px2dp from '../util';
 let {width, height} = Dimensions.get('window')
 
-
-//顶部右边的图标，这段代码不可复用，但是可以复制修改使用。
 class RightHeader extends Component {
     constructor(props) {
         super(props)
@@ -138,9 +136,6 @@ export default class MineVC extends Component {
 
     _renderListItem() {
         return this.config.map((item, i) => {
-            // if(i%3==0){
-            //     item.first = true
-            // }
             return (<Item key={i} {...item}/>)
         })
     }

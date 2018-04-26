@@ -69,7 +69,7 @@ export default class LoginVC extends Component {
         if (!judgeMobilePhone(this.state.phoneNum)) {
             this.refs.toast.show("请输入正确的手机号");
         }
-        else if (!judgeMobilePhone(this.state.password)) {
+        else if (!judgePassword(this.state.password)) {
             this.refs.toast.show("请输入正确长度的密码");
         }
         else {

@@ -17,6 +17,7 @@ import px2dp from "../util";
 import Button from '../components/Button'
 import {imagePickerOptions} from "../util/Global";
 import Toast, {DURATION} from "react-native-easy-toast";
+
 let {width, height} = Dimensions.get('window')
 
 
@@ -45,6 +46,10 @@ export default class ReleaseVC extends Component {
             {idKey:"storage", name:"空船港", color:"#ffc636", disable:true},
             {idKey:"storage",name:"空船期", disable:true, subName:"324", color:"#94d94a"},
             {idKey:"course", name:"可运航向", color:"#fc7b53", disable:false, onPress:this.cellSelected.bind(this, "SelectCourse")},
+            {idKey:"dieseloil", name:"上载货品", color:"#ffc636", disable:true},
+            {idKey:"dieseloil", name:"上载货品", color:"#ffc636", disable:true},
+            {idKey:"dieseloil", name:"上载货品", color:"#ffc636", disable:true},
+            {idKey:"dieseloil", name:"上载货品", color:"#ffc636", disable:true},
             {idKey:"dieseloil", name:"上载货品", color:"#ffc636", disable:true},
         ]
         this.areaTypes = ['取消', '沿海', '长江（可进川）', '长江（不可进川)'];
@@ -141,7 +146,8 @@ export default class ReleaseVC extends Component {
                     {this._renderListItem()}
                 </ScrollView>
                 <Toast ref={o => this.refToast = o} position={'center'}/>
-            </View> );
+            </View>
+        );
     }
 }
 const styles = StyleSheet.create({
