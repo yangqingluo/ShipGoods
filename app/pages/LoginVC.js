@@ -65,37 +65,36 @@ export default class LoginVC extends Component {
     }
 
     onLoginBtnPress = () => {
-        if (this.state.phoneNum.length !== 11) {
-            this.refs.toast.show("请输入正确的手机号", DURATION.LENGTH_SHORT);
-            return;
+        if (!judgeMobilePhone(this.state.phoneNum)) {
+            this.refs.toast.show("请输入正确的手机号");
         }
-        else if (this.state.password.length === 0) {
-            this.refs.toast.show("请输入密码", DURATION.LENGTH_SHORT);
-            return;
+        else if (!judgeMobilePhone(this.state.password)) {
+            this.refs.toast.show("请输入正确长度的密码");
         }
+        else {
+            this.setState({isSpinnerVisible : true});
+            let data = {mobile:this.state.phoneNum, password:this.state.password};
 
-        this.setState({isSpinnerVisible : true});
-        let data = {mobile:this.state.phoneNum, password:this.state.password};
-
-        NetUtil.post(appUrl + 'index.php/Mobile/User/login/', data)
-            .then(
-                (result)=>{
-                this.setState({isSpinnerVisible : false});
-                if (result.code === 0) {
-                    storage.save({
-                        key: 'userData', // 注意:请不要在key中使用_下划线符号!
-                        data: result.data,
+            NetUtil.post(appUrl + 'index.php/Mobile/User/login/', data)
+                .then(
+                    (result)=>{
+                        this.setState({isSpinnerVisible : false});
+                        if (result.code === 0) {
+                            storage.save({
+                                key: 'userData', // 注意:请不要在key中使用_下划线符号!
+                                data: result.data,
+                            });
+                            global.userData = result.data;
+                            this.props.navigation.dispatch(PublicResetAction('Main'));
+                        }
+                        else {
+                            this.refs.toast.show(result.message, DURATION.LENGTH_SHORT);
+                        }
+                    },(error)=>{
+                        this.setState({isSpinnerVisible : false});
+                        this.refs.toast.show(error, DURATION.LENGTH_SHORT);
                     });
-                    global.userData = result.data;
-                    this.props.navigation.dispatch(PublicResetAction('Main'));
-                }
-                else {
-                    this.refs.toast.show(result.message, DURATION.LENGTH_SHORT);
-                }
-            },(error)=>{
-                this.setState({isSpinnerVisible : false});
-                this.refs.toast.show(error, DURATION.LENGTH_SHORT);
-            });
+        }
     }
 
     onRegBtnPress = () => {
@@ -114,9 +113,7 @@ export default class LoginVC extends Component {
                             keyboardType={'numeric'}
                             underlineColorAndroid={'transparent'}
                             style={styles.textInput}
-                            multiline={false}
                             placeholder={'请输入手机号'}
-                            password={false}
                             onChangeText={(text) => {
                                 this.setState({
                                     phoneNum: checkNum(text)
@@ -133,7 +130,6 @@ export default class LoginVC extends Component {
                         <TextInput
                             underlineColorAndroid={'transparent'}
                             style={styles.textInput}
-                            multiline={false}
                             placeholder={'请输入密码'}
                             secureTextEntry={this.state.ispassword}
                             onChangeText={(text) => {

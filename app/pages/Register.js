@@ -69,6 +69,9 @@ class Register extends Component {
         else if (!judgeVerifyCode(this.state.chkCode)) {
             this.refs.toast.show("请输入正确的验证码");
         }
+        else if (!judgeMobilePhone(this.state.password)) {
+            this.refs.toast.show("请输入正确长度的密码");
+        }
         else {
             let data = {
                 mobile: this.state.phoneNum,
@@ -184,14 +187,11 @@ class Register extends Component {
 
                 <View style={styles.wrapper}>
                     <View style={styles.txtBorder}>
-
                         <TextInput
                             keyboardType={'numeric'}
                             underlineColorAndroid={'transparent'}
                             style={styles.textInput}
-                            multiline={false}
                             placeholder={'请输入手机号'}
-                            password={false}
                             onChangeText={(text) => {
                                 this.state.phoneNum = checkNum(text);
                             }}
@@ -206,13 +206,11 @@ class Register extends Component {
                 
                 <View style={styles.wrapper}>
                     <View style={styles.txtBorder}>
-
                         <TextInput
+                            keyboardType={'numeric'}
                             underlineColorAndroid={'transparent'}
                             style={styles.textInput}
-                            multiline={false}
                             placeholder={'请输入验证码'}
-                            password={false}
                             onChangeText={(text) => {
                                 this.state.chkCode = text;
                             }}
