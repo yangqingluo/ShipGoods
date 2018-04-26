@@ -42,6 +42,7 @@ const resetAction = (routeName) => NavigationActions.reset({
     ]
 });
 
+
 var storage = new Storage({
     // 最大容量，默认值1000条数据循环存储
     size: 1000,
@@ -100,7 +101,8 @@ global.PublicResetAction = resetAction;
 
 
 let appData = {
-    appBlueColor: '#4da6f0',
+    appBlueColor: '#2c9bfd',
+    appLightBlueColor: "#7dd3ff",
     appGrayColor: '#f3f3f3',
     appTextColor: '#000',
     appSecondaryTextColor: '#c0c0c0',
@@ -129,10 +131,19 @@ global.screenHeight = height;
 global.renderSeparator = () => {
     return <View style={{height:px2dp(0.5),backgroundColor:appData.appSeparatorColor}}/>;
 }
+global.judgeMobilePhone = function(object : String) : boolean {
+    return object.length === 11;
+};
+
+global.judgeVerifyCode = function(object : String) : boolean {
+    return object.length === 4;
+};
 
 global.appAllGoods = [];
 
-
+// export function judgeMobilePhone(phoneNum):boolean {
+//     return phoneNum.length === 11;
+// }
 
 export const imagePickerOptions = {
     quality: 1.0,

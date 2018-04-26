@@ -8,14 +8,12 @@ import {
     TextInput,
     View,
     StyleSheet,
-    ToastAndroid,
-    Button,
-    Alert,
+    TouchableOpacity,
     Picker,
-    TouchableHighlight,
 } from 'react-native'
 
 import PropTypes from 'prop-types';
+import Toast, {DURATION} from 'react-native-easy-toast';
 
 const checkNum = (num) => {
     if(num) {
@@ -47,8 +45,7 @@ class Register extends Component {
             phoneNum: "",
             chkCode: "",
             password: "",
-            // role_ships role_goods
-            role: "",
+            role: "2",
             sendChk: "发送验证码",
 
             ispassword: true,
@@ -57,14 +54,44 @@ class Register extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            // headerTitle: <Text>标题</Text>,
             headerLeft: null,
-            
         }
     }
 
+    goBack() {
+        this.props.navigation.goBack();
+    }
+
     onCfmButtonPress = () => {
-        Alert.alert('确定按钮被按下！');
+        if (!judgeMobilePhone(this.state.phoneNum)) {
+            this.refs.toast.show("请输入正确的手机号");
+        }
+        else if (!judgeVerifyCode(this.state.chkCode)) {
+            this.refs.toast.show("请输入正确的验证码");
+        }
+        else {
+            let data = {
+                mobile: this.state.phoneNum,
+                code: this.state.chkCode,
+                password: this.state.password,
+                role: this.state.role
+            };
+
+            NetUtil.post(appUrl + 'index.php/Mobile/User/register/', data)
+                .then(
+                    (result)=>{
+                        if (result.code === 0) {
+                            PublicAlert('注册完成',
+                                [{text:"确定", onPress:this.goBack.bind(this)}]
+                            );
+                        }
+                        else {
+                            this.refs.toast.show(result.message, DURATION.LENGTH_SHORT);
+                        }
+                    },(error)=>{
+                        this.refs.toast.show(error, DURATION.LENGTH_SHORT);
+                    });
+        }
     }
     
     onBackBtnPress = () => {
@@ -72,9 +99,30 @@ class Register extends Component {
     }
     
     onSendChkCodeBtnPress = () => {
-        // Alert.alert('发送验证码按钮被按下！倒计时！');
-        if (this.state.sendChk == "发送验证码")
-            this.chkCodeCount();
+        if (this.state.sendChk === "发送验证码") {
+            if (judgeMobilePhone(this.state.phoneNum)) {
+                let tokens = (parseInt(this.state.phoneNum.substr(7, 4)) - 18) * 8;
+
+                let data = {mobile:this.state.phoneNum, tokens:tokens};
+
+                NetUtil.post(appUrl + 'index.php/Mobile/App/get_sdfsefdg_5621/', data)
+                    .then(
+                        (result)=>{
+                            if (result.code === 0) {
+                                PublicAlert('验证码已发送');
+                                this.chkCodeCount();
+                            }
+                            else {
+                                this.refs.toast.show(result.message, DURATION.LENGTH_SHORT);
+                            }
+                        },(error)=>{
+                            this.refs.toast.show(error, DURATION.LENGTH_SHORT);
+                        });
+            }
+            else {
+                this.refs.toast.show("请输入正确的手机号码");
+            }
+        }
     }
 
     onEyeBtnPress = () => {
@@ -87,6 +135,10 @@ class Register extends Component {
                 ispassword: true,
             })
         }
+    }
+
+    onRolePickeValueChanged = (myRole) => {
+        this.setState({ role: myRole })
     }
 
     chkCodeCount = () => {
@@ -106,7 +158,7 @@ class Register extends Component {
             } else if (sendChkSelf === 0) {
 
                 sendChkSelf = "发送验证码";
-                
+
                 that.setState({
                     sendChk: sendChkSelf
                 })
@@ -114,16 +166,11 @@ class Register extends Component {
                 clearInterval(this.chkCodeCountInt);
 
             } else {
-                
-                
-                // Alert.alert('' + count);
                 sendChkSelf -= 1;
                 that.setState({
                     sendChk: sendChkSelf
                 })
-                // Alert.alert('in it');
             }
-            
             
         }, 1000);
     }
@@ -132,7 +179,7 @@ class Register extends Component {
     render() {
         var { style } = this.props
         return (
-            <View style={styles.container}>
+            <View style={styles.container} onPress={dismissKeyboard}>
                 <Image style={styles.img} source={require('../images/role.png')} />
 
                 <View style={styles.wrapper}>
@@ -146,16 +193,14 @@ class Register extends Component {
                             placeholder={'请输入手机号'}
                             password={false}
                             onChangeText={(text) => {
-                                this.setState({
-                                    phoneNum: checkNum(text)
-                                })
+                                this.state.phoneNum = checkNum(text);
                             }}
                             value={this.state.phoneNum}
                         />
                         <Text 
                             style={styles.sendChk}
                             onPress={this.onSendChkCodeBtnPress}
-                        >{this.state.sendChk.length == 5 ? this.state.sendChk : '              ' + this.state.sendChk}</Text>
+                        >{this.state.sendChk.length === 5 ? this.state.sendChk : '              ' + this.state.sendChk}</Text>
                     </View>
                 </View>
                 
@@ -169,9 +214,7 @@ class Register extends Component {
                             placeholder={'请输入验证码'}
                             password={false}
                             onChangeText={(text) => {
-                                this.setState({
-                                    chkCode: text
-                                })
+                                this.state.chkCode = text;
                             }}
                             value={this.state.chkCode}
                         />
@@ -194,95 +237,46 @@ class Register extends Component {
                             }}
                             value={this.state.password}
                         />
-                        {/* <Text style={styles.sendChk}>眼睛</Text> */}
-                        <TouchableHighlight style={styles.eyeImgWrap} onPress={this.onEyeBtnPress}>
+                        <TouchableOpacity style={styles.eyeImgWrap} onPress={this.onEyeBtnPress}>
                             {
-                                this.state.ispassword? 
-                                    <Image style={styles.eyeImg} source={require('../images/eye-close.png')} ></Image>
-                                    : <Image style={styles.eyeImg} source={require('../images/eye-open.png')} ></Image>
+                                this.state.ispassword ?
+                                    <Image style={styles.eyeImg} source={require('../images/eye-close.png')} />
+                                    : <Image style={styles.eyeImg} source={require('../images/eye-open.png')} />
                             }
-                        </TouchableHighlight >
+                        </TouchableOpacity>
                     </View>
                 </View>
 
                 <View style={styles.wrapper}>
                     <View style={styles.rolePicker}>
-
-                        {/* <TextInput
-                            underlineColorAndroid={'transparent'}
-                            style={styles.textInput}
-                            multiline={false}
-                            placeholder={'请选择角色'}
-                            password={ispassword}
-                            onChangeText={(text) => {
-                                this.setState({
-                                    txtValue: text
-                                })
-                            }}
-                            value={this.state.txtValue}
-                        /> */}
-
                         <Picker
                             mode= {"dropdown"}
                             selectedValue={this.state.role}
-                            onValueChange={(myRole) => 
-                            {
-                                
-                                this.setState({ role: myRole })
-                                //Alert.alert(this.state.role);
-                            }
-                                
-                                }>
-                            <Picker.Item label="我是船主" value="role_ships" />
-                            <Picker.Item label="我是货主" value="role_goods" />
+                            onValueChange={this.onRolePickeValueChanged.bind(this)}>
+                            <Picker.Item label="我是船主" value="2" />
+                            <Picker.Item label="我是货主" value="1" />
                         </Picker>
-
-
-                        {/* <Text style={styles.sendChk}>箭头</Text> */}
                     </View>
                 </View>
 
-                <View style={styles.cfmButton}>
-                    {/* <Text
-                        style={styles.cfmBtn}
-                        onPress={onCfmButtonPress}
-                        title="确定"
-                        accessibilityLabel="pressed confirm button"
-                    >
-                    </Text> */}
-                    <Text
-                        style={styles.cfmBtn}
-                        onPress={this.onCfmButtonPress}
-                    >
+                <TouchableOpacity style={styles.cfmButton} onPress={this.onCfmButtonPress}>
+                    <Text style={styles.btnText}>
                         确定
                     </Text>
-
-                </View>
-
-                {/* touchable是为了显示更好的点击效果，既然是要支持ios就算了 */}
-                {/* <Touchable></Touchable> */}
+                </TouchableOpacity>
 
                 <View style={styles.backBtn}>
                     <Text>
                         or
                     </Text>
-                    {/* <Text>
-                        {'&nbsp'}
-                    </Text> */}
                     <Text 
                         style={styles.backTxt}
                         onPress={this.onBackBtnPress}
                         >
-                        返回登陆
+                        返回登录
                     </Text>
-                    {/* <Button
-                        onPress={onCfmButtonPress}
-                        title="返回登陆"
-                        accessibilityLabel="pressed back button"
-                    >
-                    </Button> */}
                 </View>
-
+                <Toast ref="toast" position={'center'}/>
             </View >
         )
     }
@@ -365,18 +359,19 @@ const styles = StyleSheet.create({
         //marginTop: 8,
         //borderWidth: 1,
     },
-    
+
     cfmButton: {
-        //width: 
+        //width:
         marginTop: 80,
         marginBottom: 0,
         width: 100,
         height: 40,
-        alignItems: 'center',
-        backgroundColor: "#60BBFE",
+        backgroundColor: appData.appBlueColor,
         borderRadius: 20,
         //borderWidth: 1,
-
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
     },
     cfmBtn: {
         //width: 35,
@@ -395,7 +390,7 @@ const styles = StyleSheet.create({
         marginTop: 15,
     },
     backTxt: {
-        color: '#3EA3FC',
+        color: appData.appBlueColor,
     },
     
     rolePicker: {
@@ -413,7 +408,10 @@ const styles = StyleSheet.create({
         //opacity: .6,
 
         //fontSize: 5,
-    }
+    },
+    btnText: {
+        color: '#FFFFFF',
+    },
 })
 
 module.exports = Register;

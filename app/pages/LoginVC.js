@@ -146,8 +146,8 @@ export default class LoginVC extends Component {
                         <TouchableOpacity style={styles.eyeImgWrap} onPress={this.onEyeBtnPress}>
                             {
                                 this.state.ispassword ?
-                                    <Image style={styles.eyeImg} source={require('../images/eye-close.png')} ></Image>
-                                    : <Image style={styles.eyeImg} source={require('../images/eye-open.png')} ></Image>
+                                    <Image style={styles.eyeImg} source={require('../images/eye-close.png')} />
+                                    : <Image style={styles.eyeImg} source={require('../images/eye-open.png')} />
                             }
                         </TouchableOpacity>
                     </View>
@@ -169,11 +169,6 @@ export default class LoginVC extends Component {
                     </Text>
                 </TouchableOpacity>
 
-
-
-                {/* touchable是为了显示更好的点击效果，既然是要支持ios就算了 */}
-                {/* <Touchable></Touchable> */}
-
                 <View style={styles.backBtn}>
                     <Text>
                         or
@@ -185,10 +180,7 @@ export default class LoginVC extends Component {
                         注册一个
                     </Text>
                 </View>
-
                 <Toast ref="toast" position={'center'}/>
-
-
             </View >
         )
     }
@@ -246,13 +238,11 @@ const styles = StyleSheet.create({
     },
     
     cfmButton: {
-        //width: 
         marginTop: Platform.OS === 'ios' ? 260 : 160,
         marginBottom: 0,
         width: 100,
         height: 40,
-        alignItems: 'center',
-        backgroundColor: "#60BBFE",
+        backgroundColor: appData.appBlueColor,
         borderRadius: 20,
         //borderWidth: 1,
         alignItems: 'center',
@@ -276,7 +266,7 @@ const styles = StyleSheet.create({
         marginTop: 15,
     },
     backTxt: {
-        color: '#3EA3FC',
+        color: appData.appBlueColor,
     },
     btnText: {
         color: '#FFFFFF',
