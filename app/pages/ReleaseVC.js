@@ -22,63 +22,78 @@ let {width, height} = Dimensions.get('window')
 
 
 export default class ReleaseVC extends Component {
-    static navigationOptions = {
+    static navigationOptions = ({ navigation }) => ({
         headerTitle: '发布',
         tabBarLabel: '发布',
-    };
+    });
 
     constructor(props){
         super(props)
         this.state = {
             ship: Object,//船
-            upload_oil_list: [],//上载油品
-            download_oil_list: [],//下载油品
+            upload_oil_list: '',//上载油品
+            download_oil_list: '',//下载油品
             empty_port: 0,//空船港
             empty_port_name: '',//空船港港口名
             empty_time: 0,//空船期
             empty_delay: 0,//空船延迟
             course: '',//运输航向 1：南上 2：北下 3：上江 4：下江 5：运河（多选，用“##”隔开）
             remark: '',//备注
+
+            uploadOilSelectedList: [],
+            downloadOilSelectedList: [],
     }
         this.config = [
             {idKey:"ship_name", name:"船名", color:"#4c6bff", disable:true},
-            {idKey:"tonnage", name:"下载可运货品", color:"#fc7b53", disable:false, onPress:this.cellSelected.bind(this, "SelectTonnage")},
-            {idKey:"storage", name:"空船港", color:"#ffc636", disable:true},
-            {idKey:"storage",name:"空船期", disable:true, subName:"324", color:"#94d94a"},
+            {idKey:"upload_oil_list", name:"下载可运货品", color:"#fc7b53", disable:false, onPress:this.cellSelected.bind(this, "SelectDownload")},
+            {idKey:"empty_port", name:"空船港", color:"#ffc636", disable:true},
+            {idKey:"empty_time",name:"空船期", disable:true, subName:"324", color:"#94d94a"},
             {idKey:"course", name:"可运航向", color:"#fc7b53", disable:false, onPress:this.cellSelected.bind(this, "SelectCourse")},
-            {idKey:"dieseloil", name:"上载货品", color:"#ffc636", disable:true},
-            {idKey:"dieseloil", name:"上载货品", color:"#ffc636", disable:true},
-            {idKey:"dieseloil", name:"上载货品", color:"#ffc636", disable:true},
-            {idKey:"dieseloil", name:"上载货品", color:"#ffc636", disable:true},
-            {idKey:"dieseloil", name:"上载货品", color:"#ffc636", disable:true},
+            {idKey:"upload_oil_list", name:"上载货品", color:"#ffc636", disable:false, onPress:this.cellSelected.bind(this, "SelectUpload")},
         ]
-        this.areaTypes = ['取消', '沿海', '长江（可进川）', '长江（不可进川)'];
+        this.areaTypes = ['取消', '南上', '北下', '上江', '下江', '运河'];
     }
 
+
+    sureBtnClick=()=> {
+        if (this.state.ship === null) {
+            this.refToast.show("请选择船舶");
+        }
+        else {
+
+        }
+    };
+
+    componentDidMount() {
+        this.props.navigation.setParams({clickParams:this.sureBtnClick()});
+    }
 
     cellSelected(key, data = {}){
         dismissKeyboard();
         if (key === "SelectCourse") {
             this.areaTypeActionSheet.show();
         }
-        else if (key === "SelectTonnage") {
-            this.toGoToSelectGoodsVC();
+        else if (key === "SelectDownload") {
+            this.toGoToDownGoodsVC();
+        }
+        else if (key === "SelectUpload") {
+            this.toGoToUpGoodsVC();
         }
         else {
             PublicAlert(key);
         }
     }
 
-    toGoToSelectGoodsVC() {
+    toGoToDownGoodsVC() {
         if (appAllGoods.length > 0) {
             this.props.navigation.navigate(
                 'CustomSectionSelect',
                 {
-                    title: '请选择下载可运货品',
+                    title: '下载货品',
                     dataList: appAllGoods,
-                    selectedList:this.state.goodsList,
+                    selectedList:this.state.downloadOilSelectedList,
                     maxSelectCount:5,
-                    callBack:this.callBackFromSelectGoodsVC.bind(this)
+                    callBack:this.callBackFromDownGoodsVC.bind(this)
                 }
             );
         }
@@ -89,7 +104,7 @@ export default class ReleaseVC extends Component {
                     (result)=>{
                         if (result.code === 0) {
                             appAllGoods = result.data;
-                            this.toGoToSelectGoodsVC();
+                            this.toGoToDownGoodsVC();
                         }
                         else {
                             this.setState({
@@ -104,20 +119,63 @@ export default class ReleaseVC extends Component {
         }
     }
 
-    callBackFromSelectGoodsVC(backData) {
-        // let dataList = backData.map(
-        //     (info) => {
-        //         return info.goods_name;
-        //     }
-        // )
-        // this.setState({
-        //     goodsList: backData,
-        //     goods: dataList.join(',')
-        // });
+    callBackFromDownGoodsVC(backData) {
+        let dataList = backData.map(
+            (info) => {
+                return info.goods_name;
+            }
+        )
+        this.setState({
+            download_oil_list: dataList.join(','),
+            downloadOilSelectedList: backData
+        });
     }
 
-    submit() {
+    toGoToUpGoodsVC() {
+        if (appAllGoods.length > 0) {
+            this.props.navigation.navigate(
+                'CustomSectionSelect',
+                {
+                    title: '上载货品',
+                    dataList: appAllGoods,
+                    selectedList:this.state.uploadOilSelectedList,
+                    maxSelectCount:1,
+                    callBack:this.callBackFromUpGoodsVC.bind(this)
+                }
+            );
+        }
+        else {
+            let data = {pid:'0', deep:1};
+            NetUtil.post(appUrl + 'index.php/Mobile/Goods/get_all_goods/', data)
+                .then(
+                    (result)=>{
+                        if (result.code === 0) {
+                            appAllGoods = result.data;
+                            this.toGoToUpGoodsVC();
+                        }
+                        else {
+                            this.setState({
+                                refreshing: false,
+                            })
+                        }
+                    },(error)=>{
+                        this.setState({
+                            refreshing: false,
+                        })
+                    });
+        }
+    }
 
+    callBackFromUpGoodsVC(backData) {
+        let dataList = backData.map(
+            (info) => {
+                return info.goods_name;
+            }
+        )
+        this.setState({
+            upload_oil_list: dataList.join(','),
+            uploadOilSelectedList: backData
+        });
     }
 
     textInputChanged(text, key){
@@ -127,7 +185,7 @@ export default class ReleaseVC extends Component {
     onSelectInvoiceType(index) {
         if (index > 0) {
             this.setState({
-                area: index
+                course: index
             });
         }
     }
@@ -175,6 +233,11 @@ export default class ReleaseVC extends Component {
     _renderListItem() {
         return this.config.map((item, i) => {
             return (<AddAuthItem key={i} {...item}
+                                 subName = {
+                                     (i === 4 && this.state.course > 0) ? this.areaTypes[this.state.course] :
+                                         ((i === 1 && this.state.download_oil_list.length > 0) ? this.state.download_oil_list :
+                                             (i === 5 && this.state.upload_oil_list.length > 0) ? this.state.upload_oil_list : '')
+                                 }
                                  callback={this.textInputChanged.bind(this)}>
             </AddAuthItem>);
         })

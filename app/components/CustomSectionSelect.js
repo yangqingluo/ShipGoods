@@ -9,6 +9,7 @@ import {
     SectionList,
     Dimensions,
 } from 'react-native';
+import SectionCell from './SectionCell'
 import SelectCell from './SelectCell'
 
 
@@ -32,15 +33,22 @@ export default class CustomSectionSelect extends Component {
             dataList: this.props.navigation.state.params.dataList,
             maxSelectCount:this.props.navigation.state.params.maxSelectCount,
             refreshing: false,
+            selectedSection: -1,
         }
     }
 
     _btnClick=()=> {
-        this.props.navigation.goBack();
+        if (this.state.selectedList.length === 0) {
+            PublicAlert('请至少选择一项');
+        }
+        else {
+            this.props.navigation.state.params.callBack(this.state.selectedList);
+            this.props.navigation.goBack();
+        }
     };
 
     componentDidMount() {
-        this.props.navigation.setParams({clickParams:this._btnClick})
+        this.props.navigation.setParams({clickParams:this._btnClick});
     }
 
     onCellSelected = (info: Object) => {
@@ -64,47 +72,68 @@ export default class CustomSectionSelect extends Component {
         this.forceUpdate();
     }
 
-    renderCell = (info: Object) => {
-        return (
-            <SelectCell
-                info={info}
-                onPress={this.onCellSelected}
-                selected={this.state.selectedList.indexOf(info.item) !== -1}
-            />
-        )
+    onSectionSelected = (info: Object) => {
+        if (this.state.selectedSection === info.section.sectionIndex) {
+            this.setState({
+                selectedSection : -1,
+            })
+        }
+        else {
+            this.setState({
+                selectedSection : info.section.sectionIndex,
+            })
+        }
     }
 
     keyExtractor = (item: Object, index: number) => {
         return '' + index;
     }
 
-    _renderItem = (info) => {
-        let txt = '  ' + info.item.title;
-        return <Text
-            style={{ height: 60, textAlignVertical: 'center', backgroundColor: "#ffffff", color: '#5C5C5C', fontSize: 15 }}>{txt}</Text>
+    renderCell = (info) => {
+        return (
+            <SelectCell
+                info={info}
+                onPress={this.onCellSelected}
+                selected={(this.state.selectedList.indexOf(info.item) !== -1)}
+            />
+        )
     }
 
-    _sectionComp = (info) => {
-        let txt = info.section.key;
-        return <Text
-            style={{ height: 50, textAlign: 'center', textAlignVertical: 'center', backgroundColor: '#9CEBBC', color: 'white', fontSize: 30 }}>{txt}</Text>
+    renderSectionHeader = (info) => {
+        return (
+            <SectionCell
+                info={info}
+                onPress={this.onSectionSelected}
+                selected={info.section.sectionIndex === this.state.selectedSection}
+            />
+        )
     }
+    // _sectionComp = (info) => {
+    //     let txt = info.section.goods_name;
+    //     return <Text
+    //         style={{ height: 50, textAlign: 'center', textAlignVertical: 'center', backgroundColor: '#9CEBBC', color: 'white', fontSize: 30 }}>{txt}</Text>
+    // }
 
     render() {
-        let sections = [
-            {key: "A", data: [{title: "阿童木"}, {title: "阿玛尼"}, {title: "爱多多"}]},
-            {key: "B", data: [{title: "表哥"}, {title: "贝贝"}, {title: "表弟"}, {title: "表姐"}, {title: "表叔"}]},
-            {key: "C", data: []},
-            {key: "W", data: [{title: "王磊"}, {title: "王者荣耀"}, {title: "往事不能回味"}, {title: "王小磊"}, {title: "王中磊"}, {title: "王大磊"}]
-            },
-        ];
+        let sectionData = this.state.dataList.map(
+            (info, index) => {
+                return {
+                    goods_id: info.goods_id,
+                    goods_name: info.goods_name,
+                    sectionIndex: index,
+                    data: (this.state.selectedSection === index ?
+                        (info.child.length ? info.child[0] : []) :
+                        []),
+                };
+            }
+        );
 
         return (
             <View style={{flex: 1}}>
                 <SectionList
-                    renderSectionHeader={this._sectionComp}
-                    renderItem={this._renderItem}
-                    sections={sections}
+                    renderSectionHeader={this.renderSectionHeader}
+                    renderItem={this.renderCell}
+                    sections={sectionData}
                     keyExtractor={this.keyExtractor}
                     ItemSeparatorComponent={global.renderSeparator}
                     // ListHeaderComponent={() => <View style={{ backgroundColor: '#25B960', alignItems: 'center', height: 30 }}><Text style={{ fontSize: 18, color: '#ffffff' }}>通讯录</Text></View>}

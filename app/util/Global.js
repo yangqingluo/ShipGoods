@@ -132,6 +132,10 @@ global.screenHeight = height;
 global.renderSeparator = () => {
     return <View style={{height:px2dp(0.5),backgroundColor:appData.appSeparatorColor}}/>;
 }
+
+global.renderSubSeparator = () => {
+    return <View style={{marginLeft:px2dp(80), height:px2dp(0.5),backgroundColor:appData.appSeparatorColor}}/>;
+}
 global.judgeMobilePhone = function(object : String) : boolean {
     // /^1[3|4|5|7|8][0-9]{9}$/
     let reg = /^1[0-9]{10}$/;
