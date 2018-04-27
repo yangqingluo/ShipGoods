@@ -21,10 +21,10 @@ import PropTypes from 'prop-types';
 import Swiper from 'react-native-swiper'
 import ScrollableTabView,{ScrollableTabBar} from 'react-native-scrollable-tab-view'
 
-import InfoCard from './InfoCard'
+import InfoCard from '../components/InfoCard'
 
 //顶部tab样式分离。
-import TabTop from './TabTop';
+import TabTop from '../components/TabTop';
 
 
 const tabTitles = ['空船', '我的货'];

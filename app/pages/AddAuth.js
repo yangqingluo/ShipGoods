@@ -226,7 +226,7 @@ export default class DetailVC extends Component {
                 )
                 :null}
                 {i === 4 ? (
-                    <View style={{flexDirection: "row",}}>
+                    <View style={{flex:1, flexDirection: "row", justifyContent: "flex-end",}}>
                         <Button style={styles.avatar} onPress={this.onSelectIdCard.bind(this, 0)}>
                             {this.state.idcard_front_source === null ?
                                 <Text style={[styles.radio, null]}>{"正面"}</Text>

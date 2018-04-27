@@ -90,9 +90,10 @@ export default class AddAuthItem extends Component {
                         >{name}
                         </Text>
                     }
-                    {this.props.children}
-                    {subName?(<Text style={{color: "#000", fontSize:12}}>{subName}</Text>):null}
+                    {disable?null : <View style={{flex: 1}}/>}
+                    {subName?(<Text style={{flex: 1, minWidth:120, textAlign: 'right', color: "#000", fontSize:12}}>{subName}</Text>):null}
                     {avatar?(<Image source={avatar} style={{width: 36, height: 36, resizeMode: "cover", overflow:"hidden", borderRadius: 18}}/>):null}
+                    {this.props.children}
                     <Font.Ionicons style={{marginLeft: 10, paddingRight: 16, opacity: disable ? 0.0 : 1.0}} name="ios-arrow-forward-outline" size={px2dp(18)} color="#bbb" />
                 </View>
             </View>
@@ -149,7 +150,7 @@ const styles = StyleSheet.create({
         // backgroundColor: '#fff',
     },
     textLabel: {
-        flex: 1,
+        // flex: 1,
         paddingVertical: 0,
         fontSize: 13,
         paddingHorizontal: 10,
