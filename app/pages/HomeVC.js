@@ -21,12 +21,10 @@ import PropTypes from 'prop-types';
 import Swiper from 'react-native-swiper'
 import ScrollableTabView,{ScrollableTabBar} from 'react-native-scrollable-tab-view'
 
-//货主船舶详情页，点击InfoCard显示
-import GoodsDetailsPage from '../../pages/GoodsDetailsPage';
-import InfoCard from '../../pages/InfoCard'
+import InfoCard from './InfoCard'
 
 //顶部tab样式分离。
-import TabTop from '../../pages/TabTop';
+import TabTop from './TabTop';
 
 
 const tabTitles = ['空船', '我的货'];
@@ -43,8 +41,7 @@ class RightHeader extends Component {
     }
     onScreenBtnPress = () => {
         Alert.alert("筛选");
-        //
-        //this.props.Navg.navigate('GoodsDetailsPage')
+
     }
     render() {
         return (

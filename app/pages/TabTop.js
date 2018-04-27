@@ -38,7 +38,7 @@ export default class TabTop extends Component {
                 {this.props.tabs.map((tab, i) => {
                     let color = this.props.activeTab === i ? '#2D9BFD' : '#6A6A6A';
                     let _tabName = this.props.activeTab === i ? <View style={styles._under}></View> : <View style={styles._noUnder}></View>;
-                    //let logo = this.props.activeTab == i ? this.props.selectedTabIconNames[i] : this.props.tabIconNames[i];
+                    //let icon = this.props.activeTab == i ? this.props.selectedTabIconNames[i] : this.props.tabIconNames[i];
                     return (
                         <TouchableOpacity
                             key={i}
@@ -47,8 +47,8 @@ export default class TabTop extends Component {
                             onPress={()=>this.props.goToPage(i)}>
                             <View style={styles.tabItem}>
                                 {/* <Image
-                                    style={styles.logo}
-                                    source={logo}/> */}
+                                    style={styles.icon}
+                                    source={icon}/> */}
                                 <Text style={{color: color, fontSize: 16, fontWeight: '700' }}>
                                     {this.props.tabNames[i]}
                                 </Text>
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         // borderBottomWidth:5,
         // borderBottomColor: '#2D9BFD',
     },
-    // logo: {
+    // icon: {
     //     width: 26,
     //     height: 26,
     //     marginBottom: 2
