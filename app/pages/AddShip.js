@@ -141,11 +141,17 @@ export default class AddShip extends Component {
         }
 
         else {
+            let dataList = this.state.goodsList.map(
+                (info) => {
+                    return {goods_id: info.goods_id};
+                }
+            )
+
             let data = {
                 ship_name:this.state.ship_name,
                 tonnage:this.state.tonnage,
                 storage:this.state.storage,
-                goods:this.state.goods,
+                goods:dataList,
                 area:this.state.area,
                 ship_licence:this.state.ship_licence
             };
