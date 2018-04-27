@@ -74,16 +74,6 @@ export default class CustomSelect extends Component {
                 });
     }
 
-    renderCell = (info: Object) => {
-        return (
-            <SelectCell
-                info={info}
-                onPress={this.onCellSelected}
-                selected={this.state.selectedList.indexOf(info.item) !== -1}
-            />
-        )
-    }
-
     onCellSelected = (info: Object) => {
         if (this.state.maxSelectCount === 1) {
             this.state.selectedList = [info.item];
@@ -103,6 +93,17 @@ export default class CustomSelect extends Component {
             }
         }
         this.forceUpdate();
+    }
+
+
+    renderCell = (info: Object) => {
+        return (
+            <SelectCell
+                info={info}
+                onPress={this.onCellSelected}
+                selected={this.state.selectedList.indexOf(info.item) !== -1}
+            />
+        )
     }
 
     keyExtractor = (item: Object, index: number) => {

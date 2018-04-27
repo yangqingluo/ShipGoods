@@ -62,16 +62,58 @@ export default class ReleaseVC extends Component {
             this.areaTypeActionSheet.show();
         }
         else if (key === "SelectTonnage") {
-            this.props.navigation.navigate(
-                'CustomSectionSelect',
-                {
-                    title: '请选择下载可运货品',
-                }
-            );
+            this.toGoToSelectGoodsVC();
         }
         else {
             PublicAlert(key);
         }
+    }
+
+    toGoToSelectGoodsVC() {
+        if (appAllGoods.length > 0) {
+            this.props.navigation.navigate(
+                'CustomSectionSelect',
+                {
+                    title: '请选择下载可运货品',
+                    dataList: appAllGoods,
+                    selectedList:this.state.goodsList,
+                    maxSelectCount:5,
+                    callBack:this.callBackFromSelectGoodsVC.bind(this)
+                }
+            );
+        }
+        else {
+            let data = {pid:'0', deep:1};
+            NetUtil.post(appUrl + 'index.php/Mobile/Goods/get_all_goods/', data)
+                .then(
+                    (result)=>{
+                        if (result.code === 0) {
+                            appAllGoods = result.data;
+                            this.toGoToSelectGoodsVC();
+                        }
+                        else {
+                            this.setState({
+                                refreshing: false,
+                            })
+                        }
+                    },(error)=>{
+                        this.setState({
+                            refreshing: false,
+                        })
+                    });
+        }
+    }
+
+    callBackFromSelectGoodsVC(backData) {
+        // let dataList = backData.map(
+        //     (info) => {
+        //         return info.goods_name;
+        //     }
+        // )
+        // this.setState({
+        //     goodsList: backData,
+        //     goods: dataList.join(',')
+        // });
     }
 
     submit() {
