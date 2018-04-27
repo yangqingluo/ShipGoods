@@ -42,7 +42,7 @@ export default class ReleaseVC extends Component {
     }
         this.config = [
             {idKey:"ship_name", name:"船名", color:"#4c6bff", disable:true},
-            {idKey:"tonnage", name:"下载可运货品", color:"#fc7b53", disable:false},
+            {idKey:"tonnage", name:"下载可运货品", color:"#fc7b53", disable:false, onPress:this.cellSelected.bind(this, "SelectTonnage")},
             {idKey:"storage", name:"空船港", color:"#ffc636", disable:true},
             {idKey:"storage",name:"空船期", disable:true, subName:"324", color:"#94d94a"},
             {idKey:"course", name:"可运航向", color:"#fc7b53", disable:false, onPress:this.cellSelected.bind(this, "SelectCourse")},
@@ -60,6 +60,14 @@ export default class ReleaseVC extends Component {
         dismissKeyboard();
         if (key === "SelectCourse") {
             this.areaTypeActionSheet.show();
+        }
+        else if (key === "SelectTonnage") {
+            this.props.navigation.navigate(
+                'CustomSectionSelect',
+                {
+                    title: '请选择下载可运货品',
+                }
+            );
         }
         else {
             PublicAlert(key);

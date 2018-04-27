@@ -9,9 +9,6 @@ import {
     Dimensions,
 } from 'react-native';
 import SelectCell from './SelectCell'
-import {DURATION} from "react-native-easy-toast";
-import px2dp from "../util";
-
 
 export default class CustomSelect extends Component {
     static navigationOptions = ({ navigation }) => (

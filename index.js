@@ -12,6 +12,7 @@ import Register from './app/pages/Register';
 import AddAuth from './app/pages/AddAuth';
 import AddShip from './app/pages/AddShip';
 import CustomSelect from './app/components/CustomSelect';
+import CustomSectionSelect from './app/components/CustomSectionSelect';
 
 const MyNavigator = StackNavigator({
         Wait: {screen: WaitVC},
@@ -22,6 +23,7 @@ const MyNavigator = StackNavigator({
         AddAuth:{screen: AddAuth},
         AddShip:{screen: AddShip},
         CustomSelect:{screen: CustomSelect},
+        CustomSectionSelect:{screen: CustomSectionSelect},
     }
     , {
         navigationOptions: {
