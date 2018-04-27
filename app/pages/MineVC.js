@@ -5,6 +5,7 @@ import {
     ScrollView,
     Text,
     Image,
+    ImageBackground,
     View,
     TouchableOpacity,
     TouchableHighlight,
@@ -14,6 +15,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
 import Item from '../components/Item'
+import StarScore from '../components/StarScore'
 import Communications from '../util/AKCommunications';
 import px2dp from '../util';
 let {width, height} = Dimensions.get('window')
@@ -112,12 +114,21 @@ export default class MineVC extends Component {
             <TouchableWithoutFeedback onPress={this.goProfile.bind(this)}>
                 <View style={styles.userHead}>
                     <View style={{flex: 1,flexDirection: "row"}}>
-                        <Image source={require('../images/role.png')} style={{width: px2dp(60), height: px2dp(60), borderRadius: px2dp(30)}}/>
+                        <ImageBackground source={require('../images/icon_back.png')} style={styles.imageBack}>
+                            <Text style={{color: "#fff", fontSize: px2dp(20), textAlign:'center', alignItems: "center"}}>{global.userData.username.length ? global.userData.username.substr(0, 1) : ''}</Text>
+                        </ImageBackground>
                         <View style={{flex: 1, marginLeft: 10, paddingVertical: 5}}>
                             <Text style={{color: "#000", fontSize: px2dp(18)}}>{global.userData.username}</Text>
-                            <View style={{marginTop: px2dp(10), flexDirection: "row"}}>
-                                <Icon name="ios-phone-portrait-outline" size={px2dp(14)} color="#000" />
+                            <View style={{marginTop: px2dp(10), flexDirection: "row", alignItems: "center"}}>
+                                <ImageBackground source={require('../images/icon_back.png')} style={{width:px2dp(19), height:px2dp(19), justifyContent: "center", alignItems: "center"}}>
+                                    <Text style={{ color: "#fff", fontSize: px2dp(10), textAlign:'center'}}>{'账'}</Text>
+                                </ImageBackground>
+                                <Image source={require('../images/icon_account.png')} style={{marginLeft:px2dp(5), width: px2dp(22), height: px2dp(16),  resizeMode:'contain'}} />
                                 <Text style={{color: "#000", fontSize: 13, paddingLeft: 5}}>{global.userData.mobile}</Text>
+                            </View>
+                            <View style={{marginTop: px2dp(10), flexDirection: "row"}}>
+                                <Image source={require('../images/icon_xinyong.png')} style={{width: px2dp(35), height: px2dp(18)}} />
+                                <StarScore style={{marginLeft:px2dp(5)}} itemEdge={px2dp(5)} currentScore={userData.credit}/>
                             </View>
                         </View>
                     </View>
@@ -125,8 +136,8 @@ export default class MineVC extends Component {
                 </View>
             </TouchableWithoutFeedback>
             <View style={styles.authShow}>
-                <Text style={{color: appData.appSecondaryTextColor, fontSize: px2dp(14), marginLeft: 40}}>{"资质认证"}</Text>
-                <Text style={{color: appData.appBlueColor, fontSize: px2dp(14), marginLeft: 10}} onPress={this.onAuthTextPress}>{(global.userData.authstate === '0') ? "去认证" : ((global.userData.authstate === '1') ? "已认证" : "去认证")}</Text>
+                <Text style={{color: appData.appSecondaryTextColor, fontSize: px2dp(12), marginLeft: 40}}>{"资质认证"}</Text>
+                <Text style={{color: appData.appBlueColor, fontSize: px2dp(12), marginLeft: 10}} onPress={this.onAuthTextPress}>{(global.userData.authstate === '0') ? "去认证" : ((global.userData.authstate === '1') ? "已认证" : "去认证")}</Text>
             </View>
             <View>
                 {this._renderListItem()}
@@ -189,5 +200,13 @@ const styles = StyleSheet.create({
         height: 74,
         justifyContent: "center",
         alignItems: "center"
+    },
+    imageBack: {
+        width: px2dp(65),
+        height: px2dp(65),
+        borderRadius: px2dp(0.5 * 65),
+        justifyContent: "center",
+        alignItems: "center",
+        // backgroundColor: '#f3f',
     }
 });

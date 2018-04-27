@@ -102,7 +102,8 @@ global.PublicResetAction = resetAction;
 
 let appData = {
     appBlueColor: '#2c9bfd',
-    appLightBlueColor: "#7dd3ff",
+    appLightBlueColor: "#54b2ff",
+    appLittleBlueColor: "#7dd3ff",
     appGrayColor: '#f3f3f3',
     appTextColor: '#000',
     appSecondaryTextColor: '#c0c0c0',
