@@ -8,8 +8,6 @@ import {
     ImageBackground,
     View,
     TouchableOpacity,
-    TouchableHighlight,
-    TouchableNativeFeedback,
     TouchableWithoutFeedback,
     RefreshControl
 } from 'react-native';
@@ -110,6 +108,7 @@ export default class MineVC extends Component {
     }
 
     _renderHeader() {
+        let authed = (global.userData.authstate === '1');
         return <View style={{minHeight: height - 64 - px2dp(46), paddingBottom: 100, backgroundColor: "#fff"}}>
             <TouchableWithoutFeedback onPress={this.goProfile.bind(this)}>
                 <View style={styles.userHead}>
@@ -118,7 +117,11 @@ export default class MineVC extends Component {
                             <Text style={{color: "#fff", fontSize: px2dp(20), textAlign:'center', alignItems: "center"}}>{global.userData.username.length ? global.userData.username.substr(0, 1) : ''}</Text>
                         </ImageBackground>
                         <View style={{flex: 1, marginLeft: 10, paddingVertical: 5}}>
-                            <Text style={{color: "#000", fontSize: px2dp(18)}}>{global.userData.username}</Text>
+                            <View style={{flexDirection: "row", alignItems: "center"}}>
+                                <Text style={{color: "#000", fontSize: px2dp(18)}}>{global.userData.username}</Text>
+                                <Image source={authed ? require('../images/vip_selected.png') : require('../images/vip.png')} style={{marginLeft:px2dp(5), width: px2dp(13), height: px2dp(13),  resizeMode:'contain'}} />
+                                <Text style={{color: (authed ? appData.appLightBlueColor : appData.appSecondaryTextColor), marginLeft:px2dp(5), fontSize: px2dp(12)}}>{authed ? "已认证" : "未认证"}</Text>
+                            </View>
                             <View style={{marginTop: px2dp(10), flexDirection: "row", alignItems: "center"}}>
                                 <ImageBackground source={require('../images/icon_back.png')} style={{width:px2dp(19), height:px2dp(19), justifyContent: "center", alignItems: "center"}}>
                                     <Text style={{ color: "#fff", fontSize: px2dp(10), textAlign:'center'}}>{'账'}</Text>
@@ -137,7 +140,7 @@ export default class MineVC extends Component {
             </TouchableWithoutFeedback>
             <View style={styles.authShow}>
                 <Text style={{color: appData.appSecondaryTextColor, fontSize: px2dp(12), marginLeft: 40}}>{"资质认证"}</Text>
-                <Text style={{color: appData.appBlueColor, fontSize: px2dp(12), marginLeft: 10}} onPress={this.onAuthTextPress}>{(global.userData.authstate === '0') ? "去认证" : ((global.userData.authstate === '1') ? "已认证" : "去认证")}</Text>
+                <Text style={{color: appData.appBlueColor, fontSize: px2dp(12), marginLeft: 10}} onPress={this.onAuthTextPress}>{(authed ? "已认证" : "去认证")}</Text>
             </View>
             <View>
                 {this._renderListItem()}
