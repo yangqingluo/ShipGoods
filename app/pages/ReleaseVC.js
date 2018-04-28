@@ -47,7 +47,7 @@ export default class ReleaseVC extends Component {
             {idKey:"ship_name", name:"船名", color:"#4c6bff", disable:true},
             {idKey:"upload_oil_list", name:"下载可运货品", color:"#fc7b53", disable:false, onPress:this.cellSelected.bind(this, "SelectDownload")},
             {idKey:"empty_port", name:"空船港", color:"#ffc636", disable:true},
-            {idKey:"empty_time",name:"空船期", disable:true, subName:"324", color:"#94d94a"},
+            {idKey:"empty_time",name:"空船期", disable:false, subName:"324", color:"#94d94a", onPress:this.cellSelected.bind(this, "SelectEmptyTime")},
             {idKey:"course", name:"可运航向", color:"#fc7b53", disable:false, onPress:this.cellSelected.bind(this, "SelectCourse")},
             {idKey:"upload_oil_list", name:"上载货品", color:"#ffc636", disable:false, onPress:this.cellSelected.bind(this, "SelectUpload")},
         ]
@@ -78,6 +78,9 @@ export default class ReleaseVC extends Component {
         }
         else if (key === "SelectUpload") {
             this.toGoToUpGoodsVC();
+        }
+        else if (key === "SelectEmptyTime") {
+            this.props.navigation.navigate("SelectEmptyTimeVC");
         }
         else {
             PublicAlert(key);

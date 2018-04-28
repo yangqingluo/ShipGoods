@@ -11,6 +11,7 @@ import LoginVC from './app/pages/LoginVC';
 import Register from './app/pages/Register';
 import AddAuth from './app/pages/AddAuth';
 import AddShip from './app/pages/AddShip';
+import SelectEmptyTimeVC from './app/pages/SelectEmptyTimeVC';
 import CustomSelect from './app/components/CustomSelect';
 import CustomSectionSelect from './app/components/CustomSectionSelect';
 
@@ -24,6 +25,7 @@ const MyNavigator = StackNavigator({
         AddShip:{screen: AddShip},
         CustomSelect:{screen: CustomSelect},
         CustomSectionSelect:{screen: CustomSectionSelect},
+        SelectEmptyTimeVC:{screen: SelectEmptyTimeVC},
     }
     , {
         navigationOptions: {
