@@ -8,73 +8,93 @@ import PropTypes from 'prop-types';
 import {
     NativeModules,
     View,
+    DatePickerAndroid,
+    TimePickerAndroid,
 } from 'react-native';
-
-const RCTDateTimePicker = NativeModules.DateTimePicker;
 
 export default class DateTimePicker extends Component {
     static propTypes = {
         cancelText: PropTypes.string,
-        okText:  PropTypes.string
+        okText:  PropTypes.string,
+        title: PropTypes.string,
     };
 
     static defaultProps = {
-        cancelText: 'Cancel',
-        okText: 'Ok'
+        cancelText: '取消',
+        okText: '确定'
     };
 
     constructor(props) {
         super(props);
+        this.state = {
+            visible: false,
+            mode: 'date',
+            date: new Date()
+        };
+        this.callback = ()=>{};
     }
 
     showDatePicker(date, callback) {
+        this.callback = callback;
         date = date || new Date();
-        var options = {
-            ...this.props,
-            year:date.getFullYear(),
-            month:date.getMonth(),
-            day:date.getDate()
-        };
-        RCTDateTimePicker.showDatePicker(options, function (year, month, day) {
-            date.setFullYear(year);
-            date.setMonth(month);
-            date.setDate(day);
-            callback(date);
-        });
+        this.showDataPickerAndroid(date, false);
     }
 
     showTimePicker(date, callback) {
+        this.callback = callback;
         date = date || new Date();
-        var options = {
-            ...this.props,
-            hour:date.getHours(),
-            minute:date.getMinutes()
-        };
-        RCTDateTimePicker.showTimePicker(options, function (hour, minute) {
-            date.setHours(hour);
-            date.setMinutes(minute);
-            callback(date);
-        });
+        this.showTimePickerAndroid(date);
     }
 
     showDateTimePicker(date, callback) {
+        this.callback = callback;
         date = date || new Date();
-        var options = {
-            ...this.props,
-            year:date.getFullYear(),
-            month:date.getMonth(),
-            day:date.getDate(),
-            hour:date.getHours(),
-            minute:date.getMinutes()
-        };
-        RCTDateTimePicker.showDateTimePicker(options, function (year, month, day, hour, minute) {
-            date.setFullYear(year);
-            date.setMonth(month);
-            date.setDate(day);
-            date.setHours(hour);
-            date.setMinutes(minute);
-            callback(date);
+        this.showDataPickerAndroid(date, true);
+    }
+
+    selectedDone(date) {
+        this.setState({
+            date: date,
         });
+        this.callback(this.state.date);
+    }
+
+    async showDataPickerAndroid (value, showTime) {
+        try {
+            let hourO, minuteO = null
+            if (value) {
+                const datetime = new Date(value)
+                hourO = datetime.getHours()
+                minuteO = datetime.getMinutes()
+            }
+            const { action, year, month, day } = await DatePickerAndroid.open({
+                date: new Date(value),
+                minDate: value && value < new Date() ? new Date(value) : new Date()
+            })
+            if (action !== DatePickerAndroid.dismissedAction) {
+                if (showTime) {
+                    this.showTimePickerAndroid(new Date(year, month, day, hourO, minuteO));
+                }
+                else {
+                    this.selectedDone(new Date(year, month, day));
+                }
+            }
+        } catch ({ code, message }) {
+            // console.warn('Cannot open date picker', message);
+        }
+    }
+
+    showTimePickerAndroid (value) {
+        TimePickerAndroid.open({
+            hour: value.getHours() || new Date().getHours(),
+            minute: value.getMinutes() || new Date().getMinutes(),
+            is24Hour: false
+        }).then((actionResult) => {
+            const { action, hour, minute } = actionResult
+            if (action !== TimePickerAndroid.dismissedAction) {
+                this.selectedDone(new Date(value.getFullYear(), value.getMonth(), value.getDay(), hour, minute));
+            }
+        })
     }
 
     render() {
