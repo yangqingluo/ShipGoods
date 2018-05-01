@@ -11,6 +11,7 @@ import LoginVC from './app/pages/LoginVC';
 import Register from './app/pages/Register';
 import AddAuth from './app/pages/AddAuth';
 import AddShip from './app/pages/AddShip';
+import MyShip from './app/pages/MyShip';
 import SelectEmptyTimeVC from './app/pages/SelectEmptyTimeVC';
 import CustomSelect from './app/components/CustomSelect';
 import CustomSectionSelect from './app/components/CustomSectionSelect';
@@ -23,6 +24,7 @@ const MyNavigator = StackNavigator({
         DetailVC:{screen:DetailVC},
         AddAuth:{screen: AddAuth},
         AddShip:{screen: AddShip},
+        MyShip:{screen: MyShip},
         CustomSelect:{screen: CustomSelect},
         CustomSectionSelect:{screen: CustomSectionSelect},
         SelectEmptyTimeVC:{screen: SelectEmptyTimeVC},

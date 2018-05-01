@@ -61,7 +61,7 @@ export default class MineVC extends Component {
         }
         this.config = [
             {logo:require('../images/icon_back.png'), name:"我的发布", onPress:this.goPage.bind(this, "我的发布")},
-            {logo:require('../images/icon_chuand.png'), name:"我的船队", color:"#fc7b53", onPress:this.goPage.bind(this, "我的船队")},
+            {logo:require('../images/icon_chuand.png'), name:"我的船队", color:"#fc7b53", onPress:this.goPage.bind(this, "MyShip")},
             {logo:require('../images/icon_colle.png'), name:"我的收藏", onPress:this.goPage.bind(this, "我的收藏")},
             {logo:require('../images/icon_share.png'), name:"分享到好友", subName:"", color:"#fc7b53", onPress:this.goPage.bind(this, "分享到好友")},
             {logo:require('../images/icon_share.png'), name:"一键客服", subName:"", color:"#94d94a", onPress:this.goPage.bind(this, "Call")},
@@ -69,11 +69,14 @@ export default class MineVC extends Component {
         ]
     }
     goPage(key, data = {}){
+        const { navigate } = this.props.navigation;
         if (key === 'Call') {
             Communications.phonecall('18267811011', true);
         }
+        else if (key === 'MyShip') {
+            navigate(key, { title: '我的船舶' });
+        }
         else {
-            const { navigate } = this.props.navigation;
             navigate('DetailVC', { title: key, des:'我是返回点击我' });
         }
     }

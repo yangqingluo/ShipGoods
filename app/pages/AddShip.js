@@ -152,8 +152,8 @@ export default class AddShip extends Component {
                 tonnage:this.state.tonnage,
                 storage:this.state.storage,
                 goods:dataList,
-                area:this.state.area,
-                ship_licence:this.state.ship_licence
+                area:'' + this.state.area,
+                ship_lience:this.state.ship_licence
             };
             if (this.state.gasoline.length !== 0) data.gasoline = this.state.gasoline;
             if (this.state.dieseloil.length !== 0) data.dieseloil = this.state.dieseloil;
@@ -192,12 +192,12 @@ export default class AddShip extends Component {
         }
         else if (key === 'gasoline') {
             this.setState({
-                tonnage: text
+                gasoline: text
             });
         }
         else if (key === 'dieseloil') {
             this.setState({
-                storage: text
+                dieseloil: text
             });
         }
     }
