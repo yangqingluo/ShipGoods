@@ -51,7 +51,7 @@ export default class AddAuthItem extends Component {
     static propTypes = {
         idKey: PropTypes.string,
         idValue: PropTypes.string,
-        logo: PropTypes.string,
+        logo: PropTypes.number,
         name: PropTypes.string.isRequired,
         subName: PropTypes.string,
         color: PropTypes.string,

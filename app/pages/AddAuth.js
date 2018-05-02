@@ -33,6 +33,7 @@ export default class DetailVC extends Component {
             idcard_front: '',//法人身份证正面
             idcard_con: '',//法人身份证反面
             corporation: '',//公司名称
+            phone: '',//公司电话
             name: '',//联系人姓名
             contact: '',//联系人手机号
             invoice_type: 0,//可开发票类型 1、增值税专用 2、增值税普通 3、其他
@@ -42,15 +43,26 @@ export default class DetailVC extends Component {
             idcard_front_source: null,
             idcard_con_source: null,
         }
-        this.config = [
-            {idKey:"corporation", name:"公司名称", logo:require('../images/icon_blue.png'), disable:true},
-            {idKey:"name", name:"联系人姓名", logo:require('../images/icon_red.png'), disable:true},
-            {idKey:"contact", name:"联系人手机号", logo:require('../images/icon_orange.png'), disable:true, numeric:true},
-            {idKey:"bz_licence", name:"上传公司营业执照", logo:require('../images/icon_green.png'), disable:false, subName:"", onPress:this.cellSelected.bind(this, "bz_licence")},
-            {name:"上传法人身份证", disable:false, logo:require('../images/icon_red.png'), subName:"123", onPress:this.cellSelected.bind(this, "法人身份证")},
-            {name:"添加船舶", disable:false, logo:require('../images/icon_orange.png'), subName:"324", onPress:this.cellSelected.bind(this, "AddShip")},
-            {name:"可开发票类型", disable:false, logo:require('../images/icon_green.png'), onPress:this.cellSelected.bind(this, "invoice_type")},
-        ]
+        this.config = (userData.usertype === '1') ?
+            [
+                {idKey:"corporation", name:"公司名称", logo:require('../images/icon_blue.png'), disable:true},
+                {idKey:"phone", name:"公司电话", logo:require('../images/icon_red.png'), disable:true, numeric:true},
+                {idKey:"name", name:"联系人姓名", logo:require('../images/icon_orange.png'), disable:true},
+                {idKey:"contact", name:"联系人手机号", logo:require('../images/icon_green.png'), disable:true, numeric:true},
+                {idKey:"bz_licence", name:"上传公司营业执照", logo:require('../images/icon_red.png'), disable:false, subName:"", onPress:this.cellSelected.bind(this, "bz_licence")},
+                {idKey:"idcard", name:"上传联系人身份证", disable:false, logo:require('../images/icon_orange.png'), subName:"123"},
+                {idKey:"invoice", name:"可开发票类型", disable:false, logo:require('../images/icon_green.png'), onPress:this.cellSelected.bind(this, "invoice_type")},
+            ]
+            :
+            [
+                {idKey:"corporation", name:"公司名称", logo:require('../images/icon_blue.png'), disable:true},
+                {idKey:"name", name:"联系人姓名", logo:require('../images/icon_red.png'), disable:true},
+                {idKey:"contact", name:"联系人手机号", logo:require('../images/icon_orange.png'), disable:true, numeric:true},
+                {idKey:"bz_licence", name:"上传公司营业执照", logo:require('../images/icon_green.png'), disable:false, subName:"", onPress:this.cellSelected.bind(this, "bz_licence")},
+                {idKey:"idcard", name:"上传法人身份证", disable:false, logo:require('../images/icon_red.png'), subName:"123"},
+                {name:"添加船舶", disable:false, logo:require('../images/icon_orange.png'), subName:"324", onPress:this.cellSelected.bind(this, "AddShip")},
+                {idKey:"invoice", name:"可开发票类型", disable:false, logo:require('../images/icon_green.png'), onPress:this.cellSelected.bind(this, "invoice_type")},
+            ]
 
         this.invoiceTypes = ['取消', '增值税专用发票(11%)', '增值税普通发票', '其他发票'];
     }
@@ -76,29 +88,33 @@ export default class DetailVC extends Component {
     }
 
     submit() {
-        if (this.state.contact.length !== 11) {
-            this.refToast.show("请输入正确的联系人手机号", DURATION.LENGTH_SHORT);
+        if (this.state.corporation.length === 0) {
+            this.refToast.show("请输入公司名称");
+        }
+        else if (this.state.phone.length === 0 && global.userData.usertype === '1') {
+            this.refToast.show("请输入公司电话");
         }
         else if (this.state.name.length === 0) {
-            this.refToast.show("请输入联系人姓名", DURATION.LENGTH_SHORT);
+            this.refToast.show("请输入联系人姓名");
         }
-        else if (this.state.corporation.length === 0) {
-            this.refToast.show("请输入公司名称", DURATION.LENGTH_SHORT);
+        else if (this.state.contact.length !== 11) {
+            this.refToast.show("请输入正确的联系人手机号");
         }
         else if (this.state.bz_licence.length === 0) {
-            this.refToast.show("请上传公司营业执照", DURATION.LENGTH_SHORT);
+            this.refToast.show("请上传公司营业执照");
         }
         else if (this.state.idcard_front.length === 0 || this.state.idcard_con.length === 0) {
-            this.refToast.show("请上传法人身份证", DURATION.LENGTH_SHORT);
+            this.refToast.show("请上传身份证");
         }
         else if (this.state.invoice_type === 0) {
-            this.refToast.show("请选择发票类型", DURATION.LENGTH_SHORT);
+            this.refToast.show("请选择发票类型");
         }
         else {
             let data = {
+                corporation:this.state.corporation,
+                phone:this.state.phone,
                 contact:this.state.contact,
                 name:this.state.name,
-                corporation:this.state.corporation,
                 bz_licence:this.state.bz_licence,
                 idcard_front:this.state.idcard_front,
                 idcard_con:this.state.idcard_con,
@@ -138,6 +154,11 @@ export default class DetailVC extends Component {
                 corporation: text
             });
         }
+        else if (key === 'phone') {
+            this.setState({
+                phone: text
+            });
+        }
     }
 
     onSelectInvoiceType(index) {
@@ -149,7 +170,7 @@ export default class DetailVC extends Component {
     }
 
     onSelectIdCard(index) {
-        if (index == 0) {
+        if (index === 0) {
             this.toSelectPhoto('idcard_front');
         }
         else {
@@ -214,35 +235,43 @@ export default class DetailVC extends Component {
                 });
     }
 
+    renderSubNameForIndex(item, index) {
+        if (item.idKey === 'invoice' && this.state.invoice_type > 0) {
+            return this.invoiceTypes[this.state.invoice_type];
+        }
+        return '';
+    }
+
+    renderRightForIndex(item, index) {
+         if (item.idKey === 'bz_licence' && this.state.bz_licence_source !== null) {
+             return <Image style={styles.avatar} source={this.state.bz_licence_source} />;
+         }
+         else if (item.idKey === 'idcard') {
+             return (<View style={{flex:1, flexDirection: "row", justifyContent: "flex-end",}}>
+                 <Button style={styles.avatar} onPress={this.onSelectIdCard.bind(this, 0)}>
+                     {this.state.idcard_front_source === null ?
+                         <Text style={[styles.radio, null]}>{"正面"}</Text>
+                         :
+                         <Image style={styles.avatar} source={this.state.idcard_front_source} />
+                     }
+                 </Button>
+                 <Button style={styles.avatar} onPress={this.onSelectIdCard.bind(this, 1)}>
+                     {this.state.idcard_con_source === null ?
+                         <Text style={[styles.radio, null]}>{"反面"}</Text>
+                         :
+                         <Image style={styles.avatar} source={this.state.idcard_con_source} />
+                     }
+                 </Button>
+             </View>);
+         }
+        return null;
+    }
+
     _renderListItem() {
         return this.config.map((item, i) => {
-            return (<AddAuthItem key={i} {...item} subName = {
-                                     (i === 6 && this.state.invoice_type > 0) ? this.invoiceTypes[this.state.invoice_type] : ''
-                                 }
-                                 // avatar={(i===3) ? this.state.bz_licence_source : null}
+            return (<AddAuthItem key={i} {...item} subName = {this.renderSubNameForIndex(item, i)}
                                  callback={this.textInputChanged.bind(this)}>
-                {(i === 3 && this.state.bz_licence_source != null)?(
-                    <Image style={styles.avatar} source={this.state.bz_licence_source} />
-                )
-                :null}
-                {i === 4 ? (
-                    <View style={{flex:1, flexDirection: "row", justifyContent: "flex-end",}}>
-                        <Button style={styles.avatar} onPress={this.onSelectIdCard.bind(this, 0)}>
-                            {this.state.idcard_front_source === null ?
-                                <Text style={[styles.radio, null]}>{"正面"}</Text>
-                            :
-                                <Image style={styles.avatar} source={this.state.idcard_front_source} />
-                            }
-                        </Button>
-                        <Button style={styles.avatar} onPress={this.onSelectIdCard.bind(this, 1)}>
-                            {this.state.idcard_con_source === null ?
-                                <Text style={[styles.radio, null]}>{"反面"}</Text>
-                                :
-                                <Image style={styles.avatar} source={this.state.idcard_con_source} />
-                            }
-                        </Button>
-                    </View>)
-                    :null}
+                {this.renderRightForIndex(item, i)}
             </AddAuthItem>);
         })
     }
