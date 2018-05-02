@@ -39,14 +39,14 @@ export default class AddShip extends Component {
             ship_licence_source: null,
         }
         this.config = [
-            {idKey:"ship_name", name:"船名", color:"#4c6bff", disable:true},
-            {idKey:"tonnage", name:"吨位", color:"#fc7b53", disable:true},
-            {idKey:"storage", name:"仓容", color:"#ffc636", disable:true},
-            {name:"可运油品", disable:false, subName:"324", color:"#94d94a", onPress:this.cellSelected.bind(this, "SelectGoods")},
-            {idKey:"gasoline", name:"可载汽油吨位（选填）", color:"#fc7b53", disable:true},
-            {idKey:"dieseloil", name:"可载柴油吨位（选填）", color:"#ffc636", disable:true},
-            {name:"航行区域", disable:false, color:"#94d94a", onPress:this.cellSelected.bind(this, "area")},
-            {idKey:"ship_licence", name:"船舶国际证书", disable:false, subName:"", color:"#fc7b53", onPress:this.cellSelected.bind(this, "ship_licence")},
+            {idKey:"ship_name", name:"船名", logo:require('../images/icon_blue.png'), disable:true},
+            {idKey:"tonnage", name:"吨位", logo:require('../images/icon_red.png'), disable:true},
+            {idKey:"storage", name:"仓容", logo:require('../images/icon_orange.png'), disable:true},
+            {name:"可运油品", logo:require('../images/icon_green.png'), disable:false, subName:"324", onPress:this.cellSelected.bind(this, "SelectGoods")},
+            {idKey:"gasoline", name:"可载汽油吨位（选填）", logo:require('../images/icon_orange.png'), disable:true},
+            {idKey:"dieseloil", name:"可载柴油吨位（选填）", logo:require('../images/icon_red.png'), disable:true},
+            {name:"航行区域", logo:require('../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "area")},
+            {idKey:"ship_licence", name:"船舶国际证书", logo:require('../images/icon_blue.png'), disable:false, subName:"", onPress:this.cellSelected.bind(this, "ship_licence")},
         ]
 
         this.areaTypes = ['取消', '沿海', '长江（可进川）', '长江（不可进川)'];

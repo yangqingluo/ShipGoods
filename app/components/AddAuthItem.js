@@ -72,13 +72,14 @@ export default class AddAuthItem extends Component {
             <View style={{flexDirection: "column"}}>
                 <View style={[styles.listInfo, {height: 1}, {borderTopWidth: !first?1:0}]} />
                 <View style={styles.listItem} {...this.props}>
+                    {logo? (<Image source={logo} style={{width: 10, height: 12, resizeMode: "cover", overflow:"hidden"}}/>) : null}
                     {color?(<View style={{width: radius, height:radius, marginRight:5, borderRadius: 0.5 * radius, backgroundColor:color || "#4da6f0"}} />):null}
                     {disable?
                         <TextInput underlineColorAndroid="transparent"
                                    keyboardType={this.props.numeric ? "numeric" : "default"}
                                    style={styles.textInput}
                                    placeholder={name}
-                                   placeholderTextColor={"#000"}
+                                   placeholderTextColor={appData.appSecondaryTextColor}
                                    editable={disable}
                                    onChangeText={(text) => {
                                        this.props.callback(text, this.props.idKey);
@@ -111,7 +112,7 @@ AddAuthItem.Button = ItemButton
 const styles = StyleSheet.create({
     listItem: {
         height: itemHeight,
-        paddingLeft: 16,
+        paddingLeft: 0,
         backgroundColor: "#fff",
         flexDirection: "row",
         // justifyContent: "center",
@@ -147,6 +148,7 @@ const styles = StyleSheet.create({
         height: 30,
         fontSize: 13,
         paddingHorizontal: 10,
+        color: appData.appTextColor,
         // backgroundColor: '#fff',
     },
     textLabel: {
@@ -154,6 +156,7 @@ const styles = StyleSheet.create({
         paddingVertical: 0,
         fontSize: 13,
         paddingHorizontal: 10,
+        color: appData.appTextColor,
         // backgroundColor: '#fff',
     },
 })

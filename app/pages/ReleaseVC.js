@@ -49,12 +49,12 @@ export default class ReleaseVC extends Component {
             downloadOilSelectedList: [],
     }
         this.config = [
-            {idKey:"ship_name", name:"船名", color:"#4c6bff", disable:false, onPress:this.cellSelected.bind(this, "SelectShip")},
-            {idKey:"upload_oil_list", name:"下载可运货品", color:"#fc7b53", disable:false, onPress:this.cellSelected.bind(this, "SelectDownload")},
-            {idKey:"empty_port", name:"空船港", color:"#ffc636", disable:false, onPress:this.cellSelected.bind(this, "SelectPort")},
-            {idKey:"empty_time",name:"空船期", disable:false, subName:"324", color:"#94d94a", onPress:this.cellSelected.bind(this, "SelectEmptyTime")},
-            {idKey:"course", name:"可运航向", color:"#fc7b53", disable:false, onPress:this.cellSelected.bind(this, "SelectCourse")},
-            {idKey:"upload_oil_list", name:"上载货品", color:"#ffc636", disable:false, onPress:this.cellSelected.bind(this, "SelectUpload")},
+            {idKey:"ship_name", name:"船名", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectShip")},
+            {idKey:"upload_oil_list", name:"下载可运货品", logo:require('../images/icon_red.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectDownload")},
+            {idKey:"empty_port", name:"空船港", logo:require('../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectPort")},
+            {idKey:"empty_time",name:"空船期", logo:require('../images/icon_green.png'), disable:false, subName:"324", onPress:this.cellSelected.bind(this, "SelectEmptyTime")},
+            {idKey:"course", name:"可运航向", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectCourse")},
+            {idKey:"upload_oil_list", name:"上载货品", logo:require('../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectUpload")},
         ]
         this.areaTypes = ['取消', '南上', '北下', '上江', '下江', '运河'];
     }

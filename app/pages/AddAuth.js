@@ -43,13 +43,13 @@ export default class DetailVC extends Component {
             idcard_con_source: null,
         }
         this.config = [
-            {idKey:"corporation", name:"公司名称", color:"#4c6bff", disable:true},
-            {idKey:"name", name:"联系人姓名", color:"#fc7b53", disable:true},
-            {idKey:"contact", name:"联系人手机号", color:"#ffc636", disable:true, numeric:true},
-            {idKey:"bz_licence", name:"上传公司营业执照", disable:false, subName:"", color:"#94d94a", onPress:this.cellSelected.bind(this, "bz_licence")},
-            {name:"上传法人身份证", disable:false, subName:"123", color:"#ffc636", onPress:this.cellSelected.bind(this, "法人身份证")},
-            {name:"添加船舶", disable:false, subName:"324", color:"#fc7b53", onPress:this.cellSelected.bind(this, "AddShip")},
-            {name:"可开发票类型", disable:false, color:"#94d94a", onPress:this.cellSelected.bind(this, "invoice_type")},
+            {idKey:"corporation", name:"公司名称", logo:require('../images/icon_blue.png'), disable:true},
+            {idKey:"name", name:"联系人姓名", logo:require('../images/icon_red.png'), disable:true},
+            {idKey:"contact", name:"联系人手机号", logo:require('../images/icon_orange.png'), disable:true, numeric:true},
+            {idKey:"bz_licence", name:"上传公司营业执照", logo:require('../images/icon_green.png'), disable:false, subName:"", onPress:this.cellSelected.bind(this, "bz_licence")},
+            {name:"上传法人身份证", disable:false, logo:require('../images/icon_red.png'), subName:"123", onPress:this.cellSelected.bind(this, "法人身份证")},
+            {name:"添加船舶", disable:false, logo:require('../images/icon_orange.png'), subName:"324", onPress:this.cellSelected.bind(this, "AddShip")},
+            {name:"可开发票类型", disable:false, logo:require('../images/icon_green.png'), onPress:this.cellSelected.bind(this, "invoice_type")},
         ]
 
         this.invoiceTypes = ['取消', '增值税专用发票(11%)', '增值税普通发票', '其他发票'];
