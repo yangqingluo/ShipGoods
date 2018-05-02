@@ -45,7 +45,7 @@ export default class ReleaseVC extends Component {
         this.config = [
             {idKey:"ship_name", name:"船名", color:"#4c6bff", disable:false, onPress:this.cellSelected.bind(this, "SelectShip")},
             {idKey:"upload_oil_list", name:"下载可运货品", color:"#fc7b53", disable:false, onPress:this.cellSelected.bind(this, "SelectDownload")},
-            {idKey:"empty_port", name:"空船港", color:"#ffc636", disable:true},
+            {idKey:"empty_port", name:"空船港", color:"#ffc636", disable:false, onPress:this.cellSelected.bind(this, "SelectPort")},
             {idKey:"empty_time",name:"空船期", disable:false, subName:"324", color:"#94d94a", onPress:this.cellSelected.bind(this, "SelectEmptyTime")},
             {idKey:"course", name:"可运航向", color:"#fc7b53", disable:false, onPress:this.cellSelected.bind(this, "SelectCourse")},
             {idKey:"upload_oil_list", name:"上载货品", color:"#ffc636", disable:false, onPress:this.cellSelected.bind(this, "SelectUpload")},
@@ -78,6 +78,9 @@ export default class ReleaseVC extends Component {
         else if (key === "SelectUpload") {
             this.toGoToUpGoodsVC();
         }
+        else if (key === "SelectPort") {
+            this.toGoToPortsVC();
+        }
         else if (key === "SelectShip") {
             this.props.navigation.navigate(
                 "MyShip",
@@ -98,6 +101,43 @@ export default class ReleaseVC extends Component {
         else {
             PublicAlert(key);
         }
+    }
+
+    toGoToPortsVC() {
+        if (appAllPortsFirst.length > 0) {
+            this.props.navigation.navigate(
+                "SelectPort",
+                {
+                    title: '空船港',
+                    dataList: appAllPortsFirst,
+                    // selectedList:this.state.downloadOilSelectedList,
+                    callBack:this.callBackFromPortVC.bind(this)
+                });
+        }
+        else {
+            let data = {pid:'0', deep:0};
+            NetUtil.post(appUrl + 'index.php/Mobile/Ship/get_all_port/', data)
+                .then(
+                    (result)=>{
+                        if (result.code === 0) {
+                            appAllPortsFirst = result.data;
+                            this.toGoToPortsVC();
+                        }
+                        else {
+                            this.setState({
+                                refreshing: false,
+                            })
+                        }
+                    },(error)=>{
+                        this.setState({
+                            refreshing: false,
+                        })
+                    });
+        }
+    }
+
+    callBackFromPortVC(backData) {
+
     }
 
     callBackFromShipVC(backData) {

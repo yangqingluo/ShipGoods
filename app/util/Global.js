@@ -205,6 +205,8 @@ global.judgePassword = function(object : String) : boolean {
 };
 
 global.appAllGoods = [];
+global.appAllPortsFirst = [];
+global.appAllPortsSecond = [];
 
 // export function judgeMobilePhone(phoneNum):boolean {
 //     return phoneNum.length === 11;
