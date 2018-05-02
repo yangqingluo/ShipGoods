@@ -9,16 +9,15 @@ import {
     ScrollView,
     TouchableOpacity
 } from 'react-native';
-import ActionSheet from 'react-native-actionsheet'
+import ActionSheet from 'react-native-actionsheet';
 import ImagePicker from 'react-native-image-picker';
 
-import AddAuthItem from '../components/AddAuthItem'
+import AddAuthItem from '../components/AddAuthItem';
 import px2dp from "../util";
-import Button from '../components/Button'
 import {imagePickerOptions} from "../util/Global";
 import Toast, {DURATION} from "react-native-easy-toast";
 
-let {width, height} = Dimensions.get('window')
+let {width, height} = Dimensions.get('window');
 
 
 export default class ReleaseVC extends Component {
@@ -35,7 +34,7 @@ export default class ReleaseVC extends Component {
             download_oil_list: '',//下载油品
             empty_port: 0,//空船港
             empty_port_name: '',//空船港港口名
-            empty_time: 0,//空船期
+            empty_time: new Date(),//空船期
             empty_delay: 0,//空船延迟
             course: '',//运输航向 1：南上 2：北下 3：上江 4：下江 5：运河（多选，用“##”隔开）
             remark: '',//备注
@@ -91,6 +90,8 @@ export default class ReleaseVC extends Component {
                 "SelectEmptyTimeVC",
                 {
                     title: '空船期',
+                    date: this.state.empty_time,
+                    delay: this.state.empty_delay,
                     callBack:this.callBackFromTimeVC.bind(this)
                 });
         }
@@ -105,10 +106,11 @@ export default class ReleaseVC extends Component {
         })
     }
 
-    callBackFromTimeVC(backData) {
-        // this.setState({
-        //     ship: backData,
-        // })
+    callBackFromTimeVC(backDate, backDelay) {
+        this.setState({
+            empty_time: backDate,
+            empty_delay: backDelay,
+        })
     }
 
     toGoToDownGoodsVC() {
@@ -269,6 +271,13 @@ export default class ReleaseVC extends Component {
             case 1:{
                 if (this.state.download_oil_list.length > 0) {
                     return this.state.download_oil_list;
+                }
+            }
+                break;
+
+            case 3:{
+                if (this.state.empty_time !== null) {
+                    return this.state.empty_time.Format("yyyy.MM.dd") + '+' + this.state.empty_delay + '天';
                 }
             }
                 break;

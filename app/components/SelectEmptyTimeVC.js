@@ -26,8 +26,8 @@ export default class SelectEmptyTimeVC extends Component {
     constructor(props) {
         super(props);
         this.state={
-            date: new Date(),
-            delay: 0,
+            date: this.props.navigation.state.params.date || new Date(),
+            delay: this.props.navigation.state.params.delay || 0,
         };
         this.picker = null;
 
@@ -35,7 +35,8 @@ export default class SelectEmptyTimeVC extends Component {
     }
 
     sureBtnAction=()=> {
-
+        this.props.navigation.state.params.callBack(this.state.date, this.state.delay);
+        this.props.navigation.goBack();
     };
 
     componentDidMount() {
@@ -76,7 +77,6 @@ export default class SelectEmptyTimeVC extends Component {
     }
 
     render() {
-        let date = this.state.date;
         return (
             <View style={appStyles.container}>
                 <ActionSheet
@@ -95,7 +95,7 @@ export default class SelectEmptyTimeVC extends Component {
                         style = {styles.cell}
                         onPress={()=>this.showDatePicker()}>
                         <Text style={styles.text}>
-                            {date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay()}
+                            {this.state.date.Format("yyyy.MM.dd")}
                         </Text>
                     </TouchableOpacity>
                     <View style={{height:px2dp(2)}} />
