@@ -17,7 +17,7 @@ export default class DetailVC extends Component {
                 <TouchableOpacity
                     onPress={navigation.state.params.clickParams}
                 >
-                    <Text style={{marginRight : 12, color: appData.appBlueColor}}>添加船舶</Text>
+                    <Text style={{marginRight: 10, color: appData.appBlueColor}}>添加船舶</Text>
                 </TouchableOpacity>
             </View>,
         });

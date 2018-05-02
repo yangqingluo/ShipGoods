@@ -24,15 +24,22 @@ export default class ReleaseVC extends Component {
     static navigationOptions = ({ navigation }) => ({
         headerTitle: '发布',
         tabBarLabel: '发布',
+        headerRight: <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
+            <TouchableOpacity
+                onPress={navigation.state.params.clickParams}
+            >
+                <Text style={{marginRight: 10, color: appData.appBlueColor}}>{'  提交  '}</Text>
+            </TouchableOpacity>
+        </View>,
     });
 
     constructor(props){
         super(props)
         this.state = {
-            ship: Object,//船
+            ship: null,//船
             upload_oil_list: '',//上载油品
             download_oil_list: '',//下载油品
-            empty_port: Object,//空船港
+            empty_port: null,//空船港
             empty_time: new Date(),//空船期
             empty_delay: 0,//空船延迟
             course: '',//运输航向 1：南上 2：北下 3：上江 4：下江 5：运河（多选，用“##”隔开）
@@ -63,7 +70,7 @@ export default class ReleaseVC extends Component {
     };
 
     componentDidMount() {
-        this.props.navigation.setParams({clickParams:this.sureBtnClick()});
+        this.props.navigation.setParams({clickParams:this.sureBtnClick});
     }
 
     cellSelected(key, data = {}){
