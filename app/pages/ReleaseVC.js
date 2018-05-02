@@ -32,8 +32,7 @@ export default class ReleaseVC extends Component {
             ship: Object,//船
             upload_oil_list: '',//上载油品
             download_oil_list: '',//下载油品
-            empty_port: 0,//空船港
-            empty_port_name: '',//空船港港口名
+            empty_port: Object,//空船港
             empty_time: new Date(),//空船期
             empty_delay: 0,//空船延迟
             course: '',//运输航向 1：南上 2：北下 3：上江 4：下江 5：运河（多选，用“##”隔开）
@@ -137,7 +136,9 @@ export default class ReleaseVC extends Component {
     }
 
     callBackFromPortVC(backData) {
-
+        this.setState({
+            empty_port: backData,
+        })
     }
 
     callBackFromShipVC(backData) {
@@ -311,6 +312,13 @@ export default class ReleaseVC extends Component {
             case 1:{
                 if (this.state.download_oil_list.length > 0) {
                     return this.state.download_oil_list;
+                }
+            }
+                break;
+
+            case 2:{
+                if (this.state.empty_port !== null) {
+                    return this.state.empty_port.port_name;
                 }
             }
                 break;

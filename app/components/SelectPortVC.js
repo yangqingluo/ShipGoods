@@ -12,13 +12,13 @@ export default class SelectPortVC extends Component {
     static navigationOptions = ({ navigation }) => (
         {
             title: navigation.state.params.title,
-            headerRight: <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
-                <TouchableOpacity
-                    onPress={navigation.state.params.clickParams}
-                >
-                    <Text style={{marginRight : 10}}>确定</Text>
-                </TouchableOpacity>
-            </View>,
+            // headerRight: <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
+            //     <TouchableOpacity
+            //         onPress={navigation.state.params.clickParams}
+            //     >
+            //         <Text style={{marginRight : 10}}>确定</Text>
+            //     </TouchableOpacity>
+            // </View>,
         });
 
     constructor(props){
@@ -73,24 +73,59 @@ export default class SelectPortVC extends Component {
     }
 
     onCellSelected = (info: Object) => {
-        if (this.state.maxSelectCount === 1) {
-            this.state.selectedList = [info.item];
+        let port = info.item;
+        this.toGoToPortsVC([], port);
+
+        // if (this.state.maxSelectCount === 1) {
+        //     this.state.selectedList = [info.item];
+        // }
+        // else {
+        //     let index = this.state.selectedList.indexOf(info.item);
+        //     if (index === -1) {
+        //         if (this.state.selectedList.length >= this.state.maxSelectCount) {
+        //             PublicAlert('最多只能选择' + this.state.maxSelectCount + '项');
+        //         }
+        //         else {
+        //             this.state.selectedList.push(info.item);
+        //         }
+        //     }
+        //     else {
+        //         this.state.selectedList.splice(index, 1);
+        //     }
+        // }
+        // this.forceUpdate();
+    }
+
+    toGoToPortsVC(list, port) {
+        if (list.length > 0) {
+            this.props.navigation.navigate(
+                "SelectPortSecond",
+                {
+                    title: '空船港',
+                    dataList: list,
+                    // selectedList:this.state.downloadOilSelectedList,
+                    callBack:this.props.navigation.state.params.callBack
+                });
         }
         else {
-            let index = this.state.selectedList.indexOf(info.item);
-            if (index === -1) {
-                if (this.state.selectedList.length >= this.state.maxSelectCount) {
-                    PublicAlert('最多只能选择' + this.state.maxSelectCount + '项');
-                }
-                else {
-                    this.state.selectedList.push(info.item);
-                }
-            }
-            else {
-                this.state.selectedList.splice(index, 1);
-            }
+            let data = {pid:port.port_id, deep:1};
+            NetUtil.post(appUrl + 'index.php/Mobile/Ship/get_all_port/', data)
+                .then(
+                    (result)=>{
+                        if (result.code === 0) {
+                            this.toGoToPortsVC(result.data, port);
+                        }
+                        else {
+                            this.setState({
+                                refreshing: false,
+                            })
+                        }
+                    },(error)=>{
+                        this.setState({
+                            refreshing: false,
+                        })
+                    });
         }
-        this.forceUpdate();
     }
 
     renderCell = (info: Object) => {
@@ -98,6 +133,7 @@ export default class SelectPortVC extends Component {
             <PortFirstCell
                 info={info}
                 onPress={this.onCellSelected}
+                isSecond={false}
                 selected={this.state.selectedList.indexOf(info.item) !== -1}
             />
         )
@@ -128,4 +164,3 @@ export default class SelectPortVC extends Component {
 const styles = StyleSheet.create({
 
 });
-

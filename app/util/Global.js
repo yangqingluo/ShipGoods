@@ -156,7 +156,7 @@ let appData = {
     appBlueColor: '#2c9bfd',
     appLightBlueColor: "#54b2ff",
     appLittleBlueColor: "#7dd3ff",
-    appGrayColor: '#f3f3f3',
+    appGrayColor: '#f6f8fa',
     appTextColor: '#000',
     appSecondaryTextColor: '#c0c0c0',
     appViewColor: '#eee',
