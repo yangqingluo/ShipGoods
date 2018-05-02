@@ -3,10 +3,8 @@ import {
     StyleSheet,
     Text,
     View,
-    Button,
     TouchableOpacity,
     FlatList,
-    Dimensions,
 } from 'react-native';
 import SelectCell from './SelectCell'
 
@@ -94,7 +92,6 @@ export default class CustomSelect extends Component {
         }
         this.forceUpdate();
     }
-
 
     renderCell = (info: Object) => {
         return (
