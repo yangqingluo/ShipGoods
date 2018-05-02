@@ -107,7 +107,7 @@ let appData = {
     appGrayColor: '#f3f3f3',
     appTextColor: '#000',
     appSecondaryTextColor: '#c0c0c0',
-    appViewColor: '#fff',
+    appViewColor: '#eee',
     appBorderColor: '#e0e0e0',
     appSeparatorColor: 'rgba(192,192,192,0.6)',
 

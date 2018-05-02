@@ -87,7 +87,12 @@ export default class ReleaseVC extends Component {
                 });
         }
         else if (key === "SelectEmptyTime") {
-            this.props.navigation.navigate("SelectEmptyTimeVC");
+            this.props.navigation.navigate(
+                "SelectEmptyTimeVC",
+                {
+                    title: '空船期',
+                    callBack:this.callBackFromTimeVC.bind(this)
+                });
         }
         else {
             PublicAlert(key);
@@ -98,6 +103,12 @@ export default class ReleaseVC extends Component {
         this.setState({
             ship: backData,
         })
+    }
+
+    callBackFromTimeVC(backData) {
+        // this.setState({
+        //     ship: backData,
+        // })
     }
 
     toGoToDownGoodsVC() {

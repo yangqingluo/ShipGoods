@@ -12,7 +12,7 @@ import Register from './app/pages/Register';
 import AddAuth from './app/pages/AddAuth';
 import AddShip from './app/pages/AddShip';
 import MyShip from './app/pages/MyShip';
-import SelectEmptyTimeVC from './app/pages/SelectEmptyTimeVC';
+import SelectEmptyTimeVC from './app/components/SelectEmptyTimeVC';
 import CustomSelect from './app/components/CustomSelect';
 import CustomSectionSelect from './app/components/CustomSectionSelect';
 
