@@ -44,7 +44,7 @@ export default class ReleaseVC extends Component {
             downloadOilSelectedList: [],
     }
         this.config = [
-            {idKey:"ship_name", name:"船名", color:"#4c6bff", disable:true},
+            {idKey:"ship_name", name:"船名", color:"#4c6bff", disable:false, onPress:this.cellSelected.bind(this, "SelectShip")},
             {idKey:"upload_oil_list", name:"下载可运货品", color:"#fc7b53", disable:false, onPress:this.cellSelected.bind(this, "SelectDownload")},
             {idKey:"empty_port", name:"空船港", color:"#ffc636", disable:true},
             {idKey:"empty_time",name:"空船期", disable:false, subName:"324", color:"#94d94a", onPress:this.cellSelected.bind(this, "SelectEmptyTime")},
@@ -79,12 +79,25 @@ export default class ReleaseVC extends Component {
         else if (key === "SelectUpload") {
             this.toGoToUpGoodsVC();
         }
+        else if (key === "SelectShip") {
+            this.props.navigation.navigate(
+                "MyShip",
+                {
+                    callBack:this.callBackFromShipVC.bind(this)
+                });
+        }
         else if (key === "SelectEmptyTime") {
             this.props.navigation.navigate("SelectEmptyTimeVC");
         }
         else {
             PublicAlert(key);
         }
+    }
+
+    callBackFromShipVC(backData) {
+        this.setState({
+            ship: backData,
+        })
     }
 
     toGoToDownGoodsVC() {
@@ -233,14 +246,46 @@ export default class ReleaseVC extends Component {
                 });
     }
 
+    subNameForIndex(index):String {
+        switch (index){
+            case 0:{
+                if (this.state.ship !== null) {
+                    return this.state.ship.ship_name;
+                }
+            }
+                break;
+
+            case 1:{
+                if (this.state.download_oil_list.length > 0) {
+                    return this.state.download_oil_list;
+                }
+            }
+                break;
+
+            case 4:{
+                if (this.state.course > 0) {
+                    return this.areaTypes[this.state.course];
+                }
+            }
+                break;
+
+            case 5:{
+                if (this.state.upload_oil_list.length > 0) {
+                    return this.state.upload_oil_list;
+                }
+            }
+                break;
+
+            default:
+                break;
+        }
+        return '';
+    }
+
     _renderListItem() {
         return this.config.map((item, i) => {
             return (<AddAuthItem key={i} {...item}
-                                 subName = {
-                                     (i === 4 && this.state.course > 0) ? this.areaTypes[this.state.course] :
-                                         ((i === 1 && this.state.download_oil_list.length > 0) ? this.state.download_oil_list :
-                                             (i === 5 && this.state.upload_oil_list.length > 0) ? this.state.upload_oil_list : '')
-                                 }
+                                 subName = {this.subNameForIndex(i)}
                                  callback={this.textInputChanged.bind(this)}>
             </AddAuthItem>);
         })

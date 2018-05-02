@@ -69,7 +69,10 @@ export default class DetailVC extends Component {
     }
 
     onCellSelected = (info: Object) => {
-
+        if (this.props.navigation.state.params.callBack !== null) {
+            this.props.navigation.state.params.callBack(info.item);
+        }
+        this.props.navigation.goBack();
     }
 
     renderCell = (info: Object) => {

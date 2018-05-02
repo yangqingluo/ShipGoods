@@ -74,7 +74,7 @@ export default class MineVC extends Component {
             Communications.phonecall('18267811011', true);
         }
         else if (key === 'MyShip') {
-            navigate(key, { title: '我的船队' });
+            navigate(key, { title: '我的船队', callBack: null});
         }
         else {
             navigate('DetailVC', { title: key, des:'我是返回点击我' });
