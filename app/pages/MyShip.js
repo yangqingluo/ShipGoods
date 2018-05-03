@@ -75,11 +75,16 @@ export default class DetailVC extends Component {
         this.props.navigation.goBack();
     }
 
+    onCellEditBtnAction = (info: Object) => {
+        PublicAlert(JSON.stringify(info));
+    }
+
     renderCell = (info: Object) => {
         return (
             <ShipCell
                 info={info}
                 onPress={this.onCellSelected}
+                onEditPress={this.onCellEditBtnAction}
                 selected={false}
             />
         )

@@ -157,8 +157,9 @@ let appData = {
     appLightBlueColor: "#54b2ff",
     appLittleBlueColor: "#7dd3ff",
     appGrayColor: '#f6f8fa',
+    appRedColor: '#ff4848',
     appTextColor: '#000',
-    appSecondaryTextColor: '#c0c0c0',
+    appSecondaryTextColor: '#adadad',
     appViewColor: '#eee',
     appBorderColor: '#e0e0e0',
     appSeparatorColor: 'rgba(192,192,192,0.6)',
@@ -202,6 +203,16 @@ global.judgeVerifyCode = function(object : String) : boolean {
 global.judgePassword = function(object : String) : boolean {
     let reg = /^[a-zA-Z0-9]{6,20}$/;
     return reg.test(object);
+};
+
+global.getShipStateText = function(state : Number) : String {
+    switch (state){
+        case 1:
+            return "执行中";
+
+        default:
+            return "空船";
+    }
 };
 
 global.appAllGoods = [];
