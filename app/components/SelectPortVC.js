@@ -32,13 +32,7 @@ export default class SelectPortVC extends Component {
     }
 
     _btnClick=()=> {
-        if (this.state.selectedList.length === 0) {
-            PublicAlert('请至少选择一项');
-        }
-        else {
-            this.props.navigation.state.params.callBack(this.state.selectedList);
-            this.props.navigation.goBack();
-        }
+
     };
     componentDidMount() {
         this.props.navigation.setParams({clickParams:this._btnClick})
@@ -75,25 +69,6 @@ export default class SelectPortVC extends Component {
     onCellSelected = (info: Object) => {
         let port = info.item;
         this.toGoToPortsVC([], port);
-
-        // if (this.state.maxSelectCount === 1) {
-        //     this.state.selectedList = [info.item];
-        // }
-        // else {
-        //     let index = this.state.selectedList.indexOf(info.item);
-        //     if (index === -1) {
-        //         if (this.state.selectedList.length >= this.state.maxSelectCount) {
-        //             PublicAlert('最多只能选择' + this.state.maxSelectCount + '项');
-        //         }
-        //         else {
-        //             this.state.selectedList.push(info.item);
-        //         }
-        //     }
-        //     else {
-        //         this.state.selectedList.splice(index, 1);
-        //     }
-        // }
-        // this.forceUpdate();
     }
 
     toGoToPortsVC(list, port) {
@@ -101,8 +76,9 @@ export default class SelectPortVC extends Component {
             this.props.navigation.navigate(
                 "SelectPortSecond",
                 {
-                    title: '空船港',
+                    title: this.props.navigation.state.params.title,
                     dataList: list,
+                    key: this.props.navigation.state.params.key,
                     // selectedList:this.state.downloadOilSelectedList,
                     callBack:this.props.navigation.state.params.callBack
                 });

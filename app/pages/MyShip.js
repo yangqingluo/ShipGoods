@@ -61,7 +61,7 @@ export default class DetailVC extends Component {
         }
     }
 
-    requestRecommend = (isReset) => {
+    requestRecommend = async (isReset) => {
         if (isReset) {
             this.state.page = 1;
         }

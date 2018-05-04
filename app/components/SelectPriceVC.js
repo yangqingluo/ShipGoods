@@ -1,182 +1,124 @@
 import React, {Component} from "react";
-import {ActivityIndicator, FlatList, StyleSheet, Text, View} from "react-native";
-import ListLoadFooter from '../components/ListLoadFooter'
+import {
+    StyleSheet,
+    Text,
+    Image,
+    Button,
+    TextInput,
+    ScrollView,
+    View,
+    TouchableOpacity
+} from "react-native";
+import px2dp from "../util";
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
-const REQUEST_URL = 'https://api.github.com/search/repositories?q=javascript&sort=stars&page=';
-let pageNo = 1;//当前第几页
-let totalPage=5;//总的页数
-let itemNo=0;//item的个数
-export default class LoadMoreDemo extends Component {
+const Font = {
+    Ionicons,
+    FontAwesome
+}
+
+export default class SelectPriceVC extends Component {
+    static navigationOptions = ({ navigation }) => (
+        {
+            title: navigation.state.params.title,
+        });
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: true,
-            //网络请求状态
-            error: false,
-            errorInfo: "",
-            dataArray: [],
-            showFoot:0, // 控制foot， 0：隐藏footer  1：已加载完成,没有更多数据   2 ：显示加载中
-            isRefreshing:false,//下拉控制
+            price: 0,
+            is_bargain: 0
         }
     }
 
-    //网络请求——获取第pageNo页数据
-    fetchData(pageNo) {
-        //这个是js的访问网络的方法
-        fetch(REQUEST_URL+pageNo)
-            .then((response) => response.json())
-            .then((responseData) => {
-                let data = responseData.items;
-                let dataBlob = [];
-                let i = itemNo;
-
-                data.map(function (item) {
-                    dataBlob.push({
-                        key: i,
-                        value: item,
-                    })
-                    i++;
-                });
-                itemNo = i;
-                console.log("itemNo:"+itemNo);
-                let foot = 0;
-                if(pageNo>=totalPage){
-                    foot = 1;//listView底部显示没有更多数据了
-                }
-
-                this.setState({
-                    //复制数据源
-                    dataArray:this.state.dataArray.concat(dataBlob),
-                    isLoading: false,
-                    showFoot:foot,
-                    isRefreshing:false,
-                });
-                data = null;
-                dataBlob = null;
-            })
-            .catch((error) => {
-                this.setState({
-                    error: true,
-                    errorInfo: error
-                })
-            })
-            .done();
+    textInputChanged(text) {
+        this.setState({
+            price: parseInt(text),
+        });
     }
 
-    componentDidMount() {
-        //请求数据
-        this.fetchData( pageNo );
+    onBargainBtnAction() {
+        this.setState({
+            is_bargain: (this.state.is_bargain === 0) ? 1 : 0,
+        });
     }
 
-    //加载等待页
-    renderLoadingView() {
-        return (
-            <View style={styles.container}>
-                <ActivityIndicator
-                    animating={true}
-                    color='red'
-                    size="large"
-                />
-            </View>
-        );
-    }
+    onSubmitBtnAction() {
 
-    //加载失败view
-    renderErrorView() {
-        return (
-            <View style={styles.container}>
-                <Text>
-                    Fail
-                </Text>
-            </View>
-        );
-    }
-
-    //返回itemView
-    _renderItemView({item}) {
-        return (
-            <View>
-                <Text style={styles.title}>name: {item.value.name}</Text>
-                <Text style={styles.content}>stars: {item.value.stargazers_count}</Text>
-                <Text style={styles.content}>description: {item.value.description}</Text>
-            </View>
-        );
-    }
-
-    renderData() {
-        return (
-
-            <FlatList
-                data={this.state.dataArray}
-                renderItem={this._renderItemView}
-                ListFooterComponent={this._renderFooter.bind(this)}
-                onEndReached={this._onEndReached.bind(this)}
-                onEndReachedThreshold={0}
-                ItemSeparatorComponent={this._separator}
-            />
-
-        );
     }
 
     render() {
-        //第一次加载等待的view
-        if (this.state.isLoading && !this.state.error) {
-            return this.renderLoadingView();
-        } else if (this.state.error) {
-            //请求失败view
-            return this.renderErrorView();
-        }
-        //加载数据
-        return this.renderData();
-    }
-    _separator(){
-        return <View style={{height:1,backgroundColor:'#999999'}}/>;
-    }
-    _renderFooter(){
-        return <ListLoadFooter showFoot={this.state.showFoot}/>;
-    }
-
-    _onEndReached(){
-        PublicAlert('foot:' + this.state.showFoot);
-
-        //如果是正在加载中或没有更多数据了，则返回
-        if(this.state.showFoot != 0 ){
-            return ;
-        }
-        //如果当前页大于或等于总页数，那就是到最后一页了，返回
-        if((pageNo!=1) && (pageNo>=totalPage)){
-            return;
-        } else {
-            pageNo++;
-        }
-        //底部显示正在加载更多数据
-        this.setState({showFoot:2});
-        //获取数据
-        this.fetchData( pageNo );
+        const Icon = Font["Ionicons"];
+        let textColor = (this.state.is_bargain === 1) ? appData.appBlueColor:appData.appThirdTextColor;
+        return (
+            <View style={appStyles.container}>
+                <ScrollView
+                    style={styles.scrollView}
+                >
+                    <View style={{height:px2dp(2)}} />
+                    <View style = {styles.cell}>
+                        <TextInput underlineColorAndroid="transparent"
+                                   keyboardType={"numeric"}
+                                   style={styles.textInput}
+                                   placeholder={'价格键入'}
+                                   placeholderTextColor={appData.appSecondaryTextColor}
+                                   onChangeText={this.textInputChanged.bind(this)}
+                        >
+                        </TextInput>
+                        <Text style={{color:appData.appYellowColor, right:px2dp(30), fontSize:px2dp(18), textAlign: 'right', position: 'absolute',}}>{'¥元 / 吨'}</Text>
+                    </View>
+                    <View style={{height:px2dp(43), justifyContent: "center", alignItems: "center", backgroundColor: appData.appGrayColor}}>
+                        <TouchableOpacity onPress={this.onBargainBtnAction.bind(this)}>
+                            <Icon name={'ios-checkmark-circle'} size={px2dp(20)} style={{minWidth:px2dp(120), marginRight:5, textAlign:"center", fontSize: px2dp(14)}} color={textColor}>
+                                {' 不议价'}
+                            </Icon>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{width: 240, height:80, marginTop:px2dp(60), alignSelf: "center", flexDirection: 'row',}}>
+                        <TouchableOpacity onPress={this.onBargainBtnAction.bind(this)} style={{flex:1, alignItems: "center", justifyContent: "center"}}>
+                            <Icon name={'ios-checkmark-circle'} size={px2dp(32)} style={{minWidth:px2dp(32)}} color={textColor}/>
+                            <Text style={{color:textColor, fontSize:px2dp(18), textAlign: 'right',}}>{'我开价'}</Text>
+                        </TouchableOpacity>
+                        <View style={{top:px2dp(26), width: px2dp(86), height:px2dp(6), borderRadius:px2dp(3), backgroundColor:'#ebebeb'}} />
+                        <TouchableOpacity onPress={this.onBargainBtnAction.bind(this)} style={{flex:1, alignItems: "center", justifyContent: "center"}}>
+                            <Icon name={'ios-checkmark-circle'} size={px2dp(32)} style={{minWidth:px2dp(32)}} color={textColor}/>
+                            <Text style={{color:textColor, fontSize:px2dp(18), textAlign: 'right',}}>{'船东开价'}</Text>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
+                <View style={{position: "absolute", bottom: 20, height:40, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
+                    <TouchableOpacity style={{ width:90, height:40, borderRadius: 20, overflow:"hidden"}} onPress={this.onSubmitBtnAction.bind(this)}>
+                        <View style={{flex: 1, height: 40, backgroundColor: appData.appBlueColor, alignItems: "center", justifyContent: "center"}}>
+                            <Text style={{color: "#fff"}}>{"提交"}</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        );
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
+    scrollView: {
         flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
+        backgroundColor: '#fff',
     },
-    title: {
-        fontSize: 15,
-        color: 'blue',
+    cell: {
+        flex: 1,
+        // backgroundColor: '#fff',
+        minHeight: px2dp(50),
+        justifyContent: "center",
+        alignItems: "center",
     },
-    footer:{
-        flexDirection:'row',
-        height:24,
-        justifyContent:'center',
-        alignItems:'center',
-        marginBottom:10,
+    textInput: {
+        flex: 1,
+        minWidth: px2dp(80),
+        // paddingVertical: 0,
+        height: 30,
+        fontSize: px2dp(18),
+        // paddingHorizontal: 10,
+        color: appData.appTextColor,
+        // backgroundColor: '#fff',
     },
-    content: {
-        fontSize: 15,
-        color: 'black',
-    }
+
 });

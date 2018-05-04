@@ -26,6 +26,7 @@ export default class SelectEmptyTimeVC extends Component {
     constructor(props) {
         super(props);
         this.state={
+            key: this.props.navigation.state.params.key,
             date: this.props.navigation.state.params.date || new Date(),
             delay: this.props.navigation.state.params.delay || 0,
         };
@@ -35,7 +36,7 @@ export default class SelectEmptyTimeVC extends Component {
     }
 
     sureBtnAction=()=> {
-        this.props.navigation.state.params.callBack(this.state.date, this.state.delay);
+        this.props.navigation.state.params.callBack(this.state.key, this.state.date, this.state.delay);
         this.props.navigation.goBack();
     };
 

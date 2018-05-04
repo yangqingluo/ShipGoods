@@ -68,7 +68,7 @@ export default class ReleaseVC extends Component {
                 {idKey:"tonnage", name:"吨位", logo:require('../images/icon_blue.png'), disable:true, numeric:true},
                 {idKey:"price", name:"运价", logo:require('../images/icon_red.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectPrice")},
                 {idKey:"loading_port", name:"装货港", logo:require('../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectLoadingPort")},
-                {idKey:"uploading_port",name:"卸货港", logo:require('../images/icon_green.png'), disable:false, subName:"324", onPress:this.cellSelected.bind(this, "SelectUploadingPort")},
+                {idKey:"unloading_port",name:"卸货港", logo:require('../images/icon_green.png'), disable:false, subName:"324", onPress:this.cellSelected.bind(this, "SelectUnloadingPort")},
                 {idKey:"loading_time", name:"发货时间", logo:require('../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectLoadingTime")},
                 {idKey:"wastage", name:"损耗", logo:require('../images/icon_red.png'), disable:true, numeric:true},
                 {idKey:"demurrage", name:"滞期费", logo:require('../images/icon_blue.png'), disable:true, numeric:true},
@@ -84,6 +84,7 @@ export default class ReleaseVC extends Component {
                 {idKey:"upload_oil_list", name:"上载货品", logo:require('../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectUpload")},
             ];
         this.areaTypes = ['取消', '南上', '北下', '上江', '下江', '运河'];
+        this.cleanDeleyTypes = ['取消', '15', '30', '45', '60'];
     }
 
     sureBtnClick=()=> {
@@ -104,15 +105,19 @@ export default class ReleaseVC extends Component {
         if (key === "SelectCourse") {
             this.areaTypeActionSheet.show();
         }
+        else if (key === "SelectCleanDeley") {
+            this.cleanDelayTypeActionSheet.show();
+        }
         else if (key === "SelectDownload") {
             this.toGoToDownGoodsVC();
         }
         else if (key === "SelectUpload") {
             this.toGoToUpGoodsVC();
         }
-        else if (key === "SelectPort") {
-            this.toGoToPortsVC();
+        else if (key === "SelectPort" || key === "SelectLoadingPort" || key === "SelectUnloadingPort") {
+            this.toGoToPortsVC(key);
         }
+
         else if (key === "SelectShip") {
             this.props.navigation.navigate(
                 "MyShip",
@@ -125,8 +130,20 @@ export default class ReleaseVC extends Component {
                 "SelectEmptyTimeVC",
                 {
                     title: '空船期',
+                    key: key,
                     date: this.state.empty_time,
                     delay: this.state.empty_delay,
+                    callBack:this.callBackFromTimeVC.bind(this)
+                });
+        }
+        else if (key === "SelectLoadingTime") {
+            this.props.navigation.navigate(
+                "SelectEmptyTimeVC",
+                {
+                    title: '发货时间',
+                    key: key,
+                    date: this.state.loading_time,
+                    delay: this.state.loading_delay,
                     callBack:this.callBackFromTimeVC.bind(this)
                 });
         }
@@ -143,13 +160,14 @@ export default class ReleaseVC extends Component {
         }
     }
 
-    toGoToPortsVC() {
+    toGoToPortsVC(key) {
         if (appAllPortsFirst.length > 0) {
             this.props.navigation.navigate(
                 "SelectPort",
                 {
-                    title: '空船港',
+                    title: '选择港口',
                     dataList: appAllPortsFirst,
+                    key: key,
                     // selectedList:this.state.downloadOilSelectedList,
                     callBack:this.callBackFromPortVC.bind(this)
                 });
@@ -161,7 +179,7 @@ export default class ReleaseVC extends Component {
                     (result)=>{
                         if (result.code === 0) {
                             appAllPortsFirst = result.data;
-                            this.toGoToPortsVC();
+                            this.toGoToPortsVC(key);
                         }
                         else {
                             this.setState({
@@ -176,10 +194,22 @@ export default class ReleaseVC extends Component {
         }
     }
 
-    callBackFromPortVC(backData) {
-        this.setState({
-            empty_port: backData,
-        })
+    callBackFromPortVC(key, backData) {
+        if (key === "SelectPort") {
+            this.setState({
+                empty_port: backData,
+            })
+        }
+        else if (key === "SelectLoadingPort") {
+            this.setState({
+                loading_port: backData,
+            })
+        }
+        else if (key === "SelectUnloadingPort") {
+            this.setState({
+                unloading_port: backData,
+            })
+        }
     }
 
     callBackFromShipVC(backData) {
@@ -188,11 +218,20 @@ export default class ReleaseVC extends Component {
         })
     }
 
-    callBackFromTimeVC(backDate, backDelay) {
-        this.setState({
-            empty_time: backDate,
-            empty_delay: backDelay,
-        })
+    callBackFromTimeVC(key, backDate, backDelay) {
+        if (key === "SelectEmptyTime") {
+            this.setState({
+                empty_time: backDate,
+                empty_delay: backDelay,
+            })
+        }
+        else if (key === "SelectLoadingTime") {
+            this.setState({
+                loading_time: backDate,
+                loading_delay: backDelay,
+            })
+        }
+
     }
 
     callBackFromPriceVC(backData) {
@@ -307,6 +346,14 @@ export default class ReleaseVC extends Component {
         }
     }
 
+    onSelectCleanDelayType(index) {
+        if (index > 0) {
+            this.setState({
+                clean_deley: index
+            });
+        }
+    }
+
     toSelectPhoto = (idKey) => {
         ImagePicker.showImagePicker(imagePickerOptions, (response) => {
             console.log('Response = ', response);
@@ -357,11 +404,23 @@ export default class ReleaseVC extends Component {
         else if (item.idKey === 'empty_port' && this.state.empty_port !== null) {
             return this.state.empty_port.port_name;
         }
+        else if (item.idKey === 'loading_port' && this.state.loading_port !== null) {
+            return this.state.loading_port.port_name;
+        }
+        else if (item.idKey === 'unloading_port' && this.state.unloading_port !== null) {
+            return this.state.unloading_port.port_name;
+        }
         else if (item.idKey === 'empty_time' && this.state.empty_time !== null) {
             return this.state.empty_time.Format("yyyy.MM.dd") + '+' + this.state.empty_delay + '天';
         }
+        else if (item.idKey === 'loading_time' && this.state.loading_time !== null) {
+            return this.state.loading_time.Format("yyyy.MM.dd") + '+' + this.state.loading_delay + '天';
+        }
         else if (item.idKey === 'course' && this.state.course > 0) {
             return this.areaTypes[this.state.course];
+        }
+        else if (item.idKey === 'clean_deley' && this.state.clean_deley > 0) {
+            return '完货' + this.cleanDeleyTypes[this.state.clean_deley] + '天内';
         }
         else if (item.idKey === 'upload_oil_list' && this.state.upload_oil_list.length > 0) {
             return this.state.upload_oil_list;
@@ -390,6 +449,14 @@ export default class ReleaseVC extends Component {
                     cancelButtonIndex={0}
                     // destructiveButtonIndex={1}
                     onPress={this.onSelectInvoiceType.bind(this)}
+                />
+                <ActionSheet
+                    ref={o => this.cleanDelayTypeActionSheet = o}
+                    title={'请选择结算时间'}
+                    options={this.cleanDeleyTypes}
+                    cancelButtonIndex={0}
+                    // destructiveButtonIndex={1}
+                    onPress={this.onSelectCleanDelayType.bind(this)}
                 />
                 <ScrollView style={styles.scrollView}>
                     {this._renderListItem()}

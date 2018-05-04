@@ -29,6 +29,7 @@ export default class SelectPortSecond extends Component {
     constructor(props){
         super(props)
         this.state = {
+            key: this.props.navigation.state.params.key,
             selectedList: this.props.navigation.state.params.selectedList || [],
             dataList: this.props.navigation.state.params.dataList,
             maxSelectCount:this.props.navigation.state.params.maxSelectCount,
@@ -38,21 +39,15 @@ export default class SelectPortSecond extends Component {
     }
 
     _btnClick=()=> {
-        if (this.state.selectedList.length === 0) {
-            PublicAlert('请至少选择一项');
-        }
-        else {
-            this.props.navigation.state.params.callBack(this.state.selectedList);
-            this.props.navigation.goBack();
-        }
+
     };
 
     componentDidMount() {
-        this.props.navigation.setParams({clickParams:this._btnClick});
+        // this.props.navigation.setParams({clickParams:this._btnClick});
     }
 
     onCellSelected = (info: Object) => {
-        this.props.navigation.state.params.callBack(info.item);
+        this.props.navigation.state.params.callBack(this.state.key, info.item);
         this.props.navigation.goBack('Main');
 
         // if (this.state.maxSelectCount === 1) {
