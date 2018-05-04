@@ -20,6 +20,8 @@ type Props = {
     logo: Number,
     onPress: Function,
     onEditPress: Function,
+    onLicencePress: Function,
+    onPricePress: Function,
     selected: boolean,
 }
 
@@ -39,6 +41,31 @@ export default class ShipCell extends PureComponent<Props> {
                     </View>
                     <View style={styles.centerViewContainer}>
                         <View style={{backgroundColor: appData.appBlueColor, width:px2dp(9)}}/>
+                        <View style={{flex: 1, borderWidth: px2dp(0.5), borderColor: 'rgba(0,0,0,0.04)',}}>
+                            <View style={styles.cellContainer}>
+                                <View style={[styles.cellContainer, {alignItems: "center"}]}>
+                                    <Image source={require('../images/icon_word_hang.png')} style={{width: px2dp(19), height: px2dp(29), marginLeft:px2dp(12), resizeMode: "cover"}}/>
+                                    <Text style={{color:appData.appTextColor, marginLeft:px2dp(6), fontSize:px2dp(14)}}>{getShipAreaTypesText(parseInt(info.item.area))}</Text>
+                                </View>
+                                <View style={[styles.cellContainer, {alignItems: "center"}]}>
+                                    <Text style={{color:appData.appTextColor, marginLeft:px2dp(12), fontSize:px2dp(14)}}>{info.item.storage + ' m³ / ' + info.item.tonnage + ' T'}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.cellContainer}>
+                                <View style={[styles.cellContainer, {alignItems: "center"}]}>
+                                    <TouchableOpacity style={{flexDirection: 'row', alignItems: "center"}} onPress={() => this.props.onLicencePress(info)}>
+                                        <Image source={require('../images/icon_clip.png')} style={{width: px2dp(18), height: px2dp(18), marginLeft:px2dp(12), resizeMode: "cover"}}/>
+                                        <Text style={{color:appData.appBlueColor, marginLeft:px2dp(6), fontSize:px2dp(14)}}>{'船舶相关证书'}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={[styles.cellContainer, {alignItems: "center"}]}>
+                                    <TouchableOpacity style={{flexDirection: 'row', alignItems: "center"}} onPress={() => this.props.onPricePress(info)}>
+                                        <Image source={require('../images/icon_clip.png')} style={{width: px2dp(18), height: px2dp(18), marginLeft:px2dp(12), resizeMode: "cover"}}/>
+                                        <Text style={{color:appData.appBlueColor, marginLeft:px2dp(6), fontSize:px2dp(14)}}>{'相关报价'}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
                     </View>
                     <View style={styles.viewContainer}>
                         <Text style={{color:appData.appSecondaryTextColor, marginLeft:px2dp(16), fontSize:px2dp(12)}}>{'可运柴油 ' + info.item.dieseloil + '吨'}</Text>
@@ -67,22 +94,25 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         height:px2dp(36),
         alignItems: "center",
-        // justifyContent: "center",
     },
     centerViewContainer: {
         flexDirection: 'row',
         marginLeft:px2dp(16),
         marginRight:px2dp(15),
         // borderRadius: px2dp(4),
-        borderWidth: px2dp(0.5),
-        borderColor: 'rgba(0,0,0,0.08)',
+        // borderWidth: px2dp(0.5),
+        // borderColor: 'rgba(0,0,0,0.08)',
         // shadowColor: 'rgba(0,0,0,0.08)',
         // shadowOffset: {width: 0, height: 0},
         // shadowRadius: px2dp(4),
         height:px2dp(72),
-        overflow:"hidden",
+        // overflow:"hidden",
         // alignItems: "center",
         // justifyContent: "center",
+    },
+    cellContainer: {
+        flex: 1,
+        flexDirection: 'row',
     },
     icon: {
         width: 80,

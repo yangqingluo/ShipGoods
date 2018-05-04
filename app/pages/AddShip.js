@@ -49,7 +49,7 @@ export default class AddShip extends Component {
             {idKey:"ship_licence", name:"船舶国际证书", logo:require('../images/icon_blue.png'), disable:false, subName:"", onPress:this.cellSelected.bind(this, "ship_licence")},
         ]
 
-        this.areaTypes = ['取消', '沿海', '长江（可进川）', '长江（不可进川)'];
+        this.areaTypes = global.shipAreaTypes;
     }
 
 

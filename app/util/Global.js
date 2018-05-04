@@ -215,6 +215,14 @@ global.getShipStateText = function(state : Number) : String {
     }
 };
 
+global.shipAreaTypes = ['取消', '沿海', '长江（可进川）', '长江（不可进川)'];
+global.getShipAreaTypesText = function(area : Number) : String {
+    if (area < shipAreaTypes.length) {
+        return shipAreaTypes[area];
+    }
+    return "未知";
+};
+
 global.appAllGoods = [];
 global.appAllPortsFirst = [];
 global.appAllPortsSecond = [];

@@ -71,11 +71,19 @@ export default class DetailVC extends Component {
     onCellSelected = (info: Object) => {
         if (this.props.navigation.state.params.callBack !== null) {
             this.props.navigation.state.params.callBack(info.item);
+            this.props.navigation.goBack();
         }
-        this.props.navigation.goBack();
     }
 
     onCellEditBtnAction = (info: Object) => {
+        PublicAlert(JSON.stringify(info));
+    }
+
+    onCellLicenceBtnAction = (info: Object) => {
+        PublicAlert(JSON.stringify(info));
+    }
+
+    onCellPriceBtnAction = (info: Object) => {
         PublicAlert(JSON.stringify(info));
     }
 
@@ -85,6 +93,8 @@ export default class DetailVC extends Component {
                 info={info}
                 onPress={this.onCellSelected}
                 onEditPress={this.onCellEditBtnAction}
+                onLicencePress={this.onCellLicenceBtnAction}
+                onPricePress={this.onCellPriceBtnAction}
                 selected={false}
             />
         )
