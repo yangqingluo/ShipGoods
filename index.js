@@ -15,6 +15,7 @@ import MyShip from './app/pages/MyShip';
 import SelectPort from './app/components/SelectPortVC';
 import SelectPortSecond from './app/components/SelectPortSecond'
 import SelectEmptyTimeVC from './app/components/SelectEmptyTimeVC';
+import SelectPrice from './app/components/SelectPriceVC';
 import CustomSelect from './app/components/CustomSelect';
 import CustomSectionSelect from './app/components/CustomSectionSelect';
 
@@ -32,6 +33,7 @@ const MyNavigator = StackNavigator({
         CustomSelect:{screen: CustomSelect},
         CustomSectionSelect:{screen: CustomSectionSelect},
         SelectEmptyTimeVC:{screen: SelectEmptyTimeVC},
+        SelectPrice:{screen: SelectPrice},
     }
     , {
         navigationOptions: {

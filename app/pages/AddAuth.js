@@ -53,7 +53,7 @@ export default class DetailVC extends Component {
                 {idKey:"idcard", name:"上传联系人身份证", disable:false, logo:require('../images/icon_orange.png'), subName:"123"},
                 {idKey:"invoice", name:"可开发票类型", disable:false, logo:require('../images/icon_green.png'), onPress:this.cellSelected.bind(this, "invoice_type")},
             ]
-            :
+                :
             [
                 {idKey:"corporation", name:"公司名称", logo:require('../images/icon_blue.png'), disable:true},
                 {idKey:"name", name:"联系人姓名", logo:require('../images/icon_red.png'), disable:true},

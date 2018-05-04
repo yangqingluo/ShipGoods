@@ -47,18 +47,44 @@ export default class ReleaseVC extends Component {
 
             uploadOilSelectedList: [],
             downloadOilSelectedList: [],
-    }
-        this.config = [
-            {idKey:"ship_name", name:"船名", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectShip")},
-            {idKey:"upload_oil_list", name:"下载可运货品", logo:require('../images/icon_red.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectDownload")},
-            {idKey:"empty_port", name:"空船港", logo:require('../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectPort")},
-            {idKey:"empty_time",name:"空船期", logo:require('../images/icon_green.png'), disable:false, subName:"324", onPress:this.cellSelected.bind(this, "SelectEmptyTime")},
-            {idKey:"course", name:"可运航向", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectCourse")},
-            {idKey:"upload_oil_list", name:"上载货品", logo:require('../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectUpload")},
-        ]
+
+
+            tonnage: 0,//否 装载吨位
+            ton_section: 0, //否 吨位区间值
+            price: '',//否 单价
+            loading_port: null,//否 装货港
+            unloading_port: null, //否 卸货港
+            loading_time: new Date(), //否 发货时间
+            loading_delay: 0, //否 发货延迟
+            is_bargain: 0, //否 是否接收议价 0：是（默认） 1：否
+            clean_deley: 0, //否 完货后多少天结算 15/30/45/60
+            wastage: '', //否 损耗
+            goods: [], //否 货品（数组）
+            demurrage: 0, //否 滞期费
+        }
+
+        this.config = (userData.usertype === '1') ?
+            [
+                {idKey:"tonnage", name:"吨位", logo:require('../images/icon_blue.png'), disable:true, numeric:true},
+                {idKey:"price", name:"运价", logo:require('../images/icon_red.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectPrice")},
+                {idKey:"loading_port", name:"装货港", logo:require('../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectLoadingPort")},
+                {idKey:"uploading_port",name:"卸货港", logo:require('../images/icon_green.png'), disable:false, subName:"324", onPress:this.cellSelected.bind(this, "SelectUploadingPort")},
+                {idKey:"loading_time", name:"发货时间", logo:require('../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectLoadingTime")},
+                {idKey:"wastage", name:"损耗", logo:require('../images/icon_red.png'), disable:true, numeric:true},
+                {idKey:"demurrage", name:"滞期费", logo:require('../images/icon_blue.png'), disable:true, numeric:true},
+                {idKey:"clean_deley", name:"结算时间", logo:require('../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectCleanDeley")},
+            ]
+                :
+            [
+                {idKey:"ship_name", name:"船名", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectShip")},
+                {idKey:"download_oil_list", name:"下载可运货品", logo:require('../images/icon_red.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectDownload")},
+                {idKey:"empty_port", name:"空船港", logo:require('../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectPort")},
+                {idKey:"empty_time",name:"空船期", logo:require('../images/icon_green.png'), disable:false, subName:"324", onPress:this.cellSelected.bind(this, "SelectEmptyTime")},
+                {idKey:"course", name:"可运航向", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectCourse")},
+                {idKey:"upload_oil_list", name:"上载货品", logo:require('../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectUpload")},
+            ];
         this.areaTypes = ['取消', '南上', '北下', '上江', '下江', '运河'];
     }
-
 
     sureBtnClick=()=> {
         if (this.state.ship === null) {
@@ -102,6 +128,14 @@ export default class ReleaseVC extends Component {
                     date: this.state.empty_time,
                     delay: this.state.empty_delay,
                     callBack:this.callBackFromTimeVC.bind(this)
+                });
+        }
+        else if (key === "SelectPrice") {
+            this.props.navigation.navigate(
+                "SelectPrice",
+                {
+                    title: '选择运价',
+                    callBack:this.callBackFromPriceVC.bind(this)
                 });
         }
         else {
@@ -158,6 +192,12 @@ export default class ReleaseVC extends Component {
         this.setState({
             empty_time: backDate,
             empty_delay: backDelay,
+        })
+    }
+
+    callBackFromPriceVC(backData) {
+        this.setState({
+            ship: backData,
         })
     }
 
@@ -307,60 +347,33 @@ export default class ReleaseVC extends Component {
                 });
     }
 
-    subNameForIndex(index):String {
-        switch (index){
-            case 0:{
-                if (this.state.ship !== null) {
-                    return this.state.ship.ship_name;
-                }
-            }
-                break;
-
-            case 1:{
-                if (this.state.download_oil_list.length > 0) {
-                    return this.state.download_oil_list;
-                }
-            }
-                break;
-
-            case 2:{
-                if (this.state.empty_port !== null) {
-                    return this.state.empty_port.port_name;
-                }
-            }
-                break;
-
-            case 3:{
-                if (this.state.empty_time !== null) {
-                    return this.state.empty_time.Format("yyyy.MM.dd") + '+' + this.state.empty_delay + '天';
-                }
-            }
-                break;
-
-            case 4:{
-                if (this.state.course > 0) {
-                    return this.areaTypes[this.state.course];
-                }
-            }
-                break;
-
-            case 5:{
-                if (this.state.upload_oil_list.length > 0) {
-                    return this.state.upload_oil_list;
-                }
-            }
-                break;
-
-            default:
-                break;
+    renderSubNameForIndex(item, index) {
+        if (item.idKey === 'ship_name' && this.state.ship !== null) {
+            return this.state.ship.ship_name;
         }
+        else if (item.idKey === 'download_oil_list' && this.state.download_oil_list.length > 0) {
+            return this.state.download_oil_list;
+        }
+        else if (item.idKey === 'empty_port' && this.state.empty_port !== null) {
+            return this.state.empty_port.port_name;
+        }
+        else if (item.idKey === 'empty_time' && this.state.empty_time !== null) {
+            return this.state.empty_time.Format("yyyy.MM.dd") + '+' + this.state.empty_delay + '天';
+        }
+        else if (item.idKey === 'course' && this.state.course > 0) {
+            return this.areaTypes[this.state.course];
+        }
+        else if (item.idKey === 'upload_oil_list' && this.state.upload_oil_list.length > 0) {
+            return this.state.upload_oil_list;
+        }
+
         return '';
     }
 
     _renderListItem() {
         return this.config.map((item, i) => {
             return (<AddAuthItem key={i} {...item}
-                                 subName = {this.subNameForIndex(i)}
+                                 subName = {this.renderSubNameForIndex(item, i)}
                                  callback={this.textInputChanged.bind(this)}>
             </AddAuthItem>);
         })

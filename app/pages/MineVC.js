@@ -23,8 +23,6 @@ class RightHeader extends Component {
         super(props)
     }
     onLogoutBtnPress = () => {
-        // PublicAlert(JSON.stringify(global.userData));
-        // PublicAlert(global.userData.usertype);
         // 删除单个数据
         storage.remove({
             key: 'userData'
@@ -65,7 +63,7 @@ export default class MineVC extends Component {
                 {logo:require('../images/icon_colle.png'), name:"我的收藏", onPress:this.goPage.bind(this, "我的收藏")},
                 {logo:require('../images/icon_share.png'), name:"分享到好友", subName:"", onPress:this.goPage.bind(this, "分享到好友")},
                 {logo:require('../images/icon_share.png'), name:"一键客服", subName:"", onPress:this.goPage.bind(this, "Call")},
-                {logo:require('../images/icon_s.png'), name:"更多设置", subName:"", onPress:this.goPage.bind(this, "更多设置")},
+                {logo:require('../images/icon_s.png'), name:"更多设置", subName:"", onPress:this.goPage.bind(this, "MoreSettings")},
             ]
                 :
             [
@@ -74,7 +72,7 @@ export default class MineVC extends Component {
                 {logo:require('../images/icon_colle.png'), name:"我的收藏", onPress:this.goPage.bind(this, "我的收藏")},
                 {logo:require('../images/icon_share.png'), name:"分享到好友", subName:"", onPress:this.goPage.bind(this, "分享到好友")},
                 {logo:require('../images/icon_share.png'), name:"一键客服", subName:"", onPress:this.goPage.bind(this, "Call")},
-                {logo:require('../images/icon_s.png'), name:"更多设置", subName:"", onPress:this.goPage.bind(this, "更多设置")},
+                {logo:require('../images/icon_s.png'), name:"更多设置", subName:"", onPress:this.goPage.bind(this, "MoreSettings")},
             ];
     }
     goPage(key, data = {}){
@@ -85,6 +83,13 @@ export default class MineVC extends Component {
         else if (key === 'MyShip') {
             navigate(key, { title: '我的船队', callBack: null});
         }
+        // else if (key === 'MoreSettings') {
+        //     this.props.navigation.navigate(
+        //         "SelectPrice",
+        //         {
+        //             title: '选择运价',
+        //         });
+        // }
         else {
             navigate('DetailVC', { title: key, des:'我是返回点击我' });
         }

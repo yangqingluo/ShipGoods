@@ -6,7 +6,8 @@ import {
     TouchableOpacity,
     FlatList,
 } from 'react-native';
-import ShipCell from '../components/ShipCell'
+import ShipCell from '../components/ShipCell';
+import ListLoadFooter from '../components/ListLoadFooter';
 
 export default class DetailVC extends Component {
     //接收上一个页面传过来的title显示出来
@@ -27,6 +28,8 @@ export default class DetailVC extends Component {
         this.state = {
             dataList: [],
             refreshing: false,
+            showFooter:0,
+            page: 1,
         }
     }
 
@@ -42,28 +45,59 @@ export default class DetailVC extends Component {
 
     requestData = () => {
         this.setState({refreshing: true});
-        this.requestRecommend();
+        this.requestRecommend(true);
     }
 
-    requestRecommend = async () => {
-        let data = {page:0, state:2};
+    loadMoreData() {
+        if (!this.state.refreshing && this.state.showFooter === 0) {
+            if (this.state.dataList.length === 0) {
+                return;
+            }
+            if (this.state.page === 1) {
+                return;
+            }
+            this.setState({showFooter:2});
+            this.requestRecommend(false);
+        }
+    }
+
+    requestRecommend = (isReset) => {
+        if (isReset) {
+            this.state.page = 1;
+        }
+        let data = {page: this.state.page, state:2};
         NetUtil.post(appUrl + 'index.php/Mobile/Ship/get_my_ship/', data)
             .then(
                 (result)=>{
                     if (result.code === 0) {
+                        let list = [];
+                        if (!isReset) {
+                            list = list.concat(this.state.dataList);
+                        }
+                        list = list.concat(result.data);
+                        let footer = 0;
+                        if (result.data.length === 0) {
+                            footer = 1;
+                        }
+
                         this.setState({
-                            dataList: result.data,
+                            page: this.state.page + 1,
+                            dataList: list,
                             refreshing: false,
+                            showFooter: footer,
                         })
+                        // PublicAlert(this.state.showFooter + '');
                     }
                     else {
                         this.setState({
                             refreshing: false,
+                            showFooter: 0,
                         })
                     }
                 },(error)=>{
                     this.setState({
                         refreshing: false,
+                        showFooter: 0,
                     })
                 });
     }
@@ -104,6 +138,10 @@ export default class DetailVC extends Component {
         return '' + index;
     }
 
+    renderFooter(){
+        return <ListLoadFooter showFooter={this.state.showFooter}/>;
+    }
+
     render() {
         return (
             <View style={appStyles.container}>
@@ -113,10 +151,15 @@ export default class DetailVC extends Component {
                     renderItem={this.renderCell}
 
                     keyExtractor={this.keyExtractor}
-                    onRefresh={this.requestData}
-                    refreshing={this.state.refreshing}
                     ItemSeparatorComponent={global.renderSeparator}
                     // ListHeaderComponent={this.renderHeader}
+
+                    onRefresh={this.requestData}
+                    refreshing={this.state.refreshing}
+
+                    ListFooterComponent={this.renderFooter.bind(this)}
+                    onEndReached={this.loadMoreData.bind(this)}
+                    onEndReachedThreshold={0}
                 />
             </View>
         );
