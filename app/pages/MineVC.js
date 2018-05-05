@@ -16,7 +16,6 @@ import Item from '../components/Item'
 import StarScore from '../components/StarScore'
 import Communications from '../util/AKCommunications';
 import px2dp from '../util';
-let {width, height} = Dimensions.get('window')
 
 class RightHeader extends Component {
     constructor(props) {
@@ -126,7 +125,7 @@ export default class MineVC extends Component {
 
     _renderHeader() {
         let authed = (global.userData.authstate === '1');
-        return <View style={{minHeight: height - 64 - px2dp(46), paddingBottom: 100, backgroundColor: "#fff"}}>
+        return <View style={{minHeight: screenHeight - 64 - px2dp(46), paddingBottom: 100, backgroundColor: "#fff"}}>
             <TouchableWithoutFeedback onPress={this.goProfile.bind(this)}>
                 <View style={styles.userHead}>
                     <View style={{flex: 1,flexDirection: "row"}}>

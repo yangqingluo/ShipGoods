@@ -8,7 +8,6 @@ import {
     TouchableOpacity,
     Dimensions
 } from 'react-native'
-const {width,height} =Dimensions.get('window')
 
 export default class MyBottomSheet extends Component{
     static propTypes={
@@ -91,7 +90,7 @@ const styles = StyleSheet.create({
         justifyContent:'flex-end',
         alignItems:'center',
         alignSelf:'stretch',
-        width:width,
+        width:screenWidth,
     },
     itemContainer:{
         marginLeft:15,
@@ -103,7 +102,7 @@ const styles = StyleSheet.create({
         alignItems:'center',
     },
     actionItem:{
-        width:width-30,
+        width:screenWidth-30,
         height:45,
         alignItems:'center',
         justifyContent:'center',

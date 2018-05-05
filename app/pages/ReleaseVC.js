@@ -17,9 +17,6 @@ import px2dp from "../util";
 import {imagePickerOptions} from "../util/Global";
 import Toast, {DURATION} from "react-native-easy-toast";
 
-let {width, height} = Dimensions.get('window');
-
-
 export default class ReleaseVC extends Component {
     static navigationOptions = ({ navigation }) => ({
         headerTitle: '发布',

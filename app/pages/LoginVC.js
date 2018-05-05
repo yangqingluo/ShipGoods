@@ -16,6 +16,7 @@ import {
 import PropTypes from 'prop-types';
 import Toast, {DURATION} from 'react-native-easy-toast';
 import Spinner from 'react-native-spinkit';
+import px2dp from "../util";
 
 const checkNum = (num) => {
     if (num) {
@@ -237,8 +238,8 @@ const styles = StyleSheet.create({
     },
     
     cfmButton: {
-        marginTop: Platform.OS === 'ios' ? 260 : 360,
-        marginBottom: 0,
+        // marginTop: Platform.OS === 'ios' ? 260 : 360,
+        // marginBottom: 0,
         width: 137,
         height: 59,
         // backgroundColor: appData.appBlueColor,
@@ -247,6 +248,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',
+        bottom: px2dp(60),
+        position: 'absolute',
     },
 
     cfmButtonImage: {
@@ -272,7 +275,8 @@ const styles = StyleSheet.create({
     },
     backBtn: {
         flexDirection: 'row',
-        marginTop: 15,
+        bottom: px2dp(20),
+        position: 'absolute',
     },
     backTxt: {
         color: appData.appBlueColor,

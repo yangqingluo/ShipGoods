@@ -18,8 +18,6 @@ import Button from '../components/Button'
 import {imagePickerOptions} from "../util/Global";
 import Toast, {DURATION} from "react-native-easy-toast";
 
-let {width, height} = Dimensions.get('window')
-
 export default class DetailVC extends Component {
     static navigationOptions = ({ navigation }) => (
         {
@@ -291,7 +289,7 @@ export default class DetailVC extends Component {
                 <ScrollView style={styles.scrollView}>
                     {this._renderListItem()}
                 </ScrollView>
-                <View style={{position: "absolute", bottom: 20, width:width, height:40, justifyContent: "center", alignItems: "center"}}>
+                <View style={{position: "absolute", bottom: 20, width:screenWidth, height:40, justifyContent: "center", alignItems: "center"}}>
                     <Button style={{ width:90, height:40, borderRadius: 20, overflow:"hidden"}} onPress={this.submit.bind(this)}>
                         <View style={{flex: 1, height: 40, backgroundColor: appData.appBlueColor, alignItems: "center", justifyContent: "center"}}>
                             <Text style={{color: "#fff"}}>{"提交"}</Text>

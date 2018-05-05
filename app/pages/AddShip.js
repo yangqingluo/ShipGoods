@@ -16,7 +16,6 @@ import px2dp from "../util";
 import Button from '../components/Button'
 import {imagePickerOptions} from "../util/Global";
 import Toast, {DURATION} from "react-native-easy-toast";
-let {width, height} = Dimensions.get('window')
 
 export default class AddShip extends Component {
     static navigationOptions = ({ navigation }) => (
@@ -285,9 +284,9 @@ export default class AddShip extends Component {
                 <ScrollView style={styles.scrollView}>
                     {this._renderListItem()}
                 </ScrollView>
-                <View style={{position: "absolute", bottom: 20, width:width, height:40, justifyContent: "center", alignItems: "center"}}>
-                    <Button style={{ width:90, height:40, borderRadius: 20, overflow:"hidden"}} onPress={this.submit.bind(this)}>
-                        <View style={{flex: 1, height: 40, backgroundColor: appData.appBlueColor, alignItems: "center", justifyContent: "center"}}>
+                <View style={{position: "absolute", bottom: 20, height:px2dp(45), justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
+                    <Button style={{ width:px2dp(123), height:px2dp(45), borderRadius: px2dp(22.5), overflow:"hidden"}} onPress={this.submit.bind(this)}>
+                        <View style={{flex: 1, backgroundColor: appData.appBlueColor, alignItems: "center", justifyContent: "center"}}>
                             <Text style={{color: "#fff"}}>{"提交"}</Text>
                         </View>
                     </Button>
