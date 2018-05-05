@@ -160,11 +160,13 @@ let appData = {
     appRedColor: '#ff4848',
     appYellowColor: '#f09340',
     appTextColor: '#000',
-    appSecondaryTextColor: '#adadad',
+    appLightTextColor: '#464646',
+    appSecondaryTextColor: '#ababab',
     appThirdTextColor: '#c3c4c4',
     appViewColor: '#eee',
     appBorderColor: '#e0e0e0',
-    appSeparatorColor: 'rgba(192,192,192,0.6)',
+    appSeparatorColor: '#c0c0c099',
+    appSeparatorLightColor: '#c0c0c020',
 
     appItemPaddingLeft: 16,
 }

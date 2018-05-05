@@ -13,10 +13,11 @@ import {
     TouchableOpacity,
 } from 'react-native'
 
-import Swiper from 'react-native-swiper'
-import ScrollableTabView,{ScrollableTabBar} from 'react-native-scrollable-tab-view'
-import InfoCard from '../components/InfoCard'
+import Swiper from 'react-native-swiper';
+import ScrollableTabView,{ScrollableTabBar} from 'react-native-scrollable-tab-view';
+import InfoCard from '../components/InfoCard';
 import TabTop from '../components/TabTop';
+import HomeListGoodsVC from './Home/HomeGoodsVC';
 
 
 //顶部右边的图标，这段代码不可复用，但是可以复制修改使用。
@@ -130,19 +131,7 @@ export default class HomeVC extends Component {
                     tabBarActiveTextColor={appData.appBlueColor}
                     //onChangeTab={this.onChangeTabs}>
                 >
-                    <View>
-                        <ScrollView>
-                            <InfoCard Navg={this.props.navigation}/>
-
-                            <InfoCard Navg={this.props.navigation} />
-
-                            <InfoCard Navg={this.props.navigation} />
-
-                            <InfoCard Navg={this.props.navigation} />
-
-                            <InfoCard Navg={this.props.navigation} />
-                        </ScrollView>
-                    </View>
+                    <HomeListGoodsVC />
                     <View>
                         <ScrollView>
                             <InfoCard Navg={this.props.navigation} />
