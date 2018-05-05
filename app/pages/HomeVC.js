@@ -18,6 +18,8 @@ import ScrollableTabView,{ScrollableTabBar} from 'react-native-scrollable-tab-vi
 import InfoCard from '../components/InfoCard';
 import TabTop from '../components/TabTop';
 import HomeListGoodsVC from './Home/HomeGoodsVC';
+import HomeListOrderVC from './Home/HomeOrderVC';
+import px2dp from "../util";
 
 
 //顶部右边的图标，这段代码不可复用，但是可以复制修改使用。
@@ -131,20 +133,38 @@ export default class HomeVC extends Component {
                     tabBarActiveTextColor={appData.appBlueColor}
                     //onChangeTab={this.onChangeTabs}>
                 >
-                    <HomeListGoodsVC />
-                    <View>
-                        <ScrollView>
-                            <InfoCard Navg={this.props.navigation} />
+                    {isShipOwner() ?
+                        <View>
+                            <ScrollView>
+                                <InfoCard Navg={this.props.navigation} />
 
-                            <InfoCard Navg={this.props.navigation} />
+                                <InfoCard Navg={this.props.navigation} />
 
-                            <InfoCard Navg={this.props.navigation} />
+                                <InfoCard Navg={this.props.navigation} />
 
-                            <InfoCard Navg={this.props.navigation} />
+                                <InfoCard Navg={this.props.navigation} />
 
-                            <InfoCard Navg={this.props.navigation} />
-                        </ScrollView>
-                    </View>
+                                <InfoCard Navg={this.props.navigation} />
+                            </ScrollView>
+                        </View>
+                    :
+                        <HomeListGoodsVC />}
+                    {isShipOwner() ?
+                        <View>
+                            <ScrollView>
+                                <InfoCard Navg={this.props.navigation} />
+
+                                <InfoCard Navg={this.props.navigation} />
+
+                                <InfoCard Navg={this.props.navigation} />
+
+                                <InfoCard Navg={this.props.navigation} />
+
+                                <InfoCard Navg={this.props.navigation} />
+                            </ScrollView>
+                        </View>
+                        :
+                        <HomeListOrderVC />}
                 </ScrollableTabView>
 
 
@@ -188,7 +208,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         flex: 1,
 
-        padding: 10,
+        // padding: 10,
         //borderWidth: 1,
         backgroundColor: '#fff',
     },
@@ -214,7 +234,7 @@ const styles = StyleSheet.create({
     tabView: {
         marginTop: -240,
         //flex: 0,
-        //backgroundColor: '#00f',
+        // backgroundColor: appData.appViewColor,
     }
 })
 

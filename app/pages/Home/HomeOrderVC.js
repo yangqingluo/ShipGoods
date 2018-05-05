@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
     FlatList,
 } from 'react-native';
-import GoodsCell from './HomeGoodsCell';
+import OrderCell from './HomeOrderCell';
 import ListLoadFooter from '../../components/ListLoadFooter';
 
 export default class HomeGoodsVC extends Component {
@@ -47,7 +47,7 @@ export default class HomeGoodsVC extends Component {
             this.state.page = 1;
         }
         let data = {page: this.state.page};
-        NetUtil.post(appUrl + 'index.php/Mobile/Goods/goods_index/', data)
+        NetUtil.post(appUrl + 'index.php/Mobile/Goods/get_my_goods/', data)
             .then(
                 (result)=>{
                     if (result.code === 0) {
@@ -89,7 +89,7 @@ export default class HomeGoodsVC extends Component {
 
     renderCell = (info: Object) => {
         return (
-            <GoodsCell
+            <OrderCell
                 info={info}
                 onPress={this.onCellSelected}
             />
@@ -108,7 +108,7 @@ export default class HomeGoodsVC extends Component {
         return (
             <View style={styles.container}>
                 <FlatList
-                    style={{flex:1, margin: 10}}
+                    style={{flex:1}}
                     data={this.state.dataList}
                     renderItem={this.renderCell}
 
