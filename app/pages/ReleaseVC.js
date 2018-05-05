@@ -85,7 +85,7 @@ export default class ReleaseVC extends Component {
     }
 
     sureBtnClick=()=> {
-        if (isShipOwner) {
+        if (isShipOwner()) {
             if (this.state.ship === null) {
                 this.refToast.show("请选择船舶");
             }
@@ -128,8 +128,6 @@ export default class ReleaseVC extends Component {
                     course: this.state.course,
                     remark: 'from_ios',
                 };
-
-                // PublicAlert(JSON.stringify(data));
 
                 NetUtil.post(appUrl + 'index.php/Mobile/Ship/add_ship_task/', data)
                     .then(

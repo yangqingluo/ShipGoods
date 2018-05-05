@@ -1,48 +1,40 @@
 import React, { Component } from 'react';
 
 import {
-    Platform,
     Image,
     Text,
     TextInput,
     View,
     StyleSheet,
-    ToastAndroid,
     Button,
     Alert,
-    Picker,
     TouchableHighlight,
     ScrollView,
     TouchableOpacity,
 } from 'react-native'
 
-import PropTypes from 'prop-types';
-
 import Swiper from 'react-native-swiper'
 import ScrollableTabView,{ScrollableTabBar} from 'react-native-scrollable-tab-view'
-
 import InfoCard from '../components/InfoCard'
-
-//顶部tab样式分离。
 import TabTop from '../components/TabTop';
 
-
-const tabTitles = ['空船', '我的货'];
 
 //顶部右边的图标，这段代码不可复用，但是可以复制修改使用。
 class RightHeader extends Component {
     constructor(props) {
-        super(props)
-    }
+        super(props);
+        this.state = {
+
+        };
+    };
     onSortBtnPress = () => {
-        // Alert.alert("排序");
         const { navigate } = this.props.navigation;
         navigate('DetailVC', { title: '详情',des:'我是返回点击我' });
-    }
+    };
     onScreenBtnPress = () => {
         Alert.alert("筛选");
 
-    }
+    };
     render() {
         return (
             <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
@@ -69,38 +61,29 @@ class RightHeader extends Component {
 }
 
 export default class HomeVC extends Component {
-    static propTypes = {
-        // sendChkCode: PropTypes.string,
-        // phoneNumPlh: PropTypes.string,
-        // ispassword: PropTypes.bool
-    }
-
-    static defaultProps = {
-        //devicetype: '',
-    }
-    constructor(props) {
-        super(props)
-        this.state = {
-            //phoneNum: "",
-            
-        }
-    }
-
     static navigationOptions = ({ navigation }) => ({
         headerLeft: <Text style={{marginLeft: 10}}>友船友货</Text>,
         headerRight: <RightHeader navigation={navigation} />,
         // headerTitle: <Text>物流圈</Text>,
         // title: 'Home',
-        tabBarLabel: '物流圈',
+        tabBarLabel: isShipOwner() ? '物流圈' : '空船',
         // tabBarIcon:<Image source={require("../app/images/tabGoods.png")} style={{width: 25, height:25}}></Image>,
     });
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            //phoneNum: "",
+
+        }
+    }
 
     onXxxBtnPress = () => {
         Alert.alert('xx按钮被按下！');
     }
 
     render() {
-        var { style } = this.props
+        let tabTitles = isShipOwner() ? ['等待报价', '已报价'] : ['空船', '我的货'];
         return (
             <View style={styles.container}>
                 {/* <View style={styles.swiperWrap}> */}
@@ -109,8 +92,8 @@ export default class HomeVC extends Component {
                     showsButtons={false}
                     autoplay={true}
                     //隐藏小圆点
-                    dot={<View></View>}
-                    activeDot={<View></View>}
+                    dot={<View />}
+                    activeDot={<View />}
                     >
                         <View style={styles.swiperView}>
                             <Image
@@ -137,17 +120,17 @@ export default class HomeVC extends Component {
 
                 <ScrollableTabView 
                     renderTabBar={() =>
-                        <TabTop
-                            tabNames={tabTitles}
+                        <TabTop tabNames={tabTitles}
                             //FIXME:tabIconNames={tabIcon}
                             //FIXME:selectedTabIconNames={tabSelectedIcon}
                             />}
                     
                     style={styles.tabView}
                     tabBarPosition='top'
+                    tabBarActiveTextColor={appData.appBlueColor}
                     //onChangeTab={this.onChangeTabs}>
                 >
-                    <View tabLabel="1">
+                    <View>
                         <ScrollView>
                             <InfoCard Navg={this.props.navigation}/>
 
@@ -160,7 +143,7 @@ export default class HomeVC extends Component {
                             <InfoCard Navg={this.props.navigation} />
                         </ScrollView>
                     </View>
-                    <View tabLabel="2">
+                    <View>
                         <ScrollView>
                             <InfoCard Navg={this.props.navigation} />
 
