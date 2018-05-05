@@ -39,7 +39,7 @@ export default class ReleaseVC extends Component {
             empty_port: null,//空船港
             empty_time: new Date(),//空船期
             empty_delay: 0,//空船延迟
-            course: '',//运输航向 1：南上 2：北下 3：上江 4：下江 5：运河（多选，用“##”隔开）
+            course: 0,//运输航向 1：南上 2：北下 3：上江 4：下江 5：运河（多选，用“##”隔开）
             remark: '',//备注
 
             uploadOilSelectedList: [],
@@ -85,11 +85,67 @@ export default class ReleaseVC extends Component {
     }
 
     sureBtnClick=()=> {
-        if (this.state.ship === null) {
-            this.refToast.show("请选择船舶");
-        }
-        else {
+        if (isShipOwner) {
+            if (this.state.ship === null) {
+                this.refToast.show("请选择船舶");
+            }
+            else if (this.state.downloadOilSelectedList.length === 0) {
+                this.refToast.show("请选择下载货品");
+            }
+            else if (this.state.empty_port === null) {
+                this.refToast.show("请选择空船港");
+            }
+            else if (this.state.empty_time === null) {
+                this.refToast.show("请选择空船期");
+            }
+            else if (this.state.course === 0) {
+                this.refToast.show("请选择可运航向");
+            }
+            else if (this.state.uploadOilSelectedList.length === 0) {
+                this.refToast.show("请选择上载货品");
+            }
+            else {
+                let downloadList = this.state.downloadOilSelectedList.map(
+                    (info) => {
+                        return {goods_id: info.goods_id};
+                    }
+                )
 
+                let uploadList = this.state.uploadOilSelectedList.map(
+                    (info) => {
+                        return {goods_id: info.goods_id};
+                    }
+                )
+
+                let data = {
+                    ship_id: this.state.ship.ship_id,
+                    upload_oil_list: uploadList,
+                    download_oil_list: downloadList,
+                    empty_port: this.state.empty_port.port_id,
+                    empty_port_name: this.state.empty_port.port_name,
+                    empty_time: this.state.empty_time.Format("yyyy-MM-dd"),
+                    empty_delay: this.state.empty_delay,
+                    course: this.state.course,
+                    remark: 'from_ios',
+                };
+
+                // PublicAlert(JSON.stringify(data));
+
+                NetUtil.post(appUrl + 'index.php/Mobile/Ship/add_ship_task/', data)
+                    .then(
+                        (result)=>{
+                            if (result.code === 0) {
+                                PublicAlert(result.message,'',
+                                    [{text:"确定"}]
+                                );
+                            }
+                            else {
+                                this.refToast.show(result.message);
+                            }
+                        },(error)=>{
+                            this.refToast.show(error);
+                        });
+            }
         }
     };
 
@@ -292,7 +348,7 @@ export default class ReleaseVC extends Component {
                     title: '上载货品',
                     dataList: appAllGoods,
                     selectedList:this.state.uploadOilSelectedList,
-                    maxSelectCount:1,
+                    maxSelectCount:5,
                     callBack:this.callBackFromUpGoodsVC.bind(this)
                 }
             );

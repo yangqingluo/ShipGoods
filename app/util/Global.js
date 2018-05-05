@@ -181,9 +181,10 @@ global.appData = appData;
 global.appUrl = 'http://shiphire.com.cn/';//服务器url
 global.NetUtil = NetUtil;
 global.appDeviceId = DeviceInfo.getUniqueID();
-global.dismissKeyboard = require('dismissKeyboard');
 global.screenWidth = width;
 global.screenHeight = height;
+
+global.dismissKeyboard = require('dismissKeyboard');
 global.renderSeparator = () => {
     return <View style={{height:px2dp(0.5),backgroundColor:appData.appSeparatorColor}}/>;
 }
@@ -217,7 +218,7 @@ global.getShipStateText = function(state : Number) : String {
     }
 };
 
-global.shipAreaTypes = ['取消', '沿海', '长江（可进川）', '长江（不可进川)'];
+global.shipAreaTypes = ['取消', '沿海', '内河（可进川）', '内河（不可进川)'];
 global.getShipAreaTypesText = function(area : Number) : String {
     if (area < shipAreaTypes.length) {
         return shipAreaTypes[area];
@@ -225,13 +226,18 @@ global.getShipAreaTypesText = function(area : Number) : String {
     return "未知";
 };
 
+global.isShipOwner = function() : boolean {
+    if (global.userData !== null) {
+        return global.userData.usertype === '2';
+    }
+    return false;
+} ;
+
 global.appAllGoods = [];
 global.appAllPortsFirst = [];
 global.appAllPortsSecond = [];
 
-// export function judgeMobilePhone(phoneNum):boolean {
-//     return phoneNum.length === 11;
-// }
+
 
 export const imagePickerOptions = {
     quality: 1.0,
