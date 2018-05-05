@@ -166,10 +166,10 @@ export default class AddShip extends Component {
                             );
                         }
                         else {
-                            this.refToast.show(result.message, DURATION.LENGTH_SHORT);
+                            this.refToast.show(result.message);
                         }
                     },(error)=>{
-                        this.refToast.show(error, DURATION.LENGTH_SHORT);
+                        this.refToast.show(error);
                     });
         }
     }
