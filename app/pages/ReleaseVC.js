@@ -23,7 +23,7 @@ export default class ReleaseVC extends Component {
         tabBarLabel: '发布',
         headerRight: <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
             <TouchableOpacity
-                onPress={navigation.state.params.clickParams}
+                onPress={navigation.state.params.clickSureBtn}
             >
                 <Text style={{marginRight: 10, color: appData.appBlueColor}}>{'  提交  '}</Text>
             </TouchableOpacity>
@@ -84,71 +84,82 @@ export default class ReleaseVC extends Component {
         this.cleanDeleyTypes = ['取消', '15', '30', '45', '60'];
     }
 
+    componentDidMount() {
+        this.props.navigation.setParams({clickSureBtn:this.sureBtnClick});
+    }
+
     sureBtnClick=()=> {
         if (isShipOwner()) {
-            if (this.state.ship === null) {
-                this.refToast.show("请选择船舶");
-            }
-            else if (this.state.downloadOilSelectedList.length === 0) {
-                this.refToast.show("请选择下载货品");
-            }
-            else if (this.state.empty_port === null) {
-                this.refToast.show("请选择空船港");
-            }
-            else if (this.state.empty_time === null) {
-                this.refToast.show("请选择空船期");
-            }
-            else if (this.state.course === 0) {
-                this.refToast.show("请选择可运航向");
-            }
-            else if (this.state.uploadOilSelectedList.length === 0) {
-                this.refToast.show("请选择上载货品");
-            }
-            else {
-                let downloadList = this.state.downloadOilSelectedList.map(
-                    (info) => {
-                        return {goods_id: info.goods_id};
-                    }
-                )
-
-                let uploadList = this.state.uploadOilSelectedList.map(
-                    (info) => {
-                        return {goods_id: info.goods_id};
-                    }
-                )
-
-                let data = {
-                    ship_id: this.state.ship.ship_id,
-                    upload_oil_list: uploadList,
-                    download_oil_list: downloadList,
-                    empty_port: this.state.empty_port.port_id,
-                    empty_port_name: this.state.empty_port.port_name,
-                    empty_time: this.state.empty_time.Format("yyyy-MM-dd"),
-                    empty_delay: this.state.empty_delay,
-                    course: this.state.course,
-                    remark: 'from_ios',
-                };
-
-                NetUtil.post(appUrl + 'index.php/Mobile/Ship/add_ship_task/', data)
-                    .then(
-                        (result)=>{
-                            if (result.code === 0) {
-                                PublicAlert(result.message,'',
-                                    [{text:"确定"}]
-                                );
-                            }
-                            else {
-                                this.refToast.show(result.message);
-                            }
-                        },(error)=>{
-                            this.refToast.show(error);
-                        });
-            }
+            this.toReleaseForShipOwner();
+        }
+        else {
+            this.toReleaseForGoodsOwner();
         }
     };
 
-    componentDidMount() {
-        this.props.navigation.setParams({clickParams:this.sureBtnClick});
+    toReleaseForShipOwner() {
+        if (this.state.ship === null) {
+            this.refToast.show("请选择船舶");
+        }
+        else if (this.state.downloadOilSelectedList.length === 0) {
+            this.refToast.show("请选择下载货品");
+        }
+        else if (this.state.empty_port === null) {
+            this.refToast.show("请选择空船港");
+        }
+        else if (this.state.empty_time === null) {
+            this.refToast.show("请选择空船期");
+        }
+        else if (this.state.course === 0) {
+            this.refToast.show("请选择可运航向");
+        }
+        else if (this.state.uploadOilSelectedList.length === 0) {
+            this.refToast.show("请选择上载货品");
+        }
+        else {
+            let downloadList = this.state.downloadOilSelectedList.map(
+                (info) => {
+                    return {goods_id: info.goods_id};
+                }
+            )
+
+            let uploadList = this.state.uploadOilSelectedList.map(
+                (info) => {
+                    return {goods_id: info.goods_id};
+                }
+            )
+
+            let data = {
+                ship_id: this.state.ship.ship_id,
+                upload_oil_list: uploadList,
+                download_oil_list: downloadList,
+                empty_port: this.state.empty_port.port_id,
+                empty_port_name: this.state.empty_port.port_name,
+                empty_time: this.state.empty_time.Format("yyyy-MM-dd"),
+                empty_delay: this.state.empty_delay,
+                course: this.state.course,
+                remark: 'from_ios',
+            };
+
+            NetUtil.post(appUrl + 'index.php/Mobile/Ship/add_ship_task/', data)
+                .then(
+                    (result)=>{
+                        if (result.code === 0) {
+                            PublicAlert(result.message,'',
+                                [{text:"确定"}]
+                            );
+                        }
+                        else {
+                            this.refToast.show(result.message);
+                        }
+                    },(error)=>{
+                        this.refToast.show(error);
+                    });
+        }
+    }
+
+    toReleaseForGoodsOwner() {
+        this.refToast.show('精彩功能，敬请期待');
     }
 
     cellSelected(key, data = {}){

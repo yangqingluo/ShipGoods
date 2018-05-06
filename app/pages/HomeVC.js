@@ -31,12 +31,10 @@ class RightHeader extends Component {
         };
     };
     onSortBtnPress = () => {
-        const { navigate } = this.props.navigation;
-        navigate('DetailVC', { title: '详情',des:'我是返回点击我' });
+        this.props.navigation.navigate('DetailVC', { title: '详情',des:'我是返回点击我' });
     };
     onScreenBtnPress = () => {
-        Alert.alert("筛选");
-
+        this.props.navigation.navigate('HomeFilter', { title: '筛选条件'});
     };
     render() {
         return (
@@ -66,23 +64,25 @@ class RightHeader extends Component {
 export default class HomeVC extends Component {
     static navigationOptions = ({ navigation }) => ({
         headerLeft: <Text style={{marginLeft: 10}}>友船友货</Text>,
-        headerRight: <RightHeader navigation={navigation} />,
-        // headerTitle: <Text>物流圈</Text>,
-        // title: 'Home',
+        headerRight: <RightHeader navigation={navigation}/>,
         tabBarLabel: isShipOwner() ? '物流圈' : '空船',
-        // tabBarIcon:<Image source={require("../app/images/tabGoods.png")} style={{width: 25, height:25}}></Image>,
     });
 
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             //phoneNum: "",
 
         }
     }
 
-    onXxxBtnPress = () => {
-        Alert.alert('xx按钮被按下！');
+    componentDidMount() {
+        // this.props.navigation.setParams({onSortBtnAction: this.onSortBtnAction});
+        // PublicAlert(JSON.stringify(this.props.navigation.state));
+    }
+
+    onSortBtnAction() {
+
     }
 
     render() {

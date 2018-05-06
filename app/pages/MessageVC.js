@@ -3,6 +3,7 @@ import {
     AppRegistry,
     StyleSheet,
     Text,
+    Button,
     View,
     TouchableOpacity
 } from 'react-native';
@@ -13,6 +14,7 @@ export default class MessageVC extends Component {
         tabBarLabel: '消息',
         headerLeft: <Text style={{marginLeft: 10}}>友船友货</Text>,
     };
+
     render() {
         const { navigate } = this.props.navigation;
         return (

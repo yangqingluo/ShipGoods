@@ -28,7 +28,7 @@ const MainTabNavigator = TabNavigator(
     },
     {
         navigationOptions: ({ navigation }) => ({
-            tabBarIcon:({focused,tintColor}) => {
+            tabBarIcon:({focused, tintColor}) => {
                 const { routeName } = navigation.state;
                     let iconPath;
                     let isRelease = false;
@@ -91,6 +91,7 @@ const MainTabNavigator = TabNavigator(
             //         </Image>;
             // },
         }),
+        // initialRouteName: 'ReleaseVC',
         tabBarComponent: TabBarBottom,
         tabBarPosition: 'bottom',
         lazy: true,

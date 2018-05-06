@@ -90,7 +90,7 @@ const GlobalAlert = (...params) => {
 const resetAction = (routeName) => NavigationActions.reset({
     index: 0,
     actions: [
-        NavigationActions.navigate({ routeName: routeName,  params:{}})
+        NavigationActions.navigate({routeName: routeName, params:{}})
     ]
 });
 
