@@ -19,7 +19,8 @@ import InfoCard from '../components/InfoCard';
 import TabTop from '../components/TabTop';
 import HomeListGoodsVC from './Home/HomeGoodsVC';
 import HomeListOrderVC from './Home/HomeOrderVC';
-import px2dp from "../util";
+import SideMenu from '../components/SideMenu'
+import Menu from './Home/HomeMenu';
 
 
 //顶部右边的图标，这段代码不可复用，但是可以复制修改使用。
@@ -36,6 +37,7 @@ class RightHeader extends Component {
     onScreenBtnPress = () => {
         appHomeVC.onFilterBtnAction();
     };
+
     render() {
         return (
             <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
@@ -70,10 +72,11 @@ export default class HomeVC extends Component {
 
     constructor(props) {
         super(props);
+        this.toggle = this.toggle.bind(this);
         this.state = {
-            //phoneNum: "",
-
-        }
+            isOpen: false,
+            selectedItem: 'About',
+        };
     }
 
     componentDidMount() {
@@ -87,21 +90,43 @@ export default class HomeVC extends Component {
     }
 
     onFilterBtnAction() {
-        this.props.navigation.navigate('HomeFilter', { title: '筛选条件'});
+        // this.props.navigation.navigate('HomeFilter', { title: '筛选条件'});
+        this.toggle();
     }
+
+    toggle() {
+        this.setState({
+            isOpen: !this.state.isOpen,
+        });
+    }
+
+    updateMenuState(isOpen) {
+        this.setState({ isOpen });
+    }
+
+    onMenuItemSelected = item =>
+        this.setState({
+            isOpen: false,
+            selectedItem: item,
+        });
 
     render() {
         let tabTitles = isShipOwner() ? ['等待报价', '已报价'] : ['空船', '我的货'];
+        const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
         return (
-            <View style={styles.container}>
-                {/* <View style={styles.swiperWrap}> */}
+            <SideMenu menu={menu}
+                      isOpen={this.state.isOpen}
+                      onChange={isOpen => this.updateMenuState(isOpen)}
+                      menuPosition={'right'}>
+                <View style={styles.container}>
+                    {/* <View style={styles.swiperWrap}> */}
                     <Swiper
-                    style={styles.swiperWrap}
-                    showsButtons={false}
-                    autoplay={true}
-                    //隐藏小圆点
-                    dot={<View />}
-                    activeDot={<View />}
+                        style={styles.swiperWrap}
+                        showsButtons={false}
+                        autoplay={true}
+                        //隐藏小圆点
+                        dot={<View />}
+                        activeDot={<View />}
                     >
                         <View style={styles.swiperView}>
                             <Image
@@ -121,59 +146,58 @@ export default class HomeVC extends Component {
                                 style={styles.swiperImg}
                             />
                         </View>
-                            
+
                     </Swiper>
 
-                {/* </View> */}
+                    {/* </View> */}
 
-                <ScrollableTabView 
-                    renderTabBar={() =>
-                        <TabTop tabNames={tabTitles}
-                            //FIXME:tabIconNames={tabIcon}
-                            //FIXME:selectedTabIconNames={tabSelectedIcon}
+                    <ScrollableTabView
+                        renderTabBar={() =>
+                            <TabTop tabNames={tabTitles}
+                                //FIXME:tabIconNames={tabIcon}
+                                //FIXME:selectedTabIconNames={tabSelectedIcon}
                             />}
-                    
-                    style={styles.tabView}
-                    tabBarPosition='top'
-                    tabBarActiveTextColor={appData.appBlueColor}
-                    //onChangeTab={this.onChangeTabs}>
-                >
-                    {isShipOwner() ?
-                        <View>
-                            <ScrollView>
-                                <InfoCard Navg={this.props.navigation} />
 
-                                <InfoCard Navg={this.props.navigation} />
+                        style={styles.tabView}
+                        tabBarPosition='top'
+                        tabBarActiveTextColor={appData.appBlueColor}
+                        //onChangeTab={this.onChangeTabs}>
+                    >
+                        {isShipOwner() ?
+                            <View>
+                                <ScrollView>
+                                    <InfoCard Navg={this.props.navigation} />
 
-                                <InfoCard Navg={this.props.navigation} />
+                                    <InfoCard Navg={this.props.navigation} />
 
-                                <InfoCard Navg={this.props.navigation} />
+                                    <InfoCard Navg={this.props.navigation} />
 
-                                <InfoCard Navg={this.props.navigation} />
-                            </ScrollView>
-                        </View>
-                    :
-                        <HomeListGoodsVC />}
-                    {isShipOwner() ?
-                        <View>
-                            <ScrollView>
-                                <InfoCard Navg={this.props.navigation} />
+                                    <InfoCard Navg={this.props.navigation} />
 
-                                <InfoCard Navg={this.props.navigation} />
+                                    <InfoCard Navg={this.props.navigation} />
+                                </ScrollView>
+                            </View>
+                            :
+                            <HomeListGoodsVC />}
+                        {isShipOwner() ?
+                            <View>
+                                <ScrollView>
+                                    <InfoCard Navg={this.props.navigation} />
 
-                                <InfoCard Navg={this.props.navigation} />
+                                    <InfoCard Navg={this.props.navigation} />
 
-                                <InfoCard Navg={this.props.navigation} />
+                                    <InfoCard Navg={this.props.navigation} />
 
-                                <InfoCard Navg={this.props.navigation} />
-                            </ScrollView>
-                        </View>
-                        :
-                        <HomeListOrderVC />}
-                </ScrollableTabView>
+                                    <InfoCard Navg={this.props.navigation} />
 
-
-            </View >
+                                    <InfoCard Navg={this.props.navigation} />
+                                </ScrollView>
+                            </View>
+                            :
+                            <HomeListOrderVC />}
+                    </ScrollableTabView>
+                </View >
+            </SideMenu>
         )
     }
 }
