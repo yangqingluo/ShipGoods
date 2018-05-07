@@ -4,6 +4,7 @@ import {
     Dimensions,
     StyleSheet,
     ScrollView,
+    FlatList,
     Image,
     Text,
     TouchableOpacity,
@@ -11,6 +12,8 @@ import {
 } from 'react-native';
 import px2dp from "../../util";
 import AddAuthItem from '../../components/AddAuthItem'
+import CellTitleItem from '../../components/CellTitleItem'
+import TextCell from '../../components/TextCell'
 
 export default class Menu extends Component {
     constructor(props){
@@ -29,6 +32,22 @@ export default class Menu extends Component {
             [
 
             ];
+    }
+
+    componentDidMount() {
+        if (appAllGoods.length === 0) {
+            let data = {pid:'0', deep:1};
+            NetUtil.post(appUrl + 'index.php/Mobile/Goods/get_all_goods/', data)
+                .then(
+                    (result)=>{
+                        if (result.code === 0) {
+                            appAllGoods = result.data;
+                            this.forceUpdate();
+                        }
+                    },(error)=>{
+
+                    });
+        }
     }
 
     cellSelected(key, data = {}){
@@ -134,10 +153,48 @@ export default class Menu extends Component {
                                  noSeparator={true}
                                  callback={this.textInputChanged.bind(this)}>
                     </AddAuthItem>
-                    <View style={{height: px2dp(5), backgroundColor: '#f3f6f9'}}/>
+                    <View style={{marginLeft:px2dp(2), height: px2dp(5), backgroundColor: '#f3f6f9'}}/>
                 </View>);
         })
     }
+
+    onGoodsCellSelected = (info: Object) => {
+        let goods = info.item;
+        PublicAlert(JSON.stringify(goods));
+    };
+
+    renderGoodsCell = (info: Object) => {
+        return (
+            <TextCell
+                info={info}
+                showText={info.item.goods_name}
+                onPress={this.onGoodsCellSelected}
+                selected={false}
+                lines={3}
+            />
+        )
+    };
+
+    onAreaCellSelected = (info: Object) => {
+        let area = info.item;
+        PublicAlert(JSON.stringify(area));
+    };
+
+    renderAreaCell = (info: Object) => {
+        return (
+            <TextCell
+                info={info}
+                showText={info.item.name}
+                onPress={this.onAreaCellSelected}
+                selected={false}
+                lines={2}
+            />
+        )
+    };
+
+    keyExtractor = (item: Object, index: number) => {
+        return '' + index;
+    };
 
     render() {
         const {onItemSelected} = this.props;
@@ -145,6 +202,28 @@ export default class Menu extends Component {
             <View style={{flex: 1, borderLeftWidth: px2dp(0.5), borderLeftColor: appData.appBorderColor}}>
                 <ScrollView scrollsToTop={false} style={styles.menu}>
                     {this._renderListItem()}
+                    <CellTitleItem name={'可运货品'} disable={true} subName={''}>
+                        <FlatList
+                            numColumns ={3}
+                            data={appAllGoods}
+                            renderItem={this.renderGoodsCell}
+                            keyExtractor={this.keyExtractor}
+                            style={{marginLeft: px2dp(10), marginRight: px2dp(10)}}
+                        >
+                        </FlatList>
+                    </CellTitleItem>
+                    <View style={{marginLeft:px2dp(2), height: px2dp(5), backgroundColor: '#f3f6f9'}}/>
+                    <CellTitleItem name={'航行区域'} disable={true} subName={''}>
+                        <FlatList
+                            numColumns ={2}
+                            data={shipAreaObjects}
+                            renderItem={this.renderAreaCell}
+                            keyExtractor={this.keyExtractor}
+                            style={{marginLeft: px2dp(10), marginRight: px2dp(10)}}
+                        >
+                        </FlatList>
+                    </CellTitleItem>
+                    <View style={{marginLeft:px2dp(2), height: px2dp(5), backgroundColor: '#f3f6f9'}}/>
                 </ScrollView>
                 <View style={{height:px2dp(46), flexDirection: 'row', alignItems: "center"}}>
                     <TouchableOpacity style={{flex: 1}} onPress={() => onItemSelected('Cancel')}>

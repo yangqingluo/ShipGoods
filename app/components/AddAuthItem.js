@@ -28,20 +28,20 @@ const Font = {
     Ionicons,
     FontAwesome
 }
-class ItemButton extends Component {
-    constructor(props){
-        super(props)
-    }
-    render(){
-        return (
-            <Button style={{marginTop: this.props.first?10:0}} onPress={this.props.onPress}>
-                <View style={styles.button}>
-                    <Text style={{color: this.props.color || "#f00"}}>{this.props.name}</Text>
-                </View>
-            </Button>
-        )
-    }
-}
+// class ItemButton extends Component {
+//     constructor(props){
+//         super(props)
+//     }
+//     render(){
+//         return (
+//             <Button style={{marginTop: this.props.first?10:0}} onPress={this.props.onPress}>
+//                 <View style={styles.button}>
+//                     <Text style={{color: this.props.color || "#f00"}}>{this.props.name}</Text>
+//                 </View>
+//             </Button>
+//         )
+//     }
+// }
 
 export default class AddAuthItem extends Component {
     constructor(props){
@@ -54,6 +54,7 @@ export default class AddAuthItem extends Component {
         name: PropTypes.string.isRequired,
         subName: PropTypes.string,
         color: PropTypes.string,
+        first: PropTypes.bool,
         noSeparator: PropTypes.bool,
         avatar: PropTypes.object,
         disable: PropTypes.bool,
@@ -107,7 +108,7 @@ export default class AddAuthItem extends Component {
             <Button style={{marginTop: first?10:0}} onPress={onPress}>{this._render()}</Button>
     }
 }
-AddAuthItem.Button = ItemButton
+// AddAuthItem.Button = ItemButton
 const styles = StyleSheet.create({
     listItem: {
         height: itemHeight,

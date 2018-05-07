@@ -221,6 +221,7 @@ global.getShipStateText = function(state : Number) : String {
     }
 };
 
+global.shipAreaObjects = [{key: 1, name: '沿海'}, {key: 2, name: '内河（可进川）'}, {key: 3, name: '内河（不可进川)'}];
 global.shipAreaTypes = ['取消', '沿海', '内河（可进川）', '内河（不可进川)'];
 global.getShipAreaTypesText = function(area : Number) : String {
     if (area < shipAreaTypes.length) {
