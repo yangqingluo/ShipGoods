@@ -21,6 +21,7 @@ import HomeListGoodsVC from './Home/HomeGoodsVC';
 import HomeListOrderVC from './Home/HomeOrderVC';
 import SideMenu from '../components/SideMenu'
 import Menu from './Home/HomeMenu';
+import px2dp from "../util";
 
 
 //顶部右边的图标，这段代码不可复用，但是可以复制修改使用。
@@ -40,22 +41,16 @@ class RightHeader extends Component {
 
     render() {
         return (
-            <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
-                <TouchableOpacity
-                    onPress={this.onSortBtnPress}
-                >
-                    <Image
-                        source={require('../images/sort.png')}
-                        style={{ width: 18, height: 18, marginLeft: 10, marginRight: 10,}}
+            <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                <TouchableOpacity onPress={this.onSortBtnPress} style={{minWidth: px2dp(51)}}>
+                    <Image source={require('../images/navbar_icon_paixu.png')}
+                        style={{ width: px2dp(17), height: px2dp(21), marginLeft: px2dp(20), marginRight: px2dp(10),}}
                     />
                 </TouchableOpacity>
                 <View style={{ width: 0, height: 15, borderWidth: 1, opacity: .1 }} />
-                <TouchableOpacity
-                    onPress={this.onScreenBtnPress}
-                >
-                    <Image
-                        source={require('../images/screen.png')}
-                        style={{ width: 20, height: 20, marginLeft: 10, marginRight: 10, }}
+                <TouchableOpacity onPress={this.onScreenBtnPress} style={{minWidth: px2dp(51)}}>
+                    <Image source={require('../images/navbar_icon_shai.png')}
+                        style={{ width: px2dp(20), height: px2dp(16), marginLeft: px2dp(13), marginRight: px2dp(18), }}
                     />
                 </TouchableOpacity>
             </View>
@@ -112,7 +107,7 @@ export default class HomeVC extends Component {
 
     render() {
         let tabTitles = isShipOwner() ? ['等待报价', '已报价'] : ['空船', '我的货'];
-        const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
+        const menu = <Menu onItemSelected={this.onMenuItemSelected} navigation={this.props.navigation}/>;
         return (
             <SideMenu menu={menu}
                       isOpen={this.state.isOpen}

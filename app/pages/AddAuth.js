@@ -25,7 +25,7 @@ export default class DetailVC extends Component {
         });
 
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
             bz_licence: '',//公司营业执照
             idcard_front: '',//法人身份证正面
@@ -40,7 +40,7 @@ export default class DetailVC extends Component {
             bz_licence_source: null,
             idcard_front_source: null,
             idcard_con_source: null,
-        }
+        };
         this.config = (userData.usertype === '1') ?
             [
                 {idKey:"corporation", name:"公司名称", logo:require('../images/icon_blue.png'), disable:true},

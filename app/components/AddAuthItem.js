@@ -54,7 +54,7 @@ export default class AddAuthItem extends Component {
         name: PropTypes.string.isRequired,
         subName: PropTypes.string,
         color: PropTypes.string,
-        first: PropTypes.bool,
+        noSeparator: PropTypes.bool,
         avatar: PropTypes.object,
         disable: PropTypes.bool,
         numeric: PropTypes.bool,
@@ -63,13 +63,13 @@ export default class AddAuthItem extends Component {
         onPress: PropTypes.func
     }
     _render(){
-        let {logo, iconSize, name, subName, color, first, avatar, disable, font} = this.props
+        let {logo, iconSize, name, subName, color, noSeparator, avatar, disable, font} = this.props
         font = font||"Ionicons"
         const Icon = Font[font]
         let radius = px2dp(12);
         return (
             <View style={{flexDirection: "column"}}>
-                <View style={[styles.listInfo, {height: 1}, {borderTopWidth: !first?1:0}]} />
+                {noSeparator ? null : <View style={{height: 1, backgroundColor: appData.appSeparatorLightColor}}/>}
                 <View style={styles.listItem} {...this.props}>
                     {logo? (<Image source={logo} style={{width: 10, height: 12, resizeMode: "cover", overflow:"hidden"}}/>) : null}
                     {color?(<View style={{width: radius, height:radius, marginRight:5, borderRadius: 0.5 * radius, backgroundColor:color || "#4da6f0"}} />):null}
@@ -122,15 +122,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         justifyContent: "center",
         alignItems: "center"
-    },
-    listInfo: {
-        height: itemHeight,
-        flex: 1,
-        paddingRight: 16,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        borderTopColor: "#f5f5f5"
     },
     listInfoRight: {
         flexDirection: "row",
