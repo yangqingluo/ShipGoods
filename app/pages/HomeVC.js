@@ -31,10 +31,10 @@ class RightHeader extends Component {
         };
     };
     onSortBtnPress = () => {
-        this.props.navigation.navigate('DetailVC', { title: '详情',des:'我是返回点击我' });
+        appHomeVC.onSortBtnAction();
     };
     onScreenBtnPress = () => {
-        this.props.navigation.navigate('HomeFilter', { title: '筛选条件'});
+        appHomeVC.onFilterBtnAction();
     };
     render() {
         return (
@@ -77,12 +77,17 @@ export default class HomeVC extends Component {
     }
 
     componentDidMount() {
-        // this.props.navigation.setParams({onSortBtnAction: this.onSortBtnAction});
+        // this.props.navigation.setParams({onSortBtnAction: null});
         // PublicAlert(JSON.stringify(this.props.navigation.state));
+        global.appHomeVC = this;
     }
 
     onSortBtnAction() {
+        PublicAlert('***');
+    }
 
+    onFilterBtnAction() {
+        this.props.navigation.navigate('HomeFilter', { title: '筛选条件'});
     }
 
     render() {

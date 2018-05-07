@@ -182,6 +182,7 @@ global.appStyles = appStyles;
 global.appData = appData;
 global.appUrl = 'http://shiphire.com.cn/';//服务器url
 global.NetUtil = NetUtil;
+global.appHomeVC = null;
 global.appDeviceId = DeviceInfo.getUniqueID();
 global.screenWidth = width;
 global.screenHeight = height;
@@ -238,7 +239,6 @@ global.isShipOwner = function() : boolean {
 global.appAllGoods = [];
 global.appAllPortsFirst = [];
 global.appAllPortsSecond = [];
-
 
 
 export const imagePickerOptions = {

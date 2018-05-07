@@ -130,5 +130,5 @@ const MainTabNavigator = TabNavigator(
 );
 
 export default class MainTab extends MainTabNavigator {
-    
+
 }
