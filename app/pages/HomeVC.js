@@ -70,7 +70,7 @@ export default class HomeVC extends Component {
         this.toggle = this.toggle.bind(this);
         this.state = {
             isOpen: false,
-            selectedItem: 'About',
+            selectedItem: '',
         };
     }
 
@@ -99,15 +99,24 @@ export default class HomeVC extends Component {
         this.setState({ isOpen });
     }
 
-    onMenuItemSelected = item =>
+    onMenuItemSelected = item => {
         this.setState({
             isOpen: false,
             selectedItem: item,
         });
 
+        if (item === 'OK') {
+            appHomeCondition.empty_port = this.rightMenu.state.empty_port;
+            appHomeCondition.empty_time = this.rightMenu.state.empty_time;
+            appHomeCondition.empty_delay = this.rightMenu.state.empty_delay;
+
+            this.subListGoodsVC.requestData();
+        }
+    };
+
     render() {
         let tabTitles = isShipOwner() ? ['等待报价', '已报价'] : ['空船', '我的货'];
-        const menu = <Menu onItemSelected={this.onMenuItemSelected} navigation={this.props.navigation}/>;
+        const menu = <Menu ref={o => this.rightMenu = o} onItemSelected={this.onMenuItemSelected} navigation={this.props.navigation}/>;
         return (
             <SideMenu menu={menu}
                       isOpen={this.state.isOpen}
@@ -173,7 +182,7 @@ export default class HomeVC extends Component {
                                 </ScrollView>
                             </View>
                             :
-                            <HomeListGoodsVC />}
+                            <HomeListGoodsVC ref={o => this.subListGoodsVC = o}/>}
                         {isShipOwner() ?
                             <View>
                                 <ScrollView>
@@ -189,7 +198,7 @@ export default class HomeVC extends Component {
                                 </ScrollView>
                             </View>
                             :
-                            <HomeListOrderVC />}
+                            <HomeListOrderVC ref={o => this.subListOrderVC = o} />}
                     </ScrollableTabView>
                 </View >
             </SideMenu>

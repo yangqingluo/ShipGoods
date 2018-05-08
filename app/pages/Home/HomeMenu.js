@@ -21,7 +21,7 @@ export default class Menu extends Component {
         super(props);
         this.state = {
             empty_port: null,//空船港
-            empty_time: new Date(),//空船期
+            empty_time: null,//空船期
             empty_delay: 0,//空船延迟
         };
         this.config = (userData.usertype === '1') ?
@@ -258,7 +258,7 @@ export default class Menu extends Component {
                             <Text style={[styles.bottomButtonText, {color: "#a9a9a9"}]}>{"取消"}</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{flex: 1}} onPress={() => onItemSelected('Sure')}>
+                    <TouchableOpacity style={{flex: 1}} onPress={() => onItemSelected('OK')}>
                         <View style={[styles.bottomButton, {backgroundColor: appData.appBlueColor}]}>
                             <Text style={[styles.bottomButtonText, {color: "#fff"}]}>{"确定"}</Text>
                         </View>

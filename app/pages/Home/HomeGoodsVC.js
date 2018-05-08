@@ -47,6 +47,10 @@ export default class HomeGoodsVC extends Component {
             this.state.page = 1;
         }
         let data = {page: this.state.page};
+        if (appHomeCondition.empty_port !== null) data.empty_port = appHomeCondition.empty_port.port_id;
+        if (appHomeCondition.empty_time !== null) data.empty_time = creatRequestTime(appHomeCondition.empty_time);
+        if (appHomeCondition.empty_delay > 0) data.empty_delay = appHomeCondition.empty_delay;
+
         NetUtil.post(appUrl + 'index.php/Mobile/Goods/goods_index/', data)
             .then(
                 (result)=>{

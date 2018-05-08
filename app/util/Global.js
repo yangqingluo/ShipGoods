@@ -235,12 +235,23 @@ global.isShipOwner = function() : boolean {
         return global.userData.usertype === '2';
     }
     return false;
-} ;
+};
+
+global.creatRequestTime = function(date : Date) : String {
+    if (date !== null) {
+        return date.Format("yyyy-MM-dd");
+    }
+    return "1970-01-01";
+};
 
 global.appAllGoods = [];
 global.appAllPortsFirst = [];
 global.appAllPortsSecond = [];
-
+global.appHomeCondition = {
+    empty_port: null,//空船港
+    empty_time: null,//空船期
+    empty_delay: 0,//空船延迟
+}
 
 export const imagePickerOptions = {
     quality: 1.0,

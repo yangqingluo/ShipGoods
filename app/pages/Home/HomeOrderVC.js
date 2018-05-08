@@ -47,6 +47,7 @@ export default class HomeGoodsVC extends Component {
             this.state.page = 1;
         }
         let data = {page: this.state.page};
+
         NetUtil.post(appUrl + 'index.php/Mobile/Goods/get_my_goods/', data)
             .then(
                 (result)=>{
