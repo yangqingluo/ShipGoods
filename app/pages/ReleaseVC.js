@@ -60,6 +60,8 @@ export default class ReleaseVC extends Component {
             demurrage: 0, //否 滞期费
 
             goodsSelectedList: [],
+            wastageTitle: 0,
+            wastageNumber: 0,
         };
 
         this.config = isShipOwner() ?
@@ -79,8 +81,8 @@ export default class ReleaseVC extends Component {
                 {idKey:"loading_port", name:"装货港", logo:require('../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectLoadingPort")},
                 {idKey:"unloading_port",name:"卸货港", logo:require('../images/icon_orange.png'), disable:false, subName:"324", onPress:this.cellSelected.bind(this, "SelectUnloadingPort")},
                 {idKey:"loading_time", name:"发货时间", logo:require('../images/icon_red.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectLoadingTime")},
-                {idKey:"wastage", name:"损耗", logo:require('../images/icon_blue.png'), disable:true, numeric:true},
-                {idKey:"demurrage", name:"滞期费", logo:require('../images/icon_green.png'), disable:true, numeric:true},
+                {idKey:"wastage", name:"损耗", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectWastage")},
+                {idKey:"demurrage", name:"滞期费", logo:require('../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectDemurrage")},
                 {idKey:"clean_deley", name:"结算时间", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectCleanDeley")},
             ];
         this.areaTypes = ['取消', '南上', '北下', '上江', '下江', '运河'];
@@ -173,6 +175,9 @@ export default class ReleaseVC extends Component {
         else if (key === "SelectCleanDeley") {
             this.cleanDelayTypeActionSheet.show();
         }
+        else if (key === "SelectDemurrage") {
+            this.demurrageTypeActionSheet.show();
+        }
         else if (key === "SelectGoods") {
             this.toGoToGoodsVC();
         }
@@ -213,6 +218,17 @@ export default class ReleaseVC extends Component {
                     date: this.state.loading_time,
                     delay: this.state.loading_delay,
                     callBack:this.callBackFromTimeVC.bind(this)
+                });
+        }
+        else if (key === "SelectWastage") {
+            this.props.navigation.navigate(
+                "SelectWastageVC",
+                {
+                    title: '选择损耗',
+                    key: key,
+                    wastageTitle: this.state.wastageTitle,
+                    wastageNumber: this.state.wastageNumber,
+                    callBack:this.callBackFromWastageVC.bind(this)
                 });
         }
         else if (key === "SelectPrice") {
@@ -300,6 +316,15 @@ export default class ReleaseVC extends Component {
             })
         }
 
+    }
+
+    callBackFromWastageVC(key, data1, data2) {
+        if (key === "SelectWastage") {
+            this.setState({
+                wastageTitle: data1,
+                wastageNumber: data2,
+            })
+        }
     }
 
     callBackFromPriceVC(backData) {
@@ -469,6 +494,14 @@ export default class ReleaseVC extends Component {
         }
     }
 
+    onSelectDemurrageType(index) {
+        if (index > 0) {
+            this.setState({
+                demurrage: index
+            });
+        }
+    }
+
     toSelectPhoto = (idKey) => {
         ImagePicker.showImagePicker(imagePickerOptions, (response) => {
             console.log('Response = ', response);
@@ -543,6 +576,24 @@ export default class ReleaseVC extends Component {
         else if (item.idKey === 'upload_oil_list' && this.state.upload_oil_list.length > 0) {
             return this.state.upload_oil_list;
         }
+        else if (item.idKey === 'wastage') {
+            let m_string = '';
+            if (this.state.wastageTitle > 0) {
+                m_string += shipWastageTypes[this.state.wastageTitle];
+            }
+
+            if (this.state.wastageNumber > 0) {
+                if (m_string.length > 0) {
+                    m_string += ' ';
+                }
+                m_string += shipWastageNumberTypes[this.state.wastageNumber];
+            }
+
+            return m_string;
+        }
+        else if (item.idKey === 'demurrage' && this.state.demurrage > 0) {
+            return demurrageTypes[this.state.demurrage] + ' 元/天'
+        }
 
         return '';
     }
@@ -575,6 +626,14 @@ export default class ReleaseVC extends Component {
                     cancelButtonIndex={0}
                     // destructiveButtonIndex={1}
                     onPress={this.onSelectCleanDelayType.bind(this)}
+                />
+                <ActionSheet
+                    ref={o => this.demurrageTypeActionSheet = o}
+                    title={'请选择滞期费（单位：元/天）'}
+                    options={demurrageTypes}
+                    cancelButtonIndex={0}
+                    // destructiveButtonIndex={1}
+                    onPress={this.onSelectDemurrageType.bind(this)}
                 />
                 <ScrollView style={styles.scrollView}>
                     {this._renderListItem()}

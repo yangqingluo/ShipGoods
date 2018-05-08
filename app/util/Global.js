@@ -64,6 +64,21 @@ Date.prototype.Format = function (fmt) {
     return fmt;
 }
 
+Number.prototype.Format = function (n){
+    let s = this;
+    if(s ==='')
+        return;
+    n = n > 0 && n <= 20 ? n : 2;
+    s = parseFloat((s + "").replace("/[^\\d\\.-]/g", "")).toFixed(n) + "";
+    var l = s.split(".")[0].split("").reverse(),
+        r = s.split(".")[1];
+    var t = "";
+    for(let i = 0; i < l.length; i ++ ) {
+        t += l[i] + ((i + 1) % 3 === 0 && (i + 1) !== l.length ? "," : "");
+    }
+    return t.split("").reverse().join("") + "." + r;
+}
+
 
 const KEY_USERDATA = 'ships_goods_user_data';
 const UI_STANDARD = 375;
@@ -223,6 +238,27 @@ global.getShipStateText = function(state : Number) : String {
 
 global.shipAreaObjects = [{key: 1, name: '沿海'}, {key: 2, name: '内河（可进川）'}, {key: 3, name: '内河（不可进川)'}];
 global.shipAreaTypes = ['取消', '沿海', '内河（可进川）', '内河（不可进川)'];
+global.shipWastageTypes = ['取消', '船检量 -> 船检量', '罐发量 -> 入库量', '船检量 -> 入库量', '罐发量 -> 船检量'];
+global.createShipWastageNumberTypes = function() : Array {
+    let array = ['取消'];
+    for (let i = 0.1; i < 4; i += 0.1) {
+        array.push(i.Format(1) + '‰');
+    }
+    return array;
+};
+
+global.shipWastageNumberTypes = createShipWastageNumberTypes();
+
+
+global.createDemurrageTypes = function() : Array {
+    let array = ['取消'];
+    for (let i = 0; i < 100000; i += 1000) {
+        array.push(i + '');
+    }
+    return array;
+};
+global.demurrageTypes = createDemurrageTypes();
+
 global.getShipAreaTypesText = function(area : Number) : String {
     if (area < shipAreaTypes.length) {
         return shipAreaTypes[area];
