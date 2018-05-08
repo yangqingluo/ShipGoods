@@ -273,7 +273,7 @@ global.isShipOwner = function() : boolean {
     return false;
 };
 
-global.creatRequestTime = function(date : Date) : String {
+global.createRequestTime = function(date : Date) : String {
     if (date !== null) {
         return date.Format("yyyy-MM-dd");
     }

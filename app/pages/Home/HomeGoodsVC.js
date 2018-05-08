@@ -48,7 +48,7 @@ export default class HomeGoodsVC extends Component {
         }
         let data = {page: this.state.page};
         if (appHomeCondition.empty_port !== null) data.empty_port = appHomeCondition.empty_port.port_id;
-        if (appHomeCondition.empty_time !== null) data.empty_time = creatRequestTime(appHomeCondition.empty_time);
+        if (appHomeCondition.empty_time !== null) data.empty_time = createRequestTime(appHomeCondition.empty_time);
         if (appHomeCondition.empty_delay > 0) data.empty_delay = appHomeCondition.empty_delay;
         if (appHomeCondition.min_ton > 0) data.min_ton = appHomeCondition.min_ton;
         if (appHomeCondition.max_ton > 0) data.max_ton = appHomeCondition.max_ton;

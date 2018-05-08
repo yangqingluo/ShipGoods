@@ -164,7 +164,71 @@ export default class ReleaseVC extends Component {
     }
 
     toReleaseForGoodsOwner() {
-        this.refToast.show('精彩功能，敬请期待');
+        if (this.state.goodsSelectedList.length === 0) {
+            this.refToast.show("请选择货品");
+        }
+        else if (this.state.tonnage === 0) {
+            this.refToast.show("请设置吨位");
+        }
+        else if (this.state.price === 0) {
+            this.refToast.show("请设置运价");
+        }
+        else if (this.state.loading_port === null) {
+            this.refToast.show("请选择装船港");
+        }
+        else if (this.state.unloading_port === null) {
+            this.refToast.show("请选择卸船港");
+        }
+        else if (this.state.loading_time === null) {
+            this.refToast.show("请选择发货时间");
+        }
+        else if (this.state.wastage.length === 0) {
+            this.refToast.show("请设置损耗");
+        }
+        else if (this.state.demurrage === 0) {
+            this.refToast.show("请选择滞期费");
+        }
+        else if (this.state.clean_deley === 0) {
+            this.refToast.show("请选择结算时间");
+        }
+        else {
+            let goodsList = this.state.goodsSelectedList.map(
+                (info) => {
+                    return {goods_id: info.goods_id};
+                }
+            )
+
+            let data = {
+                goods: goodsList,
+                tonnage: this.state.tonnage,
+                price: this.state.price,
+                is_bargain: this.state.is_bargain,
+                loading_port: this.state.loading_port.port_id,
+                loading_port_name: this.state.loading_port.port_name,
+                unloading_port: this.state.unloading_port.port_id,
+                unloading_port_name: this.state.unloading_port.port_name,
+                loading_time: createRequestTime(this.state.loading_time),
+                wastage: this.state.wastage,
+                demurrage: parseInt(demurrageTypes[this.state.demurrage]),
+                clean_deley: this.cleanDeleyTypes[this.state.clean_deley],
+                remark: 'from_ios',
+            };
+
+            NetUtil.post(appUrl + 'index.php/Mobile/Goods/add_goods_task/', data)
+                .then(
+                    (result)=>{
+                        if (result.code === 0) {
+                            PublicAlert(result.message,'',
+                                [{text:"确定"}]
+                            );
+                        }
+                        else {
+                            this.refToast.show(result.message);
+                        }
+                    },(error)=>{
+                        this.refToast.show(error);
+                    });
+        }
     }
 
     cellSelected(key, data = {}){
@@ -322,9 +386,21 @@ export default class ReleaseVC extends Component {
 
     callBackFromWastageVC(key, data1, data2) {
         if (key === "SelectWastage") {
+            let m_string = '';
+            if (data1 > 0) {
+                m_string += shipWastageTypes[data1];
+            }
+            if (data1 > 0) {
+                if (m_string.length > 0) {
+                    m_string += ' ';
+                }
+                m_string += shipWastageNumberTypes[data2];
+            }
+
             this.setState({
                 wastageTitle: data1,
                 wastageNumber: data2,
+                wastage: m_string,
             })
         }
     }
@@ -478,7 +554,11 @@ export default class ReleaseVC extends Component {
     }
 
     textInputChanged(text, key){
-
+        if (key === 'tonnage') {
+            this.setState({
+                tonnage: text,
+            });
+        }
     }
 
     onSelectInvoiceType(index) {
@@ -583,19 +663,7 @@ export default class ReleaseVC extends Component {
             return this.state.price + ' 元/吨 ' + (this.state.is_bargain === 1 ? "不议价" : "");
         }
         else if (item.idKey === 'wastage') {
-            let m_string = '';
-            if (this.state.wastageTitle > 0) {
-                m_string += shipWastageTypes[this.state.wastageTitle];
-            }
-
-            if (this.state.wastageNumber > 0) {
-                if (m_string.length > 0) {
-                    m_string += ' ';
-                }
-                m_string += shipWastageNumberTypes[this.state.wastageNumber];
-            }
-
-            return m_string;
+            return this.state.wastage;
         }
         else if (item.idKey === 'demurrage' && this.state.demurrage > 0) {
             return demurrageTypes[this.state.demurrage] + ' 元/天'
