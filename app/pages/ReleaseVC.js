@@ -31,7 +31,7 @@ export default class ReleaseVC extends Component {
     });
 
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
             ship: null,//船
             upload_oil_list: '',//上载油品
@@ -56,22 +56,13 @@ export default class ReleaseVC extends Component {
             is_bargain: 0, //否 是否接收议价 0：是（默认） 1：否
             clean_deley: 0, //否 完货后多少天结算 15/30/45/60
             wastage: '', //否 损耗
-            goods: [], //否 货品（数组）
+            goods: '', //货品
             demurrage: 0, //否 滞期费
-        }
 
-        this.config = (userData.usertype === '1') ?
-            [
-                {idKey:"tonnage", name:"吨位", logo:require('../images/icon_blue.png'), disable:true, numeric:true},
-                {idKey:"price", name:"运价", logo:require('../images/icon_red.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectPrice")},
-                {idKey:"loading_port", name:"装货港", logo:require('../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectLoadingPort")},
-                {idKey:"unloading_port",name:"卸货港", logo:require('../images/icon_green.png'), disable:false, subName:"324", onPress:this.cellSelected.bind(this, "SelectUnloadingPort")},
-                {idKey:"loading_time", name:"发货时间", logo:require('../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectLoadingTime")},
-                {idKey:"wastage", name:"损耗", logo:require('../images/icon_red.png'), disable:true, numeric:true},
-                {idKey:"demurrage", name:"滞期费", logo:require('../images/icon_blue.png'), disable:true, numeric:true},
-                {idKey:"clean_deley", name:"结算时间", logo:require('../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectCleanDeley")},
-            ]
-                :
+            goodsSelectedList: [],
+        };
+
+        this.config = isShipOwner() ?
             [
                 {idKey:"ship_name", name:"船名", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectShip")},
                 {idKey:"download_oil_list", name:"下载可运货品", logo:require('../images/icon_red.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectDownload")},
@@ -79,6 +70,18 @@ export default class ReleaseVC extends Component {
                 {idKey:"empty_time",name:"空船期", logo:require('../images/icon_green.png'), disable:false, subName:"324", onPress:this.cellSelected.bind(this, "SelectEmptyTime")},
                 {idKey:"course", name:"可运航向", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectCourse")},
                 {idKey:"upload_oil_list", name:"上载货品", logo:require('../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectUpload")},
+            ]
+                :
+            [
+                {idKey:"goods", name:"货品名称", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectGoods")},
+                {idKey:"tonnage", name:"吨位", logo:require('../images/icon_red.png'), disable:true, numeric:true},
+                {idKey:"price", name:"运价", logo:require('../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectPrice")},
+                {idKey:"loading_port", name:"装货港", logo:require('../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectLoadingPort")},
+                {idKey:"unloading_port",name:"卸货港", logo:require('../images/icon_orange.png'), disable:false, subName:"324", onPress:this.cellSelected.bind(this, "SelectUnloadingPort")},
+                {idKey:"loading_time", name:"发货时间", logo:require('../images/icon_red.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectLoadingTime")},
+                {idKey:"wastage", name:"损耗", logo:require('../images/icon_blue.png'), disable:true, numeric:true},
+                {idKey:"demurrage", name:"滞期费", logo:require('../images/icon_green.png'), disable:true, numeric:true},
+                {idKey:"clean_deley", name:"结算时间", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectCleanDeley")},
             ];
         this.areaTypes = ['取消', '南上', '北下', '上江', '下江', '运河'];
         this.cleanDeleyTypes = ['取消', '15', '30', '45', '60'];
@@ -169,6 +172,9 @@ export default class ReleaseVC extends Component {
         }
         else if (key === "SelectCleanDeley") {
             this.cleanDelayTypeActionSheet.show();
+        }
+        else if (key === "SelectGoods") {
+            this.toGoToGoodsVC();
         }
         else if (key === "SelectDownload") {
             this.toGoToDownGoodsVC();
@@ -300,6 +306,53 @@ export default class ReleaseVC extends Component {
         this.setState({
             ship: backData,
         })
+    }
+
+    toGoToGoodsVC() {
+        if (appAllGoods.length > 0) {
+            this.props.navigation.navigate(
+                'CustomSectionSelect',
+                {
+                    title: '可运货品',
+                    dataList: appAllGoods,
+                    selectedList:this.state.goodsSelectedList,
+                    maxSelectCount:5,
+                    callBack:this.callBackFromGoodsVC.bind(this)
+                }
+            );
+        }
+        else {
+            let data = {pid:'0', deep:1};
+            NetUtil.post(appUrl + 'index.php/Mobile/Goods/get_all_goods/', data)
+                .then(
+                    (result)=>{
+                        if (result.code === 0) {
+                            appAllGoods = result.data;
+                            this.toGoToGoodsVC();
+                        }
+                        else {
+                            this.setState({
+                                refreshing: false,
+                            })
+                        }
+                    },(error)=>{
+                        this.setState({
+                            refreshing: false,
+                        })
+                    });
+        }
+    }
+
+    callBackFromGoodsVC(backData) {
+        let dataList = backData.map(
+            (info) => {
+                return info.goods_name;
+            }
+        )
+        this.setState({
+            goods: dataList.join(','),
+            goodsSelectedList: backData
+        });
     }
 
     toGoToDownGoodsVC() {
@@ -460,6 +513,9 @@ export default class ReleaseVC extends Component {
         if (item.idKey === 'ship_name' && this.state.ship !== null) {
             return this.state.ship.ship_name;
         }
+        else if (item.idKey === 'goods' && this.state.goods.length > 0) {
+            return this.state.goods;
+        }
         else if (item.idKey === 'download_oil_list' && this.state.download_oil_list.length > 0) {
             return this.state.download_oil_list;
         }
@@ -473,10 +529,10 @@ export default class ReleaseVC extends Component {
             return this.state.unloading_port.port_name;
         }
         else if (item.idKey === 'empty_time' && this.state.empty_time !== null) {
-            return this.state.empty_time.Format("yyyy.MM.dd") + '+' + this.state.empty_delay + '天';
+            return this.state.empty_time.Format("yyyy.MM.dd") + '±' + this.state.empty_delay + '天';
         }
         else if (item.idKey === 'loading_time' && this.state.loading_time !== null) {
-            return this.state.loading_time.Format("yyyy.MM.dd") + '+' + this.state.loading_delay + '天';
+            return this.state.loading_time.Format("yyyy.MM.dd") + '±' + this.state.loading_delay + '天';
         }
         else if (item.idKey === 'course' && this.state.course > 0) {
             return this.areaTypes[this.state.course];

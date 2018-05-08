@@ -104,7 +104,7 @@ export default class SelectEmptyTimeVC extends Component {
                         style = {styles.cell}
                         onPress={()=>this.showDelayPicker()}>
                         <Text style={styles.text}>
-                            {'船期前后延迟 + ' + this.state.delay + ' 天'}
+                            {'船期前后延迟 ± ' + this.state.delay + ' 天'}
                         </Text>
                     </TouchableOpacity>
                     <DateTimePicker title="请选择时间" ref={(picker)=>{this.picker=picker}} />
