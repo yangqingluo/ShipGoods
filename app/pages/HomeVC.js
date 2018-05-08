@@ -90,6 +90,9 @@ export default class HomeVC extends Component {
     }
 
     toggle() {
+        if (!this.state.isOpen) {
+            this.rightMenu.refreshDatasource();
+        }
         this.setState({
             isOpen: !this.state.isOpen,
         });
@@ -109,8 +112,15 @@ export default class HomeVC extends Component {
             appHomeCondition.empty_port = this.rightMenu.state.empty_port;
             appHomeCondition.empty_time = this.rightMenu.state.empty_time;
             appHomeCondition.empty_delay = this.rightMenu.state.empty_delay;
+            appHomeCondition.goods = this.rightMenu.state.goods;
+            appHomeCondition.area = this.rightMenu.state.area;
 
-            this.subListGoodsVC.requestData();
+            if (isShipOwner()) {
+
+            }
+            else {
+                this.subListGoodsVC.requestData();
+            }
         }
     };
 

@@ -244,6 +244,14 @@ global.creatRequestTime = function(date : Date) : String {
     return "1970-01-01";
 };
 
+global.deepCopy = function(obj : Object) : Object {
+    var newobj = {};
+    for ( var attr in obj) {
+        newobj[attr] = obj[attr];
+    }
+    return newobj;
+}
+
 global.appAllGoods = [];
 global.appAllPortsFirst = [];
 global.appAllPortsSecond = [];
@@ -251,6 +259,8 @@ global.appHomeCondition = {
     empty_port: null,//空船港
     empty_time: null,//空船期
     empty_delay: 0,//空船延迟
+    goods: null,//可运货品
+    area: [],//航行区域
 }
 
 export const imagePickerOptions = {

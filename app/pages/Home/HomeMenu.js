@@ -23,6 +23,8 @@ export default class Menu extends Component {
             empty_port: null,//空船港
             empty_time: null,//空船期
             empty_delay: 0,//空船延迟
+            goods: null,//可运货品
+            area: [],//航行区域
         };
         this.config = (userData.usertype === '1') ?
             [
@@ -49,6 +51,22 @@ export default class Menu extends Component {
 
                     });
         }
+    }
+
+    refreshDatasource() {
+        let area = appHomeCondition.area.map(
+            (info) => {
+                return info;
+            }
+        );
+
+        this.setState({
+            empty_port: appHomeCondition.empty_port,
+            empty_time: appHomeCondition.empty_time,
+            empty_delay: appHomeCondition.empty_delay,
+            goods: appHomeCondition.goods,
+            area: area,
+        });
     }
 
     cellSelected(key, data = {}){
@@ -160,8 +178,9 @@ export default class Menu extends Component {
     }
 
     onGoodsCellSelected = (info: Object) => {
-        let goods = info.item;
-        PublicAlert(JSON.stringify(goods));
+        this.setState({
+           goods: info.item,
+        });
     };
 
     renderGoodsCell = (info: Object) => {
@@ -170,15 +189,21 @@ export default class Menu extends Component {
                 info={info}
                 showText={info.item.goods_name}
                 onPress={this.onGoodsCellSelected}
-                selected={false}
+                selected={info.item === this.state.goods}
                 lines={3}
             />
         )
     };
 
     onAreaCellSelected = (info: Object) => {
-        let area = info.item;
-        PublicAlert(JSON.stringify(area));
+        let index = this.state.area.indexOf(info.item);
+        if (index === -1) {
+            this.state.area.push(info.item);
+        }
+        else {
+            this.state.area.splice(index, 1);
+        }
+        this.forceUpdate();
     };
 
     renderAreaCell = (info: Object) => {
@@ -187,7 +212,7 @@ export default class Menu extends Component {
                 info={info}
                 showText={info.item.name}
                 onPress={this.onAreaCellSelected}
-                selected={false}
+                selected={this.state.area.indexOf(info.item) !== -1}
                 lines={2}
             />
         )

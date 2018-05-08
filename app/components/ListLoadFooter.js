@@ -33,9 +33,7 @@ export default class ListLoadFooter extends PureComponent<Props> {
         } else {
             return (
                 <View style={styles.footer}>
-                    <Text style={styles.text}>
-                        上拉加载更多
-                    </Text>
+                    <Text style={styles.text}>{''}</Text>
                 </View>
             );
         }
