@@ -22,7 +22,7 @@ export default class TextCell extends PureComponent<Props> {
         return (
             <TouchableOpacity style={[styles.container, {width: (px2dp(-20) + screenWidth * 2 / 3) / lines}]} onPress={() => this.props.onPress(info)}>
                 <View style={[styles.viewContainer, {backgroundColor: selected ? appData.appBlueColor : "#f3f6f9"}]}>
-                    <Text style={{fontSize:px2dp(14), textAlign: 'center', textColor:selected ? 'white' : appData.appTextColor}}>{showText}</Text>
+                    <Text style={{fontSize:px2dp(14), textAlign: 'center', color:selected ? 'white' : appData.appTextColor}}>{showText}</Text>
                 </View>
             </TouchableOpacity>
         )

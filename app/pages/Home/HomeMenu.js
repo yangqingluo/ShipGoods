@@ -7,6 +7,7 @@ import {
     FlatList,
     Image,
     Text,
+    TextInput,
     TouchableOpacity,
     View,
 } from 'react-native';
@@ -213,6 +214,32 @@ export default class Menu extends Component {
                         </FlatList>
                     </CellTitleItem>
                     <View style={{marginLeft:px2dp(2), height: px2dp(5), backgroundColor: '#f3f6f9'}}/>
+                    <CellTitleItem name={'货量区间'} disable={true} subName={''}>
+                        <View style={{marginLeft: px2dp(10), marginRight: px2dp(10), height: px2dp(50), flexDirection: 'row', alignItems: "center"}}>
+                            <TextInput underlineColorAndroid="transparent"
+                                       keyboardType={"numeric"}
+                                       style={styles.textInput}
+                                       placeholder={"请输入数字"}
+                                       placeholderTextColor={'#5d5d5d'}
+                                       onChangeText={(text) => {
+                                           this.textInputChanged(text, "");
+                                       }}
+                            />
+                            <View style={{width: px2dp(40), height: px2dp(50), alignItems: "center", justifyContent: "center",}}>
+                                <Text style={{fontSize:px2dp(16), textAlign: 'center', color: '#5d5d5d'}}>{"~"}</Text>
+                            </View>
+                            <TextInput underlineColorAndroid="transparent"
+                                       keyboardType={"numeric"}
+                                       style={styles.textInput}
+                                       placeholder={"请输入数字"}
+                                       placeholderTextColor={'#5d5d5d'}
+                                       onChangeText={(text) => {
+                                           this.textInputChanged(text, "");
+                                       }}
+                            />
+                        </View>
+                    </CellTitleItem>
+                    <View style={{marginLeft:px2dp(2), height: px2dp(5), backgroundColor: '#f3f6f9'}}/>
                     <CellTitleItem name={'航行区域'} disable={true} subName={''}>
                         <FlatList
                             numColumns ={2}
@@ -223,7 +250,7 @@ export default class Menu extends Component {
                         >
                         </FlatList>
                     </CellTitleItem>
-                    <View style={{marginLeft:px2dp(2), height: px2dp(5), backgroundColor: '#f3f6f9'}}/>
+                    <View style={{height: px2dp(120)}}/>
                 </ScrollView>
                 <View style={{height:px2dp(46), flexDirection: 'row', alignItems: "center"}}>
                     <TouchableOpacity style={{flex: 1}} onPress={() => onItemSelected('Cancel')}>
@@ -259,5 +286,12 @@ const styles = StyleSheet.create({
     bottomButtonText: {
         fontSize: px2dp(18),
         fontWeight: '900',
-    }
+    },
+    textInput: {
+        height: px2dp(27),
+        flex: 1,
+        textAlign: "center",
+        backgroundColor: '#f3f6f9',
+        borderRadius: px2dp(4),
+    },
 });
