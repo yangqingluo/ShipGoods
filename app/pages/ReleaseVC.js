@@ -196,11 +196,12 @@ export default class ReleaseVC extends Component {
                 (info) => {
                     return {goods_id: info.goods_id};
                 }
-            )
+            );
 
             let data = {
                 goods: goodsList,
-                tonnage: this.state.tonnage,
+                tonnage: parseInt(this.state.tonnage) * 200,
+                ton_section: parseInt(this.state.tonnage),
                 price: this.state.price,
                 is_bargain: this.state.is_bargain,
                 loading_port: this.state.loading_port.port_id,
@@ -208,11 +209,14 @@ export default class ReleaseVC extends Component {
                 unloading_port: this.state.unloading_port.port_id,
                 unloading_port_name: this.state.unloading_port.port_name,
                 loading_time: createRequestTime(this.state.loading_time),
+                loading_delay: this.state.loading_delay,
                 wastage: this.state.wastage,
                 demurrage: parseInt(demurrageTypes[this.state.demurrage]),
                 clean_deley: this.cleanDeleyTypes[this.state.clean_deley],
                 remark: 'from_ios',
             };
+
+            // PublicAlert(JSON.stringify(data));
 
             NetUtil.post(appUrl + 'index.php/Mobile/Goods/add_goods_task/', data)
                 .then(

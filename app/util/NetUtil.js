@@ -62,6 +62,7 @@ export default class NetUtil extends Component {
         let opts = {
             method: method,
             headers: headers ? headers : {
+                'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
             body: body
@@ -73,6 +74,8 @@ export default class NetUtil extends Component {
                     if(response.ok){
                         return response.text();
                     }else{
+                        // PublicAlert(JSON.stringify(response));
+                        // PublicLog(JSON.stringify(response));
                         reject("服务器错误!");
                     }
                 })
