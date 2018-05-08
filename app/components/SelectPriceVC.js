@@ -26,14 +26,15 @@ export default class SelectPriceVC extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            price: 0,
-            is_bargain: 0
+            price: this.props.navigation.state.params.price || 0,
+            is_bargain: this.props.navigation.state.params.is_bargain || 0,
         }
     }
 
     textInputChanged(text) {
+        let m_text = text.length > 0 ? text : '0';
         this.setState({
-            price: parseInt(text),
+            price: parseInt(m_text),
         });
     }
 
@@ -44,7 +45,13 @@ export default class SelectPriceVC extends Component {
     }
 
     onSubmitBtnAction() {
-
+        if (this.state.price > 0) {
+            this.props.navigation.state.params.callBack(this.state.price, this.state.is_bargain);
+            this.props.navigation.goBack();
+        }
+        else {
+            PublicAlert("请输入价格");
+        }
     }
 
     render() {
@@ -63,6 +70,7 @@ export default class SelectPriceVC extends Component {
                                    placeholder={'价格键入'}
                                    placeholderTextColor={appData.appSecondaryTextColor}
                                    onChangeText={this.textInputChanged.bind(this)}
+                                   value = {this.state.price > 0 ? this.state.price + '' : ''}
                         >
                         </TextInput>
                         <Text style={{color:appData.appYellowColor, right:px2dp(30), fontSize:px2dp(18), textAlign: 'right', position: 'absolute',}}>{'¥元 / 吨'}</Text>

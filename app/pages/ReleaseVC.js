@@ -236,6 +236,8 @@ export default class ReleaseVC extends Component {
                 "SelectPrice",
                 {
                     title: '选择运价',
+                    price: this.state.price,
+                    is_bargain: this.state.is_bargain,
                     callBack:this.callBackFromPriceVC.bind(this)
                 });
         }
@@ -327,9 +329,10 @@ export default class ReleaseVC extends Component {
         }
     }
 
-    callBackFromPriceVC(backData) {
+    callBackFromPriceVC(price, is_bargain) {
         this.setState({
-            ship: backData,
+            price: price,
+            is_bargain: is_bargain,
         })
     }
 
@@ -575,6 +578,9 @@ export default class ReleaseVC extends Component {
         }
         else if (item.idKey === 'upload_oil_list' && this.state.upload_oil_list.length > 0) {
             return this.state.upload_oil_list;
+        }
+        else if (item.idKey === 'price' && this.state.price > 0) {
+            return this.state.price + ' 元/吨 ' + (this.state.is_bargain === 1 ? "不议价" : "");
         }
         else if (item.idKey === 'wastage') {
             let m_string = '';
