@@ -250,7 +250,7 @@ global.deepCopy = function(obj : Object) : Object {
         newobj[attr] = obj[attr];
     }
     return newobj;
-}
+};
 
 global.appAllGoods = [];
 global.appAllPortsFirst = [];
@@ -261,7 +261,9 @@ global.appHomeCondition = {
     empty_delay: 0,//空船延迟
     goods: null,//可运货品
     area: [],//航行区域
-}
+    min_ton: 0,//货量区间 最小吨位
+    max_ton: 0,//货量区间 最大吨位
+};
 
 export const imagePickerOptions = {
     quality: 1.0,

@@ -25,6 +25,8 @@ export default class Menu extends Component {
             empty_delay: 0,//空船延迟
             goods: null,//可运货品
             area: [],//航行区域
+            min_ton: 0,//货量区间 最小吨位
+            max_ton: 0,//货量区间 最大吨位
         };
         this.config = (userData.usertype === '1') ?
             [
@@ -66,6 +68,8 @@ export default class Menu extends Component {
             empty_delay: appHomeCondition.empty_delay,
             goods: appHomeCondition.goods,
             area: area,
+            min_ton: appHomeCondition.min_ton,
+            max_ton: appHomeCondition.max_ton,
         });
     }
 
@@ -160,7 +164,17 @@ export default class Menu extends Component {
     }
 
     textInputChanged(text, key){
-
+        let m_text = text.length > 0 ? text : '0';
+        if (key === "min") {
+            this.setState({
+                min_ton: parseInt(m_text),
+            });
+        }
+        else if (key === "max") {
+            this.setState({
+                max_ton: parseInt(m_text),
+            });
+        }
     }
 
     _renderListItem() {
@@ -247,8 +261,9 @@ export default class Menu extends Component {
                                        placeholder={"请输入数字"}
                                        placeholderTextColor={'#5d5d5d'}
                                        onChangeText={(text) => {
-                                           this.textInputChanged(text, "");
+                                           this.textInputChanged(text, "min");
                                        }}
+                                       value={this.state.min_ton > 0 ? this.state.min_ton + '' : ''}
                             />
                             <View style={{width: px2dp(40), height: px2dp(50), alignItems: "center", justifyContent: "center",}}>
                                 <Text style={{fontSize:px2dp(16), textAlign: 'center', color: '#5d5d5d'}}>{"~"}</Text>
@@ -259,8 +274,9 @@ export default class Menu extends Component {
                                        placeholder={"请输入数字"}
                                        placeholderTextColor={'#5d5d5d'}
                                        onChangeText={(text) => {
-                                           this.textInputChanged(text, "");
+                                           this.textInputChanged(text, "max");
                                        }}
+                                       value={this.state.max_ton > 0 ? this.state.max_ton + '' : ''}
                             />
                         </View>
                     </CellTitleItem>
