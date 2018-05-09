@@ -27,15 +27,21 @@ export default class Menu extends Component {
             area: [],//航行区域
             min_ton: 0,//货量区间 最小吨位
             max_ton: 0,//货量区间 最大吨位
+            loading_port: null,//装货港
+            loading_time: null,//发货时间
+            loading_delay: 0,//发货延迟
+            unloading_port: null,//卸货港
         };
-        this.config = (userData.usertype === '1') ?
+        this.config = isShipOwner() ?
             [
-                {idKey:"empty_port", name:"空船港", disable:false, onPress:this.cellSelected.bind(this, "SelectEmptyPort")},
-                {idKey:"empty_time",name:"承运时间", disable:false, subName:"324", onPress:this.cellSelected.bind(this, "SelectEmptyTime")},
+                {idKey:"loading_port", name:"装货港", disable:false, onPress:this.cellSelected.bind(this, "SelectLoadingPort")},
+                {idKey:"loading_time",name:"发货时间", disable:false, onPress:this.cellSelected.bind(this, "SelectLoadingTime")},
+                {idKey:"unloading_port", name:"卸货港", disable:false, onPress:this.cellSelected.bind(this, "SelectUnloadingPort")},
             ]
             :
             [
-
+                {idKey:"empty_port", name:"空船港", disable:false, onPress:this.cellSelected.bind(this, "SelectEmptyPort")},
+                {idKey:"empty_time",name:"承运时间", disable:false, onPress:this.cellSelected.bind(this, "SelectEmptyTime")},
             ];
     }
 
@@ -70,12 +76,16 @@ export default class Menu extends Component {
             area: area,
             min_ton: appHomeCondition.min_ton,
             max_ton: appHomeCondition.max_ton,
+            loading_port: appHomeCondition.loading_port,
+            loading_time: appHomeCondition.loading_time,
+            loading_delay: appHomeCondition.loading_delay,
+            unloading_port: appHomeCondition.unloading_port,
         });
     }
 
     cellSelected(key, data = {}){
         dismissKeyboard();
-        if (key === "SelectEmptyPort") {
+        if (key === "SelectEmptyPort"|| key === "SelectLoadingPort" || key === "SelectUnloadingPort") {
             this.toGoToPortsVC(key);
         }
         else if (key === "SelectEmptyTime") {
@@ -86,6 +96,17 @@ export default class Menu extends Component {
                     key: key,
                     date: this.state.empty_time,
                     delay: this.state.empty_delay,
+                    callBack:this.callBackFromTimeVC.bind(this)
+                });
+        }
+        else if (key === "SelectLoadingTime") {
+            this.props.navigation.navigate(
+                "SelectEmptyTimeVC",
+                {
+                    title: '发货时间',
+                    key: key,
+                    date: this.state.loading_time,
+                    delay: this.state.loading_delay,
                     callBack:this.callBackFromTimeVC.bind(this)
                 });
         }
@@ -134,6 +155,16 @@ export default class Menu extends Component {
                 empty_port: backData,
             })
         }
+        else if (key === "SelectLoadingPort") {
+            this.setState({
+                loading_port: backData,
+            })
+        }
+        else if (key === "SelectUnloadingPort") {
+            this.setState({
+                unloading_port: backData,
+            })
+        }
     }
 
     callBackFromTimeVC(key, backDate, backDelay) {
@@ -156,8 +187,17 @@ export default class Menu extends Component {
         if (item.idKey === 'empty_port' && this.state.empty_port !== null) {
             return this.state.empty_port.port_name;
         }
+        else if (item.idKey === 'loading_port' && this.state.loading_port !== null) {
+            return this.state.loading_port.port_name;
+        }
+        else if (item.idKey === 'unloading_port' && this.state.unloading_port !== null) {
+            return this.state.unloading_port.port_name;
+        }
         else if (item.idKey === 'empty_time' && this.state.empty_time !== null) {
             return this.state.empty_time.Format("yyyy.MM.dd") + '±' + this.state.empty_delay + '天';
+        }
+        else if (item.idKey === 'loading_time' && this.state.loading_time !== null) {
+            return this.state.loading_time.Format("yyyy.MM.dd") + '±' + this.state.loading_delay + '天';
         }
 
         return '';
@@ -242,7 +282,7 @@ export default class Menu extends Component {
             <View style={{flex: 1, borderLeftWidth: px2dp(0.5), borderLeftColor: appData.appBorderColor}}>
                 <ScrollView scrollsToTop={false} style={styles.menu}>
                     {this._renderListItem()}
-                    <CellTitleItem name={'可运货品'} disable={true} subName={''}>
+                    <CellTitleItem name={isShipOwner() ? '货品种类' : '可运货品'} disable={true} subName={''}>
                         <FlatList
                             numColumns ={3}
                             data={appAllGoods}

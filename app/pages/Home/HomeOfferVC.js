@@ -7,21 +7,25 @@ type Props = {
 }
 
 export default class HomeOfferVC extends HomeOrderVC {
-    renderCell = (info: Object) => {
-        return (
-            <OrderCell
-                info={info}
-                onPress={this.onCellSelected}
-                showCreateTime={true}
-            />
-        )
-    };
-
     requestRecommend = async (isReset) => {
         if (isReset) {
             this.state.page = 1;
         }
         let data = {page: this.state.page, is_offer: this.props.is_offer};
+        if (appHomeCondition.loading_port !== null) data.loading_port = appHomeCondition.loading_port.port_id;
+        if (appHomeCondition.unloading_port !== null) data.unloading_port = appHomeCondition.unloading_port.port_id;
+        if (appHomeCondition.loading_time !== null) data.loading_time = createRequestTime(appHomeCondition.loading_time);
+        if (appHomeCondition.loading_delay > 0) data.loading_delay = appHomeCondition.loading_delay;
+        if (appHomeCondition.min_ton > 0) data.min_ton = appHomeCondition.min_ton;
+        if (appHomeCondition.max_ton > 0) data.max_ton = appHomeCondition.max_ton;
+        if (appHomeCondition.goods !== null) data.goods_id = appHomeCondition.goods.goods_id;
+        if (appHomeCondition.area.length > 0) {
+            data.area = appHomeCondition.area.map(
+                (info) => {
+                    return info.key;
+                }
+            );
+        }
 
         NetUtil.post(appUrl + 'index.php/Mobile/Ship/ship_index/', data)
             .then(
@@ -56,5 +60,15 @@ export default class HomeOfferVC extends HomeOrderVC {
                         showFooter: 0,
                     })
                 });
+    };
+
+    renderCell = (info: Object) => {
+        return (
+            <OrderCell
+                info={info}
+                onPress={this.onCellSelected}
+                showCreateTime={true}
+            />
+        )
     };
 }

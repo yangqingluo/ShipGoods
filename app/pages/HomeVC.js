@@ -118,8 +118,16 @@ export default class HomeVC extends Component {
             appHomeCondition.min_ton = this.rightMenu.state.min_ton;
             appHomeCondition.max_ton = this.rightMenu.state.max_ton;
 
-            if (isShipOwner()) {
+            appHomeCondition.loading_port = this.rightMenu.state.loading_port;
+            appHomeCondition.unloading_port = this.rightMenu.state.unloading_port;
+            appHomeCondition.loading_time = this.rightMenu.state.loading_time;
+            appHomeCondition.loading_delay = this.rightMenu.state.loading_delay;
 
+            if (isShipOwner()) {
+                this.subListToOfferVC.requestData();
+                if (typeof(this.subListOfferedVC) !== appUndefined) {
+                    this.subListOfferedVC.requestData();
+                }
             }
             else {
                 this.subListGoodsVC.requestData();

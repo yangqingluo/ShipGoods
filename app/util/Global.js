@@ -196,6 +196,7 @@ let appStyles = StyleSheet.create({
 global.appStyles = appStyles;
 global.appData = appData;
 global.appUrl = 'http://shiphire.com.cn/';//服务器url
+global.appUndefined =  'undefined';
 global.NetUtil = NetUtil;
 global.appHomeVC = null;
 global.appDeviceId = DeviceInfo.getUniqueID();
@@ -299,6 +300,10 @@ global.appHomeCondition = {
     area: [],//航行区域
     min_ton: 0,//货量区间 最小吨位
     max_ton: 0,//货量区间 最大吨位
+    loading_port: null,//装货港
+    loading_time: null,//发货时间
+    loading_delay: 0,//发货延迟
+    unloading_port: null,//卸货港
 };
 
 export const imagePickerOptions = {
