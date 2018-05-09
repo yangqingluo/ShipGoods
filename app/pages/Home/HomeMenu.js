@@ -220,7 +220,7 @@ export default class Menu extends Component {
     _renderListItem() {
         return this.config.map((item, i) => {
             return (
-                <View>
+                <View key={'cell' + i}>
                     <AddAuthItem key={i} {...item}
                                  subName = {this.renderSubNameForIndex(item, i)}
                                  noSeparator={true}

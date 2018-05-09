@@ -12,7 +12,7 @@ type Props = {
     info: Object,
     showText: String,
     onPress: Function,
-    selected: boolean,
+    selected: Boolean,
     lines: number,
 }
 
