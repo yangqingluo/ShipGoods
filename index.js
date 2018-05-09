@@ -19,7 +19,7 @@ import SelectWastageVC from './app/components/SelectWastageVC';
 import SelectPrice from './app/components/SelectPriceVC';
 import CustomSelect from './app/components/CustomSelect';
 import CustomSectionSelect from './app/components/CustomSectionSelect';
-import HomeFilter from './app/pages/Home/HomeFilterVC';
+import HomeShipDetailVC from './app/pages/Home/HomeShipDetailVC';
 
 const MyNavigator = StackNavigator({
         Wait: {screen: WaitVC},
@@ -37,7 +37,7 @@ const MyNavigator = StackNavigator({
         SelectEmptyTimeVC:{screen: SelectEmptyTimeVC},
         SelectWastageVC:{screen: SelectWastageVC},
         SelectPrice:{screen: SelectPrice},
-        HomeFilter:{screen: HomeFilter},
+        HomeShipDetail:{screen: HomeShipDetailVC},
     }
     , {
         navigationOptions: {

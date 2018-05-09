@@ -62,11 +62,11 @@ export default class AddAuthItem extends Component {
         iconSize: PropTypes.number,
         font: PropTypes.string,
         onPress: PropTypes.func
-    }
+    };
     _render(){
         let {logo, iconSize, name, subName, color, noSeparator, avatar, disable, font} = this.props
-        font = font||"Ionicons"
-        const Icon = Font[font]
+        font = font||"Ionicons";
+        const Icon = Font[font];
         let radius = px2dp(12);
         return (
             <View style={{flexDirection: "column"}}>

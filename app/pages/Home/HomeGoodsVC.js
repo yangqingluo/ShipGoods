@@ -97,7 +97,10 @@ export default class HomeGoodsVC extends Component {
     };
 
     onCellSelected = (info: Object) => {
-        PublicAlert(JSON.stringify(info.item));
+        appHomeVC.props.navigation.navigate('HomeShipDetail',
+            {
+                info: info.item,
+            });
     };
 
 

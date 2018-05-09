@@ -76,8 +76,6 @@ export default class HomeVC extends Component {
     }
 
     componentDidMount() {
-        // this.props.navigation.setParams({onSortBtnAction: null});
-        // PublicAlert(JSON.stringify(this.props.navigation.state));
         global.appHomeVC = this;
     }
 
