@@ -43,6 +43,10 @@ export default class HomeGoodsVC extends Component {
     };
 
     requestRecommend = async (isReset) => {
+        if (this.state.isRefreshing) {
+            return;
+        }
+
         if (isReset) {
             this.state.page = 1;
         }

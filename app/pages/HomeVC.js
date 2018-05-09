@@ -19,7 +19,8 @@ import InfoCard from '../components/InfoCard';
 import TabTop from '../components/TabTop';
 import HomeListGoodsVC from './Home/HomeGoodsVC';
 import HomeListOrderVC from './Home/HomeOrderVC';
-import SideMenu from '../components/SideMenu'
+import HomeListOfferVC from './Home/HomeOfferVC';
+import SideMenu from '../components/SideMenu';
 import Menu from './Home/HomeMenu';
 import px2dp from "../util";
 
@@ -135,7 +136,6 @@ export default class HomeVC extends Component {
                       onChange={isOpen => this.updateMenuState(isOpen)}
                       menuPosition={'right'}>
                 <View style={styles.container}>
-                    {/* <View style={styles.swiperWrap}> */}
                     <Swiper
                         style={styles.swiperWrap}
                         showsButtons={false}
@@ -145,70 +145,32 @@ export default class HomeVC extends Component {
                         activeDot={<View />}
                     >
                         <View style={styles.swiperView}>
-                            <Image
-                                source={require('../images/swiper.png')}
-                                style={styles.swiperImg}
-                            />
+                            <Image source={require('../images/swiper.png')} style={styles.swiperImg}/>
                         </View>
                         <View style={styles.swiperView}>
-                            <Image
-                                source={require('../images/swiper.png')}
-                                style={styles.swiperImg}
-                            />
+                            <Image source={require('../images/swiper.png')} style={styles.swiperImg}/>
                         </View>
                         <View style={styles.swiperView}>
-                            <Image
-                                source={require('../images/swiper.png')}
-                                style={styles.swiperImg}
-                            />
+                            <Image source={require('../images/swiper.png')} style={styles.swiperImg}/>
                         </View>
-
                     </Swiper>
-
-                    {/* </View> */}
-
                     <ScrollableTabView
                         renderTabBar={() =>
                             <TabTop tabNames={tabTitles}
                                 //FIXME:tabIconNames={tabIcon}
                                 //FIXME:selectedTabIconNames={tabSelectedIcon}
                             />}
-
                         style={styles.tabView}
                         tabBarPosition='top'
                         tabBarActiveTextColor={appData.appBlueColor}
                         //onChangeTab={this.onChangeTabs}>
                     >
                         {isShipOwner() ?
-                            <View>
-                                <ScrollView>
-                                    <InfoCard Navg={this.props.navigation} />
-
-                                    <InfoCard Navg={this.props.navigation} />
-
-                                    <InfoCard Navg={this.props.navigation} />
-
-                                    <InfoCard Navg={this.props.navigation} />
-
-                                    <InfoCard Navg={this.props.navigation} />
-                                </ScrollView>
-                            </View>
+                            <HomeListOfferVC ref={o => this.subListToOfferVC = o} is_offer={0}/>
                             :
                             <HomeListGoodsVC ref={o => this.subListGoodsVC = o}/>}
                         {isShipOwner() ?
-                            <View>
-                                <ScrollView>
-                                    <InfoCard Navg={this.props.navigation} />
-
-                                    <InfoCard Navg={this.props.navigation} />
-
-                                    <InfoCard Navg={this.props.navigation} />
-
-                                    <InfoCard Navg={this.props.navigation} />
-
-                                    <InfoCard Navg={this.props.navigation} />
-                                </ScrollView>
-                            </View>
+                            <HomeListOfferVC ref={o => this.subListOfferedVC = o} is_offer={1}/>
                             :
                             <HomeListOrderVC ref={o => this.subListOrderVC = o} />}
                     </ScrollableTabView>
@@ -219,40 +181,9 @@ export default class HomeVC extends Component {
 }
 
 const styles = StyleSheet.create({
-    test: {
-        borderWidth: 1,
-        borderColor: '#999',
-        //borderRadius: 20,
-
-        alignSelf: 'center',
-        flex: 1,
-        alignItems: 'center',
-        flexDirection: 'column',
-
-        marginTop: 60,
-        marginBottom: 20,
-
-        width: 100,
-        height: 100,
-
-        color: '#3EA3FC',
-        fontSize: 15,
-        opacity: .6,
-
-        backgroundColor: "#60BBFE",
-
-    },
     container: {
-        //width: 100,
-        //height: 100,
-        //alignSelf: 'flex-start',
-        //alignItems: 'flex-start',
-        //justifyContent: 'flex-start',
-        //backgroundColor: '#000'
-        //borderWidth: 1,
         flexDirection: 'column',
         flex: 1,
-
         // padding: 10,
         //borderWidth: 1,
         backgroundColor: '#fff',

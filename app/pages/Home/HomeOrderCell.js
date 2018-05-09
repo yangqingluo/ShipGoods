@@ -17,6 +17,7 @@ import px2dp from "../../util";
 type Props = {
     info: Object,
     onPress: Function,
+    showCreateTime: boolean,
 }
 
 export default class HomeGoodsCell extends Component {
@@ -63,7 +64,7 @@ export default class HomeGoodsCell extends Component {
                             </View>
                         </View>
                         <View style={{marginRight:px2dp(16), height:px2dp(30), flexDirection: 'row',  alignItems: "center", justifyContent: "flex-end"}}>
-                            <Text style={{fontSize:px2dp(11), color:appData.appSecondaryTextColor}}>{'浏览'+ info.item.view_num + ' 收藏' + info.item.collect_num}</Text>
+                            <Text style={{fontSize:px2dp(11), color:appData.appSecondaryTextColor}}>{(this.props.showCreateTime ? info.item.create_timetext + ' ' : '') + '浏览'+ info.item.view_num + ' 收藏' + info.item.collect_num}</Text>
                         </View>
                     </View>
                 </TouchableHighlight>
