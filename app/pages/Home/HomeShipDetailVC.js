@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import {
     StyleSheet,
     Text,
+    Image,
     View,
     TouchableOpacity
 } from 'react-native';
 
 class RightHeader extends Component {
     static propTypes = {
-        title: String,
+        isFavor: Boolean,
     };
 
     constructor(props) {
@@ -20,10 +21,11 @@ class RightHeader extends Component {
     };
 
     render() {
+        let {isFavor} = this.props;
         return (
             <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
-                <TouchableOpacity onPress={this.onFavorBtnPress} >
-                    <Text style={{marginRight : 10}}>{this.props.title}</Text>
+                <TouchableOpacity onPress={this.onFavorBtnPress} style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
+                    <Image source={require('../../images/navbar_icon_like.png')} style={{tintColor: isFavor ? 'red' : null, width: 22, height: 19, marginRight : 10, marginLeft : 10, resizeMode: "cover"}}/>
                 </TouchableOpacity>
             </View>
         )
@@ -32,8 +34,8 @@ class RightHeader extends Component {
 
 export default class HomeShipDetailVC extends Component {
     static navigationOptions = ({ navigation }) => ({
-        headerTitle: navigation.state.params.headerTitle,
-        headerRight: <RightHeader navigation={navigation} title={navigation.state.params.rightTitle}/>,
+        headerTitle: navigation.state.params.headerTitle || '船舶详情',
+        headerRight: <RightHeader navigation={navigation} isFavor={navigation.state.params.isFavor}/>,
     });
 
     constructor(props) {
@@ -44,18 +46,14 @@ export default class HomeShipDetailVC extends Component {
     }
 
     componentDidMount() {
-        // 组件渲染之后重设props
-        this.props.navigation.setParams({
-            headerTitle: '船舶详情',
-        });
-        PublicAlert(JSON.stringify(this.props.navigation));
+        
     }
 
     testBtnAction() {
         // 组件渲染之后重设props
         this.props.navigation.setParams({
             headerTitle: '自定义Header',
-            rightTitle: '收藏',
+            isFavor: true,
         });
     }
 
