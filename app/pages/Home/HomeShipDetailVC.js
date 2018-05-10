@@ -11,27 +11,27 @@ import DashLine from '../../components/DashLine'
 
 
 class RightHeader extends Component {
-    static props = {
-        favor: PropTypes.BOOL,
-    };
-
+    // static props = {
+    //     favor: PropTypes.BOOL,
+    // };
+    //
     // static defaultProps = {
     //     favor: false,
     // };
-
-    constructor(props) {
-        super(props)
-    }
+    //
+    // constructor(props) {
+    //     super(props)
+    // }
 
     onFavorBtnPress = () => {
-
+        this.props.navigation.state.params.clickParams();
     };
 
     render() {
-        let {favor} = this.props;
+        let {favor} = this.props.navigation.state.params;
         return (
             <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
-                <TouchableOpacity onPress={this.onFavorBtnPress} style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
+                <TouchableOpacity onPress={this.onFavorBtnPress.bind(this)} style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
                     <Image source={require('../../images/navbar_icon_like.png')} style={{tintColor: favor ? 'red' : null, width: 22, height: 19, marginRight : 10, marginLeft : 10, resizeMode: "cover"}}/>
                 </TouchableOpacity>
             </View>
@@ -42,7 +42,7 @@ class RightHeader extends Component {
 export default class HomeShipDetailVC extends Component {
     static navigationOptions = ({ navigation }) => ({
         headerTitle: navigation.state.params.headerTitle || '船舶详情',
-        headerRight: <RightHeader navigation={navigation} favor={navigation.state.params.favor}/>,
+        headerRight: <RightHeader navigation={navigation}/>,
     });
 
     constructor(props) {
@@ -53,8 +53,16 @@ export default class HomeShipDetailVC extends Component {
     }
 
     componentDidMount() {
-
+        this.props.navigation.setParams({clickParams:this.onFavorBtnPress});
     }
+
+    onFavorBtnPress = () => {
+        // 组件渲染之后重设props
+        this.props.navigation.setParams({
+            headerTitle: '本王收藏了',
+            favor: true,
+        });
+    };
 
     testBtnAction() {
         // 组件渲染之后重设props
@@ -80,7 +88,7 @@ export default class HomeShipDetailVC extends Component {
                 </View>
                 <View style={{height: 40}}/>
                 <View style={{backgroundColor: 'white', height: 1, marginLeft:20, marginRight:20}}>
-                    <DashLine backgroundColor={'red'} len={(screenWidth - 40)/ 4}/>
+                    <DashLine backgroundColor={'red'} len={(screenWidth - 40)/ appData.appDashWidth}/>
                 </View>
             </View> );
     }

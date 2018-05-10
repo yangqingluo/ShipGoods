@@ -39,4 +39,4 @@ const styles = StyleSheet.create({
         marginRight: 2,
         flex: 1,
     }
-})
+});

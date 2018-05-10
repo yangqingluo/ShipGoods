@@ -46,7 +46,7 @@ Date.prototype.pattern=function(fmt) {
         }
     }
     return fmt;
-}
+};
 
 Date.prototype.Format = function (fmt) {
     let o = {
@@ -62,7 +62,7 @@ Date.prototype.Format = function (fmt) {
     for (let k in o)
         if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
-}
+};
 
 Number.prototype.Format = function (n){
     let s = this;
@@ -70,14 +70,14 @@ Number.prototype.Format = function (n){
         return;
     n = n > 0 && n <= 20 ? n : 2;
     s = parseFloat((s + "").replace("/[^\\d\\.-]/g", "")).toFixed(n) + "";
-    var l = s.split(".")[0].split("").reverse(),
+    let l = s.split(".")[0].split("").reverse(),
         r = s.split(".")[1];
-    var t = "";
+    let t = "";
     for(let i = 0; i < l.length; i ++ ) {
         t += l[i] + ((i + 1) % 3 === 0 && (i + 1) !== l.length ? "," : "");
     }
     return t.split("").reverse().join("") + "." + r;
-}
+};
 
 
 const KEY_USERDATA = 'ships_goods_user_data';
@@ -131,7 +131,7 @@ var storage = new Storage({
     // 或是写到另一个文件里，这里require引入
     // 或是在任何时候，直接对storage.sync进行赋值修改
     // sync: require('./sync') // 这个sync文件是要你自己写的
-})
+});
 
 // 最好在全局范围内创建一个（且只有一个）storage实例，方便直接调用
 
@@ -160,7 +160,7 @@ storage.load({
     global.userData = ret;
 }).catch(err => {
     global.userData = null;
-})
+});
 
 global.PublicLog = Log;
 global.PublicAlert = GlobalAlert;
@@ -184,7 +184,8 @@ let appData = {
     appSeparatorLightColor: '#c0c0c020',
 
     appItemPaddingLeft: 16,
-}
+    appDashWidth: 4.0,
+};
 
 let appStyles = StyleSheet.create({
     container: {
@@ -206,11 +207,11 @@ global.screenHeight = height;
 global.dismissKeyboard = require('dismissKeyboard');
 global.renderSeparator = () => {
     return <View style={{height:px2dp(0.5),backgroundColor:appData.appSeparatorColor}}/>;
-}
+};
 
 global.renderSubSeparator = () => {
     return <View style={{marginLeft:px2dp(80), height:px2dp(0.5),backgroundColor:appData.appSeparatorColor}}/>;
-}
+};
 global.judgeMobilePhone = function(object : String) : boolean {
     // /^1[3|4|5|7|8][0-9]{9}$/
     let reg = /^1[0-9]{10}$/;
