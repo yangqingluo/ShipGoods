@@ -47,10 +47,16 @@ export default class AddAuthItem extends Component {
         numeric: PropTypes.bool,
         iconSize: PropTypes.number,
         font: PropTypes.string,
+        showArrowForward: PropTypes.bool,
         onPress: PropTypes.func
     };
+
+    static defaultProps = {
+        showArrowForward: true,
+    };
+
     _render(){
-        let {logo, iconSize, name, subName, color, noSeparator, avatar, disable, font} = this.props
+        let {logo, iconSize, name, subName, color, noSeparator, avatar, disable, font, showArrowForward} = this.props;
         font = font||"Ionicons";
         const Icon = Font[font];
         let radius = px2dp(12);
@@ -81,7 +87,7 @@ export default class AddAuthItem extends Component {
                     {subName?(<Text style={{flex: 1, minWidth:120, textAlign: 'right', color: "#000", fontSize:12}}>{subName}</Text>):null}
                     {avatar?(<Image source={avatar} style={{width: 36, height: 36, resizeMode: "cover", overflow:"hidden", borderRadius: 18}}/>):null}
                     {this.props.children}
-                    <Font.Ionicons style={{marginLeft: 10, paddingRight: 16, opacity: disable ? 0.0 : 1.0}} name="ios-arrow-forward-outline" size={px2dp(18)} color="#bbb" />
+                    {showArrowForward ? <Font.Ionicons style={{marginLeft: 10, paddingRight: 16, opacity: disable ? 0.0 : 1.0}} name="ios-arrow-forward-outline" size={px2dp(18)} color="#bbb" /> : null}
                 </View>
             </View>
         )
