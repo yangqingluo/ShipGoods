@@ -8,8 +8,9 @@ import {
     ScrollView,
     TouchableOpacity
 } from 'react-native';
-import DashLine from '../../components/DashLine'
-import AddAuthItem from '../../components/AddAuthItem'
+import DashLine from '../../components/DashLine';
+import AddAuthItem from '../../components/AddAuthItem';
+import StarScore from '../../components/StarScore';
 import px2dp from "../../util";
 
 
@@ -60,6 +61,7 @@ export default class HomeShipDetailVC extends Component {
             {idKey:"storage", name:"仓容"},
             {idKey:"course", name:"航行区域"},
             {idKey:"upload_oil_list", name:"上载货品"},
+            {idKey:"credit", name:"船主信用"},
         ];
     }
 
@@ -84,20 +86,33 @@ export default class HomeShipDetailVC extends Component {
         if (item.idKey === 'empty_time') {
             return info.empty_timetext;
         }
-        // else if (item.idKey === 'empty_port' && this.state.empty_port !== null) {
-        //     return this.state.empty_port.port_name;
-        // }
-        // else if (item.idKey === 'loading_port' && this.state.loading_port !== null) {
-        //     return this.state.loading_port.port_name;
-        // }
-        // else if (item.idKey === 'unloading_port' && this.state.unloading_port !== null) {
-        //     return this.state.unloading_port.port_name;
-        // }
-        // else if (item.idKey === 'loading_time' && this.state.loading_time !== null) {
-        //     return this.state.loading_time.Format("yyyy.MM.dd") + '±' + this.state.loading_delay + '天';
-        // }
+        else if (item.idKey === 'download_oil_list') {
+            let oilList = info.download_oil_list.map(
+                (info) => {
+                    return info.goods_name;
+                }
+            );
+            return oilList.join(" ");
+        }
+        else if (item.idKey === 'upload_oil_list') {
+            let oilList = info.upload_oil_list.map(
+                (info) => {
+                    return info.goods_name;
+                }
+            );
+            return oilList.join(" ");
+        }
 
         return '';
+    }
+
+    renderSubViewForIndex(item, index) {
+        let {info} = this.state;
+        if (item.idKey === 'credit') {
+            return <StarScore style={{marginLeft:px2dp(5)}} itemEdge={px2dp(5)} currentScore={info.credit}/>;
+        }
+
+        return null;
     }
 
     _renderListItem() {
@@ -108,6 +123,7 @@ export default class HomeShipDetailVC extends Component {
                                  showArrowForward={false}
                                  subName={this.renderSubNameForIndex(item, i)}
                                  noSeparator={true}>
+                        {this.renderSubViewForIndex(item, i)}
                     </AddAuthItem>
                     <View style={{height: px2dp(1), marginLeft: px2dp(10)}}>
                         <DashLine backgroundColor={appData.appSeparatorLightColor} len={(screenWidth - 40)/ appData.appDashWidth}/>
@@ -131,12 +147,6 @@ export default class HomeShipDetailVC extends Component {
                         <Text style={{fontSize:px2dp(14), color:appData.appBlueColor, marginRight:px2dp(18), fontWeight:'bold'}}>{info.tonnage + ' T'}</Text>
                     </View>
                     {this._renderListItem()}
-                    <View style={{height: 40}}/>
-                    <View style={{backgroundColor: 'yellow', height: 20, borderStyle: 'dashed', borderColor: 'red', borderBottomWidth: 1,
-                        // textDecorationLine:'underline',//underline 文字的下划线 line-through 中间横穿的线
-                        // textDecorationStyle:'dashed', //double 双实线 solid 实线 dotted 点线 dashed 虚线
-                    }}>
-                    </View>
                     <View style={{height: 40}}/>
                     <View style={{backgroundColor: 'white', height: 1, marginLeft:20, marginRight:20}}>
                         <DashLine backgroundColor={'red'} len={(screenWidth - 40)/ appData.appDashWidth}/>
