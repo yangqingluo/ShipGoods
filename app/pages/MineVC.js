@@ -52,10 +52,10 @@ export default class MineVC extends Component {
     });
 
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
             isRefreshing: false
-        }
+        };
         this.config = (global.userData.usertype === '1') ?
             [
                 {logo:require('../images/icon_yuyue.png'), name:"我的预约", onPress:this.goPage.bind(this, "我的预约")},
@@ -77,7 +77,7 @@ export default class MineVC extends Component {
     goPage(key, data = {}){
         const { navigate } = this.props.navigation;
         if (key === 'Call') {
-            Communications.phonecall('18267811011', true);
+            Communications.phonecall(appData.appCustomerServicePhone, true);
         }
         else if (key === 'MyShip') {
             navigate(key, { title: '我的船队', callBack: null});

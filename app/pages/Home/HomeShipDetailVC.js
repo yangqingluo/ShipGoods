@@ -5,12 +5,14 @@ import {
     Text,
     Image,
     View,
+    TextInput,
     ScrollView,
     TouchableOpacity
 } from 'react-native';
 import DashLine from '../../components/DashLine';
 import AddAuthItem from '../../components/AddAuthItem';
 import StarScore from '../../components/StarScore';
+import Communications from '../../util/AKCommunications';
 import px2dp from "../../util";
 
 
@@ -62,7 +64,7 @@ export default class HomeShipDetailVC extends Component {
             {idKey:"course", name:"航行区域"},
             {idKey:"upload_oil_list", name:"上载货品"},
             {idKey:"credit", name:"船主信用"},
-            {idKey:"phone", name:"联系方式"},
+            {idKey:"phone", name:"联系方式", onPress:this.cellSelected.bind(this, "SelectPhone")},
         ];
     }
 
@@ -84,7 +86,18 @@ export default class HomeShipDetailVC extends Component {
     };
 
     cellSelected = (key, data = {}) =>{
-        PublicAlert(key);
+        if (key === "SelectPhone") {
+            let phone = this.state.info.phone;
+            if (phone === null) {
+                PublicAlert("联系电话不存在");
+            }
+            else {
+                Communications.phonecall(phone, true);
+            }
+        }
+        else {
+            PublicAlert(key);
+        }
     };
 
     renderSubNameForIndex(item, index) {
@@ -123,6 +136,9 @@ export default class HomeShipDetailVC extends Component {
 
     _renderListItem() {
         return this.config.map((item, i) => {
+            if (item.idKey === 'phone' && this.state.info.state === '0') {
+                return null;
+            }
             return (
                 <View key={'cell' + i} style={{paddingLeft: px2dp(10), paddingRight: px2dp(20)}}>
                     <AddAuthItem key={i} {...item}
@@ -153,6 +169,20 @@ export default class HomeShipDetailVC extends Component {
                         <Text style={{fontSize:px2dp(14), color:appData.appBlueColor, marginRight:px2dp(18), fontWeight:'bold'}}>{info.tonnage + ' T'}</Text>
                     </View>
                     {this._renderListItem()}
+                    <View style={{paddingRight:px2dp(18), height:px2dp(30), flexDirection: 'row',  alignItems: "center", justifyContent: "flex-end"}}>
+                        <Text style={{fontSize:px2dp(11), color:appData.appSecondaryTextColor}}>{'浏览'+ info.view_num + ' 收藏' + info.collect_num}</Text>
+                    </View>
+                    <View style={{paddingHorizontal:px2dp(18)}}>
+                        <Image source={require('../../images/icon_beizhu.png')} style={{width: px2dp(57), height: px2dp(21), resizeMode: "cover"}}/>
+                        <Text underlineColorAndroid="transparent"
+                                   style={styles.textInput}
+                                   multiline={true}
+                                   editable={false}
+                        >
+                            {info.remark.length === 0 ? '此油品暂无备注' : info.remark}
+                        </Text>
+                    </View>
+                    <View style={{height: px2dp(60)}} />
                 </ScrollView>
                 <View style={{position: "absolute", bottom: 20, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
                     <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)}>
@@ -165,5 +195,14 @@ export default class HomeShipDetailVC extends Component {
     }
 }
 const styles = StyleSheet.create({
-
+    textInput: {
+        marginTop: px2dp(10),
+        minHeight: px2dp(46),
+        borderRadius: px2dp(6),
+        fontSize: px2dp(16),
+        paddingHorizontal: px2dp(28),
+        paddingVertical: px2dp(15),
+        color: '#535353',
+        backgroundColor: appData.appGrayColor,
+    },
 });

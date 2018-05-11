@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingVertical: 0,
         height: 30,
-        fontSize: 13,
+        fontSize: 14,
         paddingHorizontal: 10,
         color: appData.appTextColor,
         // backgroundColor: '#fff',
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     textLabel: {
         // flex: 1,
         paddingVertical: 0,
-        fontSize: 13,
+        fontSize: 14,
         paddingHorizontal: 10,
         color: appData.appTextColor,
         // backgroundColor: '#fff',
