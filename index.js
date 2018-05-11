@@ -20,6 +20,7 @@ import SelectPrice from './app/components/SelectPriceVC';
 import CustomSelect from './app/components/CustomSelect';
 import CustomSectionSelect from './app/components/CustomSectionSelect';
 import HomeShipDetailVC from './app/pages/Home/HomeShipDetailVC';
+import HomeOrderSelectVC from './app/pages/Home/HomeOrderSelectVC';
 
 const MyNavigator = StackNavigator({
         Wait: {screen: WaitVC},
@@ -38,6 +39,7 @@ const MyNavigator = StackNavigator({
         SelectWastageVC:{screen: SelectWastageVC},
         SelectPrice:{screen: SelectPrice},
         HomeShipDetail:{screen: HomeShipDetailVC},
+        HomeOrderSelect:{screen: HomeOrderSelectVC},
     }
     , {
         navigationOptions: {

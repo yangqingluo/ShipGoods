@@ -79,7 +79,10 @@ export default class HomeShipDetailVC extends Component {
     };
 
     onSubmitBtnAction = () => {
-        PublicAlert("****");
+        appHomeVC.props.navigation.navigate('HomeOrderSelect',
+            {
+                info: this.state.info,
+            });
     };
 
     cellSelected = (key, data = {}) =>{
