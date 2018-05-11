@@ -93,9 +93,9 @@ export default class SelectPriceVC extends Component {
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
-                <View style={{position: "absolute", bottom: 20, height:px2dp(45), justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
-                    <TouchableOpacity style={{ width:px2dp(123), height:px2dp(45), borderRadius: 20, overflow:"hidden"}} onPress={this.onSubmitBtnAction.bind(this)}>
-                        <View style={{flex: 1, height: 40, backgroundColor: appData.appBlueColor, alignItems: "center", justifyContent: "center"}}>
+                <View style={{position: "absolute", bottom: px2dp(20), justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
+                    <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)}>
+                        <View style={appStyles.sureBtnContainer}>
                             <Text style={{color: "#fff"}}>{"提交"}</Text>
                         </View>
                     </TouchableOpacity>

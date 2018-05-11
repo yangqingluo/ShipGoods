@@ -185,12 +185,23 @@ let appData = {
 
     appItemPaddingLeft: 16,
     appDashWidth: 4.0,
+    appSureButtonWidth: px2dp(123),
+    appSureButtonHeight: px2dp(44),
+    appSureButtonRadius: px2dp(22),
 };
 
 let appStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: appData.appViewColor,
+    },
+    sureBtnContainer: {
+        width:appData.appSureButtonWidth,
+        height:appData.appSureButtonHeight,
+        borderRadius:appData.appSureButtonRadius,
+        backgroundColor: appData.appBlueColor,
+        alignItems: "center",
+        justifyContent: "center",
     },
 });
 

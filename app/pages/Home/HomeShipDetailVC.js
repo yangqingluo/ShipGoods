@@ -62,19 +62,24 @@ export default class HomeShipDetailVC extends Component {
             {idKey:"course", name:"航行区域"},
             {idKey:"upload_oil_list", name:"上载货品"},
             {idKey:"credit", name:"船主信用"},
+            {idKey:"phone", name:"联系方式"},
         ];
     }
 
     componentDidMount() {
-        this.props.navigation.setParams({clickParams:this.onFavorBtnPress});
+        this.props.navigation.setParams({clickParams:this.onFavorBtnAction});
     }
 
-    onFavorBtnPress = () => {
+    onFavorBtnAction = () => {
         // 组件渲染之后重设props
         this.props.navigation.setParams({
             headerTitle: '本王收藏了',
             favor: true,
         });
+    };
+
+    onSubmitBtnAction = () => {
+        PublicAlert("****");
     };
 
     cellSelected = (key, data = {}) =>{
@@ -147,11 +152,14 @@ export default class HomeShipDetailVC extends Component {
                         <Text style={{fontSize:px2dp(14), color:appData.appBlueColor, marginRight:px2dp(18), fontWeight:'bold'}}>{info.tonnage + ' T'}</Text>
                     </View>
                     {this._renderListItem()}
-                    <View style={{height: 40}}/>
-                    <View style={{backgroundColor: 'white', height: 1, marginLeft:20, marginRight:20}}>
-                        <DashLine backgroundColor={'red'} len={(screenWidth - 40)/ appData.appDashWidth}/>
-                    </View>
                 </ScrollView>
+                <View style={{position: "absolute", bottom: 20, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
+                    <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)}>
+                        <View style={appStyles.sureBtnContainer}>
+                            <Text style={{color: "#fff"}}>{"约船"}</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </View> );
     }
 }
