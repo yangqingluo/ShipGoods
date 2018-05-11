@@ -170,6 +170,9 @@ global.PublicResetAction = resetAction;
 let appData = {
     appCustomerServicePhone: "18267811011",
 
+    appFontWeightLight:'100',
+    appFontWeightMedium:'800',
+
     appBlueColor: '#2c9bfd',
     appLightBlueColor: "#54b2ff",
     appLittleBlueColor: "#7dd3ff",
