@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import OrderCell from './HomeOrderCell';
 import ListLoadFooter from '../../components/ListLoadFooter';
+import Toast, {DURATION} from "react-native-easy-toast";
 
 export default class HomeGoodsVC extends Component {
     constructor(props){
@@ -124,6 +125,7 @@ export default class HomeGoodsVC extends Component {
                     onEndReached={this.loadMoreData.bind(this)}
                     onEndReachedThreshold={0}
                 />
+                <Toast ref={o => this.refToast = o} position={'center'}/>
             </View>
         );
     }

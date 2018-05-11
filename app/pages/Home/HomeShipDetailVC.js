@@ -71,9 +71,7 @@ export default class HomeShipDetailVC extends Component {
     }
 
     onFavorBtnAction = () => {
-        // 组件渲染之后重设props
         this.props.navigation.setParams({
-            headerTitle: '本王收藏了',
             favor: true,
         });
     };
