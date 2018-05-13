@@ -10,10 +10,11 @@ export default class HomeOrderSelectVC extends HomeOrder {
     });
 
     onCellSelected = (info: Object) => {
-        PublicAlert('您确定选择该货品？', '',
-            [{text:"取消"},
-                {text:"确定", onPress:this.toAddBookShip.bind(this, info.item)}]
-        );
+        this.refSelectAlert.show({onSureBtnAction:this.toAddBookShip.bind(this, info.item)});
+        // PublicAlert('您确定选择该货品？', '',
+        //     [{text:"取消"},
+        //         {text:"确定", onPress:this.toAddBookShip.bind(this, info.item)}]
+        // );
     };
 
     goBackToMain = () => {
@@ -21,6 +22,7 @@ export default class HomeOrderSelectVC extends HomeOrder {
     };
 
     toAddBookShip(item) {
+        this.refSelectAlert.hide();
         let data = {
             task_id: item.task_id,
             ship_task_id: this.props.navigation.state.params.info.task_id,

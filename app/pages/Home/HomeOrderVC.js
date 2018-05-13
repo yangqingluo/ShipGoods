@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import OrderCell from './HomeOrderCell';
 import ListLoadFooter from '../../components/ListLoadFooter';
+import CustomAlert from '../../components/CustomAlert';
 import Toast, {DURATION} from "react-native-easy-toast";
 
 export default class HomeGoodsVC extends Component {
@@ -88,6 +89,9 @@ export default class HomeGoodsVC extends Component {
         PublicAlert(JSON.stringify(info.item));
     };
 
+    onAlertSureBtnAction = () => {
+
+    };
 
     renderCell = (info: Object) => {
         return (
@@ -126,6 +130,8 @@ export default class HomeGoodsVC extends Component {
                     onEndReachedThreshold={0}
                 />
                 <Toast ref={o => this.refToast = o} position={'center'}/>
+
+                <CustomAlert ref={o => this.refSelectAlert = o} message={"您确定选择该货品？"} />
             </View>
         );
     }
