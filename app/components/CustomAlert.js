@@ -2,17 +2,12 @@ import React, { Component } from 'react';
 import {
     Modal,
     Text,
-    TouchableHighlight,
     TouchableOpacity,
-    TouchableWithoutFeedback,
     View ,
     StyleSheet,
     Image,
-    TextInput} from 'react-native';
+} from 'react-native';
 import px2dp from "../util";
-let Dimensions = require('Dimensions');
-let screenWidth = Dimensions.get('window').width;
-let dialogWidth = screenWidth-80;
 
 export default class CustomAlert extends Component {
     constructor(props){
@@ -82,21 +77,22 @@ export default class CustomAlert extends Component {
             >
                 <View style={styles.container}>
                     <View style={styles.modalContainer}>
-
+                        <View style={styles.mainContainer}>
+                            <View style={{flex: 1, alignItems:'center', justifyContent:'center',}}>
+                                {this.props.title ? <Text style={styles.modalTitle}>{this.props.title}</Text> : null}
+                                <Text style={styles.modalMessage}>{this.props.message}</Text>
+                            </View>
+                            <View style={styles.row}>
+                                <TouchableOpacity style={styles.leftBn} onPress={this.hide.bind(this)}>
+                                    <Text style={styles.leftBnText}>取消</Text>
+                                </TouchableOpacity>
+                                <View style={styles.verticalLine}/>
+                                <TouchableOpacity style={styles.rightBn} onPress={this.state.onSureBtnAction}>
+                                    <Text style={styles.rightBnText}>确定</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
                         <Image source={require('../images/icon_de.png')} style={styles.infoImage}/>
-                        <View style={{flex: 1, alignItems:'center', justifyContent:'center',}}>
-                            {this.props.title ? <Text style={styles.modalTitle}>{this.props.title}</Text> : null}
-                            <Text style={styles.modalMessage}>{this.props.message}</Text>
-                        </View>
-                        <View style={styles.row}>
-                            <TouchableOpacity style={styles.leftBn} onPress={this.hide.bind(this)}>
-                                <Text style={styles.leftBnText}>取消</Text>
-                            </TouchableOpacity>
-                            <View style={styles.verticalLine}/>
-                            <TouchableOpacity style={styles.rightBn} onPress={this.state.onSureBtnAction}>
-                                <Text style={styles.rightBnText}>确定</Text>
-                            </TouchableOpacity>
-                        </View>
                     </View>
                 </View>
             </Modal>
@@ -109,13 +105,20 @@ const styles = StyleSheet.create({
         flex:1,
         backgroundColor:'rgba(0, 0, 0, 0.5)',
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
     },
     modalContainer: {
         width: screenWidth * (260 / 375),
+        minHeight: 171,
+        // backgroundColor: 'white',
+        alignItems:'center',
+    },
+    mainContainer: {
+        marginTop: px2dp(27),
+        flex: 1,
         borderRadius: 12,
-        minHeight: 145,
-        backgroundColor: "white",
+        minHeight: 171,
+        backgroundColor: 'white',
         alignItems:'center',
     },
     modalTitle: {
@@ -163,9 +166,9 @@ const styles = StyleSheet.create({
         color:appData.appBlueColor,
     },
     infoImage: {
-        top: -px2dp(55 * 0.5),
+        top: 0,
         width: px2dp(54),
-        height: px2dp(55),
+        height: px2dp(54),
         resizeMode: 'cover',
         position: 'absolute',
     }
