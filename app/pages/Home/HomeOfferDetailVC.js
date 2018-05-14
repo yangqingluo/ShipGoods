@@ -55,20 +55,55 @@ export default class HomeOfferDetailVC extends Component {
         super(props);
         this.state={
             info: this.props.navigation.state.params.info,
+            detailInfo: this.props.navigation.state.params.info,
+            refreshing: false,
         };
 
         this.config = [
             {idKey:"wastage",name:"损耗"},
             {idKey:"demurrage", name:"滞期费"},
+            {idKey:"clean_deley", name:"结算时间"},
+            {idKey:"corporation", name:"公司名称"},
+            {idKey:"credit", name:"船主信用"},
         ];
     }
 
     componentDidMount() {
         this.props.navigation.setParams({clickParams:this.onFavorBtnAction});
+        this.requestData();
     }
 
-    isOrdered = function() : boolean {
-        return (this.state.info.status === '1');
+    requestData = () => {
+        this.setState({refreshing: true});
+        this.requestRecommend(true);
+    };
+
+    requestRecommend = async (isReset) => {
+        let data = {task_id: this.state.info.task_id};
+
+        NetUtil.post(appUrl + 'index.php/Mobile/Ship/goods_task_detail/', data)
+            .then(
+                (result)=>{
+                    if (result.code === 0) {
+                        this.setState({
+                            detailInfo: result.data,
+                            refreshing: false,
+                        })
+                    }
+                    else {
+                        this.setState({
+                            refreshing: false,
+                        })
+                    }
+                },(error)=>{
+                    this.setState({
+                        refreshing: false,
+                    })
+                });
+    };
+
+    isBargain = function() : boolean {
+        return (this.state.detailInfo.is_bargain === '0');
     };
 
     onFavorBtnAction = () => {
@@ -78,18 +113,21 @@ export default class HomeOfferDetailVC extends Component {
     };
 
     onSubmitBtnAction = () => {
+        //报价
+    };
+
+    onAcceptBtnAction = () => {
+        //接受议价
+    };
+
+    onBargainBtnAction = () => {
+        //议价
 
     };
 
     cellSelected = (key, data = {}) =>{
-        if (key === "SelectPhone") {
-            let phone = this.state.info.phone;
-            if (phone === null) {
-                PublicAlert("联系电话不存在");
-            }
-            else {
-                Communications.phonecall(phone, true);
-            }
+        if (key === "Select") {
+
         }
         else {
             PublicAlert(key);
@@ -97,21 +135,28 @@ export default class HomeOfferDetailVC extends Component {
     };
 
     renderSubNameForIndex(item, index) {
-        let {info} = this.state;
+        let info = this.state.detailInfo;
         if (item.idKey === 'wastage') {
-            return this.state.wastage;
+            return info.wastage;
         }
-        else if (item.idKey === 'demurrage' && this.state.demurrage > 0) {
-            return demurrageTypes[this.state.demurrage] + ' 元/天'
+        else if (item.idKey === 'demurrage' && info.demurrage > 0) {
+            return info.demurrage + ' 元/天'
         }
-
+        else if (item.idKey === 'clean_deley' && info.clean_deley > 0) {
+            return '完货' + info.clean_deley + '天内';
+        }
+        else if (item.idKey === 'corporation' && info.goods_owner !== null) {
+            if (typeof(info.goods_owner) !== appUndefined) {
+                return info.goods_owner.corporation;
+            }
+        }
         return '';
     }
 
     renderSubViewForIndex(item, index) {
-        let {info} = this.state;
+        let info = this.state.detailInfo;
         if (item.idKey === 'credit') {
-            return <StarScore style={{marginLeft:px2dp(5)}} itemEdge={px2dp(5)} currentScore={info.credit}/>;
+            return <StarScore style={{marginLeft:5}} itemEdge={5} currentScore={info.credit}/>;
         }
 
         return null;
@@ -123,14 +168,14 @@ export default class HomeOfferDetailVC extends Component {
                 return null;
             }
             return (
-                <View key={'cell' + i} style={{paddingLeft: px2dp(10), paddingRight: px2dp(20)}}>
+                <View key={'cell' + i} style={{paddingLeft: 10, paddingRight: 20}}>
                     <AddAuthItem key={i} {...item}
                                  showArrowForward={false}
                                  subName={this.renderSubNameForIndex(item, i)}
                                  noSeparator={true}>
                         {this.renderSubViewForIndex(item, i)}
                     </AddAuthItem>
-                    <View style={{height: px2dp(1), marginLeft: px2dp(10)}}>
+                    <View style={{height: 1, marginLeft: 10}}>
                         <DashLine backgroundColor={appData.appSeparatorLightColor} len={(screenWidth - 40)/ appData.appDashWidth}/>
                     </View>
                 </View>);
@@ -139,40 +184,44 @@ export default class HomeOfferDetailVC extends Component {
 
     render() {
         const { navigate } = this.props.navigation;
-        let {info} = this.state;
-        let ordered = this.isOrdered();
+        let info = this.state.detailInfo;
+        let price = parseInt(info.price);
+        let bargain = this.isBargain();
         return (
             <View style={appStyles.container}>
-                <ScrollView style={{flex: 1, backgroundColor:'#fff'}}>
-                    <View style={{height:px2dp(47), flexDirection: 'row', alignItems: "center", justifyContent: "space-between",}}>
+                <ScrollView style={{flex: 1, backgroundColor:'#fff'}}
+                            onRefresh={this.requestData}
+                            refreshing={this.state.refreshing}
+                >
+                    <View style={{height: 47, flexDirection: 'row', alignItems: "center", justifyContent: "space-between",}}>
                         <View style={{flexDirection: 'row'}}>
-                            <Image source={require('../../images/icon_blue.png')} style={{width: px2dp(10), height: px2dp(12), resizeMode: "cover"}}/>
-                            <Text style={{fontSize:px2dp(10), color:appData.appSecondaryTextColor, marginLeft:px2dp(5)}}>{'货物编号：' + info.goods_sn}</Text>
+                            <Image source={require('../../images/icon_blue.png')} style={{width: 10, height: 12, resizeMode: "cover"}}/>
+                            <Text style={{fontSize: 10, color:appData.appSecondaryTextColor, marginLeft: 5}}>{'货物编号：' + info.goods_sn}</Text>
                         </View>
-                        <View style={{marginRight:px2dp(16), justifyContent: "flex-end"}}>
-                            <Text style={{fontSize:px2dp(12), color:appData.appBlueColor}}>{'已有' + info.offer_num + '人报价'}</Text>
+                        <View style={{marginRight: 6, justifyContent: "flex-end"}}>
+                            <Text style={{fontSize: 12, color:appData.appBlueColor}}>{'已有' + info.offer_num + '人报价'}</Text>
                         </View>
                     </View>
                     <View style={styles.centerContainer}>
-                        <View style={{backgroundColor: '#f2f9ff', height:px2dp(73)}}>
+                        <View style={{backgroundColor: '#f2f9ff', height: 73}}>
                             <View style={{flex: 1, flexDirection: 'row', alignItems: "center"}}>
-                                <Text style={{marginLeft: px2dp(34), fontSize:px2dp(14), color: appData.appTextColor}}>{info.loading_port_name + ' → ' + info.unloading_port_name}</Text>
+                                <Text style={{marginLeft: 34, fontSize: 14, color: appData.appTextColor}}>{info.loading_port_name + ' → ' + info.unloading_port_name}</Text>
                             </View>
                             <View style={{flex: 1, flexDirection: 'row', alignItems: "center", justifyContent: "space-between"}}>
-                                <Text style={{marginLeft: px2dp(34), fontSize:px2dp(14), color: appData.appTextColor}}>{info.loading_timetext + ' ± ' + info.loading_delay + '天'}</Text>
-                                <Text style={{marginRight: px2dp(27), fontSize:px2dp(14), color: appData.appTextColor}}>{'原油 10000+10000吨'}</Text>
+                                <Text style={{marginLeft: 34, fontSize: 14, color: appData.appTextColor}}>{info.loading_timetext + ' ± ' + info.loading_delay + '天'}</Text>
+                                <Text style={{marginRight: 27, fontSize: 14, color: appData.appTextColor}}>{'原油 10000+10000吨'}</Text>
                             </View>
                         </View>
-                        <View style={{backgroundColor: '#81c6ff', height:px2dp(26), alignItems: "center", justifyContent: "center"}}>
-                            <Text style={{fontSize:px2dp(12), color:'white', fontWeight:'bold'}}>{'¥'+ info.price + ' 元/ 吨'}</Text>
+                        <View style={{backgroundColor: '#81c6ff', height: 26, alignItems: "center", justifyContent: "center"}}>
+                            <Text style={{fontSize: 12, color:'white', fontWeight:'bold'}}>{'¥'+ info.price + ' 元/ 吨'}</Text>
                         </View>
                     </View>
                     {this._renderListItem()}
-                    <View style={{paddingRight:px2dp(18), height:px2dp(30), flexDirection: 'row',  alignItems: "center", justifyContent: "flex-end"}}>
-                        <Text style={{fontSize:px2dp(11), color:appData.appSecondaryTextColor}}>{'浏览'+ info.view_num + ' 收藏' + info.collect_num}</Text>
+                    <View style={{marginRight: 18, height: 30, flexDirection: 'row',  alignItems: "center", justifyContent: "flex-end"}}>
+                        <Text style={{fontSize: 11, color:appData.appSecondaryTextColor}}>{info.create_timetext + ' ' + '浏览'+ info.view_num + ' 收藏' + info.collect_num}</Text>
                     </View>
-                    <View style={{paddingHorizontal:px2dp(18)}}>
-                        <Image source={require('../../images/icon_beizhu.png')} style={{width: px2dp(57), height: px2dp(21), resizeMode: "cover"}}/>
+                    <View style={{paddingHorizontal: 18}}>
+                        <Image source={require('../../images/icon_beizhu.png')} style={{width: 57, height: 21, resizeMode: "cover"}}/>
                         <Text underlineColorAndroid="transparent"
                               style={styles.textInput}
                               multiline={true}
@@ -181,33 +230,41 @@ export default class HomeOfferDetailVC extends Component {
                             {info.remark.length === 0 ? '此油品暂无备注' : info.remark}
                         </Text>
                     </View>
-                    {ordered ?
-                        <View style={{alignItems: "center", justifyContent: "space-between"}}>
-                            <Text style={{marginTop: px2dp(10), fontSize:px2dp(20), color:appData.appBlueColor, fontWeight: appData.appFontWeightMedium}}>{"预约中"}</Text>
-                            <Text style={{marginTop: px2dp(10), fontSize:px2dp(12), color:appData.appSecondaryTextColor, fontWeight: appData.appFontWeightLight}}>{"货盘已推送至船东，请等待船东报价或者直接联系船东！"}</Text>
-                        </View>
-                        : null}
-                    <View style={{height: px2dp(60)}} />
                 </ScrollView>
-                {ordered ? null : <View style={{position: "absolute", bottom: 20, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
-                    <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)}>
-                        <View style={appStyles.sureBtnContainer}>
-                            <Text style={{color: "#fff"}}>{"约船"}</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>}
+                {price === 0 ?
+                    <View style={{position: "absolute", bottom: 20, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
+                        <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)}>
+                            <View style={appStyles.sureBtnContainer}>
+                                <Text style={{color: "#fff"}}>{"报价"}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                    :
+                    <View style={{position: "absolute", bottom: 0, width: screenWidth, height: 45, flexDirection: 'row'}}>
+                        <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(221), backgroundColor: appData.appBlueColor, justifyContent: "center", alignItems: "center"}}>
+                            <Text style={styles.btnText}>{"认同报价"}</Text>
+                        </TouchableOpacity>
+                        {bargain ? <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(154), backgroundColor: appData.appLightBlueColor, justifyContent: "center", alignItems: "center"}}>
+                            <Text style={styles.btnText}>{"议价"}</Text>
+                        </TouchableOpacity> : null}
+                    </View>
+                }
             </View> );
     }
 }
 const styles = StyleSheet.create({
     textInput: {
-        marginTop: px2dp(10),
-        minHeight: px2dp(46),
-        borderRadius: px2dp(6),
-        fontSize: px2dp(16),
-        paddingHorizontal: px2dp(28),
-        paddingVertical: px2dp(15),
+        marginTop: 10,
+        minHeight: 46,
+        borderRadius: 6,
+        fontSize: 16,
+        paddingHorizontal: 28,
+        paddingVertical: 15,
         color: '#535353',
         backgroundColor: appData.appGrayColor,
     },
+    btnText: {
+        color: "#fff",
+        fontSize: 16,
+    }
 });

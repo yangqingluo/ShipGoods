@@ -126,13 +126,13 @@ export default class ReleaseVC extends Component {
                 (info) => {
                     return {goods_id: info.goods_id};
                 }
-            )
+            );
 
             let uploadList = this.state.uploadOilSelectedList.map(
                 (info) => {
                     return {goods_id: info.goods_id};
                 }
-            )
+            );
 
             let data = {
                 ship_id: this.state.ship.ship_id,

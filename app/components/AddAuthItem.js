@@ -22,7 +22,7 @@ import Button from './Button'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
-const itemHeight = px2dp(50)
+const itemHeight = 50;
 
 const Font = {
     Ionicons,
@@ -59,7 +59,7 @@ export default class AddAuthItem extends Component {
         let {logo, iconSize, name, subName, color, noSeparator, avatar, disable, font, showArrowForward} = this.props;
         font = font||"Ionicons";
         const Icon = Font[font];
-        let radius = px2dp(12);
+        let radius = 12;
         return (
             <View style={{flexDirection: "column"}}>
                 {noSeparator ? null : <View style={{height: 1, backgroundColor: appData.appSeparatorLightColor}}/>}
@@ -87,7 +87,7 @@ export default class AddAuthItem extends Component {
                     {subName?(<Text style={{flex: 1, minWidth:120, textAlign: 'right', color: "#000", fontSize:12}}>{subName}</Text>):null}
                     {avatar?(<Image source={avatar} style={{width: 36, height: 36, resizeMode: "cover", overflow:"hidden", borderRadius: 18}}/>):null}
                     {this.props.children}
-                    {showArrowForward ? <Font.Ionicons style={{marginLeft: 10, paddingRight: 16, opacity: disable ? 0.0 : 1.0}} name="ios-arrow-forward-outline" size={px2dp(18)} color="#bbb" /> : null}
+                    {showArrowForward ? <Font.Ionicons style={{marginLeft: 10, paddingRight: 16, opacity: disable ? 0.0 : 1.0}} name="ios-arrow-forward-outline" size={18} color="#bbb" /> : null}
                 </View>
             </View>
         )
@@ -122,8 +122,8 @@ const styles = StyleSheet.create({
     },
     logo: {
         marginRight:5,
-        width: px2dp(20),
-        height: px2dp(20)
+        width: 20,
+        height: 20,
     },
     textInput: {
         flex: 1,

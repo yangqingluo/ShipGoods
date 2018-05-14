@@ -60,7 +60,7 @@ export default class DetailVC extends Component {
                 {idKey:"idcard", name:"上传法人身份证", disable:false, logo:require('../images/icon_red.png'), subName:"123"},
                 {name:"添加船舶", disable:false, logo:require('../images/icon_orange.png'), subName:"324", onPress:this.cellSelected.bind(this, "AddShip")},
                 {idKey:"invoice", name:"可开发票类型", disable:false, logo:require('../images/icon_green.png'), onPress:this.cellSelected.bind(this, "invoice_type")},
-            ]
+            ];
 
         this.invoiceTypes = ['取消', '增值税专用发票(11%)', '增值税普通发票', '其他发票'];
     }
