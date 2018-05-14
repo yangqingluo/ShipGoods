@@ -96,11 +96,11 @@ const Log = (...params) => { // 全局Log
     if (GLOBAL.__DEV__) {
         console.log(params);
     }
-}
+};
 
 const GlobalAlert = (...params) => {
     Alert.alert(...params);
-}
+};
 
 const resetAction = (routeName) => NavigationActions.reset({
     index: 0,
@@ -289,6 +289,10 @@ global.isShipOwner = function() : boolean {
         return global.userData.usertype === '2';
     }
     return false;
+};
+
+global.offerIsOffer = function(is_offer) : boolean {
+    return (is_offer === '1');
 };
 
 global.offerIsBargain = function(info) : boolean {

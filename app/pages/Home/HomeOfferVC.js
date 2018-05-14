@@ -63,11 +63,20 @@ export default class HomeOfferVC extends HomeOrderVC {
     };
 
     onCellSelected = (info: Object) => {
-        appHomeVC.props.navigation.navigate('HomeOfferDetail',
-            {
-                info: info.item,
-                is_offer: this.props.is_offer,
-            });
+        if (offerIsOffer(this.props.is_offer)) {
+            appHomeVC.props.navigation.navigate('HomeOfferTwicePrice',
+                {
+                    info: info.item,
+                    is_offer: this.props.is_offer,
+                });
+        }
+        else {
+            appHomeVC.props.navigation.navigate('HomeOfferDetail',
+                {
+                    info: info.item,
+                    is_offer: this.props.is_offer,
+                });
+        }
     };
 
     renderCell = (info: Object) => {

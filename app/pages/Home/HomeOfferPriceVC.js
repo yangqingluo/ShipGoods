@@ -9,7 +9,8 @@ import {
     ScrollView,
     TouchableOpacity
 } from 'react-native';
-import DashLine from '../../components/DashLine';
+
+import Toast from "react-native-easy-toast";
 import AddAuthItem from '../../components/AddAuthItem';
 import px2dp from "../../util";
 
@@ -52,7 +53,49 @@ export default class HomeOfferPriceVC extends Component {
     };
 
     onSubmitBtnAction = () => {
+        if (this.state.ship === null) {
+            this.refToast.show("请选择船舶");
+        }
+        else if (this.state.lastGoodsSelectedList.length === 0) {
+            this.refToast.show("请选择上载货品");
+        }
+        else if (this.state.arrive_time === null) {
+            this.refToast.show("请选择到港时间");
+        }
+        else {
+            let price = parseFloat(this.state.offer).Format(1);
+            if (offerIsBargain(this.state.info)) {
+                if (price - 0 < 0.000001) {
+                    this.refToast.show("请输入运价");
+                    return;
+                }
+            }
 
+            let data = {
+                ship_id: this.state.ship.ship_id,
+                last_goods_id: this.state.lastGoodsSelectedList[0].goods_id,
+                arrive_time: this.state.arrive_time.Format("yyyy-MM-dd"),
+                arrive_delay: this.state.arrive_delay,
+                type: 2,
+                offer: price,
+                task_id: this.state.info.task_id,
+            };
+            PublicAlert(JSON.stringify(data));
+            // NetUtil.post(appUrl + 'index.php/Mobile/Task/add_book_good/', data)
+            //     .then(
+            //         (result)=>{
+            //             if (result.code === 0) {
+            //                 PublicAlert(result.message,'',
+            //                     [{text:"确定"}]
+            //                 );
+            //             }
+            //             else {
+            //                 this.refToast.show(result.message);
+            //             }
+            //         },(error)=>{
+            //             this.refToast.show(error);
+            //         });
+        }
     };
 
     textInputChanged(text, key){
@@ -113,7 +156,7 @@ export default class HomeOfferPriceVC extends Component {
                     title: '上载货品',
                     dataList: appAllGoods,
                     selectedList:this.state.lastGoodsSelectedList,
-                    maxSelectCount:5,
+                    maxSelectCount: 1,
                     callBack:this.callBackFromGoodsVC.bind(this)
                 }
             );
@@ -238,6 +281,7 @@ export default class HomeOfferPriceVC extends Component {
                         </View>
                     </TouchableOpacity>
                 </View>
+                <Toast ref={o => this.refToast = o} position={'center'}/>
             </View> );
     }
 }

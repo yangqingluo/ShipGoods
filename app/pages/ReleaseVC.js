@@ -503,7 +503,7 @@ export default class ReleaseVC extends Component {
             (info) => {
                 return info.goods_name;
             }
-        )
+        );
         this.setState({
             download_oil_list: dataList.join(','),
             downloadOilSelectedList: backData
@@ -609,7 +609,7 @@ export default class ReleaseVC extends Component {
                 this.submitImage(source, idKey);
             }
         });
-    }
+    };
 
     submitImage = (source, idKey) => {
         let formData = new FormData();
@@ -627,7 +627,7 @@ export default class ReleaseVC extends Component {
                 },(error)=>{
                     PublicAlert(error);
                 });
-    }
+    };
 
     renderSubNameForIndex(item, index) {
         if (item.idKey === 'ship_name' && this.state.ship !== null) {

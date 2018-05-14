@@ -16,39 +16,9 @@ import Communications from '../../util/AKCommunications';
 import px2dp from "../../util";
 
 
-class RightHeader extends Component {
-    // static props = {
-    //     favor: PropTypes.BOOL,
-    // };
-    //
-    // static defaultProps = {
-    //     favor: false,
-    // };
-    //
-    // constructor(props) {
-    //     super(props)
-    // }
-
-    onFavorBtnPress = () => {
-        this.props.navigation.state.params.clickParams();
-    };
-
-    render() {
-        let {favor} = this.props.navigation.state.params;
-        return (
-            <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
-                <TouchableOpacity onPress={this.onFavorBtnPress.bind(this)} style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
-                    <Image source={require('../../images/navbar_icon_like.png')} style={{tintColor: favor ? 'red' : null, width: 22, height: 19, marginRight : 10, marginLeft : 10, resizeMode: "cover"}}/>
-                </TouchableOpacity>
-            </View>
-        )
-    }
-}
-
 export default class HomeOfferDetailVC extends Component {
     static navigationOptions = ({ navigation }) => ({
         headerTitle: navigation.state.params.headerTitle || '货品详情',
-        headerRight: <RightHeader navigation={navigation}/>,
     });
 
     constructor(props) {

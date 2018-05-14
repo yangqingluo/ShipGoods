@@ -16,7 +16,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 const Font = {
     Ionicons,
     FontAwesome
-}
+};
 
 export default class SelectPriceVC extends Component {
     static navigationOptions = ({ navigation }) => (
