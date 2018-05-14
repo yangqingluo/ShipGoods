@@ -144,13 +144,28 @@ export default class HomeOfferDetailVC extends Component {
         return (
             <View style={appStyles.container}>
                 <ScrollView style={{flex: 1, backgroundColor:'#fff'}}>
-                    <View style={{backgroundColor:'#81c6ff', flexDirection: 'row', justifyContent: "space-between", height:px2dp(26)}}>
-                        <Text style={{fontSize:px2dp(10), color:'white', marginLeft:px2dp(10), marginTop:px2dp(8)}}>{'发票编号：' + info.billing_sn}</Text>
-                        <Text style={{fontSize:px2dp(10), color:'white', marginRight:px2dp(10), marginTop:px2dp(8)}}>{info.create_timetext}</Text>
+                    <View style={{height:px2dp(47), flexDirection: 'row', alignItems: "center", justifyContent: "space-between",}}>
+                        <View style={{flexDirection: 'row'}}>
+                            <Image source={require('../../images/icon_blue.png')} style={{width: px2dp(10), height: px2dp(12), resizeMode: "cover"}}/>
+                            <Text style={{fontSize:px2dp(10), color:appData.appSecondaryTextColor, marginLeft:px2dp(5)}}>{'货物编号：' + info.goods_sn}</Text>
+                        </View>
+                        <View style={{marginRight:px2dp(16), justifyContent: "flex-end"}}>
+                            <Text style={{fontSize:px2dp(12), color:appData.appBlueColor}}>{'已有' + info.offer_num + '人报价'}</Text>
+                        </View>
                     </View>
-                    <View style={{backgroundColor:'#f2f9ff', flexDirection: 'row',  alignItems: "center", justifyContent: "space-between", height:px2dp(51)}}>
-                        <Text style={{fontSize:px2dp(14), color:appData.appTextColor, marginLeft:px2dp(18), fontWeight:'bold'}}>{info.empty_port_name + ' / ' + info.ship_name}</Text>
-                        <Text style={{fontSize:px2dp(14), color:appData.appBlueColor, marginRight:px2dp(18), fontWeight:'bold'}}>{info.tonnage + ' T'}</Text>
+                    <View style={styles.centerContainer}>
+                        <View style={{backgroundColor: '#f2f9ff', height:px2dp(73)}}>
+                            <View style={{flex: 1, flexDirection: 'row', alignItems: "center"}}>
+                                <Text style={{marginLeft: px2dp(34), fontSize:px2dp(14), color: appData.appTextColor}}>{info.loading_port_name + ' → ' + info.unloading_port_name}</Text>
+                            </View>
+                            <View style={{flex: 1, flexDirection: 'row', alignItems: "center", justifyContent: "space-between"}}>
+                                <Text style={{marginLeft: px2dp(34), fontSize:px2dp(14), color: appData.appTextColor}}>{info.loading_timetext + ' ± ' + info.loading_delay + '天'}</Text>
+                                <Text style={{marginRight: px2dp(27), fontSize:px2dp(14), color: appData.appTextColor}}>{'原油 10000+10000吨'}</Text>
+                            </View>
+                        </View>
+                        <View style={{backgroundColor: '#81c6ff', height:px2dp(26), alignItems: "center", justifyContent: "center"}}>
+                            <Text style={{fontSize:px2dp(12), color:'white', fontWeight:'bold'}}>{'¥'+ info.price + ' 元/ 吨'}</Text>
+                        </View>
                     </View>
                     {this._renderListItem()}
                     <View style={{paddingRight:px2dp(18), height:px2dp(30), flexDirection: 'row',  alignItems: "center", justifyContent: "flex-end"}}>
