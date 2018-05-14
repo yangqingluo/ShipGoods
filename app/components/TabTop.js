@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
         //borderTopColor: '#d9d9d9',
         //borderTopWidth:2
         //flex: 1,
-        marginTop: Platform.OS === 'ios' ?  -20 : 20,
+        // marginTop: Platform.OS === 'ios' ?  -20 : 20,
         //backgroundColor: '#0ff',
     },
     tab: {

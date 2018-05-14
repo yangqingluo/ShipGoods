@@ -14,8 +14,7 @@ import {
 } from 'react-native'
 
 import Swiper from 'react-native-swiper';
-import ScrollableTabView,{ScrollableTabBar} from 'react-native-scrollable-tab-view';
-import InfoCard from '../components/InfoCard';
+import ScrollableTabView,{DefaultTabBar, ScrollableTabBar} from 'react-native-scrollable-tab-view';
 import TabTop from '../components/TabTop';
 import HomeListGoodsVC from './Home/HomeGoodsVC';
 import HomeListOrderVC from './Home/HomeOrderVC';
@@ -142,24 +141,25 @@ export default class HomeVC extends Component {
                       onChange={isOpen => this.updateMenuState(isOpen)}
                       menuPosition={'right'}>
                 <View style={styles.container}>
-                    <Swiper
-                        style={styles.swiperWrap}
-                        showsButtons={false}
-                        autoplay={true}
-                        //隐藏小圆点
-                        dot={<View />}
-                        activeDot={<View />}
-                    >
-                        <View style={styles.swiperView}>
-                            <Image source={require('../images/swiper.png')} style={styles.swiperImg}/>
-                        </View>
-                        <View style={styles.swiperView}>
-                            <Image source={require('../images/swiper.png')} style={styles.swiperImg}/>
-                        </View>
-                        <View style={styles.swiperView}>
-                            <Image source={require('../images/swiper.png')} style={styles.swiperImg}/>
-                        </View>
-                    </Swiper>
+                    <View style={styles.swiperWrap}>
+                        <Swiper
+                            style={styles.swiperWrap}
+                            showsButtons={false}
+                            autoplay={true}
+                            showsPagination={false}
+                            horizontal={true}
+                        >
+                            <View style={styles.swiperView}>
+                                <Image source={require('../images/swiper.png')} style={styles.swiperImg}/>
+                            </View>
+                            <View style={styles.swiperView}>
+                                <Image source={require('../images/swiper.png')} style={styles.swiperImg}/>
+                            </View>
+                            <View style={styles.swiperView}>
+                                <Image source={require('../images/swiper.png')} style={styles.swiperImg}/>
+                            </View>
+                        </Swiper>
+                    </View>
                     <ScrollableTabView
                         renderTabBar={() =>
                             <TabTop tabNames={tabTitles}
@@ -188,36 +188,25 @@ export default class HomeVC extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'column',
         flex: 1,
-        // padding: 10,
-        //borderWidth: 1,
         backgroundColor: '#fff',
     },
     swiperWrap: {
-        //marginTop: 0,
-        //height: 120,
-        //backgroundColor: '#0ff',
-        //flex: 0,
+        height: 140,
     },
     swiperView: {
-        //height: 150, 
-        //margin: 10,
-        //backgroundColor: '#0ff',
-        height: 120,
+        padding: 10,
+        height: 140,
         alignItems: 'center',
         justifyContent: 'center',
     },
     swiperImg: {
-        height: 120,
         resizeMode: 'contain',
-        margin: 10,
+        flex: 1,
     },
     tabView: {
-        marginTop: -240,
-        //flex: 0,
-        // backgroundColor: appData.appViewColor,
+        flex: 1,
     }
-})
+});
 
 
