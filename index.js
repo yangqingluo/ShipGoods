@@ -22,6 +22,7 @@ import CustomSectionSelect from './app/components/CustomSectionSelect';
 import HomeShipDetailVC from './app/pages/Home/HomeShipDetailVC';
 import HomeOrderSelectVC from './app/pages/Home/HomeOrderSelectVC';
 import HomeOfferDetailVC from './app/pages/Home/HomeOfferDetailVC';
+import HomeOfferPriceVC from './app/pages/Home/HomeOfferPriceVC';
 
 const MyNavigator = StackNavigator({
         Wait: {screen: WaitVC},
@@ -42,6 +43,7 @@ const MyNavigator = StackNavigator({
         HomeShipDetail:{screen: HomeShipDetailVC},
         HomeOrderSelect:{screen: HomeOrderSelectVC},
         HomeOfferDetail:{screen: HomeOfferDetailVC},
+        HomeOfferPrice:{screen: HomeOfferPriceVC},
     }
     , {
         navigationOptions: {

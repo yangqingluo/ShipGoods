@@ -102,10 +102,6 @@ export default class HomeOfferDetailVC extends Component {
                 });
     };
 
-    isBargain = function() : boolean {
-        return (this.state.detailInfo.is_bargain === '0');
-    };
-
     onFavorBtnAction = () => {
         this.props.navigation.setParams({
             favor: true,
@@ -114,6 +110,11 @@ export default class HomeOfferDetailVC extends Component {
 
     onSubmitBtnAction = () => {
         //报价
+        this.props.navigation.navigate('HomeOfferPrice',
+            {
+                title: "报价",
+                info: this.state.detailInfo,
+            });
     };
 
     onAcceptBtnAction = () => {
@@ -164,9 +165,6 @@ export default class HomeOfferDetailVC extends Component {
 
     _renderListItem() {
         return this.config.map((item, i) => {
-            if (item.idKey === 'phone' && !this.isOrdered()) {
-                return null;
-            }
             return (
                 <View key={'cell' + i} style={{paddingLeft: 10, paddingRight: 20}}>
                     <AddAuthItem key={i} {...item}
@@ -186,7 +184,7 @@ export default class HomeOfferDetailVC extends Component {
         const { navigate } = this.props.navigation;
         let info = this.state.detailInfo;
         let price = parseInt(info.price);
-        let bargain = this.isBargain();
+        let isBargain = offerIsBargain(this.state.detailInfo);
         return (
             <View style={appStyles.container}>
                 <ScrollView style={{flex: 1, backgroundColor:'#fff'}}
@@ -244,7 +242,7 @@ export default class HomeOfferDetailVC extends Component {
                         <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(221), backgroundColor: appData.appBlueColor, justifyContent: "center", alignItems: "center"}}>
                             <Text style={styles.btnText}>{"认同报价"}</Text>
                         </TouchableOpacity>
-                        {bargain ? <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(154), backgroundColor: appData.appLightBlueColor, justifyContent: "center", alignItems: "center"}}>
+                        {isBargain ? <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(154), backgroundColor: appData.appLightBlueColor, justifyContent: "center", alignItems: "center"}}>
                             <Text style={styles.btnText}>{"议价"}</Text>
                         </TouchableOpacity> : null}
                     </View>

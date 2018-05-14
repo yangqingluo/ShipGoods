@@ -291,6 +291,10 @@ global.isShipOwner = function() : boolean {
     return false;
 };
 
+global.offerIsBargain = function(info) : boolean {
+    return (info.is_bargain === '0');
+};
+
 global.createRequestTime = function(date : Date) : String {
     if (date !== null) {
         return date.Format("yyyy-MM-dd");
