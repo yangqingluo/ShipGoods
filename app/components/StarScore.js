@@ -52,7 +52,6 @@ export default class StarScore extends Component {
                 <Image source={require('../images/icon_star.png')} style={{width: radius, height: radius, marginLeft:this.state.itemEdge, position: 'absolute'}}/>
             );
         }
-
         let scale = count - this.state.currentScore;
         if (scale > 0 && scale < 1) {
             return (

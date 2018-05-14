@@ -172,11 +172,11 @@ export default class HomeVC extends Component {
                         //onChangeTab={this.onChangeTabs}>
                     >
                         {isShipOwner() ?
-                            <HomeListOfferVC ref={o => this.subListToOfferVC = o} is_offer={0}/>
+                            <HomeListOfferVC ref={o => this.subListToOfferVC = o} is_offer={"0"}/>
                             :
                             <HomeListGoodsVC ref={o => this.subListGoodsVC = o}/>}
                         {isShipOwner() ?
-                            <HomeListOfferVC ref={o => this.subListOfferedVC = o} is_offer={1}/>
+                            <HomeListOfferVC ref={o => this.subListOfferedVC = o} is_offer={"1"}/>
                             :
                             <HomeListOrderVC ref={o => this.subListOrderVC = o} />}
                     </ScrollableTabView>

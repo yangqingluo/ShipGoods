@@ -3,7 +3,7 @@ import HomeOrderVC from "./HomeOrderVC"
 import OrderCell from './HomeOrderCell';
 
 type Props = {
-    is_offer: 0,
+    is_offer: "0",
 }
 
 export default class HomeOfferVC extends HomeOrderVC {

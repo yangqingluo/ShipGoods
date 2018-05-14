@@ -34,7 +34,8 @@ export default class HomeOfferDetailVC extends Component {
             {idKey:"demurrage", name:"滞期费"},
             {idKey:"clean_deley", name:"结算时间"},
             {idKey:"corporation", name:"公司名称"},
-            {idKey:"credit", name:"船主信用"},
+            {idKey:"credit", name:"货主信用"},
+            {idKey:"remark", name:"备注"},
         ];
     }
 
@@ -79,30 +80,12 @@ export default class HomeOfferDetailVC extends Component {
     };
 
     onSubmitBtnAction = () => {
-        //报价
-        this.props.navigation.navigate('HomeOfferPrice',
-            {
-                title: "报价",
-                info: this.state.detailInfo,
-            });
-    };
-
-    onAcceptBtnAction = () => {
-        //认同报价
-        this.props.navigation.navigate('HomeOfferPrice',
-            {
-                title: "认同报价",
-                info: this.state.detailInfo,
-            });
-    };
-
-    onBargainBtnAction = () => {
-        //议价
-        this.props.navigation.navigate('HomeOfferPrice',
-            {
-                title: "议价",
-                info: this.state.detailInfo,
-            });
+        // //修改报价
+        // this.props.navigation.navigate('HomeOfferPrice',
+        //     {
+        //         title: "报价",
+        //         info: this.state.detailInfo,
+        //     });
     };
 
     cellSelected = (key, data = {}) =>{
@@ -125,10 +108,13 @@ export default class HomeOfferDetailVC extends Component {
         else if (item.idKey === 'clean_deley' && info.clean_deley > 0) {
             return '完货' + info.clean_deley + '天内';
         }
-        else if (item.idKey === 'corporation' && info.goods_owner !== null) {
-            if (typeof(info.goods_owner) !== appUndefined) {
+        else if (item.idKey === 'corporation') {
+            if (goodsOwnerNotNull(info)) {
                 return info.goods_owner.corporation;
             }
+        }
+        else if (item.idKey === 'remark') {
+            return info.remark.length === 0 ? "暂无" : info.remark;
         }
         return '';
     }
@@ -136,7 +122,10 @@ export default class HomeOfferDetailVC extends Component {
     renderSubViewForIndex(item, index) {
         let info = this.state.detailInfo;
         if (item.idKey === 'credit') {
-            return <StarScore style={{marginLeft:5}} itemEdge={5} currentScore={info.credit}/>;
+            if (goodsOwnerNotNull(info)) {
+                let credit = parseInt(info.goods_owner.credit);
+                return <StarScore style={{marginLeft:5}} itemEdge={5} currentScore={credit}/>;
+            }
         }
 
         return null;
@@ -194,38 +183,14 @@ export default class HomeOfferDetailVC extends Component {
                         </View>
                     </View>
                     {this._renderListItem()}
-                    <View style={{marginRight: 18, height: 30, flexDirection: 'row',  alignItems: "center", justifyContent: "flex-end"}}>
-                        <Text style={{fontSize: 11, color:appData.appSecondaryTextColor}}>{info.create_timetext + ' ' + '浏览'+ info.view_num + ' 收藏' + info.collect_num}</Text>
-                    </View>
-                    <View style={{paddingHorizontal: 18}}>
-                        <Image source={require('../../images/icon_beizhu.png')} style={{width: 57, height: 21, resizeMode: "cover"}}/>
-                        <Text underlineColorAndroid="transparent"
-                              style={styles.textInput}
-                              multiline={true}
-                              editable={false}
-                        >
-                            {info.remark.length === 0 ? '此油品暂无备注' : info.remark}
-                        </Text>
-                    </View>
                 </ScrollView>
-                {price === 0 ?
-                    <View style={{position: "absolute", bottom: 20, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
-                        <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)}>
-                            <View style={appStyles.sureBtnContainer}>
-                                <Text style={{color: "#fff"}}>{"报价"}</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                    :
-                    <View style={{position: "absolute", bottom: 0, width: screenWidth, height: 45, flexDirection: 'row'}}>
-                        <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(221), backgroundColor: appData.appBlueColor, justifyContent: "center", alignItems: "center"}}>
-                            <Text style={styles.btnText}>{"认同报价"}</Text>
-                        </TouchableOpacity>
-                        {isBargain ? <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(154), backgroundColor: appData.appLightBlueColor, justifyContent: "center", alignItems: "center"}}>
-                            <Text style={styles.btnText}>{"议价"}</Text>
-                        </TouchableOpacity> : null}
-                    </View>
-                }
+                <View style={{position: "absolute", bottom: 20, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
+                    <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)}>
+                        <View style={appStyles.sureBtnContainer}>
+                            <Text style={{color: "#fff"}}>{"修改报价"}</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </View> );
     }
 }

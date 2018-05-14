@@ -299,6 +299,10 @@ global.offerIsBargain = function(info) : boolean {
     return (info.is_bargain === '0');
 };
 
+global.goodsOwnerNotNull = function(info) : boolean {
+    return ((info.goods_owner !== null) && (typeof(info.goods_owner) !== appUndefined));
+};
+
 global.createRequestTime = function(date : Date) : String {
     if (date !== null) {
         return date.Format("yyyy-MM-dd");

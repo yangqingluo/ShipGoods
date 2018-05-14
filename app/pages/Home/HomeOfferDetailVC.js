@@ -64,7 +64,7 @@ export default class HomeOfferDetailVC extends Component {
             {idKey:"demurrage", name:"滞期费"},
             {idKey:"clean_deley", name:"结算时间"},
             {idKey:"corporation", name:"公司名称"},
-            {idKey:"credit", name:"船主信用"},
+            {idKey:"credit", name:"货主信用"},
         ];
     }
 
@@ -155,8 +155,8 @@ export default class HomeOfferDetailVC extends Component {
         else if (item.idKey === 'clean_deley' && info.clean_deley > 0) {
             return '完货' + info.clean_deley + '天内';
         }
-        else if (item.idKey === 'corporation' && info.goods_owner !== null) {
-            if (typeof(info.goods_owner) !== appUndefined) {
+        else if (item.idKey === 'corporation') {
+            if (goodsOwnerNotNull(info)) {
                 return info.goods_owner.corporation;
             }
         }
@@ -166,7 +166,10 @@ export default class HomeOfferDetailVC extends Component {
     renderSubViewForIndex(item, index) {
         let info = this.state.detailInfo;
         if (item.idKey === 'credit') {
-            return <StarScore style={{marginLeft:5}} itemEdge={5} currentScore={info.credit}/>;
+            if (goodsOwnerNotNull(info)) {
+                let credit = parseInt(info.goods_owner.credit);
+                return <StarScore style={{marginLeft:5}} itemEdge={5} currentScore={credit}/>;
+            }
         }
 
         return null;
