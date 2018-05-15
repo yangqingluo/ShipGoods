@@ -90,14 +90,16 @@ export default class HomeShipDetailVC extends Component {
     };
 
     cellSelected = (key, data = {}) =>{
+        let {info} = this.state;
         if (key === "SelectPhone") {
-            let phone = this.state.info.phone;
-            if (phone === null) {
-                PublicAlert("联系电话不存在");
+            if (goodsOwnerNotNull(info)) {
+                let phone = info.goods_owner.phone;
+                if (phone !== null && phone.length > 0) {
+                    Communications.phonecall(phone, true);
+                    return;
+                }
             }
-            else {
-                Communications.phonecall(phone, true);
-            }
+            PublicAlert("联系电话不存在");
         }
         else {
             PublicAlert(key);
@@ -125,6 +127,15 @@ export default class HomeShipDetailVC extends Component {
             );
             return oilList.join(" ");
         }
+        else if (item.idKey === 'storage') {
+            return info.storage + " m³";
+        }
+        else if (item.idKey === 'course') {
+            let course = parseInt(info.course);
+            if (course > 0 && course < shipAreaTypes.length) {
+                return shipAreaTypes[course];
+            }
+        }
 
         return '';
     }
@@ -134,15 +145,19 @@ export default class HomeShipDetailVC extends Component {
         if (item.idKey === 'credit') {
             return <StarScore style={{marginLeft:px2dp(5)}} itemEdge={px2dp(5)} currentScore={info.credit}/>;
         }
+        else if (item.idKey === 'phone' && this.isOrdered()) {
+            if (goodsOwnerNotNull(info)) {
+                return <Text style={{color: appData.appBlueColor, fontSize: 14}}>
+                    {info.goods_owner.phone}
+                </Text>
+            }
+        }
 
         return null;
     }
 
     _renderListItem() {
         return this.config.map((item, i) => {
-            if (item.idKey === 'phone' && !this.isOrdered()) {
-                return null;
-            }
             return (
                 <View key={'cell' + i} style={{paddingLeft: px2dp(10), paddingRight: px2dp(20)}}>
                     <AddAuthItem key={i} {...item}

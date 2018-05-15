@@ -303,6 +303,10 @@ global.goodsOwnerNotNull = function(info) : boolean {
     return ((info.goods_owner !== null) && (typeof(info.goods_owner) !== appUndefined));
 };
 
+global.objectNotNull = function(object) : boolean {
+    return ((object !== null) && (typeof(object) !== appUndefined));
+};
+
 global.createRequestTime = function(date : Date) : String {
     if (date !== null) {
         return date.Format("yyyy-MM-dd");

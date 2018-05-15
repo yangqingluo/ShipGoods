@@ -27,6 +27,7 @@ export default class HomeOfferTwicePriceVC extends Component {
             info: this.props.navigation.state.params.info,
             detailInfo: this.props.navigation.state.params.info,
             refreshing: false,
+            showRenderList: false,
         };
 
         this.config = [
@@ -36,6 +37,14 @@ export default class HomeOfferTwicePriceVC extends Component {
             {idKey:"corporation", name:"公司名称"},
             {idKey:"credit", name:"货主信用"},
             {idKey:"remark", name:"备注"},
+        ];
+
+        this.goodsConfig = [
+            {idKey:"ship_name",name:"报价船"},
+            {idKey:"price", name:"报价"},
+            {idKey:"loading_time", name:"到港时间"},
+            {idKey:"phone", name:"联系方式", onPress:this.cellSelected.bind(this, "SelectPhone")},
+            {idKey:"goodslist", name:"上载货品"},
         ];
     }
 
@@ -89,8 +98,16 @@ export default class HomeOfferTwicePriceVC extends Component {
     };
 
     cellSelected = (key, data = {}) =>{
-        if (key === "Select") {
-
+        let info = this.state.detailInfo;
+        if (key === "SelectPhone") {
+            if (goodsOwnerNotNull(info)) {
+                let phone = info.goods_owner.phone;
+                if (phone !== null && phone.length > 0) {
+                    Communications.phonecall(phone, true);
+                    return;
+                }
+            }
+            PublicAlert("联系电话不存在");
         }
         else {
             PublicAlert(key);
@@ -116,6 +133,32 @@ export default class HomeOfferTwicePriceVC extends Component {
         else if (item.idKey === 'remark') {
             return info.remark.length === 0 ? "暂无" : info.remark;
         }
+        else if (item.idKey === 'ship_name') {
+            if (objectNotNull(info.ship)) {
+                return info.ship.ship_name;
+            }
+            // PublicAlert(JSON.stringify(info.ship));
+        }
+        else if (item.idKey === 'price') {
+            return '¥'+ info.price + ' 元/ 吨'
+        }
+        else if (item.idKey === 'loading_time') {
+            return info.loading_timetext;
+        }
+        // else if (item.idKey === 'phone') {
+        //     if (goodsOwnerNotNull(info)) {
+        //         return info.goods_owner.phone;
+        //     }
+        // }
+        else if (item.idKey === 'goodslist') {
+            let list = info.goodslist.map(
+                (info) => {
+                    return info.goods_name;
+                }
+            );
+            return list.join(" ");
+        }
+
         return '';
     }
 
@@ -127,12 +170,37 @@ export default class HomeOfferTwicePriceVC extends Component {
                 return <StarScore style={{marginLeft:5}} itemEdge={5} currentScore={credit}/>;
             }
         }
+        else if (item.idKey === 'phone') {
+            if (goodsOwnerNotNull(info)) {
+                return <Text style={{color: appData.appBlueColor, fontSize: 14}}>
+                    {info.goods_owner.phone}
+                </Text>
+            }
+        }
 
         return null;
     }
 
     _renderListItem() {
         return this.config.map((item, i) => {
+            return (
+                <View key={'cell' + i} style={{paddingLeft: 10, paddingRight: 20, backgroundColor: '#f2f9ff'}}>
+                    <AddAuthItem key={i} {...item}
+                                 showArrowForward={false}
+                                 subName={this.renderSubNameForIndex(item, i)}
+                                 noSeparator={true}>
+                        {this.renderSubViewForIndex(item, i)}
+                    </AddAuthItem>
+                    {i === this.config.length - 1 ? null :
+                        <View style={{height: 1, marginLeft: 10}}>
+                            <DashLine backgroundColor={appData.appSeparatorLightColor} len={(screenWidth - 40)/ appData.appDashWidth}/>
+                        </View>}
+                </View>);
+        })
+    }
+
+    _renderGoodsListItem() {
+        return this.goodsConfig.map((item, i) => {
             return (
                 <View key={'cell' + i} style={{paddingLeft: 10, paddingRight: 20}}>
                     <AddAuthItem key={i} {...item}
@@ -150,6 +218,7 @@ export default class HomeOfferTwicePriceVC extends Component {
 
     render() {
         const { navigate } = this.props.navigation;
+        let {showRenderList} = this.state;
         let info = this.state.detailInfo;
         let price = parseInt(info.price);
         let isBargain = offerIsBargain(this.state.detailInfo);
@@ -178,11 +247,23 @@ export default class HomeOfferTwicePriceVC extends Component {
                                 <Text style={{marginRight: 27, fontSize: 14, color: appData.appTextColor}}>{'原油 10000+10000吨'}</Text>
                             </View>
                         </View>
-                        <View style={{backgroundColor: '#81c6ff', height: 26, alignItems: "center", justifyContent: "center"}}>
-                            <Text style={{fontSize: 12, color:'white', fontWeight:'bold'}}>{'¥'+ info.price + ' 元/ 吨'}</Text>
-                        </View>
+                        <TouchableOpacity onPress={() => {this.setState({
+                            showRenderList: !this.state.showRenderList,
+                        })}}>
+                            <View style={{backgroundColor: '#81c6ff', height: 26, flexDirection: 'row', alignItems: "center", justifyContent: "center"}}>
+                                <Text style={{fontSize: 12, color:'white', fontWeight:'bold'}}>{'¥'+ info.price + ' 元/ 吨'}</Text>
+                                <Image source={showRenderList ? require('../../images/icon_rectangle_up.png') : require('../../images/icon_rectangle_down.png')} style={{marginLeft:5, width: 17, height: 11, resizeMode: "cover"}}/>
+                            </View>
+                        </TouchableOpacity>
                     </View>
-                    {this._renderListItem()}
+                    {showRenderList ?
+                        <View>
+                            {this._renderListItem()}
+                            <View style={{height: 12, backgroundColor: appData.appGrayColor}}/>
+                        </View>
+                        : null}
+                    {this._renderGoodsListItem()}
+                    <View style={{height: 80}}/>
                 </ScrollView>
                 <View style={{position: "absolute", bottom: 20, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
                     <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)}>

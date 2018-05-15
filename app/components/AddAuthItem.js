@@ -84,7 +84,7 @@ export default class AddAuthItem extends Component {
                         </Text>
                     }
                     {disable?null : <View style={{flex: 1}}/>}
-                    {subName?(<Text style={{flex: 1, minWidth:120, textAlign: 'right', color: "#000", fontSize:12}}>{subName}</Text>):null}
+                    {subName?(<Text style={{flex: 1, minWidth:120, textAlign: 'right', color: "#000", fontSize:14}}>{subName}</Text>):null}
                     {avatar?(<Image source={avatar} style={{width: 36, height: 36, resizeMode: "cover", overflow:"hidden", borderRadius: 18}}/>):null}
                     {this.props.children}
                     {showArrowForward ? <Font.Ionicons style={{marginLeft: 10, paddingRight: 16, opacity: disable ? 0.0 : 1.0}} name="ios-arrow-forward-outline" size={18} color="#bbb" /> : null}
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     listItem: {
         height: itemHeight,
         paddingLeft: 0,
-        backgroundColor: "#fff",
+        // backgroundColor: "#fff",
         flexDirection: "row",
         // justifyContent: "center",
         alignItems: "center"
