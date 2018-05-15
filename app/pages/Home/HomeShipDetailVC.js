@@ -55,6 +55,8 @@ export default class HomeShipDetailVC extends Component {
         super(props);
         this.state={
             info: this.props.navigation.state.params.info,
+            detailInfo: this.props.navigation.state.params.info,
+            refreshing: false,
         };
 
         this.config = [
@@ -70,10 +72,40 @@ export default class HomeShipDetailVC extends Component {
 
     componentDidMount() {
         this.props.navigation.setParams({clickParams:this.onFavorBtnAction});
+        this.requestData();
     }
 
+    requestData = () => {
+        this.setState({refreshing: true});
+        this.requestRecommend(true);
+    };
+
+    requestRecommend = async (isReset) => {
+        let data = {task_id: this.state.info.task_id};
+
+        NetUtil.post(appUrl + 'index.php/Mobile/Goods/ship_task_detail/', data)
+            .then(
+                (result)=>{
+                    if (result.code === 0) {
+                        this.setState({
+                            detailInfo: result.data,
+                            refreshing: false,
+                        })
+                    }
+                    else {
+                        this.setState({
+                            refreshing: false,
+                        })
+                    }
+                },(error)=>{
+                    this.setState({
+                        refreshing: false,
+                    })
+                });
+    };
+
     isOrdered = function() : boolean {
-        return (this.state.info.state === '1');
+        return (this.state.detailInfo.state === '1');
     };
 
     onFavorBtnAction = () => {
@@ -85,12 +117,12 @@ export default class HomeShipDetailVC extends Component {
     onSubmitBtnAction = () => {
         appHomeVC.props.navigation.navigate('HomeOrderSelect',
             {
-                info: this.state.info,
+                info: this.state.detailInfo,
             });
     };
 
     cellSelected = (key, data = {}) =>{
-        let {info} = this.state;
+        let info = this.state.detailInfo;
         if (key === "SelectPhone") {
             if (goodsOwnerNotNull(info)) {
                 let phone = info.goods_owner.phone;
@@ -107,7 +139,7 @@ export default class HomeShipDetailVC extends Component {
     };
 
     renderSubNameForIndex(item, index) {
-        let {info} = this.state;
+        let info = this.state.detailInfo;
         if (item.idKey === 'empty_time') {
             return info.empty_timetext;
         }
@@ -141,7 +173,7 @@ export default class HomeShipDetailVC extends Component {
     }
 
     renderSubViewForIndex(item, index) {
-        let {info} = this.state;
+        let info = this.state.detailInfo;
         if (item.idKey === 'credit') {
             return <StarScore style={{marginLeft:px2dp(5)}} itemEdge={px2dp(5)} currentScore={info.credit}/>;
         }
@@ -175,7 +207,7 @@ export default class HomeShipDetailVC extends Component {
 
     render() {
         const { navigate } = this.props.navigation;
-        let {info} = this.state;
+        let info = this.state.detailInfo;
         let ordered = this.isOrdered();
         return (
             <View style={appStyles.container}>
