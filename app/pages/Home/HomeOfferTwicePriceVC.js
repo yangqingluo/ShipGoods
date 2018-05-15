@@ -13,19 +13,18 @@ import DashLine from '../../components/DashLine';
 import AddAuthItem from '../../components/AddAuthItem';
 import StarScore from '../../components/StarScore';
 import Communications from '../../util/AKCommunications';
-import px2dp from "../../util";
 
 
 export default class HomeOfferTwicePriceVC extends Component {
     static navigationOptions = ({ navigation }) => ({
-        headerTitle: navigation.state.params.headerTitle || '货品详情',
+        headerTitle: '货品详情',
     });
 
     constructor(props) {
         super(props);
         this.state={
-            info: this.props.navigation.state.params.info,
-            detailInfo: this.props.navigation.state.params.info,
+            info: appSecondPriceParams.info,
+            detailInfo: appSecondPriceParams.info,
             refreshing: false,
             showRenderList: false,
         };
@@ -49,7 +48,6 @@ export default class HomeOfferTwicePriceVC extends Component {
     }
 
     componentDidMount() {
-        this.props.navigation.setParams({clickParams:this.onFavorBtnAction});
         this.requestData();
     }
 
@@ -82,11 +80,11 @@ export default class HomeOfferTwicePriceVC extends Component {
                 });
     };
 
-    onFavorBtnAction = () => {
-        this.props.navigation.setParams({
-            favor: true,
-        });
-    };
+    // onFavorBtnAction = () => {
+    //     this.props.navigation.setParams({
+    //         favor: true,
+    //     });
+    // };
 
     onSubmitBtnAction = () => {
         // //修改报价
@@ -265,12 +263,13 @@ export default class HomeOfferTwicePriceVC extends Component {
                     {this._renderGoodsListItem()}
                     <View style={{height: 80}}/>
                 </ScrollView>
-                <View style={{position: "absolute", bottom: 20, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
+                <View style={{position: "absolute", bottom: 5, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
                     <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)}>
                         <View style={appStyles.sureBtnContainer}>
                             <Text style={{color: "#fff"}}>{"修改报价"}</Text>
                         </View>
                     </TouchableOpacity>
+                    <Text style={{marginTop:12, color: "#4a4a4aad", fontSize: 13}}>{"报价最多可修改2次"}</Text>
                 </View>
             </View> );
     }

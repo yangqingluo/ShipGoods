@@ -52,6 +52,13 @@ export default class HomeOfferPriceVC extends Component {
         });
     };
 
+    toGotoTwicePriceVC= () =>{
+        appSecondPriceParams = {headerTitle: "我是二次报价", info: this.state.info};
+        this.props.navigation.goBack('HomeOfferTwicePrice');
+        // this.props.navigation.goBack('Main');
+        // this.props.navigation.navigate('HomeOfferTwicePrice', {info: this.state.info});
+    };
+
     onSubmitBtnAction = () => {
         if (this.state.ship === null) {
             this.refToast.show("请选择船舶");
@@ -80,13 +87,13 @@ export default class HomeOfferPriceVC extends Component {
                 offer: price,
                 task_id: this.state.info.task_id,
             };
-            // this.props.navigation.goBack('HomeOfferTwicePrice');
+
             NetUtil.post(appUrl + 'index.php/Mobile/Task/add_book_good/', data)
                 .then(
                     (result)=>{
                         if (result.code === 0) {
                             PublicAlert(result.message,'',
-                                [{text:"确定"}]
+                                [{text:"确定", onPress:this.toGotoTwicePriceVC.bind(this)}]
                             );
                         }
                         else {

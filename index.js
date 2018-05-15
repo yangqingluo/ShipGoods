@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {AppRegistry} from 'react-native';
-import {StackNavigator, TabBarBottom, TabNavigator} from 'react-navigation';
+import {StackNavigator, NavigationActions} from 'react-navigation';
 
 import './app/util/Global'
 
@@ -68,12 +68,25 @@ MyNavigator.router.getStateForAction = (action, state) => {
         const backRoute = state.routes.find((route) => route.routeName === action.key);
         if (backRoute) {
             const backRouteIndex = state.routes.indexOf(backRoute);
+
             const purposeState = {
                 ...state,
                 routes: state.routes.slice(0, backRouteIndex + 1),
                 index: backRouteIndex,
             };
             return purposeState;
+        }
+        else {
+            if (action.key === "HomeOfferTwicePrice") {
+                let routes = state.routes.slice(0, 1);
+                routes.push({routeName: "HomeOfferTwicePrice"});
+                const purposeState = {
+                    ...state,
+                    routes: routes,
+                    index: routes.length - 1,
+                };
+                return purposeState;
+            }
         }
     }
     return defaultGetStateForAction(action, state)

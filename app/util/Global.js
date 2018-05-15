@@ -171,6 +171,7 @@ let appData = {
     appCustomerServicePhone: "18267811011",
 
     appFontWeightLight:'100',
+    appFontWeightSemibold: '400',
     appFontWeightMedium:'800',
 
     appBlueColor: '#2c9bfd',
@@ -190,9 +191,9 @@ let appData = {
 
     appItemPaddingLeft: 16,
     appDashWidth: 4.0,
-    appSureButtonWidth: px2dp(123),
-    appSureButtonHeight: px2dp(44),
-    appSureButtonRadius: px2dp(22),
+    appSureButtonWidth: 123,
+    appSureButtonHeight: 44,
+    appSureButtonRadius: 22,
 };
 
 let appStyles = StyleSheet.create({
@@ -219,14 +220,15 @@ global.appHomeVC = null;
 global.appDeviceId = DeviceInfo.getUniqueID();
 global.screenWidth = width;
 global.screenHeight = height;
+global.appSecondPriceParams = null;
 
 global.dismissKeyboard = require('dismissKeyboard');
 global.renderSeparator = () => {
-    return <View style={{height:px2dp(0.5),backgroundColor:appData.appSeparatorColor}}/>;
+    return <View style={{height:0.5,backgroundColor:appData.appSeparatorColor}}/>;
 };
 
 global.renderSubSeparator = () => {
-    return <View style={{marginLeft:px2dp(80), height:px2dp(0.5),backgroundColor:appData.appSeparatorColor}}/>;
+    return <View style={{marginLeft:80, height:0.5,backgroundColor:appData.appSeparatorColor}}/>;
 };
 global.judgeMobilePhone = function(object : String) : boolean {
     // /^1[3|4|5|7|8][0-9]{9}$/
