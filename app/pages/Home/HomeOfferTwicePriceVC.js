@@ -16,7 +16,7 @@ import Communications from '../../util/AKCommunications';
 import px2dp from "../../util";
 
 
-export default class HomeOfferDetailVC extends Component {
+export default class HomeOfferTwicePriceVC extends Component {
     static navigationOptions = ({ navigation }) => ({
         headerTitle: navigation.state.params.headerTitle || '货品详情',
     });

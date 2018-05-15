@@ -80,21 +80,21 @@ export default class HomeOfferPriceVC extends Component {
                 offer: price,
                 task_id: this.state.info.task_id,
             };
-            PublicAlert(JSON.stringify(data));
-            // NetUtil.post(appUrl + 'index.php/Mobile/Task/add_book_good/', data)
-            //     .then(
-            //         (result)=>{
-            //             if (result.code === 0) {
-            //                 PublicAlert(result.message,'',
-            //                     [{text:"确定"}]
-            //                 );
-            //             }
-            //             else {
-            //                 this.refToast.show(result.message);
-            //             }
-            //         },(error)=>{
-            //             this.refToast.show(error);
-            //         });
+            // this.props.navigation.goBack('HomeOfferTwicePrice');
+            NetUtil.post(appUrl + 'index.php/Mobile/Task/add_book_good/', data)
+                .then(
+                    (result)=>{
+                        if (result.code === 0) {
+                            PublicAlert(result.message,'',
+                                [{text:"确定"}]
+                            );
+                        }
+                        else {
+                            this.refToast.show(result.message);
+                        }
+                    },(error)=>{
+                        this.refToast.show(error);
+                    });
         }
     };
 
