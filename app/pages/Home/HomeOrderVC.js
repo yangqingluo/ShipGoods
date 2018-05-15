@@ -86,7 +86,10 @@ export default class HomeGoodsVC extends Component {
     };
 
     onCellSelected = (info: Object) => {
-        PublicAlert(JSON.stringify(info.item));
+        appHomeVC.props.navigation.navigate('HomeOrderDetail',
+            {
+                info: info.item,
+            });
     };
 
     onAlertSureBtnAction = () => {

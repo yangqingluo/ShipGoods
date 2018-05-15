@@ -20,6 +20,7 @@ import SelectPrice from './app/components/SelectPriceVC';
 import CustomSelect from './app/components/CustomSelect';
 import CustomSectionSelect from './app/components/CustomSectionSelect';
 import HomeShipDetailVC from './app/pages/Home/HomeShipDetailVC';
+import HomeOrderDetailVC from './app/pages/Home/HomeOrderDetailVC';
 import HomeOrderSelectVC from './app/pages/Home/HomeOrderSelectVC';
 import HomeOfferDetailVC from './app/pages/Home/HomeOfferDetailVC';
 import HomeOfferPriceVC from './app/pages/Home/HomeOfferPriceVC';
@@ -42,6 +43,7 @@ const MyNavigator = StackNavigator({
         SelectWastageVC:{screen: SelectWastageVC},
         SelectPrice:{screen: SelectPrice},
         HomeShipDetail:{screen: HomeShipDetailVC},
+        HomeOrderDetail:{screen: HomeOrderDetailVC},
         HomeOrderSelect:{screen: HomeOrderSelectVC},
         HomeOfferDetail:{screen: HomeOfferDetailVC},
         HomeOfferPrice:{screen: HomeOfferPriceVC},
