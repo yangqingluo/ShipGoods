@@ -29,16 +29,22 @@ export default class HomeGoodsCell extends Component {
 
     render() {
         let {info} = this.props;
-        let downloadOilList = info.item.download_oil_list.map(
-            (info) => {
-                return info.goods_name;
-            }
-        );
-        let uploadOilList = info.item.upload_oil_list.map(
-            (info) => {
-                return info.goods_name;
-            }
-        );
+        let downloadOilList = [];
+        if (objectNotNull(info.item.download_oil_list)) {
+            downloadOilList = info.item.download_oil_list.map(
+                (info) => {
+                    return info.goods_name;
+                }
+            );
+        }
+        let uploadOilList = [];
+        if (objectNotNull(info.item.upload_oil_list)) {
+            uploadOilList = info.item.upload_oil_list.map(
+                (info) => {
+                    return info.goods_name;
+                }
+            );
+        }
         let isOrdered = false;
         return (
             <View style={{opacity: isOrdered ? 0.5 : 1.0}}>

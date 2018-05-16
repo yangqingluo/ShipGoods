@@ -17,6 +17,7 @@ export default class HomeOrderShipListVC extends Component {
     constructor(props){
         super(props);
         this.state = {
+            info: this.props.navigation.state.params.info,
             dataList: [],
             refreshing: false,
             showFooter:0,
@@ -50,22 +51,9 @@ export default class HomeOrderShipListVC extends Component {
         if (isReset) {
             this.state.page = 1;
         }
-        let data = {page: this.state.page};
-        if (appHomeCondition.empty_port !== null) data.empty_port = appHomeCondition.empty_port.port_id;
-        if (appHomeCondition.empty_time !== null) data.empty_time = createRequestTime(appHomeCondition.empty_time);
-        if (appHomeCondition.empty_delay > 0) data.empty_delay = appHomeCondition.empty_delay;
-        if (appHomeCondition.min_ton > 0) data.min_ton = appHomeCondition.min_ton;
-        if (appHomeCondition.max_ton > 0) data.max_ton = appHomeCondition.max_ton;
-        if (appHomeCondition.goods !== null) data.goods_id = appHomeCondition.goods.goods_id;
-        if (appHomeCondition.area.length > 0) {
-            data.area = appHomeCondition.area.map(
-                (info) => {
-                    return info.key;
-                }
-            );
-        }
+        let data = {page: this.state.page, task_id: this.state.info.task_id};
 
-        NetUtil.post(appUrl + 'index.php/Mobile/Goods/goods_index/', data)
+        NetUtil.post(appUrl + 'index.php/Mobile/Goods/get_ship_offer/', data)
             .then(
                 (result)=>{
                     if (result.code === 0) {
@@ -101,7 +89,7 @@ export default class HomeOrderShipListVC extends Component {
     };
 
     onCellSelected = (info: Object) => {
-        appHomeVC.props.navigation.navigate('HomeShipDetail',
+        appHomeVC.props.navigation.navigate('HomeOrderShipDetail',
             {
                 info: info.item,
             });
@@ -129,7 +117,7 @@ export default class HomeOrderShipListVC extends Component {
         return (
             <View style={styles.container}>
                 <FlatList
-                    style={{flex:1, marginHorizontal:10}}
+                    style={{flex:1, marginHorizontal:10, marginTop: 10}}
                     data={this.state.dataList}
                     renderItem={this.renderCell}
 

@@ -16,39 +16,9 @@ import Communications from '../../util/AKCommunications';
 import px2dp from "../../util";
 
 
-class RightHeader extends Component {
-    // static props = {
-    //     favor: PropTypes.BOOL,
-    // };
-    //
-    // static defaultProps = {
-    //     favor: false,
-    // };
-    //
-    // constructor(props) {
-    //     super(props)
-    // }
-
-    onFavorBtnPress = () => {
-        this.props.navigation.state.params.clickParams();
-    };
-
-    render() {
-        let {favor} = this.props.navigation.state.params;
-        return (
-            <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
-                <TouchableOpacity onPress={this.onFavorBtnPress.bind(this)} style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
-                    <Image source={require('../../images/navbar_icon_like.png')} style={{tintColor: favor ? 'red' : null, width: 22, height: 19, marginRight : 10, marginLeft : 10, resizeMode: "cover"}}/>
-                </TouchableOpacity>
-            </View>
-        )
-    }
-}
-
 export default class HomeShipDetailVC extends Component {
     static navigationOptions = ({ navigation }) => ({
-        headerTitle: navigation.state.params.headerTitle || '船舶详情',
-        headerRight: <RightHeader navigation={navigation}/>,
+        headerTitle: '报价船详情',
     });
 
     constructor(props) {
@@ -102,10 +72,6 @@ export default class HomeShipDetailVC extends Component {
                         refreshing: false,
                     })
                 });
-    };
-
-    isOrdered = function() : boolean {
-        return (this.state.detailInfo.state === '1');
     };
 
     onFavorBtnAction = () => {
@@ -183,7 +149,7 @@ export default class HomeShipDetailVC extends Component {
         if (item.idKey === 'credit') {
             return <StarScore style={{marginLeft:px2dp(5)}} itemEdge={px2dp(5)} currentScore={info.credit}/>;
         }
-        else if (item.idKey === 'phone' && this.isOrdered()) {
+        else if (item.idKey === 'phone') {
             if (goodsOwnerNotNull(info)) {
                 return <Text style={{color: appData.appBlueColor, fontSize: 14}}>
                     {info.goods_owner.phone}
@@ -214,7 +180,6 @@ export default class HomeShipDetailVC extends Component {
     render() {
         const { navigate } = this.props.navigation;
         let info = this.state.detailInfo;
-        let ordered = this.isOrdered();
         return (
             <View style={appStyles.container}>
                 <ScrollView style={{flex: 1, backgroundColor:'#fff'}}>
@@ -233,28 +198,15 @@ export default class HomeShipDetailVC extends Component {
                     <View style={{paddingHorizontal:px2dp(18)}}>
                         <Image source={require('../../images/icon_beizhu.png')} style={{width: px2dp(57), height: px2dp(21), resizeMode: "cover"}}/>
                         <Text underlineColorAndroid="transparent"
-                                   style={styles.textInput}
-                                   multiline={true}
-                                   editable={false}
+                              style={styles.textInput}
+                              multiline={true}
+                              editable={false}
                         >
-                            {info.remark.length === 0 ? '此油品暂无备注' : info.remark}
+                            {(info.remark === null || info.remark.length === 0) ? '此油品暂无备注' : info.remark}
                         </Text>
                     </View>
-                    {ordered ?
-                        <View style={{alignItems: "center", justifyContent: "space-between"}}>
-                            <Text style={{marginTop: px2dp(10), fontSize:px2dp(20), color:appData.appBlueColor, fontWeight: appData.appFontWeightMedium}}>{"预约中"}</Text>
-                            <Text style={{marginTop: px2dp(10), fontSize:px2dp(12), color:appData.appSecondaryTextColor, fontWeight: appData.appFontWeightLight}}>{"货盘已推送至船东，请等待船东报价或者直接联系船东！"}</Text>
-                        </View>
-                        : null}
                     <View style={{height: px2dp(60)}} />
                 </ScrollView>
-                {ordered ? null : <View style={{position: "absolute", bottom: 20, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
-                    <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)}>
-                        <View style={appStyles.sureBtnContainer}>
-                            <Text style={{color: "#fff"}}>{"约船"}</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>}
             </View> );
     }
 }
