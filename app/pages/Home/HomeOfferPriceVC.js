@@ -53,7 +53,7 @@ export default class HomeOfferPriceVC extends Component {
     };
 
     toGotoTwicePriceVC= () =>{
-        appSecondPriceParams = {headerTitle: "我是二次报价", info: this.state.info};
+        appSecondPriceParams = {headerTitle: "二次报价", info: this.state.info};
         this.props.navigation.goBack('HomeOfferTwicePrice');
         // this.props.navigation.goBack('Main');
         // this.props.navigation.navigate('HomeOfferTwicePrice', {info: this.state.info});

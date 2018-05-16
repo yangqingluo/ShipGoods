@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import {
     StyleSheet,
     Text,
@@ -13,6 +12,8 @@ import DashLine from '../../components/DashLine';
 import AddAuthItem from '../../components/AddAuthItem';
 import StarScore from '../../components/StarScore';
 import Communications from '../../util/AKCommunications';
+import CustomAlert from '../../components/CustomAlert';
+import Toast from "react-native-easy-toast";
 import px2dp from "../../util";
 
 
@@ -50,7 +51,7 @@ export default class HomeShipDetailVC extends Component {
     };
 
     requestRecommend = async (isReset) => {
-        let data = {task_id: this.state.info.task_id};
+        let data = {task_id: this.state.info.good_task_id};
 
         NetUtil.post(appUrl + 'index.php/Mobile/Goods/get_offer_detail/', data)
             .then(
@@ -74,12 +75,35 @@ export default class HomeShipDetailVC extends Component {
     };
 
     onAgreeBtnAction = () => {
-
+        this.refSelectAlert.show({onSureBtnAction:this.toAgreeBookShip.bind(this)});
     };
 
     onReplyBtnAction = () => {
 
     };
+
+    toAgreeBookShip() {
+        this.refSelectAlert.hide();
+        let data = {
+            task_id: this.state.info.good_task_id,
+            book_id: this.state.info.book_id,
+        };
+
+        NetUtil.post(appUrl + 'index.php/Mobile/Goods/agree_ship_offer/', data)
+            .then(
+                (result)=>{
+                    if (result.code === 0) {
+                        PublicAlert('订单完成', '',
+                            [{text:"确定", onPress:this.goBackToMain.bind(this)}]
+                        );
+                    }
+                    else {
+                        this.refToast.show(result.message);
+                    }
+                },(error)=>{
+                    this.refToast.show(error);
+                });
+    }
 
     cellSelected = (key, data = {}) =>{
         let info = this.state.detailInfo;
@@ -151,7 +175,7 @@ export default class HomeShipDetailVC extends Component {
     renderSubViewForIndex(item, index) {
         let info = this.state.detailInfo;
         if (item.idKey === 'credit') {
-            return <StarScore style={{marginLeft:px2dp(5)}} itemEdge={px2dp(5)} currentScore={info.credit}/>;
+            return <StarScore style={{marginLeft:5}} itemEdge={5} currentScore={info.credit}/>;
         }
         else if (item.idKey === 'phone') {
             if (goodsOwnerNotNull(info)) {
@@ -167,14 +191,14 @@ export default class HomeShipDetailVC extends Component {
     _renderListItem() {
         return this.config.map((item, i) => {
             return (
-                <View key={'cell' + i} style={{paddingLeft: px2dp(10), paddingRight: px2dp(20)}}>
+                <View key={'cell' + i} style={{paddingLeft: 10, paddingRight: 20}}>
                     <AddAuthItem key={i} {...item}
                                  showArrowForward={false}
                                  subName={this.renderSubNameForIndex(item, i)}
                                  noSeparator={true}>
                         {this.renderSubViewForIndex(item, i)}
                     </AddAuthItem>
-                    <View style={{height: px2dp(1), marginLeft: px2dp(10)}}>
+                    <View style={{height: 1, marginLeft: 10}}>
                         <DashLine backgroundColor={appData.appSeparatorLightColor} len={(screenWidth - 40)/ appData.appDashWidth}/>
                     </View>
                 </View>);
@@ -187,18 +211,18 @@ export default class HomeShipDetailVC extends Component {
         return (
             <View style={appStyles.container}>
                 <ScrollView style={{flex: 1, backgroundColor:'#fff'}}>
-                    <View style={{backgroundColor:'#81c6ff', flexDirection: 'row', justifyContent: "space-between", height:px2dp(26)}}>
-                        <Text style={{fontSize:px2dp(10), color:'white', marginLeft:px2dp(10), marginTop:px2dp(8)}}>{'发票编号：' + info.goods_sn}</Text>
-                        <Text style={{fontSize:px2dp(10), color:'white', marginRight:px2dp(10), marginTop:px2dp(8)}}>{info.add_timetext}</Text>
+                    <View style={{backgroundColor:'#81c6ff', flexDirection: 'row', justifyContent: "space-between", height:26}}>
+                        <Text style={{fontSize:10, color:'white', marginLeft:10, marginTop:8}}>{'发票编号：' + info.goods_sn}</Text>
+                        <Text style={{fontSize:10, color:'white', marginRight:10, marginTop:8}}>{info.add_timetext}</Text>
                     </View>
-                    <View style={{backgroundColor:'#f2f9ff', flexDirection: 'row',  alignItems: "center", justifyContent: "space-between", height:px2dp(51)}}>
-                        <Text style={{fontSize:px2dp(14), color:appData.appTextColor, marginLeft:px2dp(18), fontWeight:'bold'}}>{info.ship_name}</Text>
+                    <View style={{backgroundColor:'#f2f9ff', flexDirection: 'row',  alignItems: "center", justifyContent: "space-between", height:51}}>
+                        <Text style={{fontSize:14, color:appData.appTextColor, marginLeft:18, fontWeight:'bold'}}>{info.ship_name}</Text>
                         <Text style={{fontSize:12, color:appData.appRedColor, marginRight:18, fontWeight:'bold'}}>{info.offer + ' 元 / 吨'}</Text>
                     </View>
                     {this._renderListItem()}
-                    <View style={{height: px2dp(10)}} />
-                    <View style={{paddingHorizontal:px2dp(18)}}>
-                        <Image source={require('../../images/icon_beizhu.png')} style={{width: px2dp(57), height: px2dp(21), resizeMode: "cover"}}/>
+                    <View style={{height: 10}} />
+                    <View style={{paddingHorizontal:18}}>
+                        <Image source={require('../../images/icon_beizhu.png')} style={{width: 57, height: 21, resizeMode: "cover"}}/>
                         <Text underlineColorAndroid="transparent"
                               style={styles.textInput}
                               multiline={true}
@@ -207,7 +231,7 @@ export default class HomeShipDetailVC extends Component {
                             {this.remarkForInfo()}
                         </Text>
                     </View>
-                    <View style={{height: px2dp(60)}} />
+                    <View style={{height: 60}} />
                 </ScrollView>
                 <View style={{position: "absolute", bottom: 0, width: screenWidth, height: 45, flexDirection: 'row'}}>
                     <TouchableOpacity onPress={this.onAgreeBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(221), backgroundColor: appData.appBlueColor, justifyContent: "center", alignItems: "center"}}>
@@ -217,17 +241,19 @@ export default class HomeShipDetailVC extends Component {
                         <Text style={styles.btnText}>{"回复船东"}</Text>
                     </TouchableOpacity>
                 </View>
+                <Toast ref={o => this.refToast = o} position={'center'}/>
+                <CustomAlert ref={o => this.refSelectAlert = o} message={"同意该船东报价，/n该货盘将进入订单页！"} />
             </View> );
     }
 }
 const styles = StyleSheet.create({
     textInput: {
-        marginTop: px2dp(10),
-        minHeight: px2dp(46),
-        borderRadius: px2dp(6),
-        fontSize: px2dp(16),
-        paddingHorizontal: px2dp(28),
-        paddingVertical: px2dp(15),
+        marginTop: 10,
+        minHeight: 46,
+        borderRadius: 6,
+        fontSize: 16,
+        paddingHorizontal: 28,
+        paddingVertical: 15,
         color: '#535353',
         backgroundColor: appData.appGrayColor,
     },
