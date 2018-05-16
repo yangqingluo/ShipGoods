@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
     FlatList,
 } from 'react-native';
-import GoodsCell from './HomeGoodsCell';
+import ShipCell from './HomeOrderShipCell';
 import ListLoadFooter from '../../components/ListLoadFooter';
 
 export default class HomeOrderShipListVC extends Component {
@@ -98,7 +98,7 @@ export default class HomeOrderShipListVC extends Component {
 
     renderCell = (info: Object) => {
         return (
-            <GoodsCell
+            <ShipCell
                 info={info}
                 onPress={this.onCellSelected}
             />

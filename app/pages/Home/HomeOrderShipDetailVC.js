@@ -30,8 +30,8 @@ export default class HomeShipDetailVC extends Component {
         };
 
         this.config = [
-            {idKey:"empty_time",name:"空船期"},
-            {idKey:"download_oil_list", name:"下载可运货品"},
+            {idKey:"arrive_time",name:"预计到港时间"},
+            {idKey:"download_oil_list", name:"可运油品"},
             {idKey:"storage", name:"仓容"},
             {idKey:"course", name:"航行区域"},
             {idKey:"upload_oil_list", name:"上载货品"},
@@ -41,7 +41,6 @@ export default class HomeShipDetailVC extends Component {
     }
 
     componentDidMount() {
-        this.props.navigation.setParams({clickParams:this.onFavorBtnAction});
         this.requestData();
     }
 
@@ -53,7 +52,7 @@ export default class HomeShipDetailVC extends Component {
     requestRecommend = async (isReset) => {
         let data = {task_id: this.state.info.task_id};
 
-        NetUtil.post(appUrl + 'index.php/Mobile/Goods/ship_task_detail/', data)
+        NetUtil.post(appUrl + 'index.php/Mobile/Goods/get_offer_detail/', data)
             .then(
                 (result)=>{
                     if (result.code === 0) {
@@ -74,17 +73,12 @@ export default class HomeShipDetailVC extends Component {
                 });
     };
 
-    onFavorBtnAction = () => {
-        this.props.navigation.setParams({
-            favor: true,
-        });
+    onAgreeBtnAction = () => {
+
     };
 
-    onSubmitBtnAction = () => {
-        appHomeVC.props.navigation.navigate('HomeOrderSelect',
-            {
-                info: this.state.detailInfo,
-            });
+    onReplyBtnAction = () => {
+
     };
 
     cellSelected = (key, data = {}) =>{
@@ -104,10 +98,20 @@ export default class HomeShipDetailVC extends Component {
         }
     };
 
+    remarkForInfo() {
+        let info = this.state.detailInfo;
+        if (objectNotNull(info.remark)) {
+            if (info.remark.length > 0) {
+                return info.remark;
+            }
+        }
+        return '此油品暂无备注';
+    }
+
     renderSubNameForIndex(item, index) {
         let info = this.state.detailInfo;
-        if (item.idKey === 'empty_time') {
-            return info.empty_timetext;
+        if (item.idKey === 'arrive_time') {
+            return info.arrive_timetext;
         }
         else if (item.idKey === 'download_oil_list') {
             let oilList = [];
@@ -184,17 +188,15 @@ export default class HomeShipDetailVC extends Component {
             <View style={appStyles.container}>
                 <ScrollView style={{flex: 1, backgroundColor:'#fff'}}>
                     <View style={{backgroundColor:'#81c6ff', flexDirection: 'row', justifyContent: "space-between", height:px2dp(26)}}>
-                        <Text style={{fontSize:px2dp(10), color:'white', marginLeft:px2dp(10), marginTop:px2dp(8)}}>{'发票编号：' + info.billing_sn}</Text>
-                        <Text style={{fontSize:px2dp(10), color:'white', marginRight:px2dp(10), marginTop:px2dp(8)}}>{info.create_timetext}</Text>
+                        <Text style={{fontSize:px2dp(10), color:'white', marginLeft:px2dp(10), marginTop:px2dp(8)}}>{'发票编号：' + info.goods_sn}</Text>
+                        <Text style={{fontSize:px2dp(10), color:'white', marginRight:px2dp(10), marginTop:px2dp(8)}}>{info.add_timetext}</Text>
                     </View>
                     <View style={{backgroundColor:'#f2f9ff', flexDirection: 'row',  alignItems: "center", justifyContent: "space-between", height:px2dp(51)}}>
-                        <Text style={{fontSize:px2dp(14), color:appData.appTextColor, marginLeft:px2dp(18), fontWeight:'bold'}}>{info.empty_port_name + ' / ' + info.ship_name}</Text>
-                        <Text style={{fontSize:px2dp(14), color:appData.appBlueColor, marginRight:px2dp(18), fontWeight:'bold'}}>{info.tonnage + ' T'}</Text>
+                        <Text style={{fontSize:px2dp(14), color:appData.appTextColor, marginLeft:px2dp(18), fontWeight:'bold'}}>{info.ship_name}</Text>
+                        <Text style={{fontSize:12, color:appData.appRedColor, marginRight:18, fontWeight:'bold'}}>{info.offer + ' 元 / 吨'}</Text>
                     </View>
                     {this._renderListItem()}
-                    <View style={{paddingRight:px2dp(18), height:px2dp(30), flexDirection: 'row',  alignItems: "center", justifyContent: "flex-end"}}>
-                        <Text style={{fontSize:px2dp(11), color:appData.appSecondaryTextColor}}>{'浏览'+ info.view_num + ' 收藏' + info.collect_num}</Text>
-                    </View>
+                    <View style={{height: px2dp(10)}} />
                     <View style={{paddingHorizontal:px2dp(18)}}>
                         <Image source={require('../../images/icon_beizhu.png')} style={{width: px2dp(57), height: px2dp(21), resizeMode: "cover"}}/>
                         <Text underlineColorAndroid="transparent"
@@ -202,11 +204,19 @@ export default class HomeShipDetailVC extends Component {
                               multiline={true}
                               editable={false}
                         >
-                            {(info.remark === null || info.remark.length === 0) ? '此油品暂无备注' : info.remark}
+                            {this.remarkForInfo()}
                         </Text>
                     </View>
                     <View style={{height: px2dp(60)}} />
                 </ScrollView>
+                <View style={{position: "absolute", bottom: 0, width: screenWidth, height: 45, flexDirection: 'row'}}>
+                    <TouchableOpacity onPress={this.onAgreeBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(221), backgroundColor: appData.appBlueColor, justifyContent: "center", alignItems: "center"}}>
+                        <Text style={styles.btnText}>{"同意报价"}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={this.onReplyBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(154), backgroundColor: appData.appLightBlueColor, justifyContent: "center", alignItems: "center"}}>
+                        <Text style={styles.btnText}>{"回复船东"}</Text>
+                    </TouchableOpacity>
+                </View>
             </View> );
     }
 }
@@ -220,5 +230,9 @@ const styles = StyleSheet.create({
         paddingVertical: px2dp(15),
         color: '#535353',
         backgroundColor: appData.appGrayColor,
+    },
+    btnText: {
+        color: "#fff",
+        fontSize: 16,
     },
 });
