@@ -74,7 +74,12 @@ export default class HomeShipDetailVC extends Component {
                 });
     };
 
+    goBackToMain = () => {
+        this.props.navigation.goBack('Main');
+    };
+
     onAgreeBtnAction = () => {
+        // PublicAlert("uid =" + userData.uid + ", book_id =" + this.state.info.book_id);
         this.refSelectAlert.show({onSureBtnAction:this.toAgreeBookShip.bind(this)});
     };
 
@@ -85,7 +90,7 @@ export default class HomeShipDetailVC extends Component {
     toAgreeBookShip() {
         this.refSelectAlert.hide();
         let data = {
-            task_id: this.state.info.good_task_id,
+            // task_id: this.state.info.good_task_id,
             book_id: this.state.info.book_id,
         };
 
@@ -93,7 +98,7 @@ export default class HomeShipDetailVC extends Component {
             .then(
                 (result)=>{
                     if (result.code === 0) {
-                        PublicAlert('订单完成', '',
+                        PublicAlert('订单已生成', '',
                             [{text:"确定", onPress:this.goBackToMain.bind(this)}]
                         );
                     }
@@ -242,7 +247,7 @@ export default class HomeShipDetailVC extends Component {
                     </TouchableOpacity>
                 </View>
                 <Toast ref={o => this.refToast = o} position={'center'}/>
-                <CustomAlert ref={o => this.refSelectAlert = o} message={"同意该船东报价，/n该货盘将进入订单页！"} />
+                <CustomAlert ref={o => this.refSelectAlert = o} message={"同意该船东报价，\n该货盘将进入订单页！"} />
             </View> );
     }
 }

@@ -66,7 +66,7 @@ export default class NetUtil extends Component {
                 'Accept': 'application/json'
             },
             body: body
-        }
+        };
 
         return new Promise((resolve, reject)=> {
             fetch(url, opts)
