@@ -5,14 +5,19 @@ import {
     Text,
     Image,
     View,
+    Button,
     TextInput,
     ScrollView,
     TouchableOpacity
 } from 'react-native';
 import DashLine from '../../components/DashLine';
 import AddAuthItem from '../../components/AddAuthItem';
-import StarScore from '../../components/StarScore';
-import px2dp from "../../util";
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+const Font = {
+    Ionicons,
+    FontAwesome
+};
 
 export default class HomeOrderDetailVC extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -74,18 +79,31 @@ export default class HomeOrderDetailVC extends Component {
         });
     };
 
-    onSubmitBtnAction = () => {
-        // //报价
-        // this.props.navigation.navigate('HomeOfferPrice',
-        //     {
-        //         title: "报价",
-        //         info: this.state.detailInfo,
-        //     });
+    onShareBtnAction = () => {
+        //分享
+
+    };
+
+    onEditBtnAction = () => {
+        //编辑
+
+    };
+
+    onDeleteBtnAction = () => {
+        //删除
+
     };
 
     cellSelected = (key, data = {}) =>{
-        if (key === "Select") {
-
+        let info = this.state.detailInfo;
+        if (key === "SelectOffer") {
+            let offer_num = parseInt(info.offer_num);
+            if (offer_num > 0) {
+                appHomeVC.props.navigation.navigate('HomeOrderShipList',
+                    {
+                        info: this.state.detailInfo,
+                    });
+            }
         }
         else {
             PublicAlert(key);
@@ -130,6 +148,8 @@ export default class HomeOrderDetailVC extends Component {
         let info = this.state.detailInfo;
         let price = parseInt(info.price);
         let isBargain = offerIsBargain(this.state.detailInfo);
+        let font = font||"Ionicons";
+        const Icon = Font[font];
         return (
             <View style={appStyles.container}>
                 <ScrollView style={{flex: 1, backgroundColor:'#fff'}}
@@ -157,26 +177,49 @@ export default class HomeOrderDetailVC extends Component {
                         </View>
                     </View>
                     {this._renderListItem()}
+                    <View style={{paddingLeft: 10, paddingRight: 20}}>
+                        <TouchableOpacity onPress={this.cellSelected.bind(this, "SelectOffer")}>
+                            <View style={styles.offerContainer}>
+                                <Text style={{color: appData.appBlueColor, fontSize: 14}}>
+                                    {"已有" + info.offer_num + "艘船报价"}
+                                </Text>
+                                <Font.Ionicons style={{position: "absolute", right: 0, opacity: 1.0}} name="ios-arrow-forward-outline" size={18} color="#bbb" />
+                            </View>
+                        </TouchableOpacity>
+                        <View style={{height: 1, marginLeft: 10}}>
+                            <DashLine backgroundColor={appData.appSeparatorLightColor} len={(screenWidth - 40)/ appData.appDashWidth}/>
+                        </View>
+                    </View>
                 </ScrollView>
-                <View style={{position: "absolute", bottom: 0, width: screenWidth, height: 54, flexDirection: 'row', borderTopColor: appData.appSeparatorColor, borderTopWidth:1}}>
-                    {/*<TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(221), backgroundColor: appData.appBlueColor, justifyContent: "center", alignItems: "center"}}>*/}
-                        {/*<Text style={styles.btnText}>{"认同报价"}</Text>*/}
-                    {/*</TouchableOpacity>*/}
-                    {/*{isBargain ? <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(154), backgroundColor: appData.appLightBlueColor, justifyContent: "center", alignItems: "center"}}>*/}
-                        {/*<Text style={styles.btnText}>{"议价"}</Text>*/}
-                    {/*</TouchableOpacity> : null}*/}
+                <View style={{position: "absolute", bottom: 0, width: screenWidth, height: 54, flexDirection: 'row', justifyContent: "space-between", borderTopColor: appData.appSeparatorColor, borderTopWidth:1}}>
+                    <View style={{flexDirection: 'row'}}>
+                        <TouchableOpacity onPress={this.onShareBtnAction.bind(this)} style={{flexDirection: 'row', justifyContent: "center", alignItems: "center"}}>
+                            <Image source={require('../../images/icon_share_h.png')} style={{marginLeft: 16, width: 16, height: 18, resizeMode: "cover"}}/>
+                            <Text style={styles.btnText}>{"分享"}</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{flexDirection: 'row'}}>
+                        <TouchableOpacity onPress={this.onEditBtnAction.bind(this)} style={{flexDirection: 'row', justifyContent: "flex-end", alignItems: "center"}}>
+                            <Image source={require('../../images/icon_bianj.png')} style={{width: 15, height: 12, resizeMode: "cover"}}/>
+                            <Text style={[styles.btnText, {marginRight: 27}]}>{"编辑"}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={this.onDeleteBtnAction.bind(this)} style={{flexDirection: 'row', justifyContent: "flex-end", alignItems: "center"}}>
+                            <Image source={require('../../images/icon_dele.png')} style={{width: 13, height: 17, resizeMode: "cover"}}/>
+                            <Text style={[styles.btnText, {marginRight: 21}]}>{"删除"}</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View> );
     }
 }
 const styles = StyleSheet.create({
     centerContainer: {
-        marginLeft:px2dp(15),
-        marginRight:px2dp(16),
+        marginLeft:15,
+        marginRight:16,
         overflow:"hidden",
-        borderRadius: px2dp(4),
+        borderRadius: 4,
         borderColor: appData.appBorderColor,
-        borderWidth: px2dp(0.5),
+        borderWidth: 0.5,
     },
     textInput: {
         marginTop: 10,
@@ -188,8 +231,16 @@ const styles = StyleSheet.create({
         color: '#535353',
         backgroundColor: appData.appGrayColor,
     },
+    offerContainer: {
+        height: appData.appItemHeight,
+        paddingLeft: 0,
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center"
+    },
     btnText: {
-        color: "#fff",
-        fontSize: 16,
+        marginLeft: 5,
+        color: "#666666",
+        fontSize: 12,
     }
 });

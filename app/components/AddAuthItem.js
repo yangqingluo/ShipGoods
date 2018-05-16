@@ -22,12 +22,12 @@ import Button from './Button'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
-const itemHeight = 50;
+const itemHeight = appData.appItemHeight;
 
 const Font = {
     Ionicons,
     FontAwesome
-}
+};
 
 export default class AddAuthItem extends Component {
     constructor(props){

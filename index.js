@@ -25,6 +25,7 @@ import HomeOrderSelectVC from './app/pages/Home/HomeOrderSelectVC';
 import HomeOfferDetailVC from './app/pages/Home/HomeOfferDetailVC';
 import HomeOfferPriceVC from './app/pages/Home/HomeOfferPriceVC';
 import HomeOfferTwicePriceVC from './app/pages/Home/HomeOfferTwicePriceVC';
+import HomeOrderShipListVC from './app/pages/Home/HomeOrderShipListVC';
 
 const MyNavigator = StackNavigator({
         Wait: {screen: WaitVC},
@@ -48,6 +49,7 @@ const MyNavigator = StackNavigator({
         HomeOfferDetail:{screen: HomeOfferDetailVC},
         HomeOfferPrice:{screen: HomeOfferPriceVC},
         HomeOfferTwicePrice:{screen: HomeOfferTwicePriceVC},
+        HomeOrderShipList:{screen: HomeOrderShipListVC},
     }
     , {
         navigationOptions: {
