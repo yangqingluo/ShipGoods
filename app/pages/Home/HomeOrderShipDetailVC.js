@@ -84,7 +84,7 @@ export default class HomeShipDetailVC extends Component {
     };
 
     onReplyBtnAction = () => {
-
+        this.refReplyAlert.show({onSureBtnAction:this.toReplyShip.bind(this)});
     };
 
     toAgreeBookShip() {
@@ -101,6 +101,27 @@ export default class HomeShipDetailVC extends Component {
                         PublicAlert('订单已生成', '',
                             [{text:"确定", onPress:this.goBackToMain.bind(this)}]
                         );
+                    }
+                    else {
+                        this.refToast.show(result.message);
+                    }
+                },(error)=>{
+                    this.refToast.show(error);
+                });
+    }
+
+    toReplyShip() {
+        this.refReplyAlert.hide();
+        let data = {
+            reply_content: this.refReplyAlert.refTextInput.props.value,
+            book_id: this.state.info.book_id,
+        };
+
+        NetUtil.post(appUrl + 'index.php/Mobile/Goods/goods_reply/', data)
+            .then(
+                (result)=>{
+                    if (result.code === 0) {
+                        this.refToast.show("回复成功");
                     }
                     else {
                         this.refToast.show(result.message);
@@ -248,6 +269,7 @@ export default class HomeShipDetailVC extends Component {
                 </View>
                 <Toast ref={o => this.refToast = o} position={'center'}/>
                 <CustomAlert ref={o => this.refSelectAlert = o} message={"同意该船东报价，\n该货盘将进入订单页！"} />
+                <CustomAlert ref={o => this.refReplyAlert = o} showTextInput={true} placeholder={"回复船东："}/>
             </View> );
     }
 }

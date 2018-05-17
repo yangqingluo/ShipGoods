@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
     Modal,
     Text,
+    TextInput,
     TouchableOpacity,
     View ,
     StyleSheet,
@@ -15,6 +16,7 @@ export default class CustomAlert extends Component {
         this.state={
             hide:true,
             clickScreen:true,
+            showTextInput:false,
             animationType:'fade',
             modalVisible: false,
             transparent: true,
@@ -22,6 +24,7 @@ export default class CustomAlert extends Component {
             chide:false,
             headStyle:'',
             messText:'',
+            placeholder:'',
             innersWidth:null,
             innersHeight:null,
             buttons:[],
@@ -69,6 +72,7 @@ export default class CustomAlert extends Component {
     }
 
     render() {
+        let {title, message, placeholder, showTextInput} = this.props;
         return (<Modal
                 animationType={this.state.animationType}
                 transparent={this.state.transparent}
@@ -79,8 +83,13 @@ export default class CustomAlert extends Component {
                     <View style={styles.modalContainer}>
                         <View style={styles.mainContainer}>
                             <View style={{flex: 1, alignItems:'center', justifyContent:'center',}}>
-                                {this.props.title ? <Text style={styles.modalTitle}>{this.props.title}</Text> : null}
-                                <Text style={styles.modalMessage}>{this.props.message}</Text>
+                                {title ? <Text style={styles.modalTitle}>{title}</Text> : null}
+                                {message ? <Text style={styles.modalMessage}>{message}</Text> : null}
+                                {showTextInput ? <TextInput underlineColorAndroid="transparent"
+                                                            style={styles.textInput}
+                                                            multiline={true}
+                                                            placeholder={placeholder}
+                                                            ref={o => this.refTextInput = o}/> : null}
                             </View>
                             <View style={styles.row}>
                                 <TouchableOpacity style={styles.leftBn} onPress={this.hide.bind(this)}>
@@ -108,16 +117,16 @@ const styles = StyleSheet.create({
         alignItems:'center',
     },
     modalContainer: {
-        width: screenWidth * (260 / 375),
-        minHeight: 171,
-        // backgroundColor: 'white',
+        marginTop: -80,
+        width: px2dp(260),
+        minHeight: 198,
         alignItems:'center',
     },
     mainContainer: {
-        marginTop: px2dp(27),
+        marginTop: 27,
         flex: 1,
         borderRadius: 12,
-        minHeight: 171,
+        // minHeight: 171,
         backgroundColor: 'white',
         alignItems:'center',
     },
@@ -133,7 +142,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     row:{
-        width: screenWidth * (260 / 375),
+        width: px2dp(260),
         borderTopWidth: 1.0,
         borderTopColor: appData.appSeparatorLightColor,
         flexDirection:'row',
@@ -167,9 +176,16 @@ const styles = StyleSheet.create({
     },
     infoImage: {
         top: 0,
-        width: px2dp(54),
-        height: px2dp(54),
+        width: 54,
+        height: 54,
         resizeMode: 'cover',
         position: 'absolute',
-    }
+    },
+    textInput: {
+        width: px2dp(240),
+        fontSize: 16,
+        minHeight: 40,
+        maxHeight: 120,
+        color: appData.appTextColor,
+    },
 });
