@@ -16,7 +16,6 @@ export default class CustomAlert extends Component {
         this.state={
             hide:true,
             clickScreen:true,
-            showTextInput:false,
             animationType:'fade',
             modalVisible: false,
             transparent: true,
@@ -24,11 +23,13 @@ export default class CustomAlert extends Component {
             chide:false,
             headStyle:'',
             messText:'',
-            placeholder:'',
             innersWidth:null,
             innersHeight:null,
             buttons:[],
             onSureBtnAction: Function,
+            showTextInput:false,
+            placeholder:'',
+            text: '',
         }
 
     }
@@ -45,19 +46,23 @@ export default class CustomAlert extends Component {
             innersHeight=options.innersHeight===undefined?null:options.innersHeight;
             buttons=options.buttons===undefined?null:options.buttons;
             onSureBtnAction=options.onSureBtnAction || null;
+            showTextInput=options.showTextInput || null;
+            placeholder=options.placeholder || "";
             if(!this.state.modalVisible){
                 this.setState({
                     title:title,
                     messText:messText,
                     thide:thide,
                     headStyle:headStyle,
-                    modalVisible: true,
                     innersHeight:innersHeight,
                     innersWidth:innersWidth,
                     buttons:buttons,
                     animationType:animationType,
                     clickScreen:clickScreen,
                     onSureBtnAction:onSureBtnAction,
+                    showTextInput:showTextInput,
+                    placeholder:placeholder,
+                    modalVisible: true,
                 });
             }
         }else{
@@ -89,7 +94,9 @@ export default class CustomAlert extends Component {
                                                             style={styles.textInput}
                                                             multiline={true}
                                                             placeholder={placeholder}
-                                                            ref={o => this.refTextInput = o}/> : null}
+                                                            onChangeText={(text) => this.setState({text})}
+                                                            value={this.state.text}
+                                                            /> : null}
                             </View>
                             <View style={styles.row}>
                                 <TouchableOpacity style={styles.leftBn} onPress={this.hide.bind(this)}>

@@ -51,7 +51,7 @@ export default class HomeShipDetailVC extends Component {
     };
 
     requestRecommend = async (isReset) => {
-        let data = {task_id: this.state.info.good_task_id};
+        let data = {task_id: this.state.info.good_task_id, type: 1};
 
         NetUtil.post(appUrl + 'index.php/Mobile/Goods/get_offer_detail/', data)
             .then(
@@ -84,7 +84,7 @@ export default class HomeShipDetailVC extends Component {
     };
 
     onReplyBtnAction = () => {
-        this.refReplyAlert.show({onSureBtnAction:this.toReplyShip.bind(this)});
+        this.refReplyAlert.show({text:'', onSureBtnAction:this.toReplyShip.bind(this)});
     };
 
     toAgreeBookShip() {
@@ -111,24 +111,31 @@ export default class HomeShipDetailVC extends Component {
     }
 
     toReplyShip() {
+        let message = this.refReplyAlert.state.text;
         this.refReplyAlert.hide();
-        let data = {
-            reply_content: this.refReplyAlert.refTextInput.props.value,
-            book_id: this.state.info.book_id,
-        };
 
-        NetUtil.post(appUrl + 'index.php/Mobile/Goods/goods_reply/', data)
-            .then(
-                (result)=>{
-                    if (result.code === 0) {
-                        this.refToast.show("回复成功");
-                    }
-                    else {
-                        this.refToast.show(result.message);
-                    }
-                },(error)=>{
-                    this.refToast.show(error);
-                });
+        if (message.length > 0) {
+            let data = {
+                reply_content: message,
+                book_id: this.state.info.book_id,
+            };
+
+            NetUtil.post(appUrl + 'index.php/Mobile/Goods/goods_reply/', data)
+                .then(
+                    (result)=>{
+                        if (result.code === 0) {
+                            this.refToast.show("回复成功");
+                        }
+                        else {
+                            this.refToast.show(result.message);
+                        }
+                    },(error)=>{
+                        this.refToast.show(error);
+                    });
+        }
+        else {
+            this.refToast.show("回复内容不能为空.");
+        }
     }
 
     cellSelected = (key, data = {}) =>{
