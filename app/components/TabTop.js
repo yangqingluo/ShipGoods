@@ -37,7 +37,7 @@ export default class TabTop extends Component {
             <View style={styles.tabs}>
                 {this.props.tabs.map((tab, i) => {
                     let color = this.props.activeTab === i ? '#2D9BFD' : '#6A6A6A';
-                    let _tabName = this.props.activeTab === i ? <View style={styles._under}></View> : <View style={styles._noUnder}></View>;
+                    let _tabName = this.props.activeTab === i ? <View style={styles._under} /> : null;
                     //let icon = this.props.activeTab == i ? this.props.selectedTabIconNames[i] : this.props.tabIconNames[i];
                     return (
                         <TouchableOpacity
@@ -53,7 +53,6 @@ export default class TabTop extends Component {
                                     {this.props.tabNames[i]}
                                 </Text>
                                 {_tabName}
-
                             </View>
                         </TouchableOpacity>
                     )
@@ -64,55 +63,40 @@ export default class TabTop extends Component {
 }
 
 const styles = StyleSheet.create({
-    
     tabs: {
         flexDirection: 'row',
-        height: 49,
-        //borderTopColor: '#d9d9d9',
-        //borderTopWidth:2
-        //flex: 1,
-        // marginTop: Platform.OS === 'ios' ?  -20 : 20,
-        //backgroundColor: '#0ff',
+        height: 45,
+        // backgroundColor: '#fff',
     },
     tab: {
-        //flex: 1,
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-
         marginLeft: 20,
     },
     tabItem: {
-        flexDirection: 'column',
+        flex: 1,
+        // flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'space-around',
-
-        // borderRadius: 25,
-        // borderBottomWidth:5,
-        // borderBottomColor: '#2D9BFD',
+        justifyContent: 'center',
     },
-    // icon: {
-    //     width: 26,
-    //     height: 26,
-    //     marginBottom: 2
-    // },
     _under: {
-        width: 25,
-        height: 0,
-        marginTop:5,
-        borderTopWidth:2,
-        borderBottomWidth:2,
-        borderRadius: 4,
-        borderTopColor: '#2D9BFD',
-        borderBottomColor: '#2D9BFD',
+        width: 27,
+        height: 4,
+        borderRadius: 2,
+        // marginTop:5,
+        backgroundColor: appData.appBlueColor,
+        bottom: 0,
+        position: 'absolute',
     },
-    _noUnder: {
-        width: 25,
-        height: 0,
-        marginTop:5,
-        borderTopWidth:2,
-        borderBottomWidth:2,
-        borderRadius: 4,
-        borderTopColor: '#2D9BFD00',
-        borderBottomColor: '#2D9BFD00',
-    }
+    // _noUnder: {
+    //     width: 25,
+    //     height: 0,
+    //     marginTop:5,
+    //     borderTopWidth:2,
+    //     borderBottomWidth:2,
+    //     borderRadius: 4,
+    //     borderTopColor: '#2D9BFD',
+    //     borderBottomColor: '#2D9BFD',
+    // }
 });

@@ -15,7 +15,6 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import Item from '../components/Item'
 import StarScore from '../components/StarScore'
 import Communications from '../util/AKCommunications';
-import px2dp from '../util';
 
 class RightHeader extends Component {
     constructor(props) {
@@ -125,38 +124,38 @@ export default class MineVC extends Component {
 
     _renderHeader() {
         let authed = (global.userData.authstate === '1');
-        return <View style={{minHeight: screenHeight - 64 - px2dp(46), paddingBottom: 100, backgroundColor: "#fff"}}>
+        return <View style={{minHeight: screenHeight - 64 - 46, paddingBottom: 100, backgroundColor: "#fff"}}>
             <TouchableWithoutFeedback onPress={this.goProfile.bind(this)}>
                 <View style={styles.userHead}>
                     <View style={{flex: 1,flexDirection: "row"}}>
                         <ImageBackground source={require('../images/icon_back.png')} style={styles.imageBack}>
-                            <Text style={{color: "#fff", fontSize: px2dp(20), textAlign:'center', alignItems: "center"}}>{global.userData.username.length ? global.userData.username.substr(0, 1) : ''}</Text>
+                            <Text style={{color: "#fff", fontSize: 20, textAlign:'center', alignItems: "center"}}>{global.userData.username.length ? global.userData.username.substr(0, 1) : ''}</Text>
                         </ImageBackground>
                         <View style={{flex: 1, marginLeft: 10, paddingVertical: 5}}>
                             <View style={{flexDirection: "row", alignItems: "center"}}>
-                                <Text style={{color: "#000", fontSize: px2dp(18)}}>{global.userData.username}</Text>
-                                <Image source={authed ? require('../images/vip_selected.png') : require('../images/vip.png')} style={{marginLeft:px2dp(5), width: px2dp(13), height: px2dp(13),  resizeMode:'contain'}} />
-                                <Text style={{color: (authed ? appData.appLightBlueColor : appData.appSecondaryTextColor), marginLeft:px2dp(5), fontSize: px2dp(12)}}>{authed ? "已认证" : "未认证"}</Text>
+                                <Text style={{color: "#000", fontSize: 18}}>{global.userData.username}</Text>
+                                <Image source={authed ? require('../images/vip_selected.png') : require('../images/vip.png')} style={{marginLeft: 5, width: 13, height: 13,  resizeMode:'contain'}} />
+                                <Text style={{color: (authed ? appData.appLightBlueColor : appData.appSecondaryTextColor), marginLeft: 5, fontSize: 12}}>{authed ? "已认证" : "未认证"}</Text>
                             </View>
-                            <View style={{marginTop: px2dp(10), flexDirection: "row", alignItems: "center"}}>
-                                <ImageBackground source={require('../images/icon_back.png')} style={{width:px2dp(19), height:px2dp(19), justifyContent: "center", alignItems: "center"}}>
-                                    <Text style={{ color: "#fff", fontSize: px2dp(10), textAlign:'center'}}>{'账'}</Text>
+                            <View style={{marginTop: 10, flexDirection: "row", alignItems: "center"}}>
+                                <ImageBackground source={require('../images/icon_back.png')} style={{width: 19, height: 19, justifyContent: "center", alignItems: "center"}}>
+                                    <Text style={{ color: "#fff", fontSize: 10, textAlign:'center'}}>{'账'}</Text>
                                 </ImageBackground>
-                                <Image source={require('../images/icon_account.png')} style={{marginLeft:px2dp(5), width: px2dp(22), height: px2dp(16),  resizeMode:'contain'}} />
+                                <Image source={require('../images/icon_account.png')} style={{marginLeft: 5, width: 22, height: 16,  resizeMode:'contain'}} />
                                 <Text style={{color: "#000", fontSize: 13, paddingLeft: 5}}>{global.userData.mobile}</Text>
                             </View>
-                            <View style={{marginTop: px2dp(10), flexDirection: "row"}}>
-                                <Image source={require('../images/icon_xinyong.png')} style={{width: px2dp(35), height: px2dp(18)}} />
-                                <StarScore style={{marginLeft:px2dp(5)}} itemEdge={px2dp(5)} currentScore={userData.credit}/>
+                            <View style={{marginTop: 10, flexDirection: "row"}}>
+                                <Image source={require('../images/icon_xinyong.png')} style={{width: 35, height: 18}} />
+                                <StarScore style={{marginLeft: 5}} itemEdge={ 5} currentScore={userData.credit}/>
                             </View>
                         </View>
                     </View>
-                    <Icon name="ios-arrow-forward-outline" size={px2dp(22)} color="#fff" />
+                    <Icon name="ios-arrow-forward-outline" size={ 22} color="#fff" />
                 </View>
             </TouchableWithoutFeedback>
             <View style={styles.authShow}>
-                <Text style={{color: appData.appSecondaryTextColor, fontSize: px2dp(12), marginLeft: 40}}>{"资质认证"}</Text>
-                <Text style={{color: appData.appBlueColor, fontSize: px2dp(12), marginLeft: 10}} onPress={this.onAuthTextPress}>{(authed ? "已认证" : "去认证")}</Text>
+                <Text style={{color: appData.appSecondaryTextColor, fontSize: 12, marginLeft: 40}}>{"资质认证"}</Text>
+                <Text style={{color: appData.appBlueColor, fontSize: 12, marginLeft: 10}} onPress={this.onAuthTextPress}>{(authed ? "已认证" : "去认证")}</Text>
             </View>
             <View>
                 {this._renderListItem()}
@@ -197,7 +196,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F5FCFF',
     },
     scrollView: {
-        marginBottom: px2dp(0),
+        marginBottom: 0,
         backgroundColor: "#fff"
     },
     userHead: {
@@ -221,9 +220,9 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     imageBack: {
-        width: px2dp(65),
-        height: px2dp(65),
-        borderRadius: px2dp(0.5 * 65),
+        width: 65,
+        height: 65,
+        borderRadius: 0.5 * 65,
         justifyContent: "center",
         alignItems: "center",
         // backgroundColor: '#f3f',

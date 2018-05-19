@@ -14,9 +14,8 @@ import {
     TouchableOpacity,
 } from 'react-native'
 import PropTypes from 'prop-types';
-import Toast, {DURATION} from 'react-native-easy-toast';
+import Toast from 'react-native-easy-toast';
 import Spinner from 'react-native-spinkit';
-import px2dp from "../util";
 
 const checkNum = (num) => {
     if (num) {
@@ -34,7 +33,7 @@ export default class LoginVC extends Component {
         // sendChkCode: PropTypes.string,
         // phoneNumPlh: PropTypes.string,
         ispassword: PropTypes.bool
-    }
+    };
 
     constructor(props) {
         super(props)
@@ -52,7 +51,7 @@ export default class LoginVC extends Component {
             headerLeft: null,
 
         }
-    }
+    };
 
     onEyeBtnPress = () => {
         if (this.state.ispassword) {
@@ -64,7 +63,7 @@ export default class LoginVC extends Component {
                 ispassword: true,
             })
         }
-    }
+    };
 
     onLoginBtnPress = () => {
         if (!judgeMobilePhone(this.state.phoneNum)) {
@@ -90,21 +89,20 @@ export default class LoginVC extends Component {
                             this.props.navigation.dispatch(PublicResetAction('Main'));
                         }
                         else {
-                            this.refs.toast.show(result.message, DURATION.LENGTH_SHORT);
+                            this.refs.toast.show(result.message);
                         }
                     },(error)=>{
                         this.setState({isSpinnerVisible : false});
-                        this.refs.toast.show(error, DURATION.LENGTH_SHORT);
+                        this.refs.toast.show(error);
                     });
         }
-    }
+    };
 
     onRegBtnPress = () => {
         this.props.navigation.navigate('Register')
-    }
+    };
 
     render() {
-        var { style } = this.props
         return (
             <View style={styles.container}>
                 <Image style={styles.img} source={require('../images/role.png')} />
@@ -248,7 +246,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',
-        bottom: px2dp(60),
+        bottom: 60,
         position: 'absolute',
     },
 
@@ -275,7 +273,7 @@ const styles = StyleSheet.create({
     },
     backBtn: {
         flexDirection: 'row',
-        bottom: px2dp(20),
+        bottom: 20,
         position: 'absolute',
     },
     backTxt: {
@@ -284,4 +282,4 @@ const styles = StyleSheet.create({
     btnText: {
         color: '#FFFFFF',
     },
-})
+});

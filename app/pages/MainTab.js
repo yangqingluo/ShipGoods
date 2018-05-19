@@ -11,7 +11,7 @@ import {TabBarBottom, TabNavigator} from 'react-navigation';
 import TabBarItem from '../components/TabBarItem'
 
 import HomeVC from './HomeVC'
-import BusinessVC from './BusinessVC';
+import OrderVC from './OrderVC';
 import ReleaseVC from './ReleaseVC';
 import MessageVC from './MessageVC';
 import MineVC from './MineVC';
@@ -21,7 +21,7 @@ import MineVC from './MineVC';
 const MainTabNavigator = TabNavigator(
     {
         HomeVC:{screen:HomeVC},
-        BusinessVC:{screen:BusinessVC},
+        OrderVC:{screen:OrderVC},
         ReleaseVC:{screen:ReleaseVC},
         MessageVC:{screen:MessageVC},
         MineVC:{screen:MineVC},
@@ -34,7 +34,7 @@ const MainTabNavigator = TabNavigator(
                     let isRelease = false;
                     if (routeName === 'HomeVC') {
                         iconPath = require("../images/tabbar_icon_home.png");
-                    } else if (routeName === 'BusinessVC') {
+                    } else if (routeName === 'OrderVC') {
                         iconPath = require("../images/tabbar_icon_business.png");
                     } else if (routeName === 'ReleaseVC') {
                         iconPath = require("../images/tabPublish.png");
@@ -59,7 +59,7 @@ const MainTabNavigator = TabNavigator(
             //     let radius = 25;
             //     if (routeName === 'HomeVC') {
             //         iconPath = require("../images/tabGoods-outline.png");
-            //     } else if (routeName === 'BusinessVC') {
+            //     } else if (routeName === 'OrderVC') {
             //         iconPath = focused ? require("../images/tabOrders.png") : require("../images/tabOrders-outline.png");
             //     } else if (routeName === 'ReleaseVC') {
             //         iconPath = require("../images/tabPublish.png");

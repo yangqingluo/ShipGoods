@@ -51,7 +51,7 @@ export default class HomeShipDetailVC extends Component {
     };
 
     requestRecommend = async (isReset) => {
-        let data = {task_id: this.state.info.good_task_id, type: 1};
+        let data = {book_id: this.state.info.book_id, type: 2};
 
         NetUtil.post(appUrl + 'index.php/Mobile/Goods/get_offer_detail/', data)
             .then(

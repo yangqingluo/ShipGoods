@@ -11,13 +11,8 @@ import {
     View,
     Image,
     StyleSheet,
-    Dimensions,
-    Platform,
-    TouchableHighlight,
     TextInput,
-    TouchableNativeFeedback
 } from 'react-native'
-import px2dp from '../util'
 import Button from './Button'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
