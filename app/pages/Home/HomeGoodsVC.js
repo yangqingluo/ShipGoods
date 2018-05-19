@@ -125,7 +125,7 @@ export default class HomeGoodsVC extends Component {
         return (
             <View style={styles.container}>
                 <FlatList
-                    style={{flex:1, margin: 10}}
+                    style={{flex:1}}
                     data={this.state.dataList}
                     renderItem={this.renderCell}
 

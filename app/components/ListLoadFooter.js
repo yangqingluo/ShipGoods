@@ -56,4 +56,4 @@ const styles = StyleSheet.create({
         color: appData.appSecondaryTextColor,
         fontSize: px2dp(14),
     }
-})
+});

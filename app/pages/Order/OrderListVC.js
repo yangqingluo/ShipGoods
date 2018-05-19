@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
     FlatList,
 } from 'react-native';
-import GoodsCell from '../Home/HomeGoodsCell';
+import OrderCell from './OrderCell';
 import ListLoadFooter from '../../components/ListLoadFooter';
 
 type Props = {
@@ -50,22 +50,9 @@ export default class OrderListVC extends Component {
         if (isReset) {
             this.state.page = 1;
         }
-        let data = {page: this.state.page};
-        if (appHomeCondition.empty_port !== null) data.empty_port = appHomeCondition.empty_port.port_id;
-        if (appHomeCondition.empty_time !== null) data.empty_time = createRequestTime(appHomeCondition.empty_time);
-        if (appHomeCondition.empty_delay > 0) data.empty_delay = appHomeCondition.empty_delay;
-        if (appHomeCondition.min_ton > 0) data.min_ton = appHomeCondition.min_ton;
-        if (appHomeCondition.max_ton > 0) data.max_ton = appHomeCondition.max_ton;
-        if (appHomeCondition.goods !== null) data.goods_id = appHomeCondition.goods.goods_id;
-        if (appHomeCondition.area.length > 0) {
-            data.area = appHomeCondition.area.map(
-                (info) => {
-                    return info.key;
-                }
-            );
-        }
+        let data = {page: this.state.page, state: this.props.order_state};
 
-        NetUtil.post(appUrl + 'index.php/Mobile/Goods/goods_index/', data)
+        NetUtil.post(appUrl + 'index.php/Mobile/Order/get_my_order/', data)
             .then(
                 (result)=>{
                     if (result.code === 0) {
@@ -101,18 +88,20 @@ export default class OrderListVC extends Component {
     };
 
     onCellSelected = (info: Object) => {
-        appHomeVC.props.navigation.navigate('HomeShipDetail',
-            {
-                info: info.item,
-            });
+
+    };
+
+    onCellBottomBtnAction = (info: Object, index: number) => {
+        PublicAlert(index + JSON.stringify(info));
     };
 
 
     renderCell = (info: Object) => {
         return (
-            <GoodsCell
+            <OrderCell
                 info={info}
                 onPress={this.onCellSelected}
+                onBottomBtnPress={this.onCellBottomBtnAction}
             />
         )
     };
@@ -129,7 +118,7 @@ export default class OrderListVC extends Component {
         return (
             <View style={styles.container}>
                 <FlatList
-                    style={{flex:1, margin: 10}}
+                    style={{flex:1}}
                     data={this.state.dataList}
                     renderItem={this.renderCell}
 

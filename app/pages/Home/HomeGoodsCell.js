@@ -47,7 +47,7 @@ export default class HomeGoodsCell extends Component {
         }
         let isOrdered = false;
         return (
-            <View style={{opacity: isOrdered ? 0.5 : 1.0}}>
+            <View style={{opacity: isOrdered ? 0.5 : 1.0, padding: 10}}>
                 <TouchableHighlight style={styles.cellContainer} onPress={() => this.props.onPress(info)}>
                     <View style={{flex: 1, backgroundColor:'white'}}>
                         <View style={{backgroundColor:'#81c6ff', flexDirection: 'row', justifyContent: "space-between", height:px2dp(26)}}>
@@ -110,11 +110,10 @@ const styles = StyleSheet.create({
         // flexDirection: 'column',
         overflow:"hidden",
         backgroundColor: 'white',
-        minHeight:px2dp(172),
-        borderRadius: px2dp(9),
+        minHeight:172,
+        borderRadius: 9,
         borderColor: appData.appBorderColor,
-        borderWidth: px2dp(0.5),
-        // marginBottom: px2dp(27),
+        borderWidth: 0.5,
     },
 
     // container: {
@@ -125,5 +124,5 @@ const styles = StyleSheet.create({
     //     borderRadius: 10,
     //     backgroundColor: '#D3D3D3',
     // },
-})
+});
 
