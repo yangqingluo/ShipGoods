@@ -24,6 +24,7 @@ export default class OrderVC extends Component {
                 <ScrollableTabView
                     renderTabBar={() =>
                         <TabTop tabNames={tabTitles}
+                                tabItemFlex={1}
                             //FIXME:tabIconNames={tabIcon}
                             //FIXME:selectedTabIconNames={tabSelectedIcon}
                         />}

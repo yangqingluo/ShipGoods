@@ -14,14 +14,15 @@ import PropTypes from 'prop-types';
 
 export default class TabTop extends Component {
 
-    static propType = {
+    static Props = {
         goToPage    : PropTypes.func,
         activeTab   : PropTypes.number,
         tabs        : PropTypes.array,
 
         tabNames    : PropTypes.array,
         tabIconNames: PropTypes.array,
-        selectedTabIconNames: PropTypes.array
+        selectedTabIconNames: PropTypes.array,
+        tabItemFlex: Number,
     };
 
     componentDidMount() {
@@ -43,7 +44,7 @@ export default class TabTop extends Component {
                         <TouchableOpacity
                             key={i}
                             activeOpacity={0.8}
-                            style={styles.tab}
+                            style={{flex: this.props.tabItemFlex, justifyContent: 'center', alignItems: 'center',}}
                             onPress={()=>this.props.goToPage(i)}>
                             <View style={styles.tabItem}>
                                 {/* <Image
@@ -65,18 +66,16 @@ export default class TabTop extends Component {
 const styles = StyleSheet.create({
     tabs: {
         flexDirection: 'row',
-        height: 45,
-        // backgroundColor: '#fff',
     },
     tab: {
-        flex: 1,
+        flex: 0,
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: 20,
+        // marginLeft: 20,
     },
     tabItem: {
-        flex: 1,
-        // flexDirection: 'column',
+        minWidth: 80,
+        height: 45,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -84,19 +83,8 @@ const styles = StyleSheet.create({
         width: 27,
         height: 4,
         borderRadius: 2,
-        // marginTop:5,
         backgroundColor: appData.appBlueColor,
         bottom: 0,
         position: 'absolute',
     },
-    // _noUnder: {
-    //     width: 25,
-    //     height: 0,
-    //     marginTop:5,
-    //     borderTopWidth:2,
-    //     borderBottomWidth:2,
-    //     borderRadius: 4,
-    //     borderTopColor: '#2D9BFD',
-    //     borderBottomColor: '#2D9BFD',
-    // }
 });
