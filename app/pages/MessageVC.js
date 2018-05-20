@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import {
-    AppRegistry,
     StyleSheet,
     Text,
-    Button,
     View,
+    ScrollView,
+    FlatList,
     TouchableOpacity
 } from 'react-native';
+import MessageListVC from './Message/MessageListVC';
 
 export default class MessageVC extends Component {
     static navigationOptions = {
@@ -19,7 +20,7 @@ export default class MessageVC extends Component {
         const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
-
+                <MessageListVC style={{flex: 1}} />
             </View>
         );
     }

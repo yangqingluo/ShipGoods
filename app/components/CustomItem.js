@@ -88,8 +88,8 @@ export default class CustomItem extends Component {
         )
     }
     render(){
-        let { onPress, first, disable } = this.props
-        onPress = onPress || (() => {})
+        let { onPress, first, disable } = this.props;
+        onPress = onPress || (() => {});
         return disable?
             this._render():
             <Button style={{marginTop: first?10:0}} onPress={onPress}>{this._render()}</Button>
