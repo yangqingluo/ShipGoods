@@ -27,8 +27,7 @@ export default class MoreSettingsVC extends Component {
             this.props.navigation.navigate('PublicWeb',
                 {
                     title: "关于我们",
-                    // uri: appUrl + '/shared/help.php?uid=' + userData.uid,
-                    uri: "http://www.baidu.com",
+                    uri: appUrl + '/shared/help.php?uid=' + userData.uid,
                 });
         }
         else {

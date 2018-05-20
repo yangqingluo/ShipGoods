@@ -51,6 +51,7 @@ export default class PublicWebVC extends Component {
 
     render() {
         let {uri} = this.props.navigation.state.params;
+        let {scalesPageToFit} = this.state;
         return (
             <View style={appStyles.container}>
                 <WebView
@@ -60,7 +61,7 @@ export default class PublicWebVC extends Component {
                     source={{uri:uri, method: 'GET'}}
                     javaScriptEnabled={true}
                     domStorageEnabled={true}
-                    scalesPageToFit={false}
+                    scalesPageToFit={scalesPageToFit}
                     onNavigationStateChange={this.onNavigationStateChange}
                 />
             </View>
