@@ -37,11 +37,11 @@ export default class HomeOrderCell extends Component {
         return (
             <View>
                 <View style={{height: appData.appSeparatorHeight, backgroundColor: appData.appSeparatorLightColor}}/>
-                <View style={styles.cellContainer}>
+                <TouchableOpacity style={styles.cellContainer} onPress={() => this.props.onPress(info)}>
                     <Image source={require("../../images/icon_news.png")} style={styles.newsImage}/>
                     <Text style={styles.textContainer}>{info.item.content}</Text>
                     <Image source={require("../../images/icon_right.png")} style={styles.arrowImage}/>
-                </View>
+                </TouchableOpacity>
             </View>
         )
     }

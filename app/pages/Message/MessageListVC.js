@@ -89,7 +89,7 @@ export default class OrderListVC extends Component {
     };
 
     onCellSelected = (info: Object) => {
-
+        PublicAlert(JSON.stringify(info.item));
     };
 
     renderCell = (info: Object) => {
