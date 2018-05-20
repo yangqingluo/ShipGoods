@@ -35,8 +35,13 @@ export default class HomeOrderCell extends Component {
     render() {
         let {info} = this.props;
         return (
-            <View style={styles.cellContainer}>
-                <CustomItem logo={require("../../images/icon_news.png")} name={info.item.content}/>
+            <View>
+                <View style={{height: appData.appSeparatorHeight, backgroundColor: appData.appSeparatorLightColor}}/>
+                <View style={styles.cellContainer}>
+                    <Image source={require("../../images/icon_news.png")} style={styles.newsImage}/>
+                    <Text style={styles.textContainer}>{info.item.content}</Text>
+                    <Image source={require("../../images/icon_right.png")} style={styles.arrowImage}/>
+                </View>
             </View>
         )
     }
@@ -45,15 +50,30 @@ export default class HomeOrderCell extends Component {
 const styles = StyleSheet.create({
     cellContainer: {
         flex: 1,
-        overflow:"hidden",
         backgroundColor: 'white',
+        flexDirection: 'row',
+        alignItems: "center",
         minHeight:44,
         paddingLeft:13,
         paddingRight:12,
+        paddingVertical:10,
     },
     textContainer: {
-        fontSize:14,
+        flex:1,
+        marginLeft:12,
+        marginRight:5,
+        fontSize:16,
         color: appData.appTextColor
+    },
+    newsImage: {
+        width:17,
+        height:17,
+        resizeMode: "stretch",
+    },
+    arrowImage: {
+        width:4,
+        height:8,
+        resizeMode: "stretch",
     },
 });
 
