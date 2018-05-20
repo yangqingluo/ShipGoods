@@ -119,6 +119,13 @@ export default class OrderListVC extends Component {
                 this.refSelectAlert.show({onSureBtnAction:this.toCollectGoods.bind(this, info)});
                 break;
 
+            case BottomBtnEnum.JudgeOrder:
+                this.props.navigation.navigate('OrderJudgement',
+                    {
+                        info: info,
+                    });
+                break;
+
             default:
                 PublicAlert(tag + JSON.stringify(info));
                 break;

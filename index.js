@@ -19,6 +19,8 @@ import SelectWastageVC from './app/components/SelectWastageVC';
 import SelectPrice from './app/components/SelectPriceVC';
 import CustomSelect from './app/components/CustomSelect';
 import CustomSectionSelect from './app/components/CustomSectionSelect';
+import PublicWebVC from "./app/pages/PublicWebVC";
+
 import HomeShipDetailVC from './app/pages/Home/HomeShipDetailVC';
 import HomeOrderDetailVC from './app/pages/Home/HomeOrderDetailVC';
 import HomeOrderSelectVC from './app/pages/Home/HomeOrderSelectVC';
@@ -28,8 +30,10 @@ import HomeOfferTwicePriceVC from './app/pages/Home/HomeOfferTwicePriceVC';
 import HomeOrderShipListVC from './app/pages/Home/HomeOrderShipListVC';
 import HomeOrderShipDetailVC from './app/pages/Home/HomeOrderShipDetailVC';
 
+import OrderJudgementVC from './app/pages/Order/OrderJudgementVC'
+
 import MoreSettingsVC from './app/pages/Mine/MoreSettingsVC'
-import PublicWebVC from "./app/pages/PublicWebVC";
+
 
 const MyNavigator = StackNavigator({
         Wait: {screen: WaitVC},
@@ -47,6 +51,8 @@ const MyNavigator = StackNavigator({
         SelectEmptyTimeVC:{screen: SelectEmptyTimeVC},
         SelectWastageVC:{screen: SelectWastageVC},
         SelectPrice:{screen: SelectPrice},
+        PublicWeb:{screen:PublicWebVC},
+
         HomeShipDetail:{screen: HomeShipDetailVC},
         HomeOrderDetail:{screen: HomeOrderDetailVC},
         HomeOrderSelect:{screen: HomeOrderSelectVC},
@@ -55,8 +61,11 @@ const MyNavigator = StackNavigator({
         HomeOfferTwicePrice:{screen: HomeOfferTwicePriceVC},
         HomeOrderShipList:{screen: HomeOrderShipListVC},
         HomeOrderShipDetail:{screen:HomeOrderShipDetailVC},
+
+        OrderJudgement:{screen:OrderJudgementVC},
+
         MoreSettings:{screen:MoreSettingsVC},
-        PublicWeb:{screen:PublicWebVC},
+
     }
     , {
         navigationOptions: {

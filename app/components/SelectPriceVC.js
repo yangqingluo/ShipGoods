@@ -61,7 +61,7 @@ export default class SelectPriceVC extends Component {
                 <ScrollView
                     style={styles.scrollView}
                 >
-                    <View style={{height:px2dp(2)}} />
+                    <View style={{height:2}} />
                     <View style = {styles.cell}>
                         <TextInput underlineColorAndroid="transparent"
                                    keyboardType={"numeric"}
@@ -72,28 +72,28 @@ export default class SelectPriceVC extends Component {
                                    value = {this.state.price}
                         >
                         </TextInput>
-                        <Text style={{color:appData.appYellowColor, right:px2dp(30), fontSize:px2dp(18), textAlign: 'right', position: 'absolute',}}>{'¥元 / 吨'}</Text>
+                        <Text style={{color:appData.appYellowColor, right:30, fontSize:18, textAlign: 'right', position: 'absolute',}}>{'¥元 / 吨'}</Text>
                     </View>
-                    <View style={{height:px2dp(43), justifyContent: "center", alignItems: "center", backgroundColor: appData.appGrayColor}}>
+                    <View style={{height:43, justifyContent: "center", alignItems: "center", backgroundColor: appData.appGrayColor}}>
                         <TouchableOpacity onPress={this.onBargainBtnAction.bind(this)}>
-                            <Icon name={'ios-checkmark-circle'} size={px2dp(20)} style={{minWidth:px2dp(120), marginRight:5, textAlign:"center", fontSize: px2dp(14)}} color={textColor}>
+                            <Icon name={'ios-checkmark-circle'} size={20} style={{minWidth:120, marginRight:5, textAlign:"center", fontSize: 14}} color={textColor}>
                                 {' 不议价'}
                             </Icon>
                         </TouchableOpacity>
                     </View>
-                    <View style={{width: 240, height:80, marginTop:px2dp(60), alignSelf: "center", flexDirection: 'row',}}>
+                    <View style={{width: 240, height:80, marginTop:60, alignSelf: "center", flexDirection: 'row',}}>
                         <TouchableOpacity onPress={this.onBargainBtnAction.bind(this)} style={{flex:1, alignItems: "center", justifyContent: "center"}}>
-                            <Icon name={'ios-checkmark-circle'} size={px2dp(32)} style={{minWidth:px2dp(32)}} color={textColor}/>
-                            <Text style={{color:textColor, fontSize:px2dp(18), textAlign: 'right',}}>{'我开价'}</Text>
+                            <Icon name={'ios-checkmark-circle'} size={32} style={{minWidth:32}} color={textColor}/>
+                            <Text style={{color:textColor, fontSize:18, textAlign: 'right',}}>{'我开价'}</Text>
                         </TouchableOpacity>
-                        <View style={{top:px2dp(26), width: px2dp(86), height:px2dp(6), borderRadius:px2dp(3), backgroundColor:'#ebebeb'}} />
+                        <View style={{top:26, width: 86, height:6, borderRadius:3, backgroundColor:'#ebebeb'}} />
                         <TouchableOpacity onPress={this.onBargainBtnAction.bind(this)} style={{flex:1, alignItems: "center", justifyContent: "center"}}>
-                            <Icon name={'ios-checkmark-circle'} size={px2dp(32)} style={{minWidth:px2dp(32)}} color={textColor}/>
-                            <Text style={{color:textColor, fontSize:px2dp(18), textAlign: 'right',}}>{'船东开价'}</Text>
+                            <Icon name={'ios-checkmark-circle'} size={32} style={{minWidth:32}} color={textColor}/>
+                            <Text style={{color:textColor, fontSize:18, textAlign: 'right',}}>{'船东开价'}</Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
-                <View style={{position: "absolute", bottom: px2dp(20), justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
+                <View style={{position: "absolute", bottom: 20, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
                     <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)}>
                         <View style={appStyles.sureBtnContainer}>
                             <Text style={{color: "#fff"}}>{"提交"}</Text>
@@ -113,16 +113,16 @@ const styles = StyleSheet.create({
     cell: {
         flex: 1,
         // backgroundColor: '#fff',
-        minHeight: px2dp(50),
+        minHeight: 50,
         justifyContent: "center",
         alignItems: "center",
     },
     textInput: {
         flex: 1,
-        minWidth: px2dp(80),
+        minWidth: 80,
         // paddingVertical: 0,
         height: 30,
-        fontSize: px2dp(18),
+        fontSize: 18,
         // paddingHorizontal: 10,
         color: appData.appTextColor,
         // backgroundColor: '#fff',
