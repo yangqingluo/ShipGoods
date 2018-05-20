@@ -11,7 +11,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 import DashLine from '../../components/DashLine';
-import AddAuthItem from '../../components/AddAuthItem';
+import CustomItem from '../../components/CustomItem';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 const Font = {
@@ -131,11 +131,11 @@ export default class HomeOrderDetailVC extends Component {
         return this.config.map((item, i) => {
             return (
                 <View key={'cell' + i} style={{paddingLeft: 10, paddingRight: 20}}>
-                    <AddAuthItem key={i} {...item}
-                                 showArrowForward={false}
-                                 subName={this.renderSubNameForIndex(item, i)}
-                                 noSeparator={true}>
-                    </AddAuthItem>
+                    <CustomItem key={i} {...item}
+                                showArrowForward={false}
+                                subName={this.renderSubNameForIndex(item, i)}
+                                noSeparator={true}>
+                    </CustomItem>
                     <View style={{height: 1, marginLeft: 10}}>
                         <DashLine backgroundColor={appData.appSeparatorLightColor} len={(screenWidth - 40)/ appData.appDashWidth}/>
                     </View>

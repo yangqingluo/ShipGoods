@@ -28,6 +28,9 @@ import HomeOfferTwicePriceVC from './app/pages/Home/HomeOfferTwicePriceVC';
 import HomeOrderShipListVC from './app/pages/Home/HomeOrderShipListVC';
 import HomeOrderShipDetailVC from './app/pages/Home/HomeOrderShipDetailVC';
 
+import MoreSettingsVC from './app/pages/Mine/MoreSettingsVC'
+import PublicWebVC from "./app/pages/PublicWebVC";
+
 const MyNavigator = StackNavigator({
         Wait: {screen: WaitVC},
         Login: {screen: LoginVC},
@@ -52,6 +55,8 @@ const MyNavigator = StackNavigator({
         HomeOfferTwicePrice:{screen: HomeOfferTwicePriceVC},
         HomeOrderShipList:{screen: HomeOrderShipListVC},
         HomeOrderShipDetail:{screen:HomeOrderShipDetailVC},
+        MoreSettings:{screen:MoreSettingsVC},
+        PublicWeb:{screen:PublicWebVC},
     }
     , {
         navigationOptions: {

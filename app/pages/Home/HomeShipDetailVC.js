@@ -10,7 +10,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 import DashLine from '../../components/DashLine';
-import AddAuthItem from '../../components/AddAuthItem';
+import CustomItem from '../../components/CustomItem';
 import StarScore from '../../components/StarScore';
 import Communications from '../../util/AKCommunications';
 import px2dp from "../../util";
@@ -198,12 +198,12 @@ export default class HomeShipDetailVC extends Component {
         return this.config.map((item, i) => {
             return (
                 <View key={'cell' + i} style={{paddingLeft: px2dp(10), paddingRight: px2dp(20)}}>
-                    <AddAuthItem key={i} {...item}
-                                 showArrowForward={false}
-                                 subName={this.renderSubNameForIndex(item, i)}
-                                 noSeparator={true}>
+                    <CustomItem key={i} {...item}
+                                showArrowForward={false}
+                                subName={this.renderSubNameForIndex(item, i)}
+                                noSeparator={true}>
                         {this.renderSubViewForIndex(item, i)}
-                    </AddAuthItem>
+                    </CustomItem>
                     <View style={{height: px2dp(1), marginLeft: px2dp(10)}}>
                         <DashLine backgroundColor={appData.appSeparatorLightColor} len={(screenWidth - 40)/ appData.appDashWidth}/>
                     </View>

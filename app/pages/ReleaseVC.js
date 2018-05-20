@@ -12,7 +12,7 @@ import {
 import ActionSheet from 'react-native-actionsheet';
 import ImagePicker from 'react-native-image-picker';
 
-import AddAuthItem from '../components/AddAuthItem';
+import CustomItem from '../components/CustomItem';
 import px2dp from "../util";
 import {imagePickerOptions} from "../util/Global";
 import Toast, {DURATION} from "react-native-easy-toast";
@@ -678,10 +678,10 @@ export default class ReleaseVC extends Component {
 
     _renderListItem() {
         return this.config.map((item, i) => {
-            return (<AddAuthItem key={i} {...item}
-                                 subName = {this.renderSubNameForIndex(item, i)}
-                                 callback={this.textInputChanged.bind(this)}>
-            </AddAuthItem>);
+            return (<CustomItem key={i} {...item}
+                                subName = {this.renderSubNameForIndex(item, i)}
+                                callback={this.textInputChanged.bind(this)}>
+            </CustomItem>);
         })
     }
 

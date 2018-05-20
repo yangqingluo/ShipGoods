@@ -12,7 +12,7 @@ import {
     View,
 } from 'react-native';
 import px2dp from "../../util";
-import AddAuthItem from '../../components/AddAuthItem'
+import CustomItem from '../../components/CustomItem'
 import CellTitleItem from '../../components/CellTitleItem'
 import TextCell from '../../components/TextCell'
 
@@ -221,11 +221,11 @@ export default class Menu extends Component {
         return this.config.map((item, i) => {
             return (
                 <View key={'cell' + i}>
-                    <AddAuthItem key={i} {...item}
-                                 subName = {this.renderSubNameForIndex(item, i)}
-                                 noSeparator={true}
-                                 callback={this.textInputChanged.bind(this)}>
-                    </AddAuthItem>
+                    <CustomItem key={i} {...item}
+                                subName = {this.renderSubNameForIndex(item, i)}
+                                noSeparator={true}
+                                callback={this.textInputChanged.bind(this)}>
+                    </CustomItem>
                     <View style={{marginLeft:px2dp(2), height: px2dp(5), backgroundColor: '#f3f6f9'}}/>
                 </View>);
         })

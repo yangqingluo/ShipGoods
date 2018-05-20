@@ -196,6 +196,7 @@ let appData = {
     appSureButtonRadius: 22,
 
     appItemHeight: 50,
+    appSeparatorHeight: 1,
 };
 
 let appStyles = StyleSheet.create({

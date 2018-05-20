@@ -11,7 +11,7 @@ import {
 import ActionSheet from 'react-native-actionsheet'
 import ImagePicker from 'react-native-image-picker';
 
-import AddAuthItem from '../components/AddAuthItem'
+import CustomItem from '../components/CustomItem'
 import px2dp from "../util";
 import Button from '../components/Button'
 import {imagePickerOptions} from "../util/Global";
@@ -256,16 +256,16 @@ export default class AddShip extends Component {
 
     _renderListItem() {
         return this.config.map((item, i) => {
-            return (<AddAuthItem key={i} {...item} subName = {
+            return (<CustomItem key={i} {...item} subName = {
                 (i === 6 && this.state.area > 0) ? this.areaTypes[this.state.area] :
                     ((i === 3 && this.state.goods.length > 0) ? this.state.goods : '')
             }
-                                 callback={this.textInputChanged.bind(this)}>
+                                callback={this.textInputChanged.bind(this)}>
                 {(i === 7 && this.state.ship_licence_source != null)?(
                         <Image style={styles.avatar} source={this.state.ship_licence_source} />
                     )
                     :null}
-            </AddAuthItem>);
+            </CustomItem>);
         })
     }
 

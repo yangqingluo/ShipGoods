@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 import Toast from "react-native-easy-toast";
-import AddAuthItem from '../../components/AddAuthItem';
+import CustomItem from '../../components/CustomItem';
 import px2dp from "../../util";
 
 
@@ -260,10 +260,10 @@ export default class HomeOfferPriceVC extends Component {
                 return null;
             }
             return (<View key={'cell' + i}>
-                <AddAuthItem key={i} {...item}
-                             subName = {this.renderSubNameForIndex(item, i)}
-                             callback={this.textInputChanged.bind(this)}>
-                </AddAuthItem>
+                <CustomItem key={i} {...item}
+                            subName = {this.renderSubNameForIndex(item, i)}
+                            callback={this.textInputChanged.bind(this)}>
+                </CustomItem>
                 {(item.idKey === 'ship_name' && this.state.ship !== null) ?
                 this._renderShipCell()
                 :null}

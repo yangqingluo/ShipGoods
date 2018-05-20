@@ -24,7 +24,7 @@ const Font = {
     FontAwesome
 };
 
-export default class AddAuthItem extends Component {
+export default class CustomItem extends Component {
     constructor(props){
         super(props)
     }
@@ -57,7 +57,7 @@ export default class AddAuthItem extends Component {
         let radius = 12;
         return (
             <View style={{flexDirection: "column"}}>
-                {noSeparator ? null : <View style={{height: 1, backgroundColor: appData.appSeparatorLightColor}}/>}
+                {noSeparator ? null : <View style={{height: appData.appSeparatorHeight, backgroundColor: appData.appSeparatorLightColor}}/>}
                 <View style={styles.listItem} {...this.props}>
                     {logo? (<Image source={logo} style={{width: 10, height: 12, resizeMode: "cover", overflow:"hidden"}}/>) : null}
                     {color?(<View style={{width: radius, height:radius, marginRight:5, borderRadius: 0.5 * radius, backgroundColor:color || "#4da6f0"}} />):null}
@@ -95,7 +95,7 @@ export default class AddAuthItem extends Component {
             <Button style={{marginTop: first?10:0}} onPress={onPress}>{this._render()}</Button>
     }
 }
-// AddAuthItem.Button = ItemButton
+// CustomItem.Button = ItemButton
 const styles = StyleSheet.create({
     listItem: {
         height: itemHeight,

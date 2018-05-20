@@ -81,13 +81,9 @@ export default class MineVC extends Component {
         else if (key === 'MyShip') {
             navigate(key, { title: '我的船队', callBack: null});
         }
-        // else if (key === 'MoreSettings') {
-        //     this.props.navigation.navigate(
-        //         "SelectPrice",
-        //         {
-        //             title: '选择运价',
-        //         });
-        // }
+        else if (key === 'MoreSettings') {
+            navigate(key);
+        }
         else {
             navigate('DetailVC', { title: key, des:'我是返回点击我' });
         }
