@@ -11,10 +11,6 @@ export default class HomeOrderSelectVC extends HomeOrder {
 
     onCellSelected = (info: Object) => {
         this.refSelectAlert.show({onSureBtnAction:this.toAddBookShip.bind(this, info.item)});
-        // PublicAlert('您确定选择该货品？', '',
-        //     [{text:"取消"},
-        //         {text:"确定", onPress:this.toAddBookShip.bind(this, info.item)}]
-        // );
     };
 
     goBackToMain = () => {

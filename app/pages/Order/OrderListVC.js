@@ -6,8 +6,9 @@ import {
     TouchableOpacity,
     FlatList,
 } from 'react-native';
-import OrderCell from './OrderCell';
+import OrderCell, {BottomBtnEnum} from './OrderCell';
 import ListLoadFooter from '../../components/ListLoadFooter';
+import CustomAlert from '../../components/CustomAlert';
 
 type Props = {
     order_state: "0",
@@ -87,14 +88,43 @@ export default class OrderListVC extends Component {
                 });
     };
 
+    toCollectGoods(info) {
+        this.refSelectAlert.hide();
+        let data = {
+            or_id: info.or_id,
+        };
+
+        NetUtil.post(appUrl + 'index.php/Mobile/Order/change_order_state/', data)
+            .then(
+                (result)=>{
+                    this.refToast.show(result.message);
+                    if (result.code === 0) {
+                        this.requestData();
+                    }
+                    // else {
+                    //     this.refToast.show(result.message);
+                    // }
+                },(error)=>{
+                    this.refToast.show(error);
+                });
+    };
+
     onCellSelected = (info: Object) => {
 
     };
 
-    onCellBottomBtnAction = (info: Object, index: number) => {
-        PublicAlert(index + JSON.stringify(info));
-    };
+    onCellBottomBtnAction = (info: Object, tag: number) => {
+        switch (tag){
+            case BottomBtnEnum.CollectGoods:
+                this.refSelectAlert.show({onSureBtnAction:this.toCollectGoods.bind(this, info)});
+                break;
 
+            default:
+                PublicAlert(tag + JSON.stringify(info));
+                break;
+        }
+
+    };
 
     renderCell = (info: Object) => {
         return (
@@ -133,6 +163,7 @@ export default class OrderListVC extends Component {
                     onEndReached={this.loadMoreData.bind(this)}
                     onEndReachedThreshold={0}
                 />
+                <CustomAlert ref={o => this.refSelectAlert = o} title={"确认收货"} message={"请收到货确认无误以后确认收货"} />
             </View>
         );
     }
