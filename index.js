@@ -30,9 +30,10 @@ import HomeOfferTwicePriceVC from './app/pages/Home/HomeOfferTwicePriceVC';
 import HomeOrderShipListVC from './app/pages/Home/HomeOrderShipListVC';
 import HomeOrderShipDetailVC from './app/pages/Home/HomeOrderShipDetailVC';
 
-import OrderJudgementVC from './app/pages/Order/OrderJudgementVC'
+import OrderJudgementVC from './app/pages/Order/OrderJudgementVC';
+import OrderTransportVC from './app/pages/Order/OrderTransportVC';
 
-import MoreSettingsVC from './app/pages/Mine/MoreSettingsVC'
+import MoreSettingsVC from './app/pages/Mine/MoreSettingsVC';
 
 
 const MyNavigator = StackNavigator({
@@ -63,6 +64,7 @@ const MyNavigator = StackNavigator({
         HomeOrderShipDetail:{screen:HomeOrderShipDetailVC},
 
         OrderJudgement:{screen:OrderJudgementVC},
+        OrderTransport:{screen:OrderTransportVC},
 
         MoreSettings:{screen:MoreSettingsVC},
 

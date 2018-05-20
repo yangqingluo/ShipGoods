@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         color: appData.appTextColor,
     },
     arrowContainer: {
-        width:35,
+        width:32,
         height:4,
         marginLeft:20,
         marginRight:20,

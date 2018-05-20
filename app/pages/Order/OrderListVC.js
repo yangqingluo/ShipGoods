@@ -126,6 +126,13 @@ export default class OrderListVC extends Component {
                     });
                 break;
 
+            case BottomBtnEnum.CheckTransport:
+                this.props.navigation.navigate('OrderTransport',
+                    {
+                        info: info,
+                    });
+                break;
+
             default:
                 PublicAlert(tag + JSON.stringify(info));
                 break;

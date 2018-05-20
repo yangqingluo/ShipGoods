@@ -5,12 +5,12 @@ import {
     StyleSheet,
 } from 'react-native';
 
-/* 虚线
+/* 垂直方向的虚线
  * len 虚线个数
  * width 总长度
  * backgroundColor 背景颜色
  * */
-export default class DashLine extends Component {
+export default class VDashLine extends Component {
     render() {
         let len = this.props.len;
         let arr = [];
@@ -29,14 +29,13 @@ export default class DashLine extends Component {
 }
 const styles = StyleSheet.create({
     dashLine: {
-        flexDirection: 'row',
         flex: 1,
-        // overflow:"hidden",
+        overflow:"hidden",
     },
     dashItem: {
-        height: 1,
+        height: 2,
         width: 2,
-        marginRight: 2,
+        marginBottom: 2,
         flex: 1,
     }
 });
