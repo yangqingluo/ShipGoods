@@ -12,10 +12,9 @@ import ActionSheet from 'react-native-actionsheet'
 import ImagePicker from 'react-native-image-picker';
 
 import CustomItem from '../components/CustomItem'
-import px2dp from "../util";
 import Button from '../components/Button'
 import {imagePickerOptions} from "../util/Global";
-import Toast, {DURATION} from "react-native-easy-toast";
+import Toast from "react-native-easy-toast";
 
 export default class AddShip extends Component {
     static navigationOptions = ({ navigation }) => (
@@ -121,22 +120,22 @@ export default class AddShip extends Component {
 
     submit() {
         if (this.state.ship_name.length === 0) {
-            this.refToast.show("请输入船名", DURATION.LENGTH_SHORT);
+            this.refToast.show("请输入船名");
         }
         else if (this.state.tonnage.length === 0) {
-            this.refToast.show("请输入吨位", DURATION.LENGTH_SHORT);
+            this.refToast.show("请输入吨位");
         }
         else if (this.state.storage.length === 0) {
-            this.refToast.show("请输入仓容", DURATION.LENGTH_SHORT);
+            this.refToast.show("请输入仓容");
         }
         else if (this.state.goodsList.length === 0) {
-            this.refToast.show("请选择可运油品", DURATION.LENGTH_SHORT);
+            this.refToast.show("请选择可运油品");
         }
         else if (this.state.area === 0) {
-            this.refToast.show("请选择航行区域", DURATION.LENGTH_SHORT);
+            this.refToast.show("请选择航行区域");
         }
         else if (this.state.ship_licence.length === 0) {
-            this.refToast.show("请上传船舶国际证书", DURATION.LENGTH_SHORT);
+            this.refToast.show("请上传船舶国际证书");
         }
 
         else {
@@ -144,7 +143,7 @@ export default class AddShip extends Component {
                 (info) => {
                     return {goods_id: info.goods_id};
                 }
-            )
+            );
 
             let data = {
                 ship_name:this.state.ship_name,
@@ -284,8 +283,8 @@ export default class AddShip extends Component {
                 <ScrollView style={styles.scrollView}>
                     {this._renderListItem()}
                 </ScrollView>
-                <View style={{position: "absolute", bottom: 20, height:px2dp(45), justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
-                    <Button style={{ width:px2dp(123), height:px2dp(45), borderRadius: px2dp(22.5), overflow:"hidden"}} onPress={this.submit.bind(this)}>
+                <View style={{position: "absolute", bottom: 20, height:45, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
+                    <Button style={{ width:123, height:45, borderRadius: 22.5, overflow:"hidden"}} onPress={this.submit.bind(this)}>
                         <View style={{flex: 1, backgroundColor: appData.appBlueColor, alignItems: "center", justifyContent: "center"}}>
                             <Text style={{color: "#fff"}}>{"提交"}</Text>
                         </View>
@@ -297,7 +296,7 @@ export default class AddShip extends Component {
 }
 const styles = StyleSheet.create({
     scrollView: {
-        marginBottom: px2dp(0),
+        marginBottom: 0,
         backgroundColor: "#fff"
     },
     item:{
@@ -313,7 +312,7 @@ const styles = StyleSheet.create({
     },
     label: {
         minWidth: 45,
-        fontSize: px2dp(13),
+        fontSize: 13,
         color:"#222",
         // paddingTop: 8
     },
@@ -331,14 +330,14 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "#ddd",
         borderRadius: 5,
-        fontSize: px2dp(13),
+        fontSize: 13,
         backgroundColor: "#fff"
     },
     avatar: {
         borderRadius: 5,
         marginLeft: 10,
-        width: px2dp(60),
-        height: px2dp(36),
+        width: 60,
+        height: 36,
         justifyContent: "center",
         alignItems: "center"
     }

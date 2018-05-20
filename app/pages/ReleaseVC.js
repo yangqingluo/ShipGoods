@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import {
-    AppRegistry,
     StyleSheet,
     Text,
     View,
     Image,
-    Dimensions,
     ScrollView,
     TouchableOpacity
 } from 'react-native';
@@ -13,9 +11,8 @@ import ActionSheet from 'react-native-actionsheet';
 import ImagePicker from 'react-native-image-picker';
 
 import CustomItem from '../components/CustomItem';
-import px2dp from "../util";
 import {imagePickerOptions} from "../util/Global";
-import Toast, {DURATION} from "react-native-easy-toast";
+import Toast from "react-native-easy-toast";
 
 export default class ReleaseVC extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -723,7 +720,7 @@ export default class ReleaseVC extends Component {
 }
 const styles = StyleSheet.create({
     scrollView: {
-        marginBottom: px2dp(0),
+        marginBottom: 0,
         backgroundColor: "#fff"
     },
     item:{
@@ -739,7 +736,7 @@ const styles = StyleSheet.create({
     },
     label: {
         minWidth: 45,
-        fontSize: px2dp(13),
+        fontSize: 13,
         color:"#222",
         // paddingTop: 8
     },
@@ -757,14 +754,14 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "#ddd",
         borderRadius: 5,
-        fontSize: px2dp(13),
+        fontSize: 13,
         backgroundColor: "#fff"
     },
     avatar: {
         borderRadius: 5,
         marginLeft: 10,
-        width: px2dp(60),
-        height: px2dp(36),
+        width: 60,
+        height: 36,
         justifyContent: "center",
         alignItems: "center"
     }

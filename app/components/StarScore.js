@@ -5,17 +5,15 @@ import {
     View,
     TouchableOpacity,
     Image,
-    Dimensions
 } from 'react-native';
-import px2dp from "../util";
 
-let radius = px2dp(20);
 export default class StarScore extends Component {
     // 构造
     constructor(props) {
         super(props);
         // 初始状态
         this.state = {
+            radius : this.props.radius || 20,
             totalScore: 5, // 总分值
             currentScore: this.props.currentScore > 5 ? 5 : this.props.currentScore, // 分值
             itemEdge: this.props.itemEdge
@@ -23,6 +21,7 @@ export default class StarScore extends Component {
     }
 
     render() {
+        let {radius} = this.state;
         return (
             <View style={[this.props.style, {flexDirection: 'row', height: radius}]}>
                 {this._renderBody()}
@@ -31,6 +30,7 @@ export default class StarScore extends Component {
     }
 
     _renderBody() {
+        let {radius} = this.state;
         let images = [];
         for (let i = 1; i <= this.state.totalScore; i++) {
             let currentCount = i;
@@ -47,6 +47,7 @@ export default class StarScore extends Component {
     }
 
     _renderYellowStart(count) {
+        let {radius} = this.state;
         if (count <= this.state.currentScore) {
             return (
                 <Image source={require('../images/icon_star.png')} style={{width: radius, height: radius, marginLeft:this.state.itemEdge, position: 'absolute'}}/>
@@ -63,10 +64,12 @@ export default class StarScore extends Component {
     }
 
     _score(i) {
-        // this.setState({
-        //     currentScore: i
-        // });
-        // this.props.selectIndex(i);
+        if (this.props.enabled) {
+            this.setState({
+                currentScore: i,
+            });
+            this.props.selectIndex(this.props.tag, i);
+        }
     }
 
 }
