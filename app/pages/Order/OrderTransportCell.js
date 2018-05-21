@@ -54,7 +54,7 @@ export default class OrderTransportCell extends Component {
                 </View>
                 <View style={styles.rightContainer}>
                     <Text style={{minHeight:22, fontSize:16, fontWeight:appData.appFontWeightMedium, color:appData.appBlueColor}}>
-                        {info.statetext}
+                        {info.remark}
                     </Text>
                 </View>
             </View>

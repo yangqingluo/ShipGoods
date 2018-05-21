@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import {
     StyleSheet,
+    Image,
     Text,
-    TextInput,
     View,
     ScrollView,
     RefreshControl,
-    Image,
-    FlatList,
     TouchableOpacity
 } from 'react-native';
 import CustomItem from '../../components/CustomItem';
@@ -136,12 +134,22 @@ export default class OrderJudgementVC extends Component {
 
     };
 
+    onTransportTextAction = () => {
+        PublicAlert("请选择");
+    };
+
     _renderTransport() {
         let {detailInfo, transportInfo} = this.state;
         return (
             <View>
                 <View style={styles.transportTop} />
-                <View style={styles.transportContainer} />
+                <View style={styles.transportContainer}>
+                    <Image source={require('../../images/icon_zanwu.png')} style={{width: 44, height: 44, resizeMode: "stretch"}} />
+                    <Text style={{fontSize:13, marginLeft:15}}>
+                        <Text style={{color:"#3f3f3f"}}>{"暂无货运详情，"}</Text>
+                        <Text style={{color:appData.appRedColor}} onPress={this.onTransportTextAction.bind(this)}>{"请选择"}</Text>
+                    </Text>
+                </View>
             </View>
         );
     };
@@ -350,6 +358,9 @@ const styles = StyleSheet.create({
         borderWidth:0.5,
         borderColor:appData.appBorderColor,
         backgroundColor: 'white',
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: 'row',
     },
     snText: {
         fontSize:12,
