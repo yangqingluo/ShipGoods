@@ -17,17 +17,9 @@ import {
   AlertIOS,
   TouchableNativeFeedback
 } from 'react-native'
-import px2dp from '../util'
 import Button from './Button'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
+const itemHeight = 45;
 
-const itemHeight = px2dp(45)
-
-const Font = {
-  Ionicons,
-  FontAwesome
-}
 class ItemButton extends Component {
   constructor(props){
     super(props)
@@ -58,11 +50,11 @@ export default class Item extends Component {
     iconSize: PropTypes.number,
     font: PropTypes.string,
     onPress: PropTypes.func
-  }
+  };
   _render(){
     let {logo, iconSize, name, subName, color, first, avatar, disable, font} = this.props
-    font = font||"Ionicons"
-    const Icon = Font[font]
+    font = font||"Ionicons";
+    const Icon = appFont["Ionicons"];
     return (
       <View style={styles.listItem}>
           <Image source={logo} style={styles.logo}/>
@@ -72,7 +64,7 @@ export default class Item extends Component {
           <View style={styles.listInfoRight}>
             {subName?(<Text style={{color: "#aaa", fontSize:12}}>{subName}</Text>):null}
             {avatar?(<Image source={avatar} style={{width: 36, height: 36, resizeMode: "cover", overflow:"hidden", borderRadius: 18}}/>):null}
-            {disable?null:(<Font.Ionicons style={{marginLeft: 10}} name="ios-arrow-forward-outline" size={px2dp(18)} color="#bbb" />)}
+            {disable?null:(<Icon style={{marginLeft: 10}} name="ios-arrow-forward-outline" size={18} color="#bbb" />)}
           </View>
         </View>
       </View>
@@ -117,7 +109,7 @@ const styles = StyleSheet.create({
   },
     logo: {
         marginRight:5,
-        width: px2dp(20),
-        height: px2dp(20)
+        width: 20,
+        height: 20
     },
 })

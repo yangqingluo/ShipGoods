@@ -9,6 +9,7 @@ import {
 import OrderCell from './OrderCell';
 import ListLoadFooter from '../../components/ListLoadFooter';
 import CustomAlert from '../../components/CustomAlert';
+import Toast from 'react-native-easy-toast';
 
 type Props = {
     order_state: "0",
@@ -113,6 +114,7 @@ export default class OrderListVC extends Component {
         this.props.navigation.navigate('OrderDetail',
             {
                 info: info.item,
+                order_state: this.props.order_state
             });
     };
 
@@ -182,6 +184,7 @@ export default class OrderListVC extends Component {
                     onEndReachedThreshold={0}
                 />
                 <CustomAlert ref={o => this.refSelectAlert = o} title={"确认收货"} message={"请收到货确认无误以后确认收货"} />
+                <Toast ref={o => this.refToast = o} position={'center'}/>
             </View>
         );
     }

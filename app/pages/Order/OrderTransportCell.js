@@ -8,14 +8,7 @@ import {
     TouchableHighlight,
     TouchableOpacity,
 } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import VDashLine from '../../components/VDashLine'
-
-const Font = {
-    Ionicons,
-    FontAwesome
-};
 
 type Props = {
     info: Object,
@@ -35,7 +28,7 @@ export default class OrderTransportCell extends Component {
         let {showLast} = this.props;
         let selected = true;
         let create_time = info.create_timetext.split(" ");
-        const Icon = Font["Ionicons"];
+        const Icon = appFont["Ionicons"];
         return (
             <View style={styles.cellContainer}>
                 <View style={styles.leftTime}>

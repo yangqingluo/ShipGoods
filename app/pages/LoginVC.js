@@ -26,7 +26,7 @@ const checkNum = (num) => {
             return num;
         }
     }
-}
+};
 
 export default class LoginVC extends Component {
     static propTypes = {
@@ -36,7 +36,7 @@ export default class LoginVC extends Component {
     };
 
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             phoneNum: "",
             password: "",

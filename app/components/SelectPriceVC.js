@@ -9,14 +9,6 @@ import {
     View,
     TouchableOpacity
 } from "react-native";
-import px2dp from "../util";
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
-
-const Font = {
-    Ionicons,
-    FontAwesome
-};
 
 export default class SelectPriceVC extends Component {
     static navigationOptions = ({ navigation }) => (
@@ -54,7 +46,7 @@ export default class SelectPriceVC extends Component {
     }
 
     render() {
-        const Icon = Font["Ionicons"];
+        const Icon = appFont["Ionicons"];
         let textColor = (this.state.is_bargain === 1) ? appData.appBlueColor:appData.appThirdTextColor;
         return (
             <View style={appStyles.container}>

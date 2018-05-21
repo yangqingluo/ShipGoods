@@ -11,7 +11,13 @@ import NetUtil from './NetUtil'
 import {NavigationActions} from "react-navigation";
 import DeviceInfo from 'react-native-device-info';
 import px2dp from "./index";
-const {width,height}=Dimensions.get('window')
+const {width,height}=Dimensions.get('window');
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+const Font = {
+    Ionicons,
+    FontAwesome
+};
 
 
 Date.prototype.pattern=function(fmt) {
@@ -174,9 +180,11 @@ let appData = {
     appFontWeightSemibold: '400',
     appFontWeightMedium:'800',
 
+    appClearColor: '#fff0',
     appBlueColor: '#2c9bfd',
     appLightBlueColor: "#54b2ff",
     appLittleBlueColor: "#7dd3ff",
+    appDeepGrayColor: '#d8d8d8',
     appGrayColor: '#f7f7f7',
     appRedColor: '#ff4848',
     appYellowColor: '#f09340',
@@ -228,11 +236,14 @@ let OrderBtnEnum = {
     CheckTransport: 2,//查看货运
     JudgeOrder: 3,//去评价
     JudgeCheck: 4,//查看评价
+    EditTransport: 5,//编辑货运
+    Transporting: 6,//正在运输
 };
 
 global.appStyles = appStyles;
 global.appData = appData;
 global.OrderBtnEnum = OrderBtnEnum;
+global.appFont = Font;
 global.appUrl = 'http://shiphire.com.cn/';//服务器url
 global.appUndefined =  'undefined';
 global.NetUtil = NetUtil;

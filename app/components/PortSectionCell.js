@@ -6,14 +6,6 @@ import {
     CheckBox,
     TouchableOpacity
 } from 'react-native';
-import px2dp from "../util";
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
-
-const Font = {
-    Ionicons,
-    FontAwesome
-}
 
 type Props = {
     info: Object,
@@ -24,17 +16,17 @@ type Props = {
 export default class PortSectionCell extends PureComponent<Props> {
 
     render() {
-        let {info, selected} = this.props
-        const Icon = Font["Ionicons"]
+        let {info, selected} = this.props;
+        const Icon = appFont["Ionicons"];
         return (
             <TouchableOpacity style={styles.container} onPress={() => this.props.onPress(info)}>
-                <View style={{marginTop:0, height:px2dp(0.5),backgroundColor:appData.appSeparatorColor}}/>
+                <View style={{marginTop:0, height:0.5,backgroundColor:appData.appSeparatorColor}}/>
                 <View style={{flex:1, flexDirection: 'row', alignItems: "center"}}>
                     <View style={styles.rightContainer}>
                         <Text style={{marginLeft:10, color: appData.appSecondaryTextColor}}>{info.section.port_name}</Text>
                     </View>
                 </View>
-                <View style={{marginBottom:0, height:px2dp(0.5),backgroundColor:appData.appSeparatorColor}}/>
+                <View style={{marginBottom:0, height:0.5,backgroundColor:appData.appSeparatorColor}}/>
             </TouchableOpacity>
 
         )
@@ -49,7 +41,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0,
         borderColor: appData.appBorderColor,
         backgroundColor: 'white',
-        minHeight:px2dp(40),
+        minHeight:40,
     },
     icon: {
         width: 80,

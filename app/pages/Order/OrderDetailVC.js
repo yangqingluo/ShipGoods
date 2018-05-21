@@ -6,14 +6,28 @@ import {
     View,
     ScrollView,
     RefreshControl,
+    ActivityIndicator,
     TouchableOpacity
 } from 'react-native';
 import CustomItem from '../../components/CustomItem';
 import Communications from "../../util/AKCommunications";
+import DashLine from '../../components/DashLine';
+import CustomAlert from '../../components/CustomAlert';
+import Toast from 'react-native-easy-toast';
+import ActionSheet from 'react-native-actionsheet';
+
+const Icon = appFont["Ionicons"];
 
 export default class OrderJudgementVC extends Component {
     static navigationOptions = ({ navigation }) => ({
-        title: "订单详情"
+        title: "订单详情",
+        headerRight: (!isShipOwner() && navigation.state.params.order_state === '0') ?
+            <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
+                <TouchableOpacity onPress={navigation.state.params.clickMoreBtn} style={{minWidth:40}}>
+                    <Icon name={'ios-more'} size={30} color={appData.appLightTextColor}/>
+                </TouchableOpacity>
+            </View>
+            : null
     });
 
     constructor(props){
@@ -22,6 +36,7 @@ export default class OrderJudgementVC extends Component {
             detailInfo: this.props.navigation.state.params.info,
             transportInfo: null,
             refreshing: false,
+            refreshingTransport: false,
         };
         this.config = [
             {idKey:"ship_name",name:"船名"},
@@ -42,11 +57,16 @@ export default class OrderJudgementVC extends Component {
 
     componentDidMount() {
         this.requestData();
+        this.props.navigation.setParams({clickMoreBtn:this.moreBtnClick});
     }
 
     requestData = () => {
-        this.setState({refreshing: true});
+        this.setState({
+            refreshing: true,
+            refreshingTransport: true,
+        });
         this.requestRecommend(true);
+        this.requestTransport();
     };
 
     requestRecommend = async (isReset) => {
@@ -83,20 +103,80 @@ export default class OrderJudgementVC extends Component {
                     if (result.code === 0) {
                         this.setState({
                             transportInfo: result.data,
-                            // refreshing: false,
+                            refreshingTransport: false,
                         })
                     }
                     else {
-                        // this.setState({
-                        //     refreshing: false,
-                        // })
+                        this.setState({
+                            refreshingTransport: false,
+                        })
                     }
                 },(error)=>{
-                    // this.setState({
-                    //     refreshing: false,
-                    // })
+                    this.setState({
+                        refreshingTransport: false,
+                    })
                 });
     };
+
+    toCollectGoods(info) {
+        this.refSelectAlert.hide();
+        let data = {
+            or_id: info.or_id,
+        };
+
+        NetUtil.post(appUrl + 'index.php/Mobile/Order/change_order_state/', data)
+            .then(
+                (result)=>{
+                    this.refToast.show(result.message);
+                    if (result.code === 0) {
+                        this.props.navigation.setParams({
+                            order_state: '1',
+                        });
+                        this.requestData();
+                    }
+                    // else {
+                    //     this.refToast.show(result.message);
+                    // }
+                },(error)=>{
+                    this.refToast.show(error);
+                });
+    };
+
+    toCloseOrder() {
+        this.refCloseOrderAlert.hide();
+        let data = {
+            or_id: this.state.detailInfo.or_id,
+        };
+
+        NetUtil.post(appUrl + 'index.php/Mobile/Order/close_order/', data)
+            .then(
+                (result)=>{
+                    if (result.code === 0) {
+                        PublicAlert(result.message, '订单已关闭',
+                            [{text:"确定", onPress:this.goBack.bind(this)}]
+                        );
+                    }
+                    else {
+                        this.refToast.show(result.message);
+                    }
+                },(error)=>{
+                    this.refToast.show(error);
+                });
+    }
+
+    goBack() {
+        this.props.navigation.goBack();
+    }
+
+    moreBtnClick=()=> {
+        this.refActionSheet.show();
+    };
+
+    onSelectCloseOrderType(index) {
+        if (index === 1) {
+            this.refCloseOrderAlert.show({onSureBtnAction:this.toCloseOrder.bind(this)});
+        }
+    }
 
     cellSelected = (key, data = {}) =>{
         let {detailInfo} = this.state;
@@ -127,23 +207,94 @@ export default class OrderJudgementVC extends Component {
                     });
                 break;
 
+            case OrderBtnEnum.CheckTransport:
+            case OrderBtnEnum.EditTransport:
+                this.props.navigation.navigate('OrderTransport',
+                    {
+                        info: detailInfo,
+                        tag: tag,
+                    });
+                break;
+
+            case OrderBtnEnum.CollectGoods:
+                this.refSelectAlert.show({onSureBtnAction:this.toCollectGoods.bind(this, detailInfo)});
+                break;
+
             default:
-                PublicAlert(tag + JSON.stringify(info));
+                PublicAlert(tag + JSON.stringify(detailInfo));
                 break;
         }
 
     };
 
     onTransportTextAction = () => {
-        PublicAlert("请选择");
+        this.requestData();
     };
 
     _renderTransport() {
-        let {detailInfo, transportInfo} = this.state;
+        let {detailInfo, transportInfo, refreshingTransport} = this.state;
+        if (refreshingTransport) {
+            return (
+                <View>
+                    <View style={styles.transportTop} />
+                    <View style={styles.noTransportContainer}>
+                        <ActivityIndicator />
+                    </View>
+                </View>
+            );
+        }
+
+        if (objectNotNull(transportInfo)) {
+            let radius = 16;
+            let len = (screenWidth - 26 * 2 - radius * 4) / 3 /appData.appDashWidth;
+            let state = parseInt(transportInfo.trans_state);
+            let color1 = state >= 1 ? appData.appBlueColor : appData.appDeepGrayColor;
+            let color5 = state >= 5 ? appData.appBlueColor : appData.appDeepGrayColor;
+            let color6 = state >= 6 ? appData.appBlueColor : appData.appDeepGrayColor;
+            let color10 = state >= 10 ? appData.appBlueColor : appData.appDeepGrayColor;
+            let remark = transportInfo.trans_remark;
+            if (objectNotNull(transportInfo.translist)) {
+                if (state > 0 && state <= transportInfo.translist.length) {
+                    let trans = transportInfo.translist[state];
+                    if (objectNotNull(trans)) {
+                        remark = trans.remark;
+                    }
+                }
+            }
+
+            return (
+                <View>
+                    <View style={styles.transportTop} />
+                    <View style={styles.transportContainer}>
+                        <View style={{marginTop:11, flexDirection: 'row'}}>
+                            <Text style={{flex:1, fontSize:12, textAlign:'center', color:color5}}>{"灌溉发货"}</Text>
+                            <Text style={{flex:1, fontSize:12, textAlign:'center', color:color6}}>{"出海运输"}</Text>
+                            <Text style={{flex:1, fontSize:12, textAlign:'center', color:color10}}>{"交货完成"}</Text>
+                        </View>
+                        <View style={{width:screenWidth - 26 * 2, height:radius, flexDirection: 'row', alignItems: "center",}}>
+                            <Icon name={'ios-checkmark-circle'} size={radius} color={color1} />
+                            <DashLine backgroundColor={color5} len={len}/>
+                            <Icon name={'ios-checkmark-circle'} size={radius} color={color5} />
+                            <DashLine backgroundColor={color6} len={len}/>
+                            <Icon name={'ios-checkmark-circle'} size={radius} color={color6} />
+                            <DashLine backgroundColor={color10} len={len}/>
+                            <Icon name={'ios-checkmark-circle'} size={radius} color={color10} />
+                        </View>
+                        <View style={{flex:1, alignItems: "center", justifyContent: "center",}}>
+                            <Text style={{fontSize:10, textAlign:'center', color:'#838383'}}>{transportInfo.trans_remark}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.transportBottom}>
+                        <Image source={require('../../images/icon_word_hang.png')} style={{width: 19, height: 29, resizeMode: "stretch"}} />
+                        <Text style={{margin:15, fontSize:13, color:'#3f3f3f'}}>{transportInfo.trans_remark}</Text>
+                    </View>
+                </View>
+            );
+        }
         return (
             <View>
                 <View style={styles.transportTop} />
-                <View style={styles.transportContainer}>
+                <View style={styles.noTransportContainer}>
                     <Image source={require('../../images/icon_zanwu.png')} style={{width: 44, height: 44, resizeMode: "stretch"}} />
                     <Text style={{fontSize:13, marginLeft:15}}>
                         <Text style={{color:"#3f3f3f"}}>{"暂无货运详情，"}</Text>
@@ -180,12 +331,31 @@ export default class OrderJudgementVC extends Component {
 
     renderFooter() {
         let {detailInfo} = this.state;
-        if (isShipOwner()) {
-            return (
-                <View style={styles.footerContainer}>
-
-                </View>
-            );
+        if (detailInfo.order_state === '0') {
+            if (isShipOwner()) {
+                return (
+                    <View style={styles.footerContainer}>
+                        <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: '#dfdfdf', marginRight:10}]} onPress={this.onCellBottomBtnAction.bind(this, OrderBtnEnum.EditTransport)}>
+                            <Text style={{fontSize:16, color:'#3c3c3c'}}>{"编辑货运"}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: appData.appClearColor, marginRight:10}]} onPress={this.onCellBottomBtnAction.bind(this, OrderBtnEnum.Transporting)}>
+                            <Text style={{fontSize:16, color:appData.appBlueColor}}>{"正在运输"}</Text>
+                        </TouchableOpacity>
+                    </View>
+                );
+            }
+            else {
+                return (
+                    <View style={styles.footerContainer}>
+                        <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: '#dfdfdf', marginRight:10}]} onPress={this.onCellBottomBtnAction.bind(this, OrderBtnEnum.CheckTransport)}>
+                            <Text style={{fontSize:16, color:'#3c3c3c'}}>{"查看货运"}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: appData.appBlueColor}]} onPress={this.onCellBottomBtnAction.bind(this, OrderBtnEnum.CollectGoods)}>
+                            <Text style={{fontSize:16, color:appData.appBlueColor}}>{"确认收货"}</Text>
+                        </TouchableOpacity>
+                    </View>
+                );
+            }
         }
         else {
             return (
@@ -195,7 +365,7 @@ export default class OrderJudgementVC extends Component {
                         <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: appData.appBlueColor, marginRight:10}]} onPress={this.onCellBottomBtnAction.bind(this, OrderBtnEnum.JudgeCheck)}>
                             <Text style={{fontSize:16, color:appData.appBlueColor}}>{"查看评价"}</Text>
                         </TouchableOpacity>
-                    :
+                        :
                         <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: appData.appBlueColor, marginRight:10}]} onPress={this.onCellBottomBtnAction.bind(this, OrderBtnEnum.JudgeOrder)}>
                             <Text style={{fontSize:16, color:appData.appBlueColor}}>{"评价"}</Text>
                         </TouchableOpacity>}
@@ -301,6 +471,17 @@ export default class OrderJudgementVC extends Component {
                     <View style={{height: 80}}/>
                 </ScrollView>
                 {this.renderFooter()}
+                <ActionSheet
+                    ref={o => this.refActionSheet = o}
+                    title={'关闭订单'}
+                    options={['取消', '关闭订单']}
+                    cancelButtonIndex={0}
+                    destructiveButtonIndex={1}
+                    onPress={this.onSelectCloseOrderType.bind(this)}
+                />
+                <CustomAlert ref={o => this.refSelectAlert = o} title={"确认收货"} message={"请收到货确认无误以后确认收货"} />
+                <CustomAlert ref={o => this.refCloseOrderAlert = o} title={"关闭订单"} message={"请确认关闭订单"} />
+                <Toast ref={o => this.refToast = o} position={'center'}/>
             </View>
         );
     }
@@ -328,7 +509,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderTopWidth:1,
         borderTopColor:appData.appSeparatorColor,
-        paddingRight:0,
+        paddingRight: 10,
         alignItems: "center",
         justifyContent: "flex-end",
     },
@@ -354,6 +535,23 @@ const styles = StyleSheet.create({
         backgroundColor:appData.appBlueColor,
     },
     transportContainer: {
+        paddingHorizontal:16,
+        minHeight:74,
+        borderWidth:0.5,
+        borderColor:appData.appBorderColor,
+        backgroundColor: 'white',
+    },
+    transportBottom: {
+        marginTop:3,
+        paddingHorizontal:16,
+        minHeight: 61,
+        borderWidth:0.5,
+        borderColor:appData.appBorderColor,
+        backgroundColor: 'white',
+        alignItems: "center",
+        flexDirection: 'row',
+    },
+    noTransportContainer: {
         minHeight:74,
         borderWidth:0.5,
         borderColor:appData.appBorderColor,
