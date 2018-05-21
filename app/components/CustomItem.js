@@ -100,7 +100,6 @@ const styles = StyleSheet.create({
     listItem: {
         height: itemHeight,
         paddingLeft: 0,
-        // backgroundColor: "#fff",
         flexDirection: "row",
         // justifyContent: "center",
         alignItems: "center"
@@ -127,14 +126,11 @@ const styles = StyleSheet.create({
         fontSize: 14,
         paddingHorizontal: 10,
         color: appData.appTextColor,
-        // backgroundColor: '#fff',
     },
     textLabel: {
-        // flex: 1,
         paddingVertical: 0,
         fontSize: 14,
         paddingHorizontal: 10,
         color: appData.appTextColor,
-        // backgroundColor: '#fff',
     },
-})
+});

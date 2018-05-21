@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
     FlatList,
 } from 'react-native';
-import OrderCell, {BottomBtnEnum} from './OrderCell';
+import OrderCell from './OrderCell';
 import ListLoadFooter from '../../components/ListLoadFooter';
 import CustomAlert from '../../components/CustomAlert';
 
@@ -118,18 +118,19 @@ export default class OrderListVC extends Component {
 
     onCellBottomBtnAction = (info: Object, tag: number) => {
         switch (tag){
-            case BottomBtnEnum.CollectGoods:
+            case OrderBtnEnum.CollectGoods:
                 this.refSelectAlert.show({onSureBtnAction:this.toCollectGoods.bind(this, info)});
                 break;
 
-            case BottomBtnEnum.JudgeOrder:
+            case OrderBtnEnum.JudgeOrder:
+            case OrderBtnEnum.JudgeCheck:
                 this.props.navigation.navigate('OrderJudgement',
                     {
                         info: info,
                     });
                 break;
 
-            case BottomBtnEnum.CheckTransport:
+            case OrderBtnEnum.CheckTransport:
                 this.props.navigation.navigate('OrderTransport',
                     {
                         info: info,

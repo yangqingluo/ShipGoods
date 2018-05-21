@@ -10,14 +10,6 @@ import {
 } from 'react-native'
 import OrderCenterView from "../../components/OrderCenterView";
 
-export const BottomBtnEnum = {
-    Default: 0,
-    CollectGoods: 1,
-    CheckTransport: 2,
-    JudgeOrder: 3,
-
-};
-
 type Props = {
     info: Object,
     onPress: Function,
@@ -37,7 +29,7 @@ export default class HomeOrderCell extends Component {
         if (objectNotNull(info.iclose)) {
             if (info.iclose === '1') {
                 return <View style={styles.bottomContainer}>
-                    <TouchableOpacity style={[styles.btnContainer, {borderColor: '#dfdfdf', width: 102}]} onPress={() => this.props.onBottomBtnPress(info, BottomBtnEnum.Default)} disabled={true}>
+                    <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: '#dfdfdf', width: 102}]} onPress={() => this.props.onBottomBtnPress(info, OrderBtnEnum.Default)} disabled={true}>
                         <Text style={{fontSize:16, color:'#818181'}}>{"订单已关闭"}</Text>
                     </TouchableOpacity>
                 </View>;
@@ -45,19 +37,20 @@ export default class HomeOrderCell extends Component {
         }
 
         if (info.order_state === '1') {
+            let iscomment = commentIscomment(info.iscomment);
             return <View style={styles.bottomContainer}>
-                <TouchableOpacity style={[styles.btnContainer, {borderColor: appData.appBlueColor}]} onPress={() => this.props.onBottomBtnPress(info, BottomBtnEnum.JudgeOrder)}>
-                    <Text style={{fontSize:16, color:appData.appBlueColor}}>{"评价"}</Text>
+                <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: appData.appBlueColor}]} onPress={() => this.props.onBottomBtnPress(info, iscomment ? OrderBtnEnum.JudgeCheck : OrderBtnEnum.JudgeOrder)}>
+                    <Text style={{fontSize:16, color:appData.appBlueColor}}>{iscomment ? "查看评价" : "评价"}</Text>
                 </TouchableOpacity>
             </View>
         }
 
         return (
             <View style={styles.bottomContainer}>
-                <TouchableOpacity style={[styles.btnContainer, {borderColor: '#dfdfdf', marginRight:10}]} onPress={() => this.props.onBottomBtnPress(info, BottomBtnEnum.CheckTransport)}>
+                <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: '#dfdfdf', marginRight:10}]} onPress={() => this.props.onBottomBtnPress(info, OrderBtnEnum.CheckTransport)}>
                     <Text style={{fontSize:16, color:'#3c3c3c'}}>{"查看货运"}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.btnContainer, {borderColor: appData.appBlueColor}]} onPress={() => this.props.onBottomBtnPress(info, BottomBtnEnum.CollectGoods)}>
+                <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: appData.appBlueColor}]} onPress={() => this.props.onBottomBtnPress(info, OrderBtnEnum.CollectGoods)}>
                     <Text style={{fontSize:16, color:appData.appBlueColor}}>{"确认收货"}</Text>
                 </TouchableOpacity>
             </View>
@@ -109,14 +102,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: "center",
         justifyContent: "flex-end",
-    },
-    btnContainer:{
-        width: 91,
-        height: 33,
-        justifyContent: "center",
-        alignItems: "center",
-        borderRadius: 100,
-        borderWidth: 1,
     },
 });
 

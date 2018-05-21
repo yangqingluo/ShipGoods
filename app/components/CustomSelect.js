@@ -91,7 +91,7 @@ export default class CustomSelect extends Component {
             }
         }
         this.forceUpdate();
-    }
+    };
 
     renderCell = (info: Object) => {
         return (
@@ -101,11 +101,11 @@ export default class CustomSelect extends Component {
                 selected={this.state.selectedList.indexOf(info.item) !== -1}
             />
         )
-    }
+    };
 
     keyExtractor = (item: Object, index: number) => {
         return '' + index;
-    }
+    };
 
     render() {
         return (

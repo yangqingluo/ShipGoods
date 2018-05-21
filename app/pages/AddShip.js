@@ -35,7 +35,7 @@ export default class AddShip extends Component {
             goodsList: [],
 
             ship_licence_source: null,
-        }
+        };
         this.config = [
             {idKey:"ship_name", name:"船名", logo:require('../images/icon_blue.png'), disable:true},
             {idKey:"tonnage", name:"吨位", logo:require('../images/icon_red.png'), disable:true},
@@ -45,7 +45,7 @@ export default class AddShip extends Component {
             {idKey:"dieseloil", name:"可载柴油吨位（选填）", logo:require('../images/icon_red.png'), disable:true},
             {name:"航行区域", logo:require('../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "area")},
             {idKey:"ship_licence", name:"船舶国际证书", logo:require('../images/icon_blue.png'), disable:false, subName:"", onPress:this.cellSelected.bind(this, "ship_licence")},
-        ]
+        ];
 
         this.areaTypes = global.shipAreaTypes;
     }

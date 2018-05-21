@@ -212,10 +212,27 @@ let appStyles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
+    orderBtnContainer:{
+        width: 91,
+        height: 33,
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 100,
+        borderWidth: 1,
+    },
 });
+
+let OrderBtnEnum = {
+    Default: 0,
+    CollectGoods: 1,//收货
+    CheckTransport: 2,//查看货运
+    JudgeOrder: 3,//去评价
+    JudgeCheck: 4,//查看评价
+};
 
 global.appStyles = appStyles;
 global.appData = appData;
+global.OrderBtnEnum = OrderBtnEnum;
 global.appUrl = 'http://shiphire.com.cn/';//服务器url
 global.appUndefined =  'undefined';
 global.NetUtil = NetUtil;
@@ -298,6 +315,10 @@ global.isShipOwner = function() : boolean {
 
 global.offerIsOffer = function(is_offer) : boolean {
     return (is_offer === '1');
+};
+
+global.commentIscomment = function(iscomment) : boolean {
+    return (iscomment === '11');
 };
 
 global.offerIsBargain = function(info) : boolean {
