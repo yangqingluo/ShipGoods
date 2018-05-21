@@ -4,6 +4,8 @@ import {
     Text,
     TextInput,
     View,
+    ScrollView,
+    RefreshControl,
     Image,
     FlatList,
     TouchableOpacity
@@ -12,7 +14,7 @@ import OrderTransportCell from './OrderTransportCell'
 
 export default class OrderJudgementVC extends Component {
     static navigationOptions = ({ navigation }) => ({
-        title: "货运详情"
+        title: "订单详情"
     });
 
     constructor(props){
@@ -78,6 +80,7 @@ export default class OrderJudgementVC extends Component {
 
     renderHeader() {
         let {detailInfo} = this.state;
+
         return (
             <View>
                 <View style={styles.headerContainer}>
@@ -104,18 +107,16 @@ export default class OrderJudgementVC extends Component {
         let shipOwner = isShipOwner();
         return (
             <View style={styles.container}>
-                <FlatList
-                    style={{flex:1}}
-                    data={detailInfo.translist}
-                    renderItem={this.renderCell}
-
-                    keyExtractor={this.keyExtractor}
-                    // ItemSeparatorComponent={global.renderSeparator}
-                    ListHeaderComponent={this.renderHeader.bind(this)}
-
-                    onRefresh={this.requestData.bind(this)}
-                    refreshing={this.state.refreshing}
-                />
+                <ScrollView style={{flex: 1, backgroundColor:'#fff'}}
+                            refreshControl={
+                                <RefreshControl
+                                    onRefresh={this.requestData.bind(this)}
+                                    refreshing={this.state.refreshing}
+                                />
+                            }
+                >
+                    {this.renderHeader()}
+                </ScrollView>
             </View>
         );
     }
@@ -133,7 +134,6 @@ const styles = StyleSheet.create({
         borderColor:appData.appBorderColor,
         flexDirection: 'row',
         paddingTop:20,
-        // alignItems: "center",
     },
     headerText: {
         flex:1,

@@ -110,7 +110,10 @@ export default class OrderListVC extends Component {
     };
 
     onCellSelected = (info: Object) => {
-
+        this.props.navigation.navigate('OrderDetail',
+            {
+                info: info.item,
+            });
     };
 
     onCellBottomBtnAction = (info: Object, tag: number) => {
