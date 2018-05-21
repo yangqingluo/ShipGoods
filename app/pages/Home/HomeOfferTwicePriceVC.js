@@ -7,12 +7,15 @@ import {
     View,
     TextInput,
     ScrollView,
+    RefreshControl,
     TouchableOpacity
 } from 'react-native';
 import DashLine from '../../components/DashLine';
 import CustomItem from '../../components/CustomItem';
 import StarScore from '../../components/StarScore';
 import Communications from '../../util/AKCommunications';
+import CustomAlert from '../../components/CustomAlert';
+import Toast from "react-native-easy-toast";
 
 
 export default class HomeOfferTwicePriceVC extends Component {
@@ -80,6 +83,35 @@ export default class HomeOfferTwicePriceVC extends Component {
                 });
     };
 
+    toChangePrice() {
+        let message = this.refChangePriceAlert.state.text;
+        this.refChangePriceAlert.hide();
+        if (message.length > 0) {
+            let price = parseFloat(message);
+            let data = {
+                book_id: this.state.detailInfo.book_id,
+                offer: price,
+            };
+
+            NetUtil.post(appUrl + 'index.php/Mobile/Task/update_book_good/', data)
+                .then(
+                    (result)=>{
+                        if (result.code === 0) {
+                            this.refToast.show('修改报价完成');
+                            this.requestData();
+                        }
+                        else {
+                            this.refToast.show(result.message);
+                        }
+                    },(error)=>{
+                        this.refToast.show(error);
+                    });
+        }
+        else {
+            this.refToast.show("报价不能为空.");
+        }
+    }
+
     // onFavorBtnAction = () => {
     //     this.props.navigation.setParams({
     //         favor: true,
@@ -87,12 +119,8 @@ export default class HomeOfferTwicePriceVC extends Component {
     // };
 
     onSubmitBtnAction = () => {
-        // //修改报价
-        // this.props.navigation.navigate('HomeOfferPrice',
-        //     {
-        //         title: "报价",
-        //         info: this.state.detailInfo,
-        //     });
+        //修改报价
+        this.refChangePriceAlert.show({text:'', onSureBtnAction:this.toChangePrice.bind(this)});
     };
 
     cellSelected = (key, data = {}) =>{
@@ -223,8 +251,12 @@ export default class HomeOfferTwicePriceVC extends Component {
         return (
             <View style={appStyles.container}>
                 <ScrollView style={{flex: 1, backgroundColor:'#fff'}}
-                            onRefresh={this.requestData}
-                            refreshing={this.state.refreshing}
+                            refreshControl={
+                                <RefreshControl
+                                    onRefresh={this.requestData.bind(this)}
+                                    refreshing={this.state.refreshing}
+                                />
+                            }
                 >
                     <View style={{height: 47, flexDirection: 'row', alignItems: "center", justifyContent: "space-between",}}>
                         <View style={{flexDirection: 'row'}}>
@@ -271,6 +303,8 @@ export default class HomeOfferTwicePriceVC extends Component {
                     </TouchableOpacity>
                     <Text style={{marginTop:12, color: "#4a4a4aad", fontSize: 13}}>{"报价最多可修改2次"}</Text>
                 </View>
+                <Toast ref={o => this.refToast = o} position={'center'}/>
+                <CustomAlert ref={o => this.refChangePriceAlert = o} showTextInput={true} numeric={true} placeholder={"修改报价："}/>
             </View> );
     }
 }

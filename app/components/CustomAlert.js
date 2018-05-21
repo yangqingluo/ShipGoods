@@ -77,7 +77,7 @@ export default class CustomAlert extends Component {
     }
 
     render() {
-        let {title, message, placeholder, showTextInput} = this.props;
+        let {title, message, placeholder, showTextInput, numeric} = this.props;
         return (<Modal
                 animationType={this.state.animationType}
                 transparent={this.state.transparent}
@@ -91,6 +91,7 @@ export default class CustomAlert extends Component {
                                 {title ? <Text style={styles.modalTitle}>{title}</Text> : null}
                                 {message ? <Text style={styles.modalMessage}>{message}</Text> : null}
                                 {showTextInput ? <TextInput underlineColorAndroid="transparent"
+                                                            keyboardType={numeric ? "numeric" : "default"}
                                                             style={styles.textInput}
                                                             multiline={true}
                                                             placeholder={placeholder}
