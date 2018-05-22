@@ -13,6 +13,7 @@ import DashLine from '../../components/DashLine';
 import CustomItem from '../../components/CustomItem';
 import StarScore from '../../components/StarScore';
 import Communications from '../../util/AKCommunications';
+import Toast from 'react-native-easy-toast';
 import px2dp from "../../util";
 
 
@@ -38,7 +39,7 @@ class RightHeader extends Component {
         return (
             <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
                 <TouchableOpacity onPress={this.onFavorBtnPress.bind(this)} style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
-                    <Image source={require('../../images/navbar_icon_like.png')} style={{tintColor: favor ? 'red' : null, width: 22, height: 19, marginRight : 10, marginLeft : 10, resizeMode: "cover"}}/>
+                    <Image source={favor ? require('../../images/navbar_icon_like_selected.png') : require('../../images/navbar_icon_like.png')} style={{width: 22, height: 19, marginRight : 10, marginLeft : 10, resizeMode: "cover"}}/>
                 </TouchableOpacity>
             </View>
         )
@@ -90,7 +91,8 @@ export default class HomeShipDetailVC extends Component {
                         this.setState({
                             detailInfo: result.data,
                             refreshing: false,
-                        })
+                        });
+                        this.refreshFavor();
                     }
                     else {
                         this.setState({
@@ -108,10 +110,28 @@ export default class HomeShipDetailVC extends Component {
         return (this.state.detailInfo.state === '1');
     };
 
-    onFavorBtnAction = () => {
+    refreshFavor() {
         this.props.navigation.setParams({
-            favor: true,
+            favor: itemIsFavor(this.state.detailInfo.iscollect),
         });
+    }
+
+    onFavorBtnAction = () => {
+        let data = {task_id: this.state.info.task_id};
+
+        NetUtil.post(appUrl + 'index.php/Mobile/Task/change_collection/', data)
+            .then(
+                (result)=>{
+                    if (result.code === 0) {
+                        this.refToast.show(result.message);
+                        this.requestData();
+                    }
+                    else {
+                        this.refToast.show(result.message);
+                    }
+                },(error)=>{
+                    this.refToast.show(error);
+                });
     };
 
     onSubmitBtnAction = () => {
@@ -255,6 +275,7 @@ export default class HomeShipDetailVC extends Component {
                         </View>
                     </TouchableOpacity>
                 </View>}
+                <Toast ref={o => this.refToast = o} position={'center'}/>
             </View> );
     }
 }
