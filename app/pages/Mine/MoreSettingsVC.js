@@ -23,6 +23,7 @@ export default class MoreSettingsVC extends Component {
             {name:"建议与反馈", onPress:this.cellSelected.bind(this, "Suggestion")},
         ];
     }
+
     cellSelected(key, data = {}) {
         dismissKeyboard();
         if (key === "Help") {
@@ -38,6 +39,9 @@ export default class MoreSettingsVC extends Component {
                     title: "关于我们",
                     uri: appUrl + '/shiphire/Us/Index',
                 });
+        }
+        else if (key === "ChangePwd" || key === "ChangeContact" ) {
+            this.props.navigation.navigate(key);
         }
         else if (key === "Logout") {
             this.refLogoutActionSheet.show();

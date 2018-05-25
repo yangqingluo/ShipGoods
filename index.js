@@ -36,6 +36,8 @@ import OrderDetailVC from './app/pages/Order/OrderDetailVC';
 
 import MoreSettingsVC from './app/pages/Mine/MoreSettingsVC';
 import MyFavorsVC from './app/pages/Mine/MyFavorsVC';
+import ChangeContactVC from './app/pages/Mine/ChangeContactVC';
+import ChangePasswordVC from './app/pages/Mine/ChangePasswordVC';
 
 
 const MyNavigator = StackNavigator({
@@ -71,6 +73,8 @@ const MyNavigator = StackNavigator({
 
         MoreSettings:{screen:MoreSettingsVC},
         MyFavors:{screen:MyFavorsVC},
+        ChangeContact:{screen:ChangeContactVC},
+        ChangePwd:{screen:ChangePasswordVC},
 
     }
     , {
