@@ -6,16 +6,15 @@ import {
     Image,
     ImageBackground,
     Text,
-    TextInput,
     View,
     StyleSheet,
     TouchableOpacity,
     Picker,
 } from 'react-native'
 
-import PropTypes from 'prop-types';
-import Toast, {DURATION} from 'react-native-easy-toast';
-import px2dp from "../util";
+import CustomTextInput from '../components/CustomTextInput'
+import ActionSheet from 'react-native-actionsheet'
+import Toast from 'react-native-easy-toast';
 
 const checkNum = (num) => {
     if(num) {
@@ -28,58 +27,55 @@ const checkNum = (num) => {
         }
         
     }
-    
-}
+};
 
-class Register extends Component {
-    static propTypes = {
-            // sendChkCode: PropTypes.string,
-            // phoneNumPlh: PropTypes.string,
-            ispassword: PropTypes.bool
-        }
-
-    static defaultProps = {
-        role: '选择用户角色',
-    }
+export default class Register extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             phoneNum: "",
             chkCode: "",
             password: "",
-            usertype: "2",
+            usertype: 0,
             sendChk: "发送验证码",
 
             ispassword: true,
-        }
+            isShowSelectRole: false,
+        };
+
+        this.roleTypes = ['取消', '我是货主', '我是船主'];
     }
 
     static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: null,
         }
-    }
+    };
 
     goBack() {
         this.props.navigation.goBack();
     }
 
     onCfmButtonPress = () => {
-        if (!judgeMobilePhone(this.state.phoneNum)) {
+        let {phoneNum, chkCode, password, usertype} = this.state;
+        if (!judgeMobilePhone(phoneNum)) {
             this.refs.toast.show("请输入正确的手机号");
         }
-        else if (!judgeVerifyCode(this.state.chkCode)) {
+        else if (!judgeVerifyCode(chkCode)) {
             this.refs.toast.show("请输入正确的验证码");
         }
-        else if (!judgePassword(this.state.password)) {
+        else if (!judgePassword(password)) {
             this.refs.toast.show("请输入正确长度的密码");
+        }
+        else if (usertype === 0) {
+            this.refs.toast.show("请选择用户角色");
         }
         else {
             let data = {
-                mobile: this.state.phoneNum,
-                code: this.state.chkCode,
-                password: this.state.password,
-                usertype: this.state.usertype
+                mobile: phoneNum,
+                code: chkCode,
+                password: password,
+                usertype: usertype
             };
 
             NetUtil.post(appUrl + 'index.php/Mobile/User/register/', data)
@@ -97,11 +93,11 @@ class Register extends Component {
                         this.refs.toast.show(error);
                     });
         }
-    }
+    };
     
     onBackBtnPress = () => {
         this.props.navigation.goBack();
-    }
+    };
     
     onSendChkCodeBtnPress = () => {
         if (this.state.sendChk === "发送验证码") {
@@ -128,7 +124,7 @@ class Register extends Component {
                 this.refs.toast.show("请输入正确的手机号码");
             }
         }
-    }
+    };
 
     onEyeBtnPress = () => {
         if (this.state.ispassword) {
@@ -140,19 +136,33 @@ class Register extends Component {
                 ispassword: true,
             })
         }
+    };
+
+    onRoleBtnAction() {
+        this.setState({
+            isShowSelectRole: true,
+        });
+        this.refRoleTypeActionSheet.show();
     }
 
-    onRolePickeValueChanged = (myRole) => {
-        this.setState({ usertype: myRole })
+    onSelectRoleType(index) {
+        this.setState({
+            isShowSelectRole: false,
+        });
+        if (index > 0) {
+            this.setState({
+                usertype: index
+            });
+        }
     }
 
     chkCodeCount = () => {
         that = this;
         chkCodeCountInt = setInterval(function () {
-            var sendChkSelf = that.state.sendChk;
+            let sendChkSelf = that.state.sendChk;
 
 
-            var count = 60;
+            let count = 60;
             if (sendChkSelf === "发送验证码"){
 
                 sendChkSelf = count;
@@ -178,90 +188,77 @@ class Register extends Component {
             }
             
         }, 1000);
-    }
-
+    };
 
     render() {
-        var { style } = this.props
+        let {phoneNum, chkCode, password, usertype, ispassword, isShowSelectRole} = this.state;
+        let selectedRole = (usertype === 0);
         return (
             <View style={styles.container} onPress={dismissKeyboard}>
                 <Image style={styles.img} source={require('../images/role.png')} />
 
-                <View style={styles.wrapper}>
-                    <View style={styles.txtBorder}>
-                        <TextInput
-                            keyboardType={'numeric'}
-                            underlineColorAndroid={'transparent'}
-                            style={styles.textInput}
-                            placeholder={'请输入手机号'}
-                            onChangeText={(text) => {
-                                this.setState({
-                                    phoneNum : checkNum(text)
-                                })
-                            }}
-                            value={this.state.phoneNum}
-                        />
-                        <Text 
-                            style={styles.sendChk}
-                            onPress={this.onSendChkCodeBtnPress}
-                        >{this.state.sendChk.length === 5 ? this.state.sendChk : '              ' + this.state.sendChk}</Text>
-                    </View>
-                </View>
-                
-                <View style={styles.wrapper}>
-                    <View style={styles.txtBorder}>
-                        <TextInput
-                            keyboardType={'numeric'}
-                            underlineColorAndroid={'transparent'}
-                            style={styles.textInput}
-                            placeholder={'请输入验证码'}
-                            onChangeText={(text) => {
-                                this.setState({
-                                    chkCode: text
-                                })
-                            }}
-                            value={this.state.chkCode}
-                        />
-                    </View>
+                <View style={styles.txtBorder}>
+                    <CustomTextInput
+                        keyboardType={'numeric'}
+                        underlineColorAndroid={'transparent'}
+                        style={styles.textInput}
+                        placeholder={'请输入手机号'}
+                        maxLength={appData.appMaxLengthPhone}
+                        onChangeText={(text) => {
+                            this.setState({
+                                phoneNum : checkNum(text)
+                            })
+                        }}
+                        value={phoneNum}
+                    />
+                    <Text style={styles.sendChk} onPress={this.onSendChkCodeBtnPress}
+                    >{this.state.sendChk.length === 5 ? this.state.sendChk : '              ' + this.state.sendChk}</Text>
                 </View>
 
-                <View style={styles.wrapper}>
-                    <View style={styles.txtBorder}>
-
-                        <TextInput
-                            underlineColorAndroid={'transparent'}
-                            style={styles.textInput}
-                            multiline={false}
-                            placeholder={'请设置密码'}
-                            secureTextEntry ={this.state.ispassword}
-                            onChangeText={(text) => {
-                                this.setState({
-                                    password: text
-                                })
-                            }}
-                            value={this.state.password}
-                        />
-                        <TouchableOpacity style={styles.eyeImgWrap} onPress={this.onEyeBtnPress}>
-                            {
-                                this.state.ispassword ?
-                                    <Image style={styles.eyeImg} source={require('../images/eye-close.png')} />
-                                    : <Image style={styles.eyeImg} source={require('../images/eye-open.png')} />
-                            }
-                        </TouchableOpacity>
-                    </View>
+                <View style={styles.txtBorder}>
+                    <CustomTextInput
+                        keyboardType={'numeric'}
+                        underlineColorAndroid={'transparent'}
+                        style={styles.textInput}
+                        placeholder={'请输入验证码'}
+                        maxLength={appData.appMaxLengthVerifyCode}
+                        onChangeText={(text) => {
+                            this.setState({
+                                chkCode: text
+                            })
+                        }}
+                        value={chkCode}
+                    />
                 </View>
 
-                <View style={styles.wrapper}>
-                    <View style={styles.rolePicker}>
-                        <Picker
-                            mode= {"dropdown"}
-                            selectedValue={this.state.usertype}
-                            onValueChange={this.onRolePickeValueChanged.bind(this)}>
-                            <Picker.Item label="我是船主" value="2" />
-                            <Picker.Item label="我是货主" value="1" />
-                        </Picker>
-                    </View>
+                <View style={styles.txtBorder}>
+                    <CustomTextInput
+                        underlineColorAndroid={'transparent'}
+                        style={styles.textInput}
+                        multiline={false}
+                        placeholder={'请设置密码'}
+                        secureTextEntry ={this.state.ispassword}
+                        maxLength={appData.appMaxLengthPassword}
+                        onChangeText={(text) => {
+                            this.setState({
+                                password: text
+                            })
+                        }}
+                        value={password}
+                    />
+                    <TouchableOpacity style={styles.eyeImgWrap} onPress={this.onEyeBtnPress}>
+                        {<Image style={styles.eyeImg} source={ispassword ? require('../images/eye-close.png') : require('../images/eye-open.png')} />}
+                    </TouchableOpacity>
                 </View>
+
+                <TouchableOpacity style={styles.txtBorder} onPress={this.onRoleBtnAction.bind(this)}>
+                    <View style={{flex:1, alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between'}}>
+                        <Text style={{color:selectedRole ? appData.appLightGrayColor: appData.appTextColor}}>
+                            {selectedRole ? '请选择用户角色' : this.roleTypes[usertype]}
+                        </Text>
+                        <appFont.Ionicons style={{marginLeft: 10, paddingRight: 14}} name={isShowSelectRole?"ios-arrow-up-outline":"ios-arrow-down-outline"} size={16} color={"#afafaf"} />
+                    </View>
+                </TouchableOpacity>
 
                 <TouchableOpacity style={styles.cfmButton} onPress={this.onCfmButtonPress}>
                     <ImageBackground style={styles.cfmButtonImage} source={require('../images/button_login.png')}>
@@ -272,27 +269,24 @@ class Register extends Component {
                 </TouchableOpacity>
 
                 <View style={styles.backBtn}>
-                    <Text>
-                        or
-                    </Text>
-                    <Text 
-                        style={styles.backTxt}
-                        onPress={this.onBackBtnPress}
-                        >
-                        返回登录
-                    </Text>
+                    <Text>or</Text>
+                    <Text style={styles.backTxt} onPress={this.onBackBtnPress}>返回登录</Text>
                 </View>
+                <ActionSheet
+                    ref={o => this.refRoleTypeActionSheet = o}
+                    title={'请选择用户角色'}
+                    options={this.roleTypes}
+                    cancelButtonIndex={0}
+                    // destructiveButtonIndex={1}
+                    onPress={this.onSelectRoleType.bind(this)}
+                />
                 <Toast ref="toast" position={'center'}/>
             </View >
         )
     }
-    getValue() {
-        return this.state.txtValue
-    }
 }
 
 const styles = StyleSheet.create({
-    
     container: {
         flex: 1,
         alignItems: 'center',
@@ -304,130 +298,77 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
     },
-    wrapper: {
-        flexDirection: 'row',
-        //backgroundColor: '#ff0',
-        //justifyContent: 'flex-end',
-        //justifyContent: 'space-between',
-        //justifyContent: 'space-around',
-        //alignSelf: 'center',
-        //alignItems: 'flex-end',
-    },
     txtBorder: {
         height: 40,
-        flex: 1,
         borderBottomWidth: 1,
         borderColor: '#999',
         marginLeft: 50,
         marginRight: 50,
         flexDirection: 'row',
-        //backgroundColor: '#0ff',
-
-        justifyContent: 'space-between',
+        // justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingTop: 10,
     },
     textInput: {
-        height: 50,
-        //width: 200
         flex: 1,
-        //backgroundColor: '#0ff',
     },
     sendChk: {
-        //backgroundColor: '#ff0',
-        //flex: 1,
         height: 20,
         width: 80,
-        //justifyContent: 'space-between',
-        
-        //marginLeft: Platform.OS === 'ios' ? 20: -20,
-
-        //marginRight: 0,
-        fontSize: 15,
-        marginTop: 15,
+        fontSize: 14,
         color: '#999',
-        
     },
     eyeImgWrap: {
-        //marginLeft: Platform.OS === 'ios' ? 65 : 25,
-        //backgroundColor: '#ff0',
-        //marginRight: 0,
-        marginTop: 8,
         height: 30,
         width: 32,
-        //borderWidth: 1,
-        //backgroundColor: '#f00',
     },
     eyeImg: {
-        opacity: .6,
-        height: 30,
-        width: 30,
-        //marginLeft: 30,
-        //marginRight: 0,
-        //marginTop: 8,
-        //borderWidth: 1,
+        height: 24,
+        width: 24,
+        resizeMode: "stretch",
+        tintColor: "#afafaf",
     },
 
     cfmButton: {
-        //width:
-        marginTop: Platform.OS === 'ios' ? 60 : 160,
-        marginBottom: 0,
-        width: px2dp(137),
-        height: px2dp(59),
-        // backgroundColor: appData.appBlueColor,
-        // borderRadius: 20,
-        //borderWidth: 1,
+        width: 137,
+        height: 59,
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',
+        bottom: 60,
+        position: 'absolute',
     },
 
     cfmButtonImage: {
         flex: 1,
-        width: px2dp(137),
-        height: px2dp(59),
+        width: 137,
+        height: 59,
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',
     },
-
     cfmBtn: {
-        //width: 35,
         height: 40,
         fontSize: 15,
-        //alignItems: 'center',
-        // borderWidth:1,
-        //borderRadius: 20,
-        //backgroundColor: '#fff',
         marginTop: 10,
-        //borderWidth: 1,
         color: '#fff',
     },
     backBtn: {
         flexDirection: 'row',
-        marginTop: 15,
+        bottom: 20,
+        position: 'absolute',
     },
     backTxt: {
         color: appData.appBlueColor,
     },
-    
     rolePicker: {
         marginLeft: 50,
         marginRight: 50,
-        
-        marginBottom: Platform.OS === 'ios'? 120: 0,
-
         height: 40,
-        flex: 1,
-        //borderBottomWidth: 1,
+        width:200,
         borderColor: '#999',
-        //backgroundColor: '#999',
-        //color: '#999',
-        //opacity: .6,
-
-        //fontSize: 5,
     },
     btnText: {
         color: '#FFFFFF',
     },
-})
-
-module.exports = Register;
+});

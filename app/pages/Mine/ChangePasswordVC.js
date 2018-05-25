@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import {
     StyleSheet,
     Text,
+    TextInput,
     View,
+    ScrollView,
     TouchableOpacity
 } from 'react-native';
 
@@ -15,18 +17,15 @@ export default class DetailVC extends Component {
         const { navigate } = this.props.navigation;
         return (
             <View style={appStyles.container}>
-                {/*<TouchableOpacity style={{ height:40, backgroundColor:'green', justifyContent: 'center'}}*/}
-                {/*onPress={() =>{this.backVC()}}>*/}
-                {/*<Text>{this.props.navigation.state.params.des}*/}
+                <ScrollView style={styles.scrollContainer}>
 
-                {/*</Text>*/}
-                {/*</TouchableOpacity>*/}
+                </ScrollView>
             </View> );
     }
 }
 const styles = StyleSheet.create({
-    container: {
+    scrollContainer: {
         flex: 1,
-        backgroundColor: '#F5FCFF',
+        backgroundColor: '#fff',
     },
 });

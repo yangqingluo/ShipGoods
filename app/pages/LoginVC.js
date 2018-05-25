@@ -114,6 +114,7 @@ export default class LoginVC extends Component {
                             underlineColorAndroid={'transparent'}
                             style={styles.textInput}
                             placeholder={'请输入手机号'}
+                            maxLength={appData.appMaxLengthPhone}
                             onChangeText={(text) => {
                                 this.setState({
                                     phoneNum: checkNum(text)
@@ -132,6 +133,7 @@ export default class LoginVC extends Component {
                             style={styles.textInput}
                             placeholder={'请输入密码'}
                             secureTextEntry={this.state.ispassword}
+                            maxLength={appData.appMaxLengthPassword}
                             onChangeText={(text) => {
                                 this.setState({
                                     password: text
@@ -226,23 +228,15 @@ const styles = StyleSheet.create({
         //borderWidth: 1,
     },
     eyeImg: {
-        opacity: .6,
         height: 30,
         width: 30,
-        //marginLeft: 30,
-        //marginRight: 0,
-        //marginTop: 8,
-        //borderWidth: 1,
+        resizeMode: "stretch",
+        tintColor: "#afafaf",
     },
     
     cfmButton: {
-        // marginTop: Platform.OS === 'ios' ? 260 : 360,
-        // marginBottom: 0,
         width: 137,
         height: 59,
-        // backgroundColor: appData.appBlueColor,
-        // borderRadius: 20,
-        //borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',

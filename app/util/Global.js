@@ -184,6 +184,7 @@ let appData = {
     appBlueColor: '#2c9bfd',
     appLightBlueColor: "#54b2ff",
     appLittleBlueColor: "#7dd3ff",
+    appLightGrayColor: '#a8a8a8',
     appDeepGrayColor: '#d8d8d8',
     appGrayColor: '#f7f7f7',
     appRedColor: '#ff4848',
@@ -205,6 +206,10 @@ let appData = {
 
     appItemHeight: 50,
     appSeparatorHeight: 1,
+
+    appMaxLengthVerifyCode: 4,
+    appMaxLengthPhone: 11,
+    appMaxLengthPassword: 20,
 };
 
 let appStyles = StyleSheet.create({

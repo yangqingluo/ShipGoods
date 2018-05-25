@@ -19,11 +19,6 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 const itemHeight = appData.appItemHeight;
 
-const Font = {
-    Ionicons,
-    FontAwesome
-};
-
 export default class CustomItem extends Component {
     constructor(props){
         super(props)
@@ -52,8 +47,6 @@ export default class CustomItem extends Component {
 
     _render(){
         let {logo, iconSize, name, subName, color, noSeparator, avatar, disable, font, showArrowForward} = this.props;
-        font = font||"Ionicons";
-        const Icon = Font[font];
         let radius = 12;
         return (
             <View style={{flexDirection: "column"}}>
@@ -82,7 +75,7 @@ export default class CustomItem extends Component {
                     {subName?(<Text style={{flex: 1, minWidth:120, textAlign: 'right', color: "#000", fontSize:14}}>{subName}</Text>):null}
                     {avatar?(<Image source={avatar} style={{width: 36, height: 36, resizeMode: "cover", overflow:"hidden", borderRadius: 18}}/>):null}
                     {this.props.children}
-                    {showArrowForward ? <Font.Ionicons style={{marginLeft: 10, paddingRight: 16, opacity: disable ? 0.0 : 1.0}} name="ios-arrow-forward-outline" size={18} color="#bbb" /> : null}
+                    {showArrowForward ? <appFont.Ionicons style={{marginLeft: 10, paddingRight: 16, opacity: disable ? 0.0 : 1.0}} name="ios-arrow-forward-outline" size={18} color="#bbb" /> : null}
                 </View>
             </View>
         )

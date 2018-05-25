@@ -6,9 +6,7 @@ import {
     Image,
     TouchableOpacity,
     ScrollView,
-    TextInput, Dimensions
 } from 'react-native';
-import ActionSheet from 'react-native-actionsheet'
 import ImagePicker from 'react-native-image-picker';
 import CustomItem from '../../components/CustomItem'
 import Button from '../../components/Button'
