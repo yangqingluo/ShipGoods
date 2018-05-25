@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
     StyleSheet,
+    Image,
     Text,
     View,
     TouchableOpacity,
@@ -9,6 +10,7 @@ import {
 import MessageCell from './MessageCell';
 import ListLoadFooter from '../../components/ListLoadFooter';
 import CustomAlert from '../../components/CustomAlert';
+import px2dp from "../../util";
 
 type Props = {
     order_state: "0",
@@ -110,6 +112,12 @@ export default class OrderListVC extends Component {
     }
 
     render() {
+        // if (this.state.dataList.length === 0) {
+        //     return <TouchableOpacity style={{flex:1, alignItems: "center", backgroundColor:'white'}} onPress={this.requestData.bind(this)}>
+        //         <Image source={require("../../images/icon_no_message.png")} style={styles.noMsgImage}/>
+        //         <Text style={{marginTop:14, fontSize:14, color:'#494949'}}>{"啊哦，还没有消息哦..."}</Text>
+        //     </TouchableOpacity>;
+        // }
         return (
             <View style={styles.container}>
                 <FlatList
@@ -136,5 +144,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#f8f8f8'
+    },
+    noMsgImage: {
+        marginTop: 24,
+        width:px2dp(140),
+        height:px2dp(140),
+        resizeMode: "stretch",
     },
 });
