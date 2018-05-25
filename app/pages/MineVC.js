@@ -47,7 +47,7 @@ export default class MineVC extends Component {
         headerTitle: '我的',
         tabBarLabel: '我的',
         headerLeft: <Text style={{marginLeft: 10}}>友船友货</Text>,
-        headerRight: <RightHeader navigation={navigation} />,
+        // headerRight: <RightHeader navigation={navigation} />,
     });
 
     constructor(props){

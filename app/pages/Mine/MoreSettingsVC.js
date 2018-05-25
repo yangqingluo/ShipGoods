@@ -4,7 +4,8 @@ import {
     ScrollView,
     View,
 } from 'react-native';
-import Item from '../../components/CustomItem'
+import Item from '../../components/CustomItem';
+import ActionSheet from 'react-native-actionsheet';
 
 export default class MoreSettingsVC extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -14,8 +15,9 @@ export default class MoreSettingsVC extends Component {
     constructor(props){
         super(props);
         this.config = [
+            {name:"帮助中心", onPress:this.cellSelected.bind(this, "Help")},
             {name:"关于我们", onPress:this.cellSelected.bind(this, "AboutUs")},
-            {name:"退出登录", onPress:this.cellSelected.bind(this, "LoginOut")},
+            {name:"退出登录", onPress:this.cellSelected.bind(this, "Logout")},
             {name:"修改密码", onPress:this.cellSelected.bind(this, "ChangePwd")},
             {name:"变更联系人", onPress:this.cellSelected.bind(this, "ChangeContact")},
             {name:"建议与反馈", onPress:this.cellSelected.bind(this, "Suggestion")},
@@ -23,15 +25,36 @@ export default class MoreSettingsVC extends Component {
     }
     cellSelected(key, data = {}) {
         dismissKeyboard();
-        if (key === "AboutUs") {
+        if (key === "Help") {
+            this.props.navigation.navigate('PublicWeb',
+                {
+                    title: "帮助中心",
+                    uri: appUrl + '/shiphire/Help/Index',
+                });
+        }
+        else if (key === "AboutUs") {
             this.props.navigation.navigate('PublicWeb',
                 {
                     title: "关于我们",
                     uri: appUrl + '/shiphire/Us/Index',
                 });
         }
+        else if (key === "Logout") {
+            this.refLogoutActionSheet.show();
+        }
         else {
             PublicAlert("精彩功能，敬请期待" + "(" + key + ")");
+        }
+    }
+
+    onSelectLogout(index) {
+        if (index === 1) {
+            storage.remove({
+                key: 'userData'
+            });
+            global.userData = null;
+
+            this.props.navigation.dispatch(PublicResetAction('Login'));
         }
     }
 
@@ -48,6 +71,14 @@ export default class MoreSettingsVC extends Component {
                     {this._renderListItem()}
                     <View style={{height: appData.appSeparatorHeight, backgroundColor: appData.appSeparatorLightColor}}/>
                 </ScrollView>
+                <ActionSheet
+                    ref={o => this.refLogoutActionSheet = o}
+                    title={'您确定退出登录？'}
+                    options={["取消", "退出登录"]}
+                    cancelButtonIndex={0}
+                    destructiveButtonIndex={1}
+                    onPress={this.onSelectLogout.bind(this)}
+                />
             </View>
         )
     }
