@@ -207,6 +207,7 @@ let appData = {
     appItemHeight: 50,
     appSeparatorHeight: 1,
 
+    appMaxLengthInput: 100,
     appMaxLengthVerifyCode: 4,
     appMaxLengthPhone: 11,
     appMaxLengthPassword: 20,

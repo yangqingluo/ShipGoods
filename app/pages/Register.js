@@ -1,8 +1,6 @@
-
 import React, { Component } from 'react';
 
 import {
-    Platform,
     Image,
     ImageBackground,
     Text,
@@ -44,6 +42,11 @@ export default class Register extends Component {
         };
 
         this.roleTypes = ['取消', '我是货主', '我是船主'];
+        this._timer = null;
+    }
+
+    componentWillUnmount() {
+        this._timer && clearInterval(this._timer);
     }
 
     static navigationOptions = ({ navigation }) => {
@@ -158,7 +161,7 @@ export default class Register extends Component {
 
     chkCodeCount = () => {
         that = this;
-        chkCodeCountInt = setInterval(function () {
+        this._timer = setInterval(function () {
             let sendChkSelf = that.state.sendChk;
 
 
@@ -178,7 +181,7 @@ export default class Register extends Component {
                     sendChk: sendChkSelf
                 })
 
-                clearInterval(this.chkCodeCountInt);
+                clearInterval(that._timer);
 
             } else {
                 sendChkSelf -= 1;

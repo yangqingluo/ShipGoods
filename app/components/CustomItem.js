@@ -35,28 +35,37 @@ export default class CustomItem extends Component {
         avatar: PropTypes.object,
         disable: PropTypes.bool,
         numeric: PropTypes.bool,
+        secureTextEntry: PropTypes.bool,
+        maxLength: PropTypes.number,
         iconSize: PropTypes.number,
+        logoWidth: PropTypes.number,
+        logoHeight: PropTypes.number,
         font: PropTypes.string,
         showArrowForward: PropTypes.bool,
         onPress: PropTypes.func
     };
 
     static defaultProps = {
+        maxLength: appData.appMaxLengthInput,
         showArrowForward: true,
+        logoWidth: 10,
+        logoHeight: 12,
     };
 
     _render(){
-        let {logo, iconSize, name, subName, color, noSeparator, avatar, disable, font, showArrowForward} = this.props;
+        let {logo, iconSize, logoWidth, logoHeight, name, subName, color, noSeparator, avatar, disable, font, showArrowForward, maxLength} = this.props;
         let radius = 12;
         return (
             <View style={{flexDirection: "column"}}>
                 {noSeparator ? null : <View style={{height: appData.appSeparatorHeight, backgroundColor: appData.appSeparatorLightColor}}/>}
                 <View style={styles.listItem} {...this.props}>
-                    {logo? (<Image source={logo} style={{width: 10, height: 12, resizeMode: "cover", overflow:"hidden"}}/>) : null}
-                    {color?(<View style={{width: radius, height:radius, marginRight:5, borderRadius: 0.5 * radius, backgroundColor:color || "#4da6f0"}} />):null}
+                    {logo? (<Image source={logo} style={{width: logoWidth, height: logoHeight, resizeMode: "cover", overflow:"hidden"}}/>) : null}
+                    {/*{color?(<View style={{width: radius, height:radius, marginRight:5, borderRadius: 0.5 * radius, backgroundColor:color || "#4da6f0"}} />):null}*/}
                     {disable?
                         <TextInput underlineColorAndroid="transparent"
                                    keyboardType={this.props.numeric ? "numeric" : "default"}
+                                   secureTextEntry={this.props.secureTextEntry}
+                                   maxLength={maxLength}
                                    style={styles.textInput}
                                    placeholder={name}
                                    placeholderTextColor={appData.appSecondaryTextColor}
