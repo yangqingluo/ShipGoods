@@ -40,7 +40,7 @@ export default class MoreSettingsVC extends Component {
                     uri: appUrl + '/shiphire/Us/Index',
                 });
         }
-        else if (key === "ChangePwd" || key === "ChangeContact" ) {
+        else if (key === "ChangePwd" || key === "ChangeContact" || key === "Suggestion") {
             this.props.navigation.navigate(key);
         }
         else if (key === "Logout") {
