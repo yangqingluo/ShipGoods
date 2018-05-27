@@ -173,11 +173,11 @@ global.PublicAlert = GlobalAlert;
 global.PublicResetAction = resetAction;
 
 global.saveUserData = (data) => {
-    storage.save({
+    global.storage.save({
         key: 'userData', // 注意:请不要在key中使用_下划线符号!
         data: data,
     });
-    userData = data;
+    global.userData = data;
 };
 
 
