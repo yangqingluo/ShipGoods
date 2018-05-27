@@ -81,11 +81,12 @@ export default class LoginVC extends Component {
                     (result)=>{
                         this.setState({isSpinnerVisible : false});
                         if (result.code === 0) {
-                            storage.save({
-                                key: 'userData', // 注意:请不要在key中使用_下划线符号!
-                                data: result.data,
-                            });
-                            global.userData = result.data;
+                            // storage.save({
+                            //     key: 'userData', // 注意:请不要在key中使用_下划线符号!
+                            //     data: result.data,
+                            // });
+                            // global.userData = result.data;
+                            saveUserData(result.data);
                             this.props.navigation.dispatch(PublicResetAction('Main'));
                         }
                         else {

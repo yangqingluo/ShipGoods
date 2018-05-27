@@ -6,8 +6,8 @@ import {
     TouchableOpacity,
     FlatList,
 } from 'react-native';
-import ShipCell from '../components/ShipCell';
-import ListLoadFooter from '../components/ListLoadFooter';
+import ShipCell from '../../components/ShipCell';
+import ListLoadFooter from '../../components/ListLoadFooter';
 
 export default class DetailVC extends Component {
     //接收上一个页面传过来的title显示出来
@@ -24,7 +24,7 @@ export default class DetailVC extends Component {
         });
 
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
             dataList: [],
             refreshing: false,
@@ -46,7 +46,7 @@ export default class DetailVC extends Component {
     requestData = () => {
         this.setState({refreshing: true});
         this.requestRecommend(true);
-    }
+    };
 
     loadMoreData() {
         if (!this.state.refreshing && this.state.showFooter === 0) {

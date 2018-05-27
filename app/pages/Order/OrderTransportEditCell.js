@@ -32,20 +32,25 @@ export default class OrderTransportEditCell extends Component {
         let passed = (parseInt(info.state) <= parseInt(trans_state));
         let editable = (parseInt(info.state) === parseInt(trans_state) + 1);
         let color = (passed || editable) ? appData.appBlueColor:appData.appGrayColor;
-        let textColor = (passed || editable) ? appData.appTextColor : "#8b8b8b";
+        let textColor = passed ? appData.appTextColor : "#8b8b8b";
         let stateText = getArrayTypesText(transportStateTypes, parseInt(info.state) - 1);
 
-        let create_time = parseInt(info.create_time);
+        let time = objectNotNull(info.update_time) ? info.update_time : info.create_time;
+        if (objectNotNull(info.update_time)) {
+            time = info.update_time;
+            textColor = appData.appTextColor;
+        }
+
         const Icon = appFont["Ionicons"];
         return (
             <View style={[styles.cellContainer, {opacity: (passed || editable) ? 1.0 : 0.5}]}>
                 <View style={styles.leftTime}>
                     <TouchableOpacity style={{alignItems: "center"}} onPress={editable ? () => {this.props.onTimePress(this.props.info)} : null}>
                         <Text style={{minHeight:22, fontSize:16, fontWeight:appData.appFontWeightMedium, color:textColor}}>
-                            {createTimeFormat(create_time, "HH:mm")}
+                            {createTimeFormat(time, "HH:mm")}
                         </Text>
                         <Text style={{marginTop:2, minHeight:17, fontSize:12, fontWeight:appData.appFontWeightMedium, color:textColor}}>
-                            {createTimeFormat(create_time, "yyyy-MM-dd")}
+                            {createTimeFormat(time, "yyyy-MM-dd")}
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -61,16 +66,21 @@ export default class OrderTransportEditCell extends Component {
                             {stateText}
                         </Text>
                     </View>
-                    <TextInput style={{minHeight:22, fontSize:16, fontWeight:appData.appFontWeightMedium, color:appData.appLightTextColor}}
-                               multiline={true}
-                               placeholder={editable ? "请输入货品具体" + stateText + "状态" : null}
-                               onChangeText={(text) => {
-                                   this.props.textInputChanged(text, this.props.info);
-                               }}
-                               editable={editable}
-                    >
-                        {passed ? info.remark : null}
-                    </TextInput>
+                    {editable ?
+                        <TextInput style={styles.textContainer}
+                                   multiline={true}
+                                   placeholder={"请输入货品具体" + stateText + "状态"}
+                                   onChangeText={(text) => {
+                                       this.props.textInputChanged(text, this.props.info);
+                                   }}
+                                   editable={editable}
+                        >
+                            {passed ? info.remark : null}
+                        </TextInput>
+                    :
+                        <Text style={styles.textContainer}>
+                            {passed ? info.remark : null}
+                        </Text>}
                 </View>
             </View>
         )
@@ -98,6 +108,13 @@ const styles = StyleSheet.create({
         marginLeft:15,
         paddingRight:22,
         justifyContent: "center",
+    },
+    textContainer: {
+        // minHeight:22,
+        minWidth: 80,
+        fontSize:16,
+        fontWeight:appData.appFontWeightMedium,
+        color:appData.appLightTextColor,
     },
 });
 

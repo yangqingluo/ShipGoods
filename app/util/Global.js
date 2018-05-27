@@ -172,6 +172,14 @@ global.PublicLog = Log;
 global.PublicAlert = GlobalAlert;
 global.PublicResetAction = resetAction;
 
+global.saveUserData = (data) => {
+    storage.save({
+        key: 'userData', // 注意:请不要在key中使用_下划线符号!
+        data: data,
+    });
+    userData = data;
+};
+
 
 let appData = {
     appCustomerServicePhone: "18267811011",
@@ -366,7 +374,7 @@ global.createRequestTime = function(date : Date) : String {
 
 global.createTimeFormat = function(time, format) : String {
     if (time !== null) {
-        let date = new Date(time * 1000);
+        let date = new Date(parseInt(time) * 1000);
         // date.setTime(time * 1000);
         return date.pattern(format);
     }

@@ -53,7 +53,7 @@ export default class MineVC extends Component {
     constructor(props){
         super(props);
         this.state = {
-            isRefreshing: false
+            refreshing: false
         };
         this.config = (global.userData.usertype === '1') ?
             [
@@ -109,17 +109,39 @@ export default class MineVC extends Component {
             //未审核/审核不通过
             this.props.navigation.navigate('AddAuth');
         }
-    }
+    };
 
-    componentDidMount(){
+    componentDidMount() {
         // this._onRefresh()
     }
     _onRefresh(){
-        // this.setState({isRefreshing: true});
-        // setTimeout(() => {
-        //     this.setState({isRefreshing: false});
-        // }, 1500)
+        this.setState({refreshing: true});
+        this.requestRecommend(true);
     }
+
+    requestRecommend = async (isReset) => {
+        let data = {suid: userData.uid};
+
+        NetUtil.post(appUrl + 'index.php/Mobile/User/get_user_info/', data)
+            .then(
+                (result)=>{
+                    if (result.code === 0) {
+                        saveUserData(result.data);
+                        this.setState({
+                            refreshing: false,
+                        });
+                    }
+                    else {
+                        this.setState({
+                            refreshing: false,
+                        })
+                    }
+                },(error)=>{
+                    this.setState({
+                        refreshing: false,
+                    })
+                });
+    };
 
     _renderHeader() {
         let authed = (global.userData.authstate === '1');
@@ -175,11 +197,8 @@ export default class MineVC extends Component {
                     style={styles.scrollView}
                     refreshControl={
                         <RefreshControl
-                            refreshing={this.state.isRefreshing}
+                            refreshing={this.state.refreshing}
                             onRefresh={this._onRefresh.bind(this)}
-                            tintColor="#fff"
-                            colors={['#ddd', '#0398ff']}
-                            progressBackgroundColor="#ffffff"
                         />
                     }
                 >

@@ -11,7 +11,7 @@ import LoginVC from './app/pages/LoginVC';
 import Register from './app/pages/Register';
 import AddAuth from './app/pages/AddAuth';
 import AddShip from './app/pages/AddShip';
-import MyShip from './app/pages/MyShip';
+import MyShip from './app/pages/Mine/MyShip';
 import SelectPort from './app/components/SelectPortVC';
 import SelectPortSecond from './app/components/SelectPortSecond'
 import SelectEmptyTimeVC from './app/components/SelectEmptyTimeVC';
