@@ -88,10 +88,10 @@ export default class MyPostVC extends Component {
     };
 
     onCellSelected = (info: Object) => {
-        this.props.navigation.navigate('HomeShipDetail',
-            {
-                info: info.item,
-            });
+        // this.props.navigation.navigate('HomeShipDetail',
+        //     {
+        //         info: info.item,
+        //     });
     };
 
 
