@@ -357,9 +357,18 @@ global.createRequestTime = function(date : Date) : String {
     return "1970-01-01";
 };
 
+global.createTimeFormat = function(time, format) : String {
+    if (time !== null) {
+        let date = new Date();
+        date.setTime(parseInt(time));
+        return date.pattern(format);
+    }
+    return "1970-01-01";
+};
+
 global.deepCopy = function(obj : Object) : Object {
-    var newobj = {};
-    for ( var attr in obj) {
+    let newobj = {};
+    for (let attr in obj) {
         newobj[attr] = obj[attr];
     }
     return newobj;

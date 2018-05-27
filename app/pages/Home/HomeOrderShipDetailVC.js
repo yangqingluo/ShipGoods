@@ -60,7 +60,7 @@ export default class HomeShipDetailVC extends Component {
                         this.setState({
                             detailInfo: result.data,
                             refreshing: false,
-                        })
+                        });
                     }
                     else {
                         this.setState({
@@ -79,7 +79,6 @@ export default class HomeShipDetailVC extends Component {
     };
 
     onAgreeBtnAction = () => {
-        // PublicAlert("uid =" + userData.uid + ", book_id =" + this.state.info.book_id);
         this.refSelectAlert.show({onSureBtnAction:this.toAgreeBookShip.bind(this)});
     };
 
@@ -90,7 +89,6 @@ export default class HomeShipDetailVC extends Component {
     toAgreeBookShip() {
         this.refSelectAlert.hide();
         let data = {
-            // task_id: this.state.info.good_task_id,
             book_id: this.state.info.book_id,
         };
 
@@ -238,6 +236,27 @@ export default class HomeShipDetailVC extends Component {
         })
     }
 
+    _renderReplyList() {
+        let info = this.state.detailInfo;
+        if (objectNotNull(info.replylist)) {
+            return info.replylist.map((item, i) => {
+                return (
+                    <View key={"" + i}>
+                        <View style={{minHeight:20, borderRadius:4, paddingHorizontal:5, backgroundColor:'#5cb8ff33', flexDirection: 'row', justifyContent: "space-between", alignItems: "center"}}>
+                            <Text style={{flex:1, fontSize:14}}>
+                                <Text style={{color:"#ff5700a6"}}>{"我的回复："}</Text>
+                                <Text style={{color:"#ff9d69"}}>{item.content}</Text>
+                            </Text>
+                            <Text style={{width:60, fontSize:12, color:"#a5a5a5"}}>{createTimeFormat(item.reply_time, "MM-dd HH:mm:ss")}</Text>
+                        </View>
+                        <View style={{height: 4}}/>
+                    </View>
+                );
+            })
+        }
+        return null;
+    }
+
     render() {
         const { navigate } = this.props.navigation;
         let info = this.state.detailInfo;
@@ -263,6 +282,9 @@ export default class HomeShipDetailVC extends Component {
                         >
                             {this.remarkForInfo()}
                         </Text>
+                    </View>
+                    <View style={{marginTop:12, paddingHorizontal:18}}>
+                        {this._renderReplyList()}
                     </View>
                     <View style={{height: 60}} />
                 </ScrollView>
