@@ -89,7 +89,7 @@ export default class HomeOfferDetailVC extends Component {
                         this.setState({
                             detailInfo: result.data,
                             refreshing: false,
-                        })
+                        });
                         this.refreshFavor();
                     }
                     else {

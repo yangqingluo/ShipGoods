@@ -13,6 +13,7 @@ import {
 import DashLine from '../../components/DashLine';
 import CustomItem from '../../components/CustomItem';
 import StarScore from '../../components/StarScore';
+import ReplyCell from './HomeReplyCell';
 import Communications from '../../util/AKCommunications';
 import CustomAlert from '../../components/CustomAlert';
 import Toast from "react-native-easy-toast";
@@ -20,7 +21,7 @@ import Toast from "react-native-easy-toast";
 
 export default class HomeOfferTwicePriceVC extends Component {
     static navigationOptions = ({ navigation }) => ({
-        headerTitle: '货品详情',
+        headerTitle: '报价详情',
     });
 
     constructor(props) {
@@ -74,17 +75,17 @@ export default class HomeOfferTwicePriceVC extends Component {
                         this.setState({
                             detailInfo: result.data,
                             refreshing: false,
-                        })
+                        });
                     }
                     else {
                         this.setState({
                             refreshing: false,
-                        })
+                        });
                     }
                 },(error)=>{
                     this.setState({
                         refreshing: false,
-                    })
+                    });
                 });
     };
 
@@ -242,6 +243,27 @@ export default class HomeOfferTwicePriceVC extends Component {
         })
     }
 
+    renderCell = (info: Object) => {
+        return <ReplyCell info={info}/>;
+    };
+
+    keyExtractor = (item: Object, index: number) => {
+        return '' + index;
+    };
+
+    _renderReplyList() {
+        let info = this.state.detailInfo;
+        if (objectNotNull(info.replylist)) {
+            return <FlatList
+                style={{flex:1}}
+                data={info.replylist}
+                renderItem={this.renderCell}
+                keyExtractor={this.keyExtractor}
+            />;
+        }
+        return null;
+    }
+
     render() {
         const { navigate } = this.props.navigation;
         let {showRenderList} = this.state;
@@ -293,6 +315,9 @@ export default class HomeOfferTwicePriceVC extends Component {
                         </View>
                         : null}
                     {this._renderGoodsListItem()}
+                    <View style={{marginTop:12, paddingHorizontal:18}}>
+                        {this._renderReplyList()}
+                    </View>
                     <View style={{height: 80}}/>
                 </ScrollView>
                 <View style={{position: "absolute", bottom: 5, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
