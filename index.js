@@ -32,6 +32,7 @@ import HomeOrderShipDetailVC from './app/pages/Home/HomeOrderShipDetailVC';
 
 import OrderJudgementVC from './app/pages/Order/OrderJudgementVC';
 import OrderTransportVC from './app/pages/Order/OrderTransportVC';
+import OrderTransportEditVC from './app/pages/Order/OrderTransportEditVC';
 import OrderDetailVC from './app/pages/Order/OrderDetailVC';
 
 import MoreSettingsVC from './app/pages/Mine/MoreSettingsVC';
@@ -70,6 +71,7 @@ const MyNavigator = StackNavigator({
 
         OrderJudgement:{screen:OrderJudgementVC},
         OrderTransport:{screen:OrderTransportVC},
+        OrderTransportEdit:{screen:OrderTransportEditVC},
         OrderDetail:{screen:OrderDetailVC},
 
         MoreSettings:{screen:MoreSettingsVC},

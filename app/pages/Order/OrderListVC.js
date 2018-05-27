@@ -132,6 +132,13 @@ export default class OrderListVC extends Component {
                     });
                 break;
 
+            case OrderBtnEnum.EditTransport:
+                this.props.navigation.navigate('OrderTransportEdit',
+                    {
+                        info: info,
+                    });
+                break;
+
             case OrderBtnEnum.CheckTransport:
                 this.props.navigation.navigate('OrderTransport',
                     {
@@ -140,7 +147,7 @@ export default class OrderListVC extends Component {
                 break;
 
             default:
-                PublicAlert(tag + JSON.stringify(info));
+                PublicAlert("精彩功能，敬请期待");
                 break;
         }
 

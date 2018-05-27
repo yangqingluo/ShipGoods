@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
         flex:1,
         marginLeft:12,
         marginRight:5,
-        fontSize:16,
+        fontSize:14,
         color: appData.appTextColor
     },
     newsImage: {

@@ -8,9 +8,10 @@ import {
     FlatList,
     TouchableOpacity
 } from 'react-native';
-import OrderTransportCell from './OrderTransportCell'
+import OrderTransportCell from './OrderTransportEditCell'
+import DateTimePicker from '../../components/DateTime';
 
-export default class OrderTransportVC extends Component {
+export default class OrderTransportEditVC extends Component {
     static navigationOptions = ({ navigation }) => ({
         title: "货运详情"
     });
@@ -61,12 +62,24 @@ export default class OrderTransportVC extends Component {
 
     };
 
+    onCellTimeSelected = (info: Object) => {
+        this.refTimePicker.showDateTimePicker(null, (d)=>{
+            info.item.create_time = Date.parse(d) * 0.001;
+        });
+    };
+
+    cellTextInputChanged(text, info){
+        // PublicAlert(text + JSON.stringify(info));
+    }
+
     renderCell = (info: Object) => {
         let translist = this.state.detailInfo.translist;
         return (
             <OrderTransportCell
                 info={info}
                 onPress={this.onCellSelected}
+                onTimePress={this.onCellTimeSelected}
+                textInputChanged={this.cellTextInputChanged}
                 trans_state={this.state.detailInfo.trans_state}
                 showLast={translist.indexOf(info.item) === (translist.length - 1)}
             />
@@ -117,6 +130,7 @@ export default class OrderTransportVC extends Component {
                     onRefresh={this.requestData.bind(this)}
                     refreshing={this.state.refreshing}
                 />
+                <DateTimePicker title="请选择时间" ref={o => this.refTimePicker = o} />
             </View>
         );
     }

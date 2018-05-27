@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import DateTimePicker from './DateTime/index';
-import px2dp from "../util";
 
 export default class SelectEmptyTimeVC extends Component {
     static navigationOptions = ({ navigation }) => (
@@ -91,7 +90,7 @@ export default class SelectEmptyTimeVC extends Component {
                 <ScrollView
                     style={styles.scrollView}
                 >
-                    <View style={{height:px2dp(2)}} />
+                    <View style={{height:2}} />
                     <TouchableOpacity
                         style = {styles.cell}
                         onPress={()=>this.showDatePicker()}>
@@ -99,7 +98,7 @@ export default class SelectEmptyTimeVC extends Component {
                             {this.state.date.Format("yyyy.MM.dd")}
                         </Text>
                     </TouchableOpacity>
-                    <View style={{height:px2dp(2)}} />
+                    <View style={{height:2}} />
                     <TouchableOpacity
                         style = {styles.cell}
                         onPress={()=>this.showDelayPicker()}>
@@ -120,13 +119,13 @@ const styles = StyleSheet.create({
     cell: {
         flex: 1,
         backgroundColor: '#fff',
-        minHeight: px2dp(50),
+        minHeight: 50,
         justifyContent: "center",
         alignItems: "center",
     },
     text: {
         textAlign: 'center',
         color: appData.appBlueColor,
-        fontSize: px2dp(16),
+        fontSize: 16,
     }
 });

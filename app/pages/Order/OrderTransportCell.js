@@ -25,8 +25,10 @@ export default class OrderTransportCell extends Component {
 
     render() {
         let info = this.props.info.item;
-        let {showLast} = this.props;
-        let selected = true;
+        let {showLast, trans_state} = this.props;
+        let selected = (parseInt(info.state) <= parseInt(trans_state));
+        let color = selected ? appData.appBlueColor:appData.appGrayColor;
+
         let create_time = info.create_timetext.split(" ");
         const Icon = appFont["Ionicons"];
         return (
@@ -40,13 +42,16 @@ export default class OrderTransportCell extends Component {
                     </Text>
                 </View>
                 <View style={styles.centerLine}>
-                    <Icon name={'ios-checkmark-circle'} size={22} color={selected ? appData.appBlueColor:appData.appGrayColor} />
+                    <Icon name={'ios-checkmark-circle'} size={22} color={color} />
                     {/*<Image source={require('../../images/Line.png')} style={{width: 1, height: 72, marginVertical: 2, resizeMode: "stretch"}} />*/}
-                    <VDashLine backgroundColor={appData.appBlueColor} len={72 / appData.appDashWidth}/>
-                    {showLast? <Icon name={'ios-checkmark-circle'} size={22} color={selected ? appData.appBlueColor:appData.appGrayColor} /> : null}
+                    <VDashLine backgroundColor={color} len={72 / appData.appDashWidth}/>
+                    {showLast? <Icon name={'ios-checkmark-circle'} size={22} color={color} /> : null}
                 </View>
                 <View style={styles.rightContainer}>
-                    <Text style={{minHeight:22, fontSize:16, fontWeight:appData.appFontWeightMedium, color:appData.appBlueColor}}>
+                    <Text style={{top: 5, left: 0, position: 'absolute', fontSize: 16, color: appData.appBlueColor, opacity: selected ? 1.0 : 0.5}}>
+                        {getArrayTypesText(transportStateTypes, parseInt(info.state) - 1)}
+                    </Text>
+                    <Text style={{minHeight:22, fontSize:16, fontWeight:appData.appFontWeightMedium, color:selected ? appData.appLightTextColor : appData.appThirdTextColor}}>
                         {info.remark}
                     </Text>
                 </View>
@@ -70,14 +75,12 @@ const styles = StyleSheet.create({
     centerLine: {
         width:22,
         alignItems: "center",
-        // backgroundColor: 'gray',
     },
     rightContainer: {
         flex:1,
         marginLeft:15,
         paddingRight:22,
         justifyContent: "center",
-        // alignItems: "center",
     },
 });
 

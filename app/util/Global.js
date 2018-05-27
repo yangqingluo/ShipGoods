@@ -296,6 +296,7 @@ global.getShipStateText = function(state : Number) : String {
 global.shipAreaObjects = [{key: 1, name: '沿海'}, {key: 2, name: '内河（可进川）'}, {key: 3, name: '内河（不可进川)'}];
 global.shipAreaTypes = ['取消', '沿海', '内河（可进川）', '内河（不可进川)'];
 global.shipWastageTypes = ['取消', '船检量 -> 船检量', '罐发量 -> 入库量', '船检量 -> 入库量', '罐发量 -> 船检量'];
+global.transportStateTypes = ["抵锚", "靠泊", "开始装货", "装货完毕", "离港", "抵锚", "靠泊", "开始卸货", "卸货完毕", "离港"];
 global.createShipWastageNumberTypes = function() : Array {
     let array = ['取消'];
     for (let i = 0.1; i < 4; i += 0.1) {
@@ -303,7 +304,6 @@ global.createShipWastageNumberTypes = function() : Array {
     }
     return array;
 };
-
 global.shipWastageNumberTypes = createShipWastageNumberTypes();
 
 
@@ -315,6 +315,13 @@ global.createDemurrageTypes = function() : Array {
     return array;
 };
 global.demurrageTypes = createDemurrageTypes();
+
+global.getArrayTypesText = function(array, index) : String {
+    if (index >= 0 && index < array.length) {
+        return array[index];
+    }
+    return "";
+};
 
 global.getShipAreaTypesText = function(area : Number) : String {
     if (area < shipAreaTypes.length) {
