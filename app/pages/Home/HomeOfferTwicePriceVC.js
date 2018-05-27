@@ -290,13 +290,15 @@ export default class HomeOfferTwicePriceVC extends Component {
                         </View>
                     </View>
                     <View style={styles.centerContainer}>
-                        <View style={{backgroundColor: '#f2f9ff', height: 73}}>
-                            <View style={{flex: 1, flexDirection: 'row', alignItems: "center"}}>
-                                <Text style={{marginLeft: 34, fontSize: 14, color: appData.appTextColor}}>{info.loading_port_name + ' → ' + info.unloading_port_name}</Text>
+                        <View style={{backgroundColor: '#f2f9ff', paddingLeft:34, paddingRight:10, minHeight:73}}>
+                            <View style={{marginTop: 15, height: 20, flexDirection: 'row', alignItems: "center"}}>
+                                <Text style={styles.textContainer}>{info.loading_port_name}</Text>
+                                <Image source={require('../../images/icon_arrow_right_half.png')} style={styles.arrowContainer}/>
+                                <Text style={styles.textContainer}>{info.unloading_port_name}</Text>
                             </View>
                             <View style={{flex: 1, flexDirection: 'row', alignItems: "center", justifyContent: "space-between"}}>
-                                <Text style={{marginLeft: 34, fontSize: 14, color: appData.appTextColor}}>{info.loading_timetext + ' ± ' + info.loading_delay + '天'}</Text>
-                                <Text style={{marginRight: 27, fontSize: 14, color: appData.appTextColor}}>{'原油 10000+10000吨'}</Text>
+                                <Text style={styles.textContainer}>{info.loading_timetext + ' ± ' + info.loading_delay + '天'}</Text>
+                                <Text style={[styles.textContainer, {flex: 1, marginLeft:20}]}>{this.state.info.goods_name + ' ' + this.state.info.tonnage + '+' + this.state.info.ton_section + '吨'}</Text>
                             </View>
                         </View>
                         <TouchableOpacity onPress={() => {this.setState({
@@ -347,5 +349,12 @@ const styles = StyleSheet.create({
     btnText: {
         color: "#fff",
         fontSize: 16,
+    },
+    arrowContainer: {
+        width:32,
+        height:4,
+        marginLeft:20,
+        marginRight:20,
+        resizeMode: "stretch",
     }
 });
