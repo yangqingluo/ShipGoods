@@ -24,12 +24,13 @@ export default class MessageCell extends Component {
 
     render() {
         let {info} = this.props;
+        let isnew = (info.item.isnew === '1');
         return (
             <View>
                 <View style={{height: appData.appSeparatorHeight, backgroundColor: appData.appSeparatorLightColor}}/>
                 <TouchableOpacity style={styles.cellContainer} onPress={() => this.props.onPress(info)}>
                     <Image source={require("../../images/icon_news.png")} style={styles.newsImage}/>
-                    <Text style={styles.textContainer}>{info.item.content}</Text>
+                    <Text style={{flex:1, marginLeft:12, marginRight:5, fontSize:14, color: isnew ? appData.appTextColor : appData.appThirdTextColor}}>{info.item.content}</Text>
                     <Image source={require("../../images/icon_right.png")} style={styles.arrowImage}/>
                 </TouchableOpacity>
             </View>

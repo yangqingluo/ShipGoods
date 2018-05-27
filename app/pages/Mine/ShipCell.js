@@ -21,7 +21,7 @@ export default class ShipCell extends PureComponent<Props> {
 
     render() {
         let {info, logo, selected} = this.props;
-        logo = require('../images/icon_blue.png');
+        logo = require('../../images/icon_blue.png');
         const Icon = appFont["Ionicons"];
         return (
             <View>
@@ -36,7 +36,7 @@ export default class ShipCell extends PureComponent<Props> {
                         <View style={{flex: 1, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.04)',}}>
                             <View style={styles.cellContainer}>
                                 <View style={[styles.cellContainer, {alignItems: "center"}]}>
-                                    <Image source={require('../images/icon_word_hang.png')} style={{width: 19, height: 29, marginLeft:12, resizeMode: "cover"}}/>
+                                    <Image source={require('../../images/icon_word_hang.png')} style={{width: 19, height: 29, marginLeft:12, resizeMode: "cover"}}/>
                                     <Text style={{color:appData.appTextColor, marginLeft:6, fontSize:14}}>{getShipAreaTypesText(parseInt(info.item.area))}</Text>
                                 </View>
                                 <View style={[styles.cellContainer, {alignItems: "center"}]}>
@@ -46,13 +46,13 @@ export default class ShipCell extends PureComponent<Props> {
                             <View style={styles.cellContainer}>
                                 <View style={[styles.cellContainer, {alignItems: "center"}]}>
                                     <TouchableOpacity style={{flexDirection: 'row', alignItems: "center"}} onPress={() => this.props.onLicencePress(info)}>
-                                        <Image source={require('../images/icon_clip.png')} style={{width: 18, height: 18, marginLeft:12, resizeMode: "cover"}}/>
+                                        <Image source={require('../../images/icon_clip.png')} style={{width: 18, height: 18, marginLeft:12, resizeMode: "cover"}}/>
                                         <Text style={{color:appData.appBlueColor, marginLeft:6, fontSize:14}}>{'船舶相关证书'}</Text>
                                     </TouchableOpacity>
                                 </View>
                                 <View style={[styles.cellContainer, {alignItems: "center"}]}>
                                     <TouchableOpacity style={{flexDirection: 'row', alignItems: "center"}} onPress={() => this.props.onPricePress(info)}>
-                                        <Image source={require('../images/icon_clip.png')} style={{width: 18, height: 18, marginLeft:12, resizeMode: "cover"}}/>
+                                        <Image source={require('../../images/icon_clip.png')} style={{width: 18, height: 18, marginLeft:12, resizeMode: "cover"}}/>
                                         <Text style={{color:appData.appBlueColor, marginLeft:6, fontSize:14}}>{'相关报价'}</Text>
                                     </TouchableOpacity>
                                 </View>

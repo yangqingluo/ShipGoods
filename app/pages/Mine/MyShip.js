@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
     FlatList,
 } from 'react-native';
-import ShipCell from '../../components/ShipCell';
+import ShipCell from './ShipCell';
 import ListLoadFooter from '../../components/ListLoadFooter';
 
 export default class DetailVC extends Component {
