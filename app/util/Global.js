@@ -359,8 +359,8 @@ global.createRequestTime = function(date : Date) : String {
 
 global.createTimeFormat = function(time, format) : String {
     if (time !== null) {
-        let date = new Date();
-        date.setTime(parseInt(time));
+        let date = new Date(time * 1000);
+        // date.setTime(time * 1000);
         return date.pattern(format);
     }
     return "1970-01-01";

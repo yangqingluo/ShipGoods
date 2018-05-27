@@ -76,7 +76,7 @@ export default class HomeVC extends Component {
     }
 
     onSortBtnAction() {
-        PublicAlert('***');
+        PublicAlert("精彩功能，敬请期待");
     }
 
     onFilterBtnAction() {

@@ -8,23 +8,13 @@ import {
     TouchableHighlight,
     TouchableOpacity,
 } from 'react-native'
-import CustomItem from '../../components/CustomItem'
-
-
-export const BottomBtnEnum = {
-    Default: 0,
-    CollectGoods: 1,
-    CheckTransport: 2,
-    JudgeOrder: 3,
-
-};
 
 type Props = {
     info: Object,
     onPress: Function,
 }
 
-export default class HomeOrderCell extends Component {
+export default class MessageCell extends Component {
     constructor(props) {
         super(props);
         this.state = {
