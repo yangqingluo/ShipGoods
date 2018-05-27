@@ -54,6 +54,7 @@
 		E4C3352B2092101400D47356 /* IQToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C334EF2092101400D47356 /* IQToolbar.m */; };
 		E4C3352C2092101400D47356 /* IQUIView+IQKeyboardToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C334F12092101400D47356 /* IQUIView+IQKeyboardToolbar.m */; };
 		E4C3352D2092101400D47356 /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E4C334F32092101400D47356 /* IQKeyboardManager.bundle */; };
+		E4DEA68D20BB600B00F40F14 /* PublicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4DEA68C20BB600B00F40F14 /* PublicViewController.m */; };
 		F766909BAFF0440DB4CF2FE1 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6DEFEE07F324C11A42192FA /* libRNVectorIcons.a */; };
 /* End PBXBuildFile section */
 
@@ -443,6 +444,8 @@
 		E4C334F02092101400D47356 /* IQUIView+IQKeyboardToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQUIView+IQKeyboardToolbar.h"; sourceTree = "<group>"; };
 		E4C334F12092101400D47356 /* IQUIView+IQKeyboardToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQUIView+IQKeyboardToolbar.m"; sourceTree = "<group>"; };
 		E4C334F32092101400D47356 /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IQKeyboardManager.bundle; sourceTree = "<group>"; };
+		E4DEA68B20BB600B00F40F14 /* PublicViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PublicViewController.h; sourceTree = "<group>"; };
+		E4DEA68C20BB600B00F40F14 /* PublicViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PublicViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -566,6 +569,8 @@
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				E4DEA68B20BB600B00F40F14 /* PublicViewController.h */,
+				E4DEA68C20BB600B00F40F14 /* PublicViewController.m */,
 				E4C334CE2092101400D47356 /* thirdParty */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
@@ -1352,6 +1357,7 @@
 				E4C3352A2092101400D47356 /* IQTitleBarButtonItem.m in Sources */,
 				E4C3351F2092101400D47356 /* IQNSArray+Sort.m in Sources */,
 				E4C3352C2092101400D47356 /* IQUIView+IQKeyboardToolbar.m in Sources */,
+				E4DEA68D20BB600B00F40F14 /* PublicViewController.m in Sources */,
 				E4C335282092101400D47356 /* IQBarButtonItem.m in Sources */,
 				E4C335202092101400D47356 /* IQUIScrollView+Additions.m in Sources */,
 				E4C3352B2092101400D47356 /* IQToolbar.m in Sources */,
