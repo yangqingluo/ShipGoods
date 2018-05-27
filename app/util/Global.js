@@ -303,6 +303,7 @@ global.getShipStateText = function(state : Number) : String {
 
 global.shipAreaObjects = [{key: 1, name: '沿海'}, {key: 2, name: '内河（可进川）'}, {key: 3, name: '内河（不可进川)'}];
 global.shipAreaTypes = ['取消', '沿海', '内河（可进川）', '内河（不可进川)'];
+global.shipCourseTypes = ['取消', '南上', '北下', '上江', '下江', '运河'];
 global.shipWastageTypes = ['取消', '船检量 -> 船检量', '罐发量 -> 入库量', '船检量 -> 入库量', '罐发量 -> 船检量'];
 global.transportStateTypes = ["抵锚", "靠泊", "开始装货", "装货完毕", "离港", "抵锚", "靠泊", "开始卸货", "卸货完毕", "离港"];
 global.createShipWastageNumberTypes = function() : Array {

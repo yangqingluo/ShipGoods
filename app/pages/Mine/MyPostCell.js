@@ -43,8 +43,6 @@ export default class MyPostCell extends PureComponent<Props> {
                 break;
         }
 
-        const Icon = appFont["Ionicons"];
-
         let downloadOilList = [];
         if (objectNotNull(info.item.download_oil_list)) {
             downloadOilList = info.item.download_oil_list.map(

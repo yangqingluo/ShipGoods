@@ -37,6 +37,7 @@ import OrderDetailVC from './app/pages/Order/OrderDetailVC';
 
 import MyBookVC from './app/pages/Mine/MyBookVC';
 import MyPostVC from './app/pages/Mine/MyPostVC';
+import MyPostDetailVC from './app/pages/Mine/MyPostDetailVC';
 import MoreSettingsVC from './app/pages/Mine/MoreSettingsVC';
 import MyFavorsVC from './app/pages/Mine/MyFavorsVC';
 import ChangeContactVC from './app/pages/Mine/ChangeContactVC';
@@ -78,6 +79,7 @@ const MyNavigator = StackNavigator({
 
         MyBook:{screen:MyBookVC},
         MyPost:{screen:MyPostVC},
+        MyPostDetail:{screen:MyPostDetailVC},
         MoreSettings:{screen:MoreSettingsVC},
         MyFavors:{screen:MyFavorsVC},
         ChangeContact:{screen:ChangeContactVC},
