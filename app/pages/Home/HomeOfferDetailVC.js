@@ -176,7 +176,7 @@ export default class HomeOfferDetailVC extends Component {
             return '完货' + info.clean_deley + '天内';
         }
         else if (item.idKey === 'corporation') {
-            if (goodsOwnerNotNull(info)) {
+            if (objectNotNull(info.goods_owner)) {
                 return info.goods_owner.corporation;
             }
         }
@@ -186,7 +186,7 @@ export default class HomeOfferDetailVC extends Component {
     renderSubViewForIndex(item, index) {
         let info = this.state.detailInfo;
         if (item.idKey === 'credit') {
-            if (goodsOwnerNotNull(info)) {
+            if (objectNotNull(info.goods_owner)) {
                 let credit = parseInt(info.goods_owner.credit);
                 return <StarScore style={{marginLeft:5}} itemEdge={5} currentScore={credit}/>;
             }

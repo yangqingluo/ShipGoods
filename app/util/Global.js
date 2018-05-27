@@ -346,10 +346,6 @@ global.itemIsFavor = function(iscollect) : boolean {
     return (parseInt(iscollect) === 1)
 };
 
-global.goodsOwnerNotNull = function(info) : boolean {
-    return ((info.goods_owner !== null) && (typeof(info.goods_owner) !== appUndefined));
-};
-
 global.objectNotNull = function(object) : boolean {
     return ((object !== null) && (typeof(object) !== appUndefined));
 };

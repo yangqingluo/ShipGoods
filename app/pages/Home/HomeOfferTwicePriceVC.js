@@ -60,7 +60,12 @@ export default class HomeOfferTwicePriceVC extends Component {
     };
 
     requestRecommend = async (isReset) => {
-        let data = {task_id: this.state.info.task_id};
+        let data = {
+            task_id: this.state.info.task_id
+        };
+        if (objectNotNull(this.state.info.book_id)) {
+            data.book_id = this.state.info.book_id;
+        }
 
         NetUtil.post(appUrl + 'index.php/Mobile/Ship/goods_task_detail/', data)
             .then(
@@ -126,7 +131,7 @@ export default class HomeOfferTwicePriceVC extends Component {
     cellSelected = (key, data = {}) =>{
         let info = this.state.detailInfo;
         if (key === "SelectPhone") {
-            if (goodsOwnerNotNull(info)) {
+            if (objectNotNull(info.goods_owner)) {
                 let phone = info.goods_owner.phone;
                 if (phone !== null && phone.length > 0) {
                     Communications.phonecall(phone, true);
@@ -152,7 +157,7 @@ export default class HomeOfferTwicePriceVC extends Component {
             return '完货' + info.clean_deley + '天内';
         }
         else if (item.idKey === 'corporation') {
-            if (goodsOwnerNotNull(info)) {
+            if (objectNotNull(info.goods_owner)) {
                 return info.goods_owner.corporation;
             }
         }
@@ -171,11 +176,6 @@ export default class HomeOfferTwicePriceVC extends Component {
         else if (item.idKey === 'loading_time') {
             return info.loading_timetext;
         }
-        // else if (item.idKey === 'phone') {
-        //     if (goodsOwnerNotNull(info)) {
-        //         return info.goods_owner.phone;
-        //     }
-        // }
         else if (item.idKey === 'goodslist') {
             let list = info.goodslist.map(
                 (info) => {
@@ -191,13 +191,13 @@ export default class HomeOfferTwicePriceVC extends Component {
     renderSubViewForIndex(item, index) {
         let info = this.state.detailInfo;
         if (item.idKey === 'credit') {
-            if (goodsOwnerNotNull(info)) {
+            if (objectNotNull(info.goods_owner)) {
                 let credit = parseInt(info.goods_owner.credit);
                 return <StarScore style={{marginLeft:5}} itemEdge={5} currentScore={credit}/>;
             }
         }
         else if (item.idKey === 'phone') {
-            if (goodsOwnerNotNull(info)) {
+            if (objectNotNull(info.goods_owner)) {
                 return <Text style={{color: appData.appBlueColor, fontSize: 14}}>
                     {info.goods_owner.phone}
                 </Text>

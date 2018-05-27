@@ -144,7 +144,7 @@ export default class HomeShipDetailVC extends Component {
     cellSelected = (key, data = {}) =>{
         let info = this.state.detailInfo;
         if (key === "SelectPhone") {
-            if (goodsOwnerNotNull(info)) {
+            if (objectNotNull(info.goods_owner)) {
                 let phone = info.goods_owner.phone;
                 if (phone !== null && phone.length > 0) {
                     Communications.phonecall(phone, true);
@@ -204,7 +204,7 @@ export default class HomeShipDetailVC extends Component {
             return <StarScore style={{marginLeft:px2dp(5)}} itemEdge={px2dp(5)} currentScore={info.credit}/>;
         }
         else if (item.idKey === 'phone' && this.isOrdered()) {
-            if (goodsOwnerNotNull(info)) {
+            if (objectNotNull(info.goods_owner)) {
                 return <Text style={{color: appData.appBlueColor, fontSize: 14}}>
                     {info.goods_owner.phone}
                 </Text>
