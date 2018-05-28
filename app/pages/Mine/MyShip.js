@@ -100,26 +100,33 @@ export default class DetailVC extends Component {
                         showFooter: 0,
                     })
                 });
-    }
+    };
 
     onCellSelected = (info: Object) => {
         if (this.props.navigation.state.params.callBack !== null) {
             this.props.navigation.state.params.callBack(info.item);
             this.props.navigation.goBack();
         }
-    }
+    };
 
     onCellEditBtnAction = (info: Object) => {
         PublicAlert(JSON.stringify(info));
-    }
+    };
 
     onCellLicenceBtnAction = (info: Object) => {
-        PublicAlert(JSON.stringify(info));
-    }
+        if (objectNotNull(info.item.ship_lience)) {
+            this.props.navigation.navigate('PublicImageShow',
+                {
+                    images: [{url: appUrl + info.item.ship_lience}],
+                    index: 0,
+                })
+        }
+
+    };
 
     onCellPriceBtnAction = (info: Object) => {
         PublicAlert(JSON.stringify(info));
-    }
+    };
 
     renderCell = (info: Object) => {
         return (
@@ -132,11 +139,11 @@ export default class DetailVC extends Component {
                 selected={false}
             />
         )
-    }
+    };
 
     keyExtractor = (item: Object, index: number) => {
         return '' + index;
-    }
+    };
 
     renderFooter(){
         return <ListLoadFooter showFooter={this.state.showFooter}/>;

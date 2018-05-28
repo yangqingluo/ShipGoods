@@ -20,6 +20,7 @@ import SelectPrice from './app/components/SelectPriceVC';
 import CustomSelect from './app/components/CustomSelect';
 import CustomSectionSelect from './app/components/CustomSectionSelect';
 import PublicWebVC from "./app/pages/PublicWebVC";
+import PublicImageShowVC from "./app/pages/PublicImageShowVC";
 
 import HomeShipDetailVC from './app/pages/Home/HomeShipDetailVC';
 import HomeOrderDetailVC from './app/pages/Home/HomeOrderDetailVC';
@@ -62,6 +63,7 @@ const MyNavigator = StackNavigator({
         SelectWastageVC:{screen: SelectWastageVC},
         SelectPrice:{screen: SelectPrice},
         PublicWeb:{screen:PublicWebVC},
+        PublicImageShow:{screen:PublicImageShowVC},
 
         HomeShipDetail:{screen: HomeShipDetailVC},
         HomeOrderDetail:{screen: HomeOrderDetailVC},

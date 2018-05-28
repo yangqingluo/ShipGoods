@@ -4629,9 +4629,19 @@ react-native-easy-toast@^1.1.0:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-image-pan-zoom@^2.1.2:
+  version "2.1.3"
+  resolved "http://registry.npm.taobao.org/react-native-image-pan-zoom/download/react-native-image-pan-zoom-2.1.3.tgz#1f1847518eb0d10a43fce20ee387a9f273dacd9a"
+
 react-native-image-picker@^0.26.7:
   version "0.26.7"
   resolved "http://registry.npm.taobao.org/react-native-image-picker/download/react-native-image-picker-0.26.7.tgz#ad2ee957f7f6cc01396893ea03d84cb2adb2e376"
+
+react-native-image-zoom-viewer@^2.1.0:
+  version "2.2.5"
+  resolved "http://registry.npm.taobao.org/react-native-image-zoom-viewer/download/react-native-image-zoom-viewer-2.2.5.tgz#ad06f7b4666ef554ab2a900b92b56d2658570464"
+  dependencies:
+    react-native-image-pan-zoom "^2.1.2"
 
 react-native-menu@^0.23.0:
   version "0.23.0"
