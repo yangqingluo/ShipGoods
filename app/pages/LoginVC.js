@@ -15,18 +15,7 @@ import {
 } from 'react-native'
 import PropTypes from 'prop-types';
 import Toast from 'react-native-easy-toast';
-import Spinner from 'react-native-spinkit';
-
-const checkNum = (num) => {
-    if (num) {
-        if (num.length > 11) {
-            return num.slice(0, 11);
-        }
-        else {
-            return num;
-        }
-    }
-};
+import IndicatorModal from '../components/IndicatorModal';
 
 export default class LoginVC extends Component {
     static propTypes = {
@@ -73,19 +62,14 @@ export default class LoginVC extends Component {
             this.refs.toast.show("请输入正确长度的密码");
         }
         else {
-            this.setState({isSpinnerVisible : true});
+            this.refIndicator.show();
             let data = {mobile:this.state.phoneNum, password:this.state.password};
 
             NetUtil.post(appUrl + 'index.php/Mobile/User/login/', data)
                 .then(
                     (result)=>{
-                        this.setState({isSpinnerVisible : false});
+                        this.refIndicator.hide();
                         if (result.code === 0) {
-                            // storage.save({
-                            //     key: 'userData', // 注意:请不要在key中使用_下划线符号!
-                            //     data: result.data,
-                            // });
-                            // global.userData = result.data;
                             saveUserData(result.data);
                             this.props.navigation.dispatch(PublicResetAction('Main'));
                         }
@@ -93,7 +77,7 @@ export default class LoginVC extends Component {
                             this.refs.toast.show(result.message);
                         }
                     },(error)=>{
-                        this.setState({isSpinnerVisible : false});
+                        this.refIndicator.hide();
                         this.refs.toast.show(error);
                     });
         }
@@ -118,7 +102,7 @@ export default class LoginVC extends Component {
                             maxLength={appData.appMaxLengthPhone}
                             onChangeText={(text) => {
                                 this.setState({
-                                    phoneNum: checkNum(text)
+                                    phoneNum: text
                                 })
                             }}
                             value={this.state.phoneNum}
@@ -152,16 +136,6 @@ export default class LoginVC extends Component {
                     </View>
                 </View>
 
-                <View style={{height:0}}>
-                    <Spinner style={{
-                        flex: 1,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        alignSelf: 'center',
-                        backgroundColor: "red",
-                    }} isVisible={this.state.isSpinnerVisible} size={40} type={'Arc'} color={"gray"}/>
-                </View>
-
                 <TouchableOpacity style={styles.cfmButton} onPress={this.onLoginBtnPress}>
                     <ImageBackground style={styles.cfmButtonImage} source={require('../images/button_login.png')}>
                         <Text style={styles.btnText}>
@@ -182,6 +156,7 @@ export default class LoginVC extends Component {
                     </Text>
                 </View>
                 <Toast ref="toast" position={'center'}/>
+                <IndicatorModal ref={o => this.refIndicator = o}/>
             </View >
         )
     }

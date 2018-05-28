@@ -10,22 +10,10 @@ import {
     Picker,
 } from 'react-native'
 
+import IndicatorModal from '../components/IndicatorModal';
 import CustomTextInput from '../components/CustomTextInput'
 import ActionSheet from 'react-native-actionsheet'
 import Toast from 'react-native-easy-toast';
-
-const checkNum = (num) => {
-    if(num) {
-
-        if (num.length > 11) {
-            return num.slice(0, 11);
-        }
-        else {
-            return num;
-        }
-        
-    }
-};
 
 export default class Register extends Component {
     constructor(props) {
@@ -81,9 +69,11 @@ export default class Register extends Component {
                 usertype: usertype
             };
 
+            this.refIndicator.show();
             NetUtil.post(appUrl + 'index.php/Mobile/User/register/', data)
                 .then(
                     (result)=>{
+                        this.refIndicator.hide();
                         if (result.code === 0) {
                             PublicAlert('注册完成', '',
                                 [{text:"确定", onPress:this.goBack.bind(this)}]
@@ -93,6 +83,7 @@ export default class Register extends Component {
                             this.refs.toast.show(result.message);
                         }
                     },(error)=>{
+                        this.refIndicator.hide();
                         this.refs.toast.show(error);
                     });
         }
@@ -209,7 +200,7 @@ export default class Register extends Component {
                         maxLength={appData.appMaxLengthPhone}
                         onChangeText={(text) => {
                             this.setState({
-                                phoneNum : checkNum(text)
+                                phoneNum : text
                             })
                         }}
                         value={phoneNum}
@@ -284,6 +275,7 @@ export default class Register extends Component {
                     onPress={this.onSelectRoleType.bind(this)}
                 />
                 <Toast ref="toast" position={'center'}/>
+                <IndicatorModal ref={o => this.refIndicator = o}/>
             </View >
         )
     }
