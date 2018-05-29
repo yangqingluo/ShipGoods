@@ -14,7 +14,6 @@ import CustomItem from '../../components/CustomItem';
 import StarScore from '../../components/StarScore';
 import Communications from '../../util/AKCommunications';
 import Toast from 'react-native-easy-toast';
-import px2dp from "../../util";
 
 
 class RightHeader extends Component {
@@ -201,7 +200,7 @@ export default class HomeShipDetailVC extends Component {
     renderSubViewForIndex(item, index) {
         let info = this.state.detailInfo;
         if (item.idKey === 'credit') {
-            return <StarScore style={{marginLeft:px2dp(5)}} itemEdge={px2dp(5)} currentScore={info.credit}/>;
+            return <StarScore style={{marginLeft:5}} itemEdge={5} currentScore={info.credit}/>;
         }
         else if (item.idKey === 'phone' && this.isOrdered()) {
             if (objectNotNull(info.goods_owner)) {
@@ -217,14 +216,14 @@ export default class HomeShipDetailVC extends Component {
     _renderListItem() {
         return this.config.map((item, i) => {
             return (
-                <View key={'cell' + i} style={{paddingLeft: px2dp(10), paddingRight: px2dp(20)}}>
+                <View key={'cell' + i} style={{paddingLeft: 10, paddingRight: 20}}>
                     <CustomItem key={i} {...item}
                                 showArrowForward={false}
                                 subName={this.renderSubNameForIndex(item, i)}
                                 noSeparator={true}>
                         {this.renderSubViewForIndex(item, i)}
                     </CustomItem>
-                    <View style={{height: px2dp(1), marginLeft: px2dp(10)}}>
+                    <View style={{height: 1, marginLeft: 10}}>
                         <DashLine backgroundColor={appData.appSeparatorLightColor} len={(screenWidth - 40)/ appData.appDashWidth}/>
                     </View>
                 </View>);
@@ -238,20 +237,20 @@ export default class HomeShipDetailVC extends Component {
         return (
             <View style={appStyles.container}>
                 <ScrollView style={{flex: 1, backgroundColor:'#fff'}}>
-                    <View style={{backgroundColor:'#81c6ff', flexDirection: 'row', justifyContent: "space-between", height:px2dp(26)}}>
-                        <Text style={{fontSize:px2dp(10), color:'white', marginLeft:px2dp(10), marginTop:px2dp(8)}}>{'发票编号：' + info.billing_sn}</Text>
-                        <Text style={{fontSize:px2dp(10), color:'white', marginRight:px2dp(10), marginTop:px2dp(8)}}>{info.create_timetext}</Text>
+                    <View style={{backgroundColor:'#81c6ff', flexDirection: 'row', justifyContent: "space-between", height:26}}>
+                        <Text style={{fontSize:10, color:'white', marginLeft:10, marginTop:8}}>{'发票编号：' + info.billing_sn}</Text>
+                        <Text style={{fontSize:10, color:'white', marginRight:10, marginTop:8}}>{info.create_timetext}</Text>
                     </View>
-                    <View style={{backgroundColor:'#f2f9ff', flexDirection: 'row',  alignItems: "center", justifyContent: "space-between", height:px2dp(51)}}>
-                        <Text style={{fontSize:px2dp(14), color:appData.appTextColor, marginLeft:px2dp(18), fontWeight:'bold'}}>{info.empty_port_name + ' / ' + info.ship_name}</Text>
-                        <Text style={{fontSize:px2dp(14), color:appData.appBlueColor, marginRight:px2dp(18), fontWeight:'bold'}}>{info.tonnage + ' T'}</Text>
+                    <View style={{backgroundColor:'#f2f9ff', flexDirection: 'row',  alignItems: "center", justifyContent: "space-between", height:51}}>
+                        <Text style={{fontSize:14, color:appData.appTextColor, marginLeft:18, fontWeight:'bold'}}>{info.empty_port_name + ' / ' + info.ship_name}</Text>
+                        <Text style={{fontSize:14, color:appData.appBlueColor, marginRight:18, fontWeight:'bold'}}>{info.tonnage + ' T'}</Text>
                     </View>
                     {this._renderListItem()}
-                    <View style={{paddingRight:px2dp(18), height:px2dp(30), flexDirection: 'row',  alignItems: "center", justifyContent: "flex-end"}}>
-                        <Text style={{fontSize:px2dp(11), color:appData.appSecondaryTextColor}}>{'浏览'+ info.view_num + ' 收藏' + info.collect_num}</Text>
+                    <View style={{paddingRight:18, height:30, flexDirection: 'row',  alignItems: "center", justifyContent: "flex-end"}}>
+                        <Text style={{fontSize:11, color:appData.appSecondaryTextColor}}>{'浏览'+ info.view_num + ' 收藏' + info.collect_num}</Text>
                     </View>
-                    <View style={{paddingHorizontal:px2dp(18)}}>
-                        <Image source={require('../../images/icon_beizhu.png')} style={{width: px2dp(57), height: px2dp(21), resizeMode: "cover"}}/>
+                    <View style={{paddingHorizontal:18}}>
+                        <Image source={require('../../images/icon_beizhu.png')} style={{width: 57, height: 21, resizeMode: "cover"}}/>
                         <Text underlineColorAndroid="transparent"
                                    style={styles.textInput}
                                    multiline={true}
@@ -262,11 +261,11 @@ export default class HomeShipDetailVC extends Component {
                     </View>
                     {ordered ?
                         <View style={{alignItems: "center", justifyContent: "space-between"}}>
-                            <Text style={{marginTop: px2dp(10), fontSize:px2dp(20), color:appData.appBlueColor, fontWeight: appData.appFontWeightMedium}}>{"预约中"}</Text>
-                            <Text style={{marginTop: px2dp(10), fontSize:px2dp(12), color:appData.appSecondaryTextColor, fontWeight: appData.appFontWeightLight}}>{"货盘已推送至船东，请等待船东报价或者直接联系船东！"}</Text>
+                            <Text style={{marginTop: 10, fontSize:20, color:appData.appBlueColor, fontWeight: appData.appFontWeightMedium}}>{"预约中"}</Text>
+                            <Text style={{marginTop: 10, fontSize:12, color:appData.appSecondaryTextColor, fontWeight: appData.appFontWeightLight}}>{"货盘已推送至船东，请等待船东报价或者直接联系船东！"}</Text>
                         </View>
                         : null}
-                    <View style={{height: px2dp(60)}} />
+                    <View style={{height: 60}} />
                 </ScrollView>
                 {ordered ? null : <View style={{position: "absolute", bottom: 20, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
                     <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)}>
@@ -281,12 +280,12 @@ export default class HomeShipDetailVC extends Component {
 }
 const styles = StyleSheet.create({
     textInput: {
-        marginTop: px2dp(10),
-        minHeight: px2dp(46),
-        borderRadius: px2dp(6),
-        fontSize: px2dp(16),
-        paddingHorizontal: px2dp(28),
-        paddingVertical: px2dp(15),
+        marginTop: 10,
+        minHeight: 46,
+        borderRadius: 6,
+        fontSize: 16,
+        paddingHorizontal: 28,
+        paddingVertical: 15,
         color: '#535353',
         backgroundColor: appData.appGrayColor,
     },

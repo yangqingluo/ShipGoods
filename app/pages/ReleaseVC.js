@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
     StyleSheet,
     Text,
+    TextInput,
     View,
     Image,
     ScrollView,
@@ -82,7 +83,7 @@ export default class ReleaseVC extends Component {
                 {idKey:"demurrage", name:"滞期费", logo:require('../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectDemurrage")},
                 {idKey:"clean_deley", name:"结算时间", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectCleanDeley")},
             ];
-        this.areaTypes = ['取消', '南上', '北下', '上江', '下江', '运河'];
+        this.courseTypes = ['取消', '南上', '北下', '上江', '下江', '运河'];
         this.cleanDeleyTypes = ['取消', '15', '30', '45', '60'];
     }
 
@@ -100,47 +101,51 @@ export default class ReleaseVC extends Component {
     };
 
     toReleaseForShipOwner() {
-        if (this.state.ship === null) {
+        let {ship, downloadOilSelectedList, empty_port, empty_time, empty_delay, course, uploadOilSelectedList, remark} = this.state;
+        if (ship === null) {
             this.refToast.show("请选择船舶");
         }
-        else if (this.state.downloadOilSelectedList.length === 0) {
+        else if (downloadOilSelectedList.length === 0) {
             this.refToast.show("请选择下载货品");
         }
-        else if (this.state.empty_port === null) {
+        else if (empty_port === null) {
             this.refToast.show("请选择空船港");
         }
-        else if (this.state.empty_time === null) {
+        else if (empty_time === null) {
             this.refToast.show("请选择空船期");
         }
-        else if (this.state.course === 0) {
+        else if (course === 0) {
             this.refToast.show("请选择可运航向");
         }
-        else if (this.state.uploadOilSelectedList.length === 0) {
+        else if (uploadOilSelectedList.length === 0) {
             this.refToast.show("请选择上载货品");
         }
+        else if (remark.length === 0) {
+            this.refToast.show("请输入您的备注");
+        }
         else {
-            let downloadList = this.state.downloadOilSelectedList.map(
+            let downloadList = downloadOilSelectedList.map(
                 (info) => {
                     return {goods_id: info.goods_id};
                 }
             );
 
-            let uploadList = this.state.uploadOilSelectedList.map(
+            let uploadList = uploadOilSelectedList.map(
                 (info) => {
                     return {goods_id: info.goods_id};
                 }
             );
 
             let data = {
-                ship_id: this.state.ship.ship_id,
+                ship_id: ship.ship_id,
                 upload_oil_list: uploadList,
                 download_oil_list: downloadList,
-                empty_port: this.state.empty_port.port_id,
-                empty_port_name: this.state.empty_port.port_name,
-                empty_time: this.state.empty_time.Format("yyyy-MM-dd"),
-                empty_delay: this.state.empty_delay,
-                course: this.state.course,
-                remark: 'from_ios',
+                empty_port: empty_port.port_id,
+                empty_port_name: empty_port.port_name,
+                empty_time: empty_time.Format("yyyy-MM-dd"),
+                empty_delay: empty_delay,
+                course: course,
+                remark: remark,
             };
 
             NetUtil.post(appUrl + 'index.php/Mobile/Ship/add_ship_task/', data)
@@ -161,35 +166,39 @@ export default class ReleaseVC extends Component {
     }
 
     toReleaseForGoodsOwner() {
-        if (this.state.goodsSelectedList.length === 0) {
+        let {goodsSelectedList, tonnage, price, is_bargain, loading_port, unloading_port, loading_time, loading_delay, wastage, demurrage, clean_deley, remark} = this.state;
+        if (goodsSelectedList.length === 0) {
             this.refToast.show("请选择货品");
         }
-        else if (this.state.tonnage === 0) {
+        else if (tonnage === 0) {
             this.refToast.show("请设置吨位");
         }
-        else if (this.state.price === 0) {
+        else if (price === 0) {
             this.refToast.show("请设置运价");
         }
-        else if (this.state.loading_port === null) {
+        else if (loading_port === null) {
             this.refToast.show("请选择装船港");
         }
-        else if (this.state.unloading_port === null) {
+        else if (unloading_port === null) {
             this.refToast.show("请选择卸船港");
         }
-        else if (this.state.loading_time === null) {
+        else if (loading_time === null) {
             this.refToast.show("请选择发货时间");
         }
-        else if (this.state.wastage.length === 0) {
+        else if (wastage.length === 0) {
             this.refToast.show("请设置损耗");
         }
-        else if (this.state.demurrage === 0) {
+        else if (demurrage === 0) {
             this.refToast.show("请选择滞期费");
         }
-        else if (this.state.clean_deley === 0) {
+        else if (clean_deley === 0) {
             this.refToast.show("请选择结算时间");
         }
+        else if (remark.length === 0) {
+            this.refToast.show("请输入您的备注");
+        }
         else {
-            let goodsList = this.state.goodsSelectedList.map(
+            let goodsList = goodsSelectedList.map(
                 (info) => {
                     return {goods_id: info.goods_id};
                 }
@@ -197,23 +206,21 @@ export default class ReleaseVC extends Component {
 
             let data = {
                 goods: goodsList,
-                tonnage: parseInt(this.state.tonnage) * 200,
-                ton_section: parseInt(this.state.tonnage),
-                price: this.state.price,
-                is_bargain: this.state.is_bargain,
-                loading_port: this.state.loading_port.port_id,
-                loading_port_name: this.state.loading_port.port_name,
-                unloading_port: this.state.unloading_port.port_id,
-                unloading_port_name: this.state.unloading_port.port_name,
-                loading_time: createRequestTime(this.state.loading_time),
-                loading_delay: this.state.loading_delay,
-                wastage: this.state.wastage,
-                demurrage: parseInt(demurrageTypes[this.state.demurrage]),
-                clean_deley: this.cleanDeleyTypes[this.state.clean_deley],
-                remark: 'from_ios',
+                tonnage: parseInt(tonnage) * 200,
+                ton_section: parseInt(tonnage),
+                price: price,
+                is_bargain: is_bargain,
+                loading_port: loading_port.port_id,
+                loading_port_name: loading_port.port_name,
+                unloading_port: unloading_port.port_id,
+                unloading_port_name: unloading_port.port_name,
+                loading_time: createRequestTime(loading_time),
+                loading_delay: loading_delay,
+                wastage: wastage,
+                demurrage: parseInt(demurrageTypes[demurrage]),
+                clean_deley: this.cleanDeleyTypes[clean_deley],
+                remark: remark,
             };
-
-            // PublicAlert(JSON.stringify(data));
 
             NetUtil.post(appUrl + 'index.php/Mobile/Goods/add_goods_task/', data)
                 .then(
@@ -547,7 +554,7 @@ export default class ReleaseVC extends Component {
             (info) => {
                 return info.goods_name;
             }
-        )
+        );
         this.setState({
             upload_oil_list: dataList.join(','),
             uploadOilSelectedList: backData
@@ -555,7 +562,12 @@ export default class ReleaseVC extends Component {
     }
 
     textInputChanged(text, key){
-        if (key === 'tonnage') {
+        if (key === "remark") {
+            this.setState({
+                remark: text,
+            });
+        }
+        else if (key === 'tonnage') {
             this.setState({
                 tonnage: text,
             });
@@ -652,7 +664,7 @@ export default class ReleaseVC extends Component {
             return this.state.loading_time.Format("yyyy.MM.dd") + '±' + this.state.loading_delay + '天';
         }
         else if (item.idKey === 'course' && this.state.course > 0) {
-            return this.areaTypes[this.state.course];
+            return this.courseTypes[this.state.course];
         }
         else if (item.idKey === 'clean_deley' && this.state.clean_deley > 0) {
             return '完货' + this.cleanDeleyTypes[this.state.clean_deley] + '天内';
@@ -683,13 +695,32 @@ export default class ReleaseVC extends Component {
     }
 
     render() {
-        const { navigate } = this.props.navigation;
+        let {remark} = this.state;
         return (
             <View style={appStyles.container}>
+                <ScrollView style={styles.scrollView}>
+                    {this._renderListItem()}
+                    <View style={{height: appData.appSeparatorHeight, backgroundColor: appData.appSeparatorLightColor}}/>
+                    <View style={{paddingHorizontal:18, paddingVertical:15}}>
+                        <Image source={require('../images/icon_beizhu.png')} style={{width: 57, height: 21, resizeMode: "cover"}}/>
+                        <TextInput underlineColorAndroid="transparent"
+                                   style={styles.textInput}
+                                   multiline={true}
+                                   placeholder={"请在此输入您的备注"}
+                                   placeholderTextColor={appData.appSecondaryTextColor}
+                                   onChangeText={(text) => {
+                                       this.textInputChanged(text, "remark");
+                                   }}
+                                   value={remark}
+                        >
+                        </TextInput>
+                    </View>
+                    <View style={{height:80}} />
+                </ScrollView>
                 <ActionSheet
                     ref={o => this.areaTypeActionSheet = o}
                     title={'请选择运输航向'}
-                    options={this.areaTypes}
+                    options={this.courseTypes}
                     cancelButtonIndex={0}
                     // destructiveButtonIndex={1}
                     onPress={this.onSelectInvoiceType.bind(this)}
@@ -710,9 +741,6 @@ export default class ReleaseVC extends Component {
                     // destructiveButtonIndex={1}
                     onPress={this.onSelectDemurrageType.bind(this)}
                 />
-                <ScrollView style={styles.scrollView}>
-                    {this._renderListItem()}
-                </ScrollView>
                 <Toast ref={o => this.refToast = o} position={'center'}/>
             </View>
         );
@@ -723,46 +751,14 @@ const styles = StyleSheet.create({
         marginBottom: 0,
         backgroundColor: "#fff"
     },
-    item:{
-        borderBottomWidth: 1,
-        borderBottomColor: "#f8f8f8",
-        paddingVertical: 10,
-        flexDirection: "row",
-        justifyContent: "space-between"
-    },
-    active: {
-        borderColor: "#81c2ff",
-        color: "#0096ff"
-    },
-    label: {
-        minWidth: 45,
-        fontSize: 13,
-        color:"#222",
-        // paddingTop: 8
-    },
     textInput: {
-        flex: 1,
-        paddingVertical: 0,
-        height: 30,
-        fontSize: 13,
-        paddingHorizontal: 10
+        marginTop: 10,
+        minHeight: 120,
+        borderRadius: 6,
+        fontSize: 16,
+        paddingHorizontal: 14,
+        paddingVertical: 15,
+        color: appData.appTextColor,
+        backgroundColor: appData.appGrayColor,
     },
-    radio: {
-        paddingHorizontal: 8,
-        paddingVertical: 4,
-        color: "#666",
-        borderWidth: 1,
-        borderColor: "#ddd",
-        borderRadius: 5,
-        fontSize: 13,
-        backgroundColor: "#fff"
-    },
-    avatar: {
-        borderRadius: 5,
-        marginLeft: 10,
-        width: 60,
-        height: 36,
-        justifyContent: "center",
-        alignItems: "center"
-    }
 });
