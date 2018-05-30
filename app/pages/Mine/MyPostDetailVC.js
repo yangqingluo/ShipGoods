@@ -92,7 +92,7 @@ export default class MyPostDetailVC extends Component {
                     {
                         info: info,
                         title: "已有" + offer_num + "人预约",
-                        is_offer: "1",
+                        is_offer: "0",
                     });
             }
         }
