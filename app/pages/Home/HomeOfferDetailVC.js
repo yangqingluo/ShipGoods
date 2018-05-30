@@ -217,6 +217,7 @@ export default class HomeOfferDetailVC extends Component {
         let info = this.state.detailInfo;
         let price = parseInt(info.price);
         let isBargain = offerIsBargain(this.state.detailInfo);
+        let {remark} = this.state.detailInfo;
         return (
             <View style={appStyles.container}>
                 <ScrollView style={{flex: 1, backgroundColor:'#fff'}}
@@ -259,7 +260,7 @@ export default class HomeOfferDetailVC extends Component {
                               multiline={true}
                               editable={false}
                         >
-                            {info.remark.length === 0 ? '此油品暂无备注' : info.remark}
+                            {objectNotNull(remark) ? remark : '此油品暂无备注'}
                         </Text>
                     </View>
                 </ScrollView>

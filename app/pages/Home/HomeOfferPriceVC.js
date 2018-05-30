@@ -60,6 +60,10 @@ export default class HomeOfferPriceVC extends Component {
     };
 
     onSubmitBtnAction = () => {
+        // PublicAlert("测试跳转",'',
+        //     [{text:"确定", onPress:this.toGotoTwicePriceVC.bind(this)}]
+        // );
+
         if (this.state.ship === null) {
             this.refToast.show("请选择船舶");
         }

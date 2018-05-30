@@ -121,8 +121,17 @@ MyNavigator.router.getStateForAction = (action, state) => {
         }
         else {
             if (action.key === "HomeOfferTwicePrice") {
-                let routes = state.routes.slice(0, 1);
+                let routes = state.routes.slice(0, state.routes.length - 2);
                 routes.push({routeName: "HomeOfferTwicePrice"});
+                const purposeState = {
+                    ...state,
+                    routes: routes,
+                    index: routes.length - 1,
+                };
+                return purposeState;
+            }
+            else {
+                let routes = state.routes.slice(0, state.routes.length - 1);
                 const purposeState = {
                     ...state,
                     routes: routes,

@@ -58,14 +58,14 @@ export default class MyPostOrderVC extends HomeOrderVC {
         let {is_offer} = this.props.navigation.state.params;
         if (offerIsOffer(is_offer)) {
             appSecondPriceParams = {info : info.item};
-            appHomeVC.props.navigation.navigate('HomeOfferTwicePrice',
+            this.props.navigation.navigate('HomeOfferTwicePrice',
                 {
                     info: info.item,
                     is_offer: is_offer,
                 });
         }
         else {
-            appHomeVC.props.navigation.navigate('HomeOfferDetail',
+            this.props.navigation.navigate('HomeOfferDetail',
                 {
                     info: info.item,
                     is_offer: is_offer,
