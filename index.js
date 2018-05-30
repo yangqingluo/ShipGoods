@@ -11,7 +11,6 @@ import LoginVC from './app/pages/LoginVC';
 import Register from './app/pages/Register';
 import AddAuth from './app/pages/AddAuth';
 import AddShip from './app/pages/AddShip';
-import MyShip from './app/pages/Mine/MyShip';
 import SelectPort from './app/components/SelectPortVC';
 import SelectPortSecond from './app/components/SelectPortSecond'
 import SelectEmptyTimeVC from './app/components/SelectEmptyTimeVC';
@@ -36,6 +35,8 @@ import OrderTransportVC from './app/pages/Order/OrderTransportVC';
 import OrderTransportEditVC from './app/pages/Order/OrderTransportEditVC';
 import OrderDetailVC from './app/pages/Order/OrderDetailVC';
 
+import MyShip from './app/pages/Mine/MyShip';
+import MyPostOrderVC from './app/pages/Mine/MyPostOrderVC';
 import MyBookVC from './app/pages/Mine/MyBookVC';
 import MyPostVC from './app/pages/Mine/MyPostVC';
 import MyPostDetailVC from './app/pages/Mine/MyPostDetailVC';
@@ -56,7 +57,6 @@ const MyNavigator = StackNavigator({
         AddShip:{screen: AddShip},
         SelectPort:{screen: SelectPort},
         SelectPortSecond:{screen: SelectPortSecond},
-        MyShip:{screen: MyShip},
         CustomSelect:{screen: CustomSelect},
         CustomSectionSelect:{screen: CustomSectionSelect},
         SelectEmptyTimeVC:{screen: SelectEmptyTimeVC},
@@ -79,9 +79,11 @@ const MyNavigator = StackNavigator({
         OrderTransportEdit:{screen:OrderTransportEditVC},
         OrderDetail:{screen:OrderDetailVC},
 
+        MyShip:{screen: MyShip},
         MyBook:{screen:MyBookVC},
         MyPost:{screen:MyPostVC},
         MyPostDetail:{screen:MyPostDetailVC},
+        MyPostOrder:{screen: MyPostOrderVC},
         MoreSettings:{screen:MoreSettingsVC},
         MyFavors:{screen:MyFavorsVC},
         ChangeContact:{screen:ChangeContactVC},

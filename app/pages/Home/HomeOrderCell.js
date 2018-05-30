@@ -25,11 +25,6 @@ export default class HomeOrderCell extends Component {
 
     render() {
         let {info} = this.props;
-        let goodsList = info.item.goodslist.map(
-            (info) => {
-                return info.goods_name;
-            }
-        );
         let isOrdered = false;
         return (
             <View style={{opacity: isOrdered ? 0.5 : 1.0}}>

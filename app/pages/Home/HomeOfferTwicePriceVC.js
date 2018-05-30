@@ -177,14 +177,6 @@ export default class HomeOfferTwicePriceVC extends Component {
         else if (item.idKey === 'loading_time') {
             return info.loading_timetext;
         }
-        else if (item.idKey === 'goodslist') {
-            let list = info.goodslist.map(
-                (info) => {
-                    return info.goods_name;
-                }
-            );
-            return list.join(" ");
-        }
 
         return '';
     }

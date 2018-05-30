@@ -84,19 +84,21 @@ export default class MyPostDetailVC extends Component {
     };
 
     cellSelected = (key, data = {}) =>{
-        // let info = this.state.detailInfo;
-        // if (key === "SelectOffer") {
-        //     let offer_num = parseInt(info.offer_num);
-        //     if (offer_num > 0) {
-        //         appHomeVC.props.navigation.navigate('HomeOrderShipList',
-        //             {
-        //                 info: this.state.detailInfo,
-        //             });
-        //     }
-        // }
-        // else {
-        //     PublicAlert(key);
-        // }
+        let info = this.state.detailInfo;
+        if (key === "SelectOffer") {
+            let offer_num = parseInt(info.appoint_num);
+            if (offer_num > 0) {
+                appHomeVC.props.navigation.navigate('MyPostOrder',
+                    {
+                        info: info,
+                        title: "已有" + offer_num + "人预约",
+                        is_offer: "1",
+                    });
+            }
+        }
+        else {
+            PublicAlert(key);
+        }
     };
 
     renderSubNameForIndex(item, index) {
