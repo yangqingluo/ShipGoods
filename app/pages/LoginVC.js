@@ -179,9 +179,8 @@ const styles = StyleSheet.create({
     },
     textInput: {
         height: 50,
-        //width: 200
         flex: 1,
-        //backgroundColor: '#0ff',
+        paddingLeft:0,
     },
     txtBorder: {
         height: 40,

@@ -306,6 +306,8 @@ const styles = StyleSheet.create({
     },
     textInput: {
         flex: 1,
+        height: 50,
+        paddingLeft:0,
     },
     sendChk: {
         height: 20,
