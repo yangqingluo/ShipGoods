@@ -37,12 +37,12 @@ export default class ReleaseVC extends Component {
             empty_port: null,//空船港
             empty_time: new Date(),//空船期
             empty_delay: 0,//空船延迟
-            course: 0,//运输航向 1：南上 2：北下 3：上江 4：下江 5：运河（多选，用“##”隔开）
+            course: '',//运输航向 1：南上 2：北下 3：上江 4：下江 5：运河（多选，用“##”隔开）
             remark: '',//备注
 
             uploadOilSelectedList: [],
             downloadOilSelectedList: [],
-
+            courseList: [],
 
             tonnage: '',//否 装载吨位
             ton_section: 0, //否 吨位区间值
@@ -83,7 +83,6 @@ export default class ReleaseVC extends Component {
                 {idKey:"demurrage", name:"滞期费", logo:require('../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectDemurrage")},
                 {idKey:"clean_deley", name:"结算时间", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectCleanDeley")},
             ];
-        this.courseTypes = ['取消', '南上', '北下', '上江', '下江', '运河'];
         this.cleanDeleyTypes = ['取消', '15', '30', '45', '60'];
     }
 
@@ -248,7 +247,17 @@ export default class ReleaseVC extends Component {
     cellSelected(key, data = {}){
         dismissKeyboard();
         if (key === "SelectCourse") {
-            this.areaTypeActionSheet.show();
+            this.props.navigation.navigate(
+                'SelectText',
+                {
+                    key: key,
+                    title: '可运航向',
+                    dataList: shipCourseTypes,
+                    selectedList:this.state.courseList,
+                    maxSelectCount:shipCourseTypes.length,
+                    callBack:this.callBackFromCourseVC.bind(this)
+                }
+            );
         }
         else if (key === "SelectCleanDeley") {
             this.cleanDelayTypeActionSheet.show();
@@ -331,6 +340,15 @@ export default class ReleaseVC extends Component {
         }
         else {
             PublicAlert(key);
+        }
+    }
+
+    callBackFromCourseVC(key, backData) {
+        if (key === "SelectCourse") {
+            this.setState({
+                course: backData.join("##"),
+                courseList: backData,
+            });
         }
     }
 
@@ -686,8 +704,8 @@ export default class ReleaseVC extends Component {
         else if (item.idKey === 'loading_time' && this.state.loading_time !== null) {
             return this.state.loading_time.Format("yyyy.MM.dd") + '±' + this.state.loading_delay + '天';
         }
-        else if (item.idKey === 'course' && this.state.course > 0) {
-            return this.courseTypes[this.state.course];
+        else if (item.idKey === 'course' && this.state.course.length > 0) {
+            return getShipCourseTypesText(this.state.course);
         }
         else if (item.idKey === 'clean_deley' && this.state.clean_deley > 0) {
             return '完货' + this.cleanDeleyTypes[this.state.clean_deley] + '天内';

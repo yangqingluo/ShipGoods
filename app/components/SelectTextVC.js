@@ -6,12 +6,12 @@ import {
     TouchableOpacity,
     FlatList,
 } from 'react-native';
-import SelectCell from './SelectCell'
+import SelectTextCell from './SelectTextCell'
 
 export default class CustomSelect extends Component {
     static navigationOptions = ({ navigation }) => (
         {
-            title: navigation.state.params.title,
+            title: navigation.state.params.title || '请选择',
             headerRight: <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
                 <TouchableOpacity
                     onPress={navigation.state.params.clickParams}
@@ -24,6 +24,7 @@ export default class CustomSelect extends Component {
     constructor(props){
         super(props);
         this.state = {
+            key: this.props.navigation.state.params.key,
             selectedList: this.props.navigation.state.params.selectedList,
             dataList: this.props.navigation.state.params.dataList,
             maxSelectCount:this.props.navigation.state.params.maxSelectCount,
@@ -36,7 +37,7 @@ export default class CustomSelect extends Component {
             PublicAlert('请至少选择一项');
         }
         else {
-            this.props.navigation.state.params.callBack(this.state.selectedList);
+            this.props.navigation.state.params.callBack(this.state.key, this.state.selectedList.sort(compare));
             this.props.navigation.goBack();
         }
     };
@@ -44,50 +45,24 @@ export default class CustomSelect extends Component {
         this.props.navigation.setParams({clickParams:this._btnClick})
     }
 
-    requestData = () => {
-        this.setState({refreshing: true});
-        this.requestRecommend()
-    };
-
-    requestRecommend = async () => {
-        let data = {pid:'0', deep:1};
-        NetUtil.post(appUrl + 'index.php/Mobile/Goods/get_all_goods/', data)
-            .then(
-                (result)=>{
-                    if (result.code === 0) {
-                        this.setState({
-                            dataList: result.data,
-                            refreshing: false,
-                        })
-                    }
-                    else {
-                        this.setState({
-                            refreshing: false,
-                        })
-                    }
-                },(error)=>{
-                    this.setState({
-                        refreshing: false,
-                    })
-                });
-    };
-
     onCellSelected = (info: Object) => {
-        if (this.state.maxSelectCount === 1) {
-            this.state.selectedList = [info.item];
+        let {selectedList, maxSelectCount} = this.state;
+        let item = info.index + 1;
+        if (maxSelectCount === 1) {
+            selectedList = [item];
         }
         else {
-            let index = this.state.selectedList.indexOf(info.item);
+            let index = selectedList.indexOf(item);
             if (index === -1) {
-                if (this.state.selectedList.length >= this.state.maxSelectCount) {
-                    PublicAlert('最多只能选择' + this.state.maxSelectCount + '项');
+                if (selectedList.length >= maxSelectCount) {
+                    PublicAlert('最多只能选择' + maxSelectCount + '项');
                 }
                 else {
-                    this.state.selectedList.push(info.item);
+                    selectedList.push(item);
                 }
             }
             else {
-                this.state.selectedList.splice(index, 1);
+                selectedList.splice(index, 1);
             }
         }
         this.forceUpdate();
@@ -95,10 +70,10 @@ export default class CustomSelect extends Component {
 
     renderCell = (info: Object) => {
         return (
-            <SelectCell
+            <SelectTextCell
                 info={info}
                 onPress={this.onCellSelected}
-                selected={this.state.selectedList.indexOf(info.item) !== -1}
+                selected={this.state.selectedList.indexOf(info.index + 1) !== -1}
             />
         )
     };

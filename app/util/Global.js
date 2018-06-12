@@ -304,7 +304,7 @@ global.getShipStateText = function(state : Number) : String {
 
 global.shipAreaObjects = [{key: 1, name: '沿海'}, {key: 2, name: '内河（可进川）'}, {key: 3, name: '内河（不可进川)'}];
 global.shipAreaTypes = ['取消', '沿海', '内河（可进川）', '内河（不可进川)'];
-global.shipCourseTypes = ['取消', '南上', '北下', '上江', '下江', '运河'];
+global.shipCourseTypes = ['南上', '北下', '上江', '下江', '运河'];
 global.shipWastageTypes = ['取消', '船检量 -> 船检量', '罐发量 -> 入库量', '船检量 -> 入库量', '罐发量 -> 船检量'];
 global.transportStateTypes = ["抵锚", "靠泊", "开始装货", "装货完毕", "离港", "抵锚", "靠泊", "开始卸货", "卸货完毕", "离港"];
 
@@ -347,6 +347,23 @@ global.getShipAreaTypesText = function(area : Number) : String {
         return shipAreaTypes[area];
     }
     return "未知";
+};
+
+global.getShipCourseTypesText = function(course : String) : String {
+    if (course !== null && course.length > 0) {
+        let types = course.split("##");
+        let typesText = [];
+        for (let i = 0, len = types.length; i < len; i++) {
+            let index = parseInt(types[i]);
+            if (index > 0 && index <= shipCourseTypes.length) {
+                typesText.push(shipCourseTypes[index - 1]);
+            }
+        }
+        if (typesText.length > 0) {
+            return typesText.join(",");
+        }
+    }
+    return "";
 };
 
 global.isShipOwner = function() : boolean {
@@ -399,6 +416,10 @@ global.deepCopy = function(obj : Object) : Object {
     }
     return newobj;
 };
+
+global.compare = function compare(val1, val2){
+    return val1 > val2;
+}
 
 global.appAllGoods = [];
 global.appAllPortsFirst = [];

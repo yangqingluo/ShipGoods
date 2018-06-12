@@ -15,39 +15,13 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import Item from '../components/Item'
 import StarScore from '../components/StarScore'
 import Communications from '../util/AKCommunications';
-
-class RightHeader extends Component {
-    constructor(props) {
-        super(props)
-    }
-    onLogoutBtnPress = () => {
-        // 删除单个数据
-        storage.remove({
-            key: 'userData'
-        });
-        global.userData = null;
-
-        this.props.navigation.dispatch(PublicResetAction('Login'));
-    };
-    render() {
-        return (
-            <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
-                <TouchableOpacity
-                    onPress={this.onLogoutBtnPress}
-                >
-                    <Text style={{marginRight : 10}}>登出</Text>
-                </TouchableOpacity>
-            </View>
-        )
-    }
-}
+import Toast from "react-native-easy-toast";
 
 export default class MineVC extends Component {
     static navigationOptions = ({ navigation }) => ({
         headerTitle: '我的',
         tabBarLabel: '我的',
         headerLeft: <Text style={{marginLeft: 10}}>友船友货</Text>,
-        // headerRight: <RightHeader navigation={navigation} />,
     });
 
     constructor(props){
@@ -73,6 +47,11 @@ export default class MineVC extends Component {
                 {logo:require('../images/icon_s.png'), name:"更多设置", subName:"", onPress:this.goPage.bind(this, "MoreSettings")},
             ];
     }
+
+    componentDidMount() {
+        // this._onRefresh()
+    }
+
     goPage(key, data = {}){
         const { navigate } = this.props.navigation;
         if (key === 'Call') {
@@ -88,16 +67,11 @@ export default class MineVC extends Component {
             navigate(key);
         }
         else {
-            navigate('DetailVC', { title: key, des:'我是返回点击我' });
+
         }
     }
-    leftPress(){
 
-    }
-    rightPress(){
-
-    }
-    goProfile(){
+    goProfile() {
 
     }
 
@@ -111,9 +85,6 @@ export default class MineVC extends Component {
         }
     };
 
-    componentDidMount() {
-        // this._onRefresh()
-    }
     _onRefresh(){
         this.setState({refreshing: true});
         this.requestRecommend(true);
@@ -204,6 +175,7 @@ export default class MineVC extends Component {
                 >
                     {this._renderHeader()}
                 </ScrollView>
+                <Toast ref={o => this.refToast = o} position={'center'}/>
             </View>
         )
     }
