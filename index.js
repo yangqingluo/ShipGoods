@@ -16,6 +16,7 @@ import SelectPortSecond from './app/components/SelectPortSecond'
 import SelectEmptyTimeVC from './app/components/SelectEmptyTimeVC';
 import SelectWastageVC from './app/components/SelectWastageVC';
 import SelectPrice from './app/components/SelectPriceVC';
+import SelectTonnage from './app/components/SelectTonnageVC';
 import CustomSelect from './app/components/CustomSelect';
 import CustomSectionSelect from './app/components/CustomSectionSelect';
 import PublicWebVC from "./app/pages/PublicWebVC";
@@ -62,6 +63,7 @@ const MyNavigator = StackNavigator({
         SelectEmptyTimeVC:{screen: SelectEmptyTimeVC},
         SelectWastageVC:{screen: SelectWastageVC},
         SelectPrice:{screen: SelectPrice},
+        SelectTonnage:{screen: SelectTonnage},
         PublicWeb:{screen:PublicWebVC},
         PublicImageShow:{screen:PublicImageShowVC},
 

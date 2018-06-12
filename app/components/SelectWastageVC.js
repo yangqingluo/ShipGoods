@@ -7,7 +7,6 @@ import {
     TouchableOpacity
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import px2dp from "../util";
 
 export default class SelectWastageVC extends Component {
     static navigationOptions = ({ navigation }) => (
@@ -72,6 +71,24 @@ export default class SelectWastageVC extends Component {
     render() {
         return (
             <View style={appStyles.container}>
+                <ScrollView style={styles.scrollView}>
+                    <View style={{height:2}} />
+                    <TouchableOpacity
+                        style = {styles.cell}
+                        onPress={()=>this.showWastagePicker()}>
+                        <Text style={styles.text}>
+                            {this.state.wastageTitle > 0 ? shipWastageTypes[this.state.wastageTitle] : '请选择损耗类型'}
+                        </Text>
+                    </TouchableOpacity>
+                    <View style={{height:2}} />
+                    <TouchableOpacity
+                        style = {styles.cell}
+                        onPress={()=>this.showWastageNumberPicker()}>
+                        <Text style={styles.text}>
+                            {this.state.wastageNumber > 0 ? shipWastageNumberTypes[this.state.wastageNumber] : '请选择损耗千分比'}
+                        </Text>
+                    </TouchableOpacity>
+                </ScrollView>
                 <ActionSheet
                     ref={o => this.wastageTypeActionSheet = o}
                     title={''}
@@ -88,26 +105,6 @@ export default class SelectWastageVC extends Component {
                     // destructiveButtonIndex={1}
                     onPress={this.onSelectWastageNumberType.bind(this)}
                 />
-                <ScrollView
-                    style={styles.scrollView}
-                >
-                    <View style={{height:px2dp(2)}} />
-                    <TouchableOpacity
-                        style = {styles.cell}
-                        onPress={()=>this.showWastagePicker()}>
-                        <Text style={styles.text}>
-                            {this.state.wastageTitle > 0 ? shipWastageTypes[this.state.wastageTitle] : '请选择损耗类型'}
-                        </Text>
-                    </TouchableOpacity>
-                    <View style={{height:px2dp(2)}} />
-                    <TouchableOpacity
-                        style = {styles.cell}
-                        onPress={()=>this.showWastageNumberPicker()}>
-                        <Text style={styles.text}>
-                            {this.state.wastageNumber > 0 ? shipWastageNumberTypes[this.state.wastageNumber] : '请选择损耗千分比'}
-                        </Text>
-                    </TouchableOpacity>
-                </ScrollView>
             </View>
         );
     }
@@ -119,13 +116,13 @@ const styles = StyleSheet.create({
     cell: {
         flex: 1,
         backgroundColor: '#fff',
-        minHeight: px2dp(50),
+        minHeight: 50,
         justifyContent: "center",
         alignItems: "center",
     },
     text: {
         textAlign: 'center',
         color: appData.appBlueColor,
-        fontSize: px2dp(16),
+        fontSize: 16,
     }
 });

@@ -204,7 +204,7 @@ const LaunchURL = function(url) {
 };
 
 const getValidArgumentsFromArray = function(array, type) {
-	var validValues = [];
+	let validValues = [];
 	array.forEach(function(value) {
 		if(isCorrectType(type, value)) {
 			validValues.push(value);

@@ -44,7 +44,7 @@ export default class ReleaseVC extends Component {
             downloadOilSelectedList: [],
 
 
-            tonnage: 0,//否 装载吨位
+            tonnage: '',//否 装载吨位
             ton_section: 0, //否 吨位区间值
             price: '',//否 单价
             loading_port: null,//否 装货港
@@ -74,7 +74,7 @@ export default class ReleaseVC extends Component {
                 :
             [
                 {idKey:"goods", name:"货品名称", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectGoods")},
-                {idKey:"tonnage", name:"吨位", logo:require('../images/icon_red.png'), disable:true, numeric:true},
+                {idKey:"tonnage", name:"货量", logo:require('../images/icon_red.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectTonnage")},
                 {idKey:"price", name:"运价", logo:require('../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectPrice")},
                 {idKey:"loading_port", name:"装货港", logo:require('../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectLoadingPort")},
                 {idKey:"unloading_port",name:"卸货港", logo:require('../images/icon_orange.png'), disable:false, subName:"324", onPress:this.cellSelected.bind(this, "SelectUnloadingPort")},
@@ -169,14 +169,14 @@ export default class ReleaseVC extends Component {
     }
 
     toReleaseForGoodsOwner() {
-        let {goodsSelectedList, tonnage, price, is_bargain, loading_port, unloading_port, loading_time, loading_delay, wastage, demurrage, clean_deley, remark} = this.state;
+        let {goodsSelectedList, tonnage, ton_section, price, is_bargain, loading_port, unloading_port, loading_time, loading_delay, wastage, demurrage, clean_deley, remark} = this.state;
         if (goodsSelectedList.length === 0) {
             this.refToast.show("请选择货品");
         }
-        else if (tonnage === 0) {
-            this.refToast.show("请设置吨位");
+        else if (tonnage.length === 0) {
+            this.refToast.show("请设置货量");
         }
-        else if (price === 0) {
+        else if (price.length === 0) {
             this.refToast.show("请设置运价");
         }
         else if (loading_port === null) {
@@ -209,8 +209,8 @@ export default class ReleaseVC extends Component {
 
             let data = {
                 goods: goodsList,
-                tonnage: parseInt(tonnage) * 200,
-                ton_section: parseInt(tonnage),
+                tonnage: tonnage,
+                ton_section: ton_section,
                 price: price,
                 is_bargain: is_bargain,
                 loading_port: loading_port.port_id,
@@ -319,6 +319,16 @@ export default class ReleaseVC extends Component {
                     callBack:this.callBackFromPriceVC.bind(this)
                 });
         }
+        else if (key === "SelectTonnage") {
+            this.props.navigation.navigate(
+                "SelectTonnage",
+                {
+                    title: '货量',
+                    tonnage: this.state.tonnage,
+                    ton_section: this.state.ton_section,
+                    callBack:this.callBackFromTonnageVC.bind(this)
+                });
+        }
         else {
             PublicAlert(key);
         }
@@ -423,6 +433,13 @@ export default class ReleaseVC extends Component {
         this.setState({
             price: price,
             is_bargain: is_bargain,
+        })
+    }
+
+    callBackFromTonnageVC(tonnage, ton_section) {
+        this.setState({
+            tonnage: tonnage,
+            ton_section: ton_section,
         })
     }
 
@@ -680,6 +697,9 @@ export default class ReleaseVC extends Component {
         }
         else if (item.idKey === 'price' && this.state.price > 0) {
             return this.state.price + ' 元/吨 ' + (this.state.is_bargain === 1 ? "不议价" : "");
+        }
+        else if (item.idKey === 'tonnage' && this.state.tonnage.length > 0) {
+            return this.state.tonnage + '±' + this.state.ton_section + "吨";
         }
         else if (item.idKey === 'wastage') {
             return this.state.wastage;

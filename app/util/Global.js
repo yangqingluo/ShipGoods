@@ -219,6 +219,7 @@ let appData = {
     appMaxLengthVerifyCode: 4,
     appMaxLengthPhone: 11,
     appMaxLengthPassword: 20,
+    appMaxLengthTonnage: 10,
 };
 
 let appStyles = StyleSheet.create({
@@ -306,19 +307,28 @@ global.shipAreaTypes = ['取消', '沿海', '内河（可进川）', '内河（�
 global.shipCourseTypes = ['取消', '南上', '北下', '上江', '下江', '运河'];
 global.shipWastageTypes = ['取消', '船检量 -> 船检量', '罐发量 -> 入库量', '船检量 -> 入库量', '罐发量 -> 船检量'];
 global.transportStateTypes = ["抵锚", "靠泊", "开始装货", "装货完毕", "离港", "抵锚", "靠泊", "开始卸货", "卸货完毕", "离港"];
+
 global.createShipWastageNumberTypes = function() : Array {
     let array = ['取消'];
-    for (let i = 0.1; i < 4; i += 0.1) {
+    for (let i = 0.1; i <= 4; i += 0.1) {
         array.push(i.Format(1) + '‰');
     }
     return array;
 };
 global.shipWastageNumberTypes = createShipWastageNumberTypes();
 
+global.createTonSectionTypes = function() : Array {
+    let array = ['取消'];
+    for (let i = 0; i <= 5000; i += 500) {
+        array.push(i + '');
+    }
+    return array;
+};
+global.tonSectionTypes = createTonSectionTypes();
 
 global.createDemurrageTypes = function() : Array {
     let array = ['取消'];
-    for (let i = 0; i < 100000; i += 1000) {
+    for (let i = 0; i <= 100000; i += 1000) {
         array.push(i + '');
     }
     return array;
