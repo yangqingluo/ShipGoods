@@ -113,7 +113,7 @@ export default class ReleaseVC extends Component {
         else if (empty_time === null) {
             this.refToast.show("请选择空船期");
         }
-        else if (course === 0) {
+        else if (course.length === 0) {
             this.refToast.show("请选择可运航向");
         }
         else if (uploadOilSelectedList.length === 0) {
