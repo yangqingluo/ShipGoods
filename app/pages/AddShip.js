@@ -107,7 +107,7 @@ export default class AddShip extends Component {
             (info) => {
                 return info.goods_name;
             }
-        )
+        );
         this.setState({
             goodsList: backData,
             goods: dataList.join(',')

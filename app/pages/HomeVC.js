@@ -134,6 +134,7 @@ export default class HomeVC extends Component {
         const menu = <Menu ref={o => this.rightMenu = o} onItemSelected={this.onMenuItemSelected} navigation={this.props.navigation}/>;
         return (
             <SideMenu menu={menu}
+                      disableGestures={true}
                       isOpen={this.state.isOpen}
                       onChange={isOpen => this.updateMenuState(isOpen)}
                       menuPosition={'right'}>

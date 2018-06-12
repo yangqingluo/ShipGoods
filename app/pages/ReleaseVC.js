@@ -120,9 +120,9 @@ export default class ReleaseVC extends Component {
         else if (uploadOilSelectedList.length === 0) {
             this.refToast.show("请选择上载货品");
         }
-        else if (remark.length === 0) {
-            this.refToast.show("请输入您的备注");
-        }
+        // else if (remark.length === 0) {
+        //     this.refToast.show("请输入您的备注");
+        // }
         else {
             let downloadList = downloadOilSelectedList.map(
                 (info) => {
@@ -145,8 +145,11 @@ export default class ReleaseVC extends Component {
                 empty_time: empty_time.Format("yyyy-MM-dd"),
                 empty_delay: empty_delay,
                 course: course,
-                remark: remark,
             };
+
+            if (remark.length > 0) {
+                data.remark = remark;
+            }
 
             NetUtil.post(appUrl + 'index.php/Mobile/Ship/add_ship_task/', data)
                 .then(
@@ -194,9 +197,9 @@ export default class ReleaseVC extends Component {
         else if (clean_deley === 0) {
             this.refToast.show("请选择结算时间");
         }
-        else if (remark.length === 0) {
-            this.refToast.show("请输入您的备注");
-        }
+        // else if (remark.length === 0) {
+        //     this.refToast.show("请输入您的备注");
+        // }
         else {
             let goodsList = goodsSelectedList.map(
                 (info) => {
@@ -219,8 +222,11 @@ export default class ReleaseVC extends Component {
                 wastage: wastage,
                 demurrage: parseInt(demurrageTypes[demurrage]),
                 clean_deley: this.cleanDeleyTypes[clean_deley],
-                remark: remark,
             };
+
+            if (remark.length > 0) {
+                data.remark = remark;
+            }
 
             NetUtil.post(appUrl + 'index.php/Mobile/Goods/add_goods_task/', data)
                 .then(

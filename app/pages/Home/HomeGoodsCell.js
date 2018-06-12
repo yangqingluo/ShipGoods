@@ -12,7 +12,6 @@ import {
     Picker,
     TouchableHighlight,
 } from 'react-native'
-import px2dp from "../../util";
 
 type Props = {
     info: Object,
@@ -51,16 +50,16 @@ export default class HomeGoodsCell extends Component {
                 <TouchableHighlight style={styles.cellContainer} onPress={() => this.props.onPress(info)}>
                     <View style={{flex: 1, backgroundColor:'white'}}>
                         <View style={{backgroundColor:'#81c6ff', flexDirection: 'row', justifyContent: "space-between", height:26}}>
-                            <Text style={{fontSize:px2dp(10), color:'white', marginLeft:px2dp(3), marginTop:px2dp(8)}}>{'发票编号：' + info.item.billing_sn}</Text>
-                            <Text style={{fontSize:px2dp(10), color:'white', marginRight:px2dp(6), marginTop:px2dp(8)}}>{info.item.create_timetext}</Text>
+                            <Text style={{fontSize:10, color:'white', marginLeft:3, marginTop:8}}>{'发票编号：' + info.item.billing_sn}</Text>
+                            <Text style={{fontSize:10, color:'white', marginRight:6, marginTop:8}}>{info.item.create_timetext}</Text>
                         </View>
                         <View style={{backgroundColor:'#f2f9ff', flexDirection: 'row',  alignItems: "center", justifyContent: "space-between", height:51}}>
-                            <Text style={{fontSize:px2dp(14), color:appData.appTextColor, marginLeft:px2dp(28), fontWeight:'bold'}}>{info.item.empty_port_name + ' / ' + info.item.ship_name}</Text>
-                            <Text style={{fontSize:px2dp(14), color:appData.appBlueColor, marginRight:px2dp(18), fontWeight:'bold'}}>{info.item.tonnage + ' T'}</Text>
+                            <Text style={{fontSize:14, color:appData.appTextColor, marginLeft:28, fontWeight:'bold'}}>{info.item.empty_port_name + ' / ' + info.item.ship_name}</Text>
+                            <Text style={{fontSize:14, color:appData.appBlueColor, marginRight:18, fontWeight:'bold'}}>{info.item.tonnage + ' T'}</Text>
                         </View>
                         <View style={styles.cellItemContainer}>
-                            <Text style={{fontSize:px2dp(14), color:appData.appSecondaryTextColor}}>空船期</Text>
-                            <Text style={{fontSize:px2dp(14), color:appData.appLightTextColor}}>{info.item.empty_timetext}</Text>
+                            <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>空船期</Text>
+                            <Text style={{fontSize:14, color:appData.appLightTextColor}}>{info.item.empty_timetext}</Text>
                         </View>
                         {downloadOilList.length > 0 ?
                             <View>
@@ -95,10 +94,10 @@ export default class HomeGoodsCell extends Component {
                         </View>
                     </View>
                 </TouchableHighlight>
-                <View style={{height:px2dp(30), flexDirection: 'row',  alignItems: "center", justifyContent: "flex-end"}}>
-                    <Text style={{fontSize:px2dp(11), color:appData.appSecondaryTextColor}}>{'浏览'+ info.item.view_num + ' 收藏' + info.item.collect_num}</Text>
+                <View style={{height:30, flexDirection: 'row',  alignItems: "center", justifyContent: "flex-end"}}>
+                    <Text style={{fontSize:11, color:appData.appSecondaryTextColor}}>{'浏览'+ info.item.view_num + ' 收藏' + info.item.collect_num}</Text>
                 </View>
-                {isOrdered ? <Image source={require('../../images/icon_ding.png')} style={{width: px2dp(87), height: px2dp(69), top: px2dp(0), right: px2dp(84), resizeMode: "cover", position: 'absolute',}} /> : null}
+                {isOrdered ? <Image source={require('../../images/icon_ding.png')} style={{width: 87, height: 69, top: 0, right: 84, resizeMode: "cover", position: 'absolute',}} /> : null}
             </View>
         )
     }
