@@ -7,6 +7,7 @@ import {
     View,
     TextInput,
     ScrollView,
+    FlatList,
     RefreshControl,
     TouchableOpacity
 } from 'react-native';

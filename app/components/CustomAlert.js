@@ -4,6 +4,7 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
+    TouchableWithoutFeedback,
     View ,
     StyleSheet,
     Image,
@@ -76,6 +77,10 @@ export default class CustomAlert extends Component {
         });
     }
 
+    tapToDismissKeyboard() {
+        dismissKeyboard();
+    }
+
     render() {
         let {title, message, placeholder, showTextInput, numeric} = this.props;
         return (<Modal
@@ -84,7 +89,7 @@ export default class CustomAlert extends Component {
                 visible={this.state.modalVisible}
                 onRequestClose={this.hide.bind(this)}
             >
-                <View style={styles.container}>
+                <TouchableOpacity style={styles.container} activeOpacity={1} onPress={this.tapToDismissKeyboard}>
                     <View style={styles.modalContainer}>
                         <View style={styles.mainContainer}>
                             <View style={{flex: 1, alignItems:'center', justifyContent:'center',}}>
@@ -111,7 +116,7 @@ export default class CustomAlert extends Component {
                         </View>
                         <Image source={require('../images/icon_de.png')} style={styles.infoImage}/>
                     </View>
-                </View>
+                </TouchableOpacity>
             </Modal>
         );
     }
