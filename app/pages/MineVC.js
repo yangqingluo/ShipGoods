@@ -76,7 +76,7 @@ export default class MineVC extends Component {
     }
 
     onAuthTextPress = () =>  {
-        if (global.userData.authstate === '1') {
+        if (isAuthed()) {
             //审核通过
         }
         else {
@@ -115,7 +115,7 @@ export default class MineVC extends Component {
     };
 
     _renderHeader() {
-        let authed = (global.userData.authstate === '1');
+        let authed = isAuthed();
         return <View style={{minHeight: screenHeight - 64 - 46, paddingBottom: 100, backgroundColor: "#fff"}}>
             <TouchableWithoutFeedback onPress={this.goProfile.bind(this)}>
                 <View style={styles.userHead}>

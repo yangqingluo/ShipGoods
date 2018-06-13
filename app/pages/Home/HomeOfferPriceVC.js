@@ -17,7 +17,7 @@ import px2dp from "../../util";
 
 export default class HomeOfferPriceVC extends Component {
     static navigationOptions = ({ navigation }) => ({
-        headerTitle: navigation.state.params.headerTitle || '报价',
+        headerTitle: navigation.state.params.title || '报价',
     });
 
     constructor(props) {

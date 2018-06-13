@@ -116,7 +116,7 @@ const resetAction = (routeName) => NavigationActions.reset({
 });
 
 
-var storage = new Storage({
+let storage = new Storage({
     // 最大容量，默认值1000条数据循环存储
     size: 1000,
 
@@ -263,6 +263,7 @@ global.appUrl = 'http://shiphire.com.cn/';//服务器url
 global.appUndefined =  'undefined';
 global.NetUtil = NetUtil;
 global.appHomeVC = null;
+global.appMainTab = null;
 global.appDeviceId = DeviceInfo.getUniqueID();
 global.screenWidth = width;
 global.screenHeight = height;
@@ -366,6 +367,13 @@ global.getShipCourseTypesText = function(course : String) : String {
     return "";
 };
 
+global.isAuthed = function() : boolean {
+    if (global.userData !== null) {
+        return global.userData.authstate === '1';
+    }
+    return false;
+};
+
 global.isShipOwner = function() : boolean {
     if (global.userData !== null) {
         return global.userData.usertype === '2';
@@ -419,7 +427,7 @@ global.deepCopy = function(obj : Object) : Object {
 
 global.compare = function compare(val1, val2){
     return val1 > val2;
-}
+};
 
 global.appAllGoods = [];
 global.appAllPortsFirst = [];

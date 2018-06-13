@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-    Platform,
     StyleSheet,
     Text,
     View,
@@ -16,8 +15,6 @@ import ReleaseVC from './ReleaseVC';
 import MessageVC from './MessageVC';
 import MineVC from './MineVC';
 
-
-// 通过TabNavigator做路由映射
 const MainTabNavigator = TabNavigator(
     {
         HomeVC:{screen:HomeVC},
@@ -130,5 +127,7 @@ const MainTabNavigator = TabNavigator(
 );
 
 export default class MainTab extends MainTabNavigator {
-
+    componentDidMount() {
+        global.appMainTab = this;
+    }
 }

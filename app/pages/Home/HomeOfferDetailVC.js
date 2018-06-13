@@ -130,30 +130,55 @@ export default class HomeOfferDetailVC extends Component {
 
     onSubmitBtnAction = () => {
         //报价
-        this.props.navigation.navigate('HomeOfferPrice',
-            {
-                title: "报价",
-                info: this.state.detailInfo,
-            });
+        this.goToOfferVC(0);
     };
 
     onAcceptBtnAction = () => {
         //认同报价
-        this.props.navigation.navigate('HomeOfferPrice',
-            {
-                title: "认同报价",
-                info: this.state.detailInfo,
-            });
+        this.goToOfferVC(1);
     };
 
     onBargainBtnAction = () => {
         //议价
-        this.props.navigation.navigate('HomeOfferPrice',
-            {
-                title: "议价",
-                info: this.state.detailInfo,
-            });
+        this.goToOfferVC(2);
     };
+
+    goToOfferVC(type) {
+        if (isAuthed()) {
+            let title = null;
+            switch (type) {
+                case 0:
+                    title = "报价";
+                    break;
+
+                case 1:
+                    title = "认同报价";
+                    break;
+
+                case 2:
+                    title = "议价";
+                    break;
+            }
+
+            this.props.navigation.navigate('HomeOfferPrice',
+                {
+                    title: title,
+                    info: this.state.detailInfo,
+                });
+        }
+        else {
+            PublicAlert('请先认证才能发布，前去认证？','',
+                [{text:"取消"},
+                    {text:"去认证", onPress:this.goToAuth.bind(this)}]
+            );
+        }
+    }
+
+    goToAuth() {
+        this.props.navigation.goBack('AddAuth');
+        appMainTab.props.navigation.navigate('MineVC');
+        appMainTab.props.navigation.navigate('AddAuth');
+    }
 
     cellSelected = (key, data = {}) =>{
         if (key === "Select") {
@@ -274,10 +299,10 @@ export default class HomeOfferDetailVC extends Component {
                     </View>
                     :
                     <View style={{position: "absolute", bottom: 0, width: screenWidth, height: 45, flexDirection: 'row'}}>
-                        <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(221), backgroundColor: appData.appBlueColor, justifyContent: "center", alignItems: "center"}}>
+                        <TouchableOpacity onPress={this.onAcceptBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(221), backgroundColor: appData.appBlueColor, justifyContent: "center", alignItems: "center"}}>
                             <Text style={styles.btnText}>{"认同报价"}</Text>
                         </TouchableOpacity>
-                        {isBargain ? <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(154), backgroundColor: appData.appLightBlueColor, justifyContent: "center", alignItems: "center"}}>
+                        {isBargain ? <TouchableOpacity onPress={this.onBargainBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(154), backgroundColor: appData.appLightBlueColor, justifyContent: "center", alignItems: "center"}}>
                             <Text style={styles.btnText}>{"议价"}</Text>
                         </TouchableOpacity> : null}
                     </View>
