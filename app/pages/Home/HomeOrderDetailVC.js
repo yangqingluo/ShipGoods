@@ -147,7 +147,7 @@ export default class HomeOrderDetailVC extends Component {
         const { navigate } = this.props.navigation;
         let info = this.state.detailInfo;
         let price = parseInt(info.price);
-        let isBargain = offerIsBargain(this.state.detailInfo);
+        let isBargain = offerIsBargain(this.state.detailInfo.is_bargain);
         let font = font||"Ionicons";
         const Icon = Font[font];
         return (

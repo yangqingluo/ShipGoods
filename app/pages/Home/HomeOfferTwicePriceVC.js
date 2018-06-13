@@ -262,7 +262,7 @@ export default class HomeOfferTwicePriceVC extends Component {
         let {showRenderList} = this.state;
         let info = this.state.detailInfo;
         let price = parseInt(info.price);
-        let isBargain = offerIsBargain(this.state.detailInfo);
+        let isBargain = offerIsBargain(this.state.detailInfo.is_bargain);
         return (
             <View style={appStyles.container}>
                 <ScrollView style={{flex: 1, backgroundColor:'#fff'}}

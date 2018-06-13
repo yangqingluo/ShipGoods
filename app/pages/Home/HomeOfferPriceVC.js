@@ -75,7 +75,7 @@ export default class HomeOfferPriceVC extends Component {
         }
         else {
             let price = parseFloat(this.state.offer).Format(1);
-            if (offerIsBargain(this.state.info)) {
+            if (offerIsBargain(this.state.info.is_bargain)) {
                 if (price - 0 < 0.000001) {
                     this.refToast.show("请输入运价");
                     return;
@@ -260,7 +260,7 @@ export default class HomeOfferPriceVC extends Component {
 
     _renderListItem() {
         return this.config.map((item, i) => {
-            if (item.idKey === 'offer' && !offerIsBargain(this.state.info)) {
+            if (item.idKey === 'offer' && !offerIsBargain(this.state.info.is_bargain)) {
                 return null;
             }
             return (<View key={'cell' + i}>

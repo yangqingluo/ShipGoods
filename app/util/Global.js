@@ -395,8 +395,11 @@ global.commentIscomment = function(iscomment) : boolean {
     return (iscomment === '11');
 };
 
-global.offerIsBargain = function(info) : boolean {
-    return (info.is_bargain === '0');
+global.offerIsBargain = function(is_bargain) : boolean {
+    return (parseInt(is_bargain) === 0);
+};
+global.offerIsShipPrice = function(is_shipprice) : boolean {
+    return (parseInt(is_shipprice) === 1);
 };
 
 global.itemIsFavor = function(iscollect) : boolean {

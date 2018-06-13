@@ -52,6 +52,7 @@ export default class ReleaseVC extends Component {
             loading_time: new Date(), //否 发货时间
             loading_delay: 0, //否 发货延迟
             is_bargain: 0, //否 是否接收议价 0：是（默认） 1：否
+            is_shipprice: 0, //是 是否船东开价 0：否 1：是
             clean_deley: 0, //否 完货后多少天结算 15/30/45/60
             wastage: '', //否 损耗
             goods: '', //货品
@@ -352,6 +353,7 @@ export default class ReleaseVC extends Component {
                     title: '选择运价',
                     price: this.state.price,
                     is_bargain: this.state.is_bargain,
+                    is_shipprice: this.state.is_shipprice,
                     callBack:this.callBackFromPriceVC.bind(this)
                 });
         }
@@ -474,10 +476,11 @@ export default class ReleaseVC extends Component {
         }
     }
 
-    callBackFromPriceVC(price, is_bargain) {
+    callBackFromPriceVC(price, is_bargain, is_shipprice) {
         this.setState({
             price: price,
             is_bargain: is_bargain,
+            is_shipprice: is_shipprice,
         })
     }
 
@@ -741,7 +744,7 @@ export default class ReleaseVC extends Component {
             return this.state.upload_oil_list;
         }
         else if (item.idKey === 'price' && this.state.price > 0) {
-            return this.state.price + ' 元/吨 ' + (this.state.is_bargain === 1 ? "不议价" : "");
+            return offerIsShipPrice(this.state.is_shipprice) ? "船东开价" : (this.state.price + ' 元/吨 ' + (offerIsBargain(this.state.is_bargain) ? "不议价" : ""));
         }
         else if (item.idKey === 'tonnage' && this.state.tonnage.length > 0) {
             return this.state.tonnage + '±' + this.state.ton_section + "吨";
