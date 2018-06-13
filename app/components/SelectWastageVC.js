@@ -12,13 +12,6 @@ export default class SelectWastageVC extends Component {
     static navigationOptions = ({ navigation }) => (
         {
             title: navigation.state.params.title,
-            headerRight: <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
-                <TouchableOpacity
-                    onPress={navigation.state.params.clickParams}
-                >
-                    <Text style={{marginRight : 12, color: appData.appBlueColor}}>确定</Text>
-                </TouchableOpacity>
-            </View>,
         });
 
     constructor(props) {
@@ -30,7 +23,7 @@ export default class SelectWastageVC extends Component {
         };
     }
 
-    sureBtnAction=()=> {
+    onSubmitBtnAction = () => {
         if (this.state.wastageTitle > 0 && this.state.wastageNumber > 0) {
             this.props.navigation.state.params.callBack(this.state.key, this.state.wastageTitle, this.state.wastageNumber);
             this.props.navigation.goBack();
@@ -39,10 +32,6 @@ export default class SelectWastageVC extends Component {
             PublicAlert("请选择损耗");
         }
     };
-
-    componentDidMount() {
-        this.props.navigation.setParams({clickParams:this.sureBtnAction});
-    }
 
     showWastagePicker() {
         this.wastageTypeActionSheet.show();
@@ -89,6 +78,13 @@ export default class SelectWastageVC extends Component {
                         </Text>
                     </TouchableOpacity>
                 </ScrollView>
+                <View style={{position: "absolute", bottom: 20, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
+                    <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)}>
+                        <View style={appStyles.sureBtnContainer}>
+                            <Text style={{color: "#fff"}}>{"确定"}</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
                 <ActionSheet
                     ref={o => this.wastageTypeActionSheet = o}
                     title={''}

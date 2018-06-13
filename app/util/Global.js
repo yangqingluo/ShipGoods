@@ -317,7 +317,7 @@ global.transportStateTypes = ["抵锚", "靠泊", "开始装货", "装货完毕"
 
 global.createShipWastageNumberTypes = function() : Array {
     let array = ['取消'];
-    for (let i = 0.1; i <= 4; i += 0.1) {
+    for (let i = 0.0; i <= 4; i += 0.1) {
         array.push(i.Format(1) + '‰');
     }
     return array;

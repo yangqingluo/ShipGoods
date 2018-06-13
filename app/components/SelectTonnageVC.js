@@ -83,7 +83,7 @@ export default class SelectTonnageVC extends Component {
                 <View style={{position: "absolute", bottom: 20, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
                     <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)}>
                         <View style={appStyles.sureBtnContainer}>
-                            <Text style={{color: "#fff"}}>{"提交"}</Text>
+                            <Text style={{color: "#fff"}}>{"确定"}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

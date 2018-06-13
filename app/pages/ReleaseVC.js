@@ -88,9 +88,36 @@ export default class ReleaseVC extends Component {
 
     componentDidMount() {
         this.props.navigation.setParams({clickSureBtn:this.sureBtnClick});
+        this.refreshDefaultState();
     }
 
-    sureBtnClick=()=> {
+    refreshDefaultState() {
+        if (isShipOwner()) {
+
+        }
+        else {
+            let data1 = 1;
+            let data2 = 21;
+            let m_string = '';
+            if (data1 > 0) {
+                m_string += shipWastageTypes[data1];
+            }
+            if (data1 > 0) {
+                if (m_string.length > 0) {
+                    m_string += ' ';
+                }
+                m_string += shipWastageNumberTypes[data2];
+            }
+
+            this.setState({
+                wastageTitle: data1,
+                wastageNumber: data2,
+                wastage: m_string,
+            })
+        }
+    }
+
+    sureBtnClick = () => {
         if (isShipOwner()) {
             this.toReleaseForShipOwner();
         }
