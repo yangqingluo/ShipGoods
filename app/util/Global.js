@@ -270,6 +270,12 @@ global.screenHeight = height;
 global.appSecondPriceParams = null;
 
 global.dismissKeyboard = require('dismissKeyboard');
+global.backAndGoToAuth = function() : void {
+    appMainTab.props.navigation.goBack('Main');
+    appMainTab.props.navigation.navigate('MineVC');
+    appMainTab.props.navigation.navigate('AddAuth');
+};
+
 global.renderSeparator = () => {
     return <View style={{height:0.5,backgroundColor:appData.appSeparatorColor}}/>;
 };

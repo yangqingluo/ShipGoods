@@ -169,15 +169,9 @@ export default class HomeOfferDetailVC extends Component {
         else {
             PublicAlert('请先认证才能发布，前去认证？','',
                 [{text:"取消"},
-                    {text:"去认证", onPress:this.goToAuth.bind(this)}]
+                    {text:"去认证", onPress:backAndGoToAuth}]
             );
         }
-    }
-
-    goToAuth() {
-        this.props.navigation.goBack('AddAuth');
-        appMainTab.props.navigation.navigate('MineVC');
-        appMainTab.props.navigation.navigate('AddAuth');
     }
 
     cellSelected = (key, data = {}) =>{
