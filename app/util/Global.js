@@ -380,6 +380,33 @@ global.isAuthed = function() : boolean {
     return false;
 };
 
+global.getAuthStateText = function(authState) : String {
+    let stateText = "未知";
+    let state = parseInt(authState);
+    switch (state) {
+        case -1:
+            stateText = "未认证";
+            break;
+
+        case 0:
+            stateText = "认证中";
+            break;
+
+        case 1:
+            stateText = "已认证";
+            break;
+
+        case 2:
+            stateText = "认证未通过";
+            break;
+
+        default:
+            break;
+    }
+
+    return stateText;
+};
+
 global.isShipOwner = function() : boolean {
     if (global.userData !== null) {
         return global.userData.usertype === '2';

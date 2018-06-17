@@ -127,7 +127,7 @@ export default class MineVC extends Component {
                             <View style={{flexDirection: "row", alignItems: "center"}}>
                                 <Text style={{color: "#000", fontSize: 18}}>{global.userData.username}</Text>
                                 <Image source={authed ? require('../images/vip_selected.png') : require('../images/vip.png')} style={{marginLeft: 5, width: 13, height: 13,  resizeMode:'contain'}} />
-                                <Text style={{color: (authed ? appData.appLightBlueColor : appData.appSecondaryTextColor), marginLeft: 5, fontSize: 12}}>{authed ? "已认证" : "未认证"}</Text>
+                                <Text style={{color: (authed ? appData.appLightBlueColor : appData.appSecondaryTextColor), marginLeft: 5, fontSize: 12}}>{getAuthStateText(userData.authstate)}</Text>
                             </View>
                             <View style={{marginTop: 10, flexDirection: "row", alignItems: "center"}}>
                                 <ImageBackground source={require('../images/icon_back.png')} style={{width: 19, height: 19, justifyContent: "center", alignItems: "center"}}>
@@ -147,7 +147,7 @@ export default class MineVC extends Component {
             </TouchableWithoutFeedback>
             <View style={styles.authShow}>
                 <Text style={{color: appData.appSecondaryTextColor, fontSize: 12, marginLeft: 40}}>{"资质认证"}</Text>
-                <Text style={{color: appData.appBlueColor, fontSize: 12, marginLeft: 10}} onPress={this.onAuthTextPress}>{(authed ? "已认证" : "去认证")}</Text>
+                <Text style={{color: appData.appBlueColor, fontSize: 12, marginLeft: 10}} onPress={this.onAuthTextPress}>{getAuthStateText(userData.authstate)}</Text>
             </View>
             <View>
                 {this._renderListItem()}
