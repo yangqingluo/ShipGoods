@@ -10,7 +10,7 @@
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
-#import<UMSocialCore/UMSocialCore.h>
+#import <UMShare/UMShare.h>
 
 @implementation AppDelegate
 
@@ -48,6 +48,9 @@
    [微信平台从U-Share 4/5升级说明]http://dev.umeng.com/social/ios/%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3#1_1
    */
   [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wx76a7d279c788d379" appSecret:@"90e1346e7c70ff2e513c1f2ac8cff9a0" redirectURL:nil];
+  
+  /*设置QQ平台的appID*/
+  [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"1105761007" appSecret:nil redirectURL:nil];
   
   return YES;
 }

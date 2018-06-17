@@ -27,11 +27,10 @@ export default class AlertModal extends Component{
 
     close=()=>{
         requestAnimationFrame(()=>{
-            if(this.props.close){
-                // console.log("close","执行了父组件的close方法")
+            if(this.props.close) {
                 this.props.close();
-            }else{
-                // console.log("close","执行本组件方法")
+            }
+            else {
                 this.setState({ visible: false });
             }
         })
@@ -78,4 +77,4 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     }
 
-})
+});

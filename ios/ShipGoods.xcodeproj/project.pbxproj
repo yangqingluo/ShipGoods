@@ -39,30 +39,15 @@
 		BBC2E8C31FB448C9BC8DE578 /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F057B371F884821A34D7E41 /* libRNSpinkit.a */; };
 		C58ECE21A64B44CAA78AB903 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1431A63EC9FC446699A1B5DD /* EvilIcons.ttf */; };
 		DBF10009474C4D878BDD0B87 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4B5CB95B8B954B07B79CF38E /* Ionicons.ttf */; };
-		E4934B9020D6048A00A254E5 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4934B4820D6048900A254E5 /* Bolts.framework */; };
-		E4934B9120D6048A00A254E5 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4934B4A20D6048900A254E5 /* FBSDKCoreKit.framework */; };
-		E4934B9220D6048A00A254E5 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4934B4B20D6048900A254E5 /* FBSDKLoginKit.framework */; };
-		E4934B9320D6048A00A254E5 /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4934B4C20D6048900A254E5 /* FBSDKMessengerShareKit.framework */; };
-		E4934B9420D6048A00A254E5 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4934B4D20D6048900A254E5 /* FBSDKShareKit.framework */; };
-		E4934B9520D6048A00A254E5 /* libSocialFacebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4934B4E20D6048900A254E5 /* libSocialFacebook.a */; };
-		E4934B9620D6048A00A254E5 /* libSocialQQ.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4934B5120D6048900A254E5 /* libSocialQQ.a */; };
-		E4934B9720D6048A00A254E5 /* libSocialSina.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4934B5420D6048900A254E5 /* libSocialSina.a */; };
-		E4934B9820D6048A00A254E5 /* libSocialUniqueId.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4934B5720D6048900A254E5 /* libSocialUniqueId.a */; };
-		E4934B9920D6048A00A254E5 /* libSocialWeChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4934B5A20D6048900A254E5 /* libSocialWeChat.a */; };
-		E4934B9A20D6048A00A254E5 /* UMSocialCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4934B5D20D6048900A254E5 /* UMSocialCore.framework */; };
-		E4934B9B20D6048A00A254E5 /* UMSocialNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4934B5E20D6048900A254E5 /* UMSocialNetwork.framework */; };
-		E4934B9C20D6048A00A254E5 /* UMSocialSDKPromptResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E4934B5F20D6048900A254E5 /* UMSocialSDKPromptResources.bundle */; };
-		E4934B9D20D6048A00A254E5 /* libUMSocialLog.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4934B6120D6048900A254E5 /* libUMSocialLog.a */; };
-		E4934B9E20D6048A00A254E5 /* UMSocialSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E4934B6320D6048900A254E5 /* UMSocialSDKResources.bundle */; };
-		E4934B9F20D6048A00A254E5 /* UShareUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4934B6420D6048900A254E5 /* UShareUI.framework */; };
-		E4934BA220D6049600A254E5 /* sharemodule.m in Sources */ = {isa = PBXBuildFile; fileRef = E4934BA020D6049600A254E5 /* sharemodule.m */; };
-		E4934BA420D604E900A254E5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4934BA320D604E900A254E5 /* SystemConfiguration.framework */; };
-		E4934BA620D6050100A254E5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4934BA520D6050100A254E5 /* CoreGraphics.framework */; };
-		E4934BA820D6050E00A254E5 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4934BA720D6050E00A254E5 /* CoreTelephony.framework */; };
-		E4934BAA20D6051700A254E5 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4934BA920D6051700A254E5 /* ImageIO.framework */; };
-		E4934BAC20D6052E00A254E5 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E4934BAB20D6052E00A254E5 /* libsqlite3.tbd */; };
-		E4934BAE20D6053B00A254E5 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E4934BAD20D6053B00A254E5 /* libc++.tbd */; };
-		E4934BB020D6054300A254E5 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E4934BAF20D6054300A254E5 /* libz.tbd */; };
+		E43B28DE20D65CDA009E9BD6 /* UMShareModule.m in Sources */ = {isa = PBXBuildFile; fileRef = E43B28DD20D65CDA009E9BD6 /* UMShareModule.m */; };
+		E43B291E20D663FC009E9BD6 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E4934BAB20D6052E00A254E5 /* libsqlite3.tbd */; };
+		E43B291F20D66404009E9BD6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4934BA520D6050100A254E5 /* CoreGraphics.framework */; };
+		E43B292C20D66481009E9BD6 /* libSocialQQ.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E43B292320D66480009E9BD6 /* libSocialQQ.a */; };
+		E43B292D20D66481009E9BD6 /* libSocialWeChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E43B292620D66480009E9BD6 /* libSocialWeChat.a */; };
+		E43B292E20D66481009E9BD6 /* UMShare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E43B292820D66480009E9BD6 /* UMShare.framework */; };
+		E43B292F20D66481009E9BD6 /* UMSocialSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E43B292A20D66480009E9BD6 /* UMSocialSDKResources.bundle */; };
+		E43B293020D66481009E9BD6 /* UShareUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E43B292B20D66480009E9BD6 /* UShareUI.framework */; };
+		E43B293220D665A7009E9BD6 /* UMCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E43B293120D665A7009E9BD6 /* UMCommon.framework */; };
 		E4C3351F2092101400D47356 /* IQNSArray+Sort.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C334D22092101400D47356 /* IQNSArray+Sort.m */; };
 		E4C335202092101400D47356 /* IQUIScrollView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C334D42092101400D47356 /* IQUIScrollView+Additions.m */; };
 		E4C335212092101400D47356 /* IQUITextFieldView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C334D62092101400D47356 /* IQUITextFieldView+Additions.m */; };
@@ -437,30 +422,16 @@
 		D474D263DD3C4BAEB3648811 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		D6DEFEE07F324C11A42192FA /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		E2BDDBE80C92463AB4EC4509 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
-		E4934B4820D6048900A254E5 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		E4934B4920D6048900A254E5 /* facebook_ios_sdk_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = facebook_ios_sdk_Prefix.pch; sourceTree = "<group>"; };
-		E4934B4A20D6048900A254E5 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		E4934B4B20D6048900A254E5 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		E4934B4C20D6048900A254E5 /* FBSDKMessengerShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKMessengerShareKit.framework; sourceTree = "<group>"; };
-		E4934B4D20D6048900A254E5 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
-		E4934B4E20D6048900A254E5 /* libSocialFacebook.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialFacebook.a; sourceTree = "<group>"; };
-		E4934B4F20D6048900A254E5 /* UMSocialFaceBookHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialFaceBookHandler.h; sourceTree = "<group>"; };
-		E4934B5120D6048900A254E5 /* libSocialQQ.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialQQ.a; sourceTree = "<group>"; };
-		E4934B5220D6048900A254E5 /* UMSocialQQHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialQQHandler.h; sourceTree = "<group>"; };
-		E4934B5420D6048900A254E5 /* libSocialSina.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialSina.a; sourceTree = "<group>"; };
-		E4934B5520D6048900A254E5 /* UMSocialSinaHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialSinaHandler.h; sourceTree = "<group>"; };
-		E4934B5720D6048900A254E5 /* libSocialUniqueId.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialUniqueId.a; sourceTree = "<group>"; };
-		E4934B5820D6048900A254E5 /* UMSocialUniqueIdHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialUniqueIdHandler.h; sourceTree = "<group>"; };
-		E4934B5A20D6048900A254E5 /* libSocialWeChat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialWeChat.a; sourceTree = "<group>"; };
-		E4934B5B20D6048900A254E5 /* UMSocialWechatHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialWechatHandler.h; sourceTree = "<group>"; };
-		E4934B5D20D6048900A254E5 /* UMSocialCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMSocialCore.framework; sourceTree = "<group>"; };
-		E4934B5E20D6048900A254E5 /* UMSocialNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMSocialNetwork.framework; sourceTree = "<group>"; };
-		E4934B5F20D6048900A254E5 /* UMSocialSDKPromptResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UMSocialSDKPromptResources.bundle; sourceTree = "<group>"; };
-		E4934B6120D6048900A254E5 /* libUMSocialLog.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMSocialLog.a; sourceTree = "<group>"; };
-		E4934B6320D6048900A254E5 /* UMSocialSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UMSocialSDKResources.bundle; sourceTree = "<group>"; };
-		E4934B6420D6048900A254E5 /* UShareUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UShareUI.framework; sourceTree = "<group>"; };
-		E4934BA020D6049600A254E5 /* sharemodule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sharemodule.m; sourceTree = "<group>"; };
-		E4934BA120D6049600A254E5 /* sharemodule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sharemodule.h; sourceTree = "<group>"; };
+		E43B28B120D65CD9009E9BD6 /* UMShareModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMShareModule.h; sourceTree = "<group>"; };
+		E43B28DD20D65CDA009E9BD6 /* UMShareModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMShareModule.m; sourceTree = "<group>"; };
+		E43B292320D66480009E9BD6 /* libSocialQQ.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialQQ.a; sourceTree = "<group>"; };
+		E43B292420D66480009E9BD6 /* UMSocialQQHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialQQHandler.h; sourceTree = "<group>"; };
+		E43B292620D66480009E9BD6 /* libSocialWeChat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialWeChat.a; sourceTree = "<group>"; };
+		E43B292720D66480009E9BD6 /* UMSocialWechatHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialWechatHandler.h; sourceTree = "<group>"; };
+		E43B292820D66480009E9BD6 /* UMShare.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMShare.framework; sourceTree = "<group>"; };
+		E43B292A20D66480009E9BD6 /* UMSocialSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UMSocialSDKResources.bundle; sourceTree = "<group>"; };
+		E43B292B20D66480009E9BD6 /* UShareUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UShareUI.framework; sourceTree = "<group>"; };
+		E43B293120D665A7009E9BD6 /* UMCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMCommon.framework; sourceTree = "<group>"; };
 		E4934BA320D604E900A254E5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		E4934BA520D6050100A254E5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		E4934BA720D6050E00A254E5 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -516,44 +487,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4934BB020D6054300A254E5 /* libz.tbd in Frameworks */,
-				E4934BAE20D6053B00A254E5 /* libc++.tbd in Frameworks */,
-				E4934BAC20D6052E00A254E5 /* libsqlite3.tbd in Frameworks */,
-				E4934BAA20D6051700A254E5 /* ImageIO.framework in Frameworks */,
-				E4934BA820D6050E00A254E5 /* CoreTelephony.framework in Frameworks */,
-				E4934BA620D6050100A254E5 /* CoreGraphics.framework in Frameworks */,
-				E4934BA420D604E900A254E5 /* SystemConfiguration.framework in Frameworks */,
-				E4934B9A20D6048A00A254E5 /* UMSocialCore.framework in Frameworks */,
-				E4934B9620D6048A00A254E5 /* libSocialQQ.a in Frameworks */,
+				E43B291F20D66404009E9BD6 /* CoreGraphics.framework in Frameworks */,
+				E43B291E20D663FC009E9BD6 /* libsqlite3.tbd in Frameworks */,
+				E43B292C20D66481009E9BD6 /* libSocialQQ.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
-				E4934B9720D6048A00A254E5 /* libSocialSina.a in Frameworks */,
-				E4934B9520D6048A00A254E5 /* libSocialFacebook.a in Frameworks */,
+				E43B293020D66481009E9BD6 /* UShareUI.framework in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
-				E4934B9220D6048A00A254E5 /* FBSDKLoginKit.framework in Frameworks */,
-				E4934B9820D6048A00A254E5 /* libSocialUniqueId.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
-				E4934B9D20D6048A00A254E5 /* libUMSocialLog.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
-				E4934B9420D6048A00A254E5 /* FBSDKShareKit.framework in Frameworks */,
-				E4934B9F20D6048A00A254E5 /* UShareUI.framework in Frameworks */,
+				E43B293220D665A7009E9BD6 /* UMCommon.framework in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
+				E43B292D20D66481009E9BD6 /* libSocialWeChat.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
-				E4934B9120D6048A00A254E5 /* FBSDKCoreKit.framework in Frameworks */,
+				E43B292E20D66481009E9BD6 /* UMShare.framework in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
-				E4934B9320D6048A00A254E5 /* FBSDKMessengerShareKit.framework in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				BBC2E8C31FB448C9BC8DE578 /* libRNSpinkit.a in Frameworks */,
 				F766909BAFF0440DB4CF2FE1 /* libRNVectorIcons.a in Frameworks */,
-				E4934B9020D6048A00A254E5 /* Bolts.framework in Frameworks */,
 				77DD221338874E24A608E17E /* libRNImagePicker.a in Frameworks */,
-				E4934B9920D6048A00A254E5 /* libSocialWeChat.a in Frameworks */,
 				090C77A8BAFD414CA68A2277 /* libRNDeviceInfo.a in Frameworks */,
-				E4934B9B20D6048A00A254E5 /* UMSocialNetwork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -642,14 +599,14 @@
 		13B07FAE1A68108700A75B9A /* ShipGoods */ = {
 			isa = PBXGroup;
 			children = (
-				E4934B4520D6048900A254E5 /* UMSocial */,
+				E43B292020D66480009E9BD6 /* UMSocial */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				E4DEA68B20BB600B00F40F14 /* PublicViewController.h */,
 				E4DEA68C20BB600B00F40F14 /* PublicViewController.m */,
-				E4934BA120D6049600A254E5 /* sharemodule.h */,
-				E4934BA020D6049600A254E5 /* sharemodule.m */,
+				E43B28B120D65CD9009E9BD6 /* UMShareModule.h */,
+				E43B28DD20D65CDA009E9BD6 /* UMShareModule.m */,
 				E4C334CE2092101400D47356 /* thirdParty */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
@@ -808,6 +765,53 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		E43B292020D66480009E9BD6 /* UMSocial */ = {
+			isa = PBXGroup;
+			children = (
+				E43B293120D665A7009E9BD6 /* UMCommon.framework */,
+				E43B292120D66480009E9BD6 /* SocialLibraries */,
+				E43B292820D66480009E9BD6 /* UMShare.framework */,
+				E43B292920D66480009E9BD6 /* UMSocialUI */,
+			);
+			path = UMSocial;
+			sourceTree = "<group>";
+		};
+		E43B292120D66480009E9BD6 /* SocialLibraries */ = {
+			isa = PBXGroup;
+			children = (
+				E43B292220D66480009E9BD6 /* QQ */,
+				E43B292520D66480009E9BD6 /* WeChat */,
+			);
+			path = SocialLibraries;
+			sourceTree = "<group>";
+		};
+		E43B292220D66480009E9BD6 /* QQ */ = {
+			isa = PBXGroup;
+			children = (
+				E43B292320D66480009E9BD6 /* libSocialQQ.a */,
+				E43B292420D66480009E9BD6 /* UMSocialQQHandler.h */,
+			);
+			path = QQ;
+			sourceTree = "<group>";
+		};
+		E43B292520D66480009E9BD6 /* WeChat */ = {
+			isa = PBXGroup;
+			children = (
+				E43B292620D66480009E9BD6 /* libSocialWeChat.a */,
+				E43B292720D66480009E9BD6 /* UMSocialWechatHandler.h */,
+			);
+			path = WeChat;
+			sourceTree = "<group>";
+		};
+		E43B292920D66480009E9BD6 /* UMSocialUI */ = {
+			isa = PBXGroup;
+			children = (
+				E43B292A20D66480009E9BD6 /* UMSocialSDKResources.bundle */,
+				E43B292B20D66480009E9BD6 /* UShareUI.framework */,
+			);
+			path = UMSocialUI;
+			sourceTree = "<group>";
+		};
 		E455022C2086E743007CB211 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -826,107 +830,6 @@
 				E45502592086E745007CB211 /* libRNSpinkit.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		E4934B4520D6048900A254E5 /* UMSocial */ = {
-			isa = PBXGroup;
-			children = (
-				E4934B4620D6048900A254E5 /* SocialLibraries */,
-				E4934B5C20D6048900A254E5 /* UMSocialSDK */,
-				E4934B6020D6048900A254E5 /* UMSocialSDKPlugin */,
-				E4934B6220D6048900A254E5 /* UMSocialUI */,
-			);
-			path = UMSocial;
-			sourceTree = "<group>";
-		};
-		E4934B4620D6048900A254E5 /* SocialLibraries */ = {
-			isa = PBXGroup;
-			children = (
-				E4934B4720D6048900A254E5 /* Facebook */,
-				E4934B5020D6048900A254E5 /* QQ */,
-				E4934B5320D6048900A254E5 /* Sina */,
-				E4934B5620D6048900A254E5 /* UniqueId */,
-				E4934B5920D6048900A254E5 /* WeChat */,
-			);
-			path = SocialLibraries;
-			sourceTree = "<group>";
-		};
-		E4934B4720D6048900A254E5 /* Facebook */ = {
-			isa = PBXGroup;
-			children = (
-				E4934B4820D6048900A254E5 /* Bolts.framework */,
-				E4934B4920D6048900A254E5 /* facebook_ios_sdk_Prefix.pch */,
-				E4934B4A20D6048900A254E5 /* FBSDKCoreKit.framework */,
-				E4934B4B20D6048900A254E5 /* FBSDKLoginKit.framework */,
-				E4934B4C20D6048900A254E5 /* FBSDKMessengerShareKit.framework */,
-				E4934B4D20D6048900A254E5 /* FBSDKShareKit.framework */,
-				E4934B4E20D6048900A254E5 /* libSocialFacebook.a */,
-				E4934B4F20D6048900A254E5 /* UMSocialFaceBookHandler.h */,
-			);
-			path = Facebook;
-			sourceTree = "<group>";
-		};
-		E4934B5020D6048900A254E5 /* QQ */ = {
-			isa = PBXGroup;
-			children = (
-				E4934B5120D6048900A254E5 /* libSocialQQ.a */,
-				E4934B5220D6048900A254E5 /* UMSocialQQHandler.h */,
-			);
-			path = QQ;
-			sourceTree = "<group>";
-		};
-		E4934B5320D6048900A254E5 /* Sina */ = {
-			isa = PBXGroup;
-			children = (
-				E4934B5420D6048900A254E5 /* libSocialSina.a */,
-				E4934B5520D6048900A254E5 /* UMSocialSinaHandler.h */,
-			);
-			path = Sina;
-			sourceTree = "<group>";
-		};
-		E4934B5620D6048900A254E5 /* UniqueId */ = {
-			isa = PBXGroup;
-			children = (
-				E4934B5720D6048900A254E5 /* libSocialUniqueId.a */,
-				E4934B5820D6048900A254E5 /* UMSocialUniqueIdHandler.h */,
-			);
-			path = UniqueId;
-			sourceTree = "<group>";
-		};
-		E4934B5920D6048900A254E5 /* WeChat */ = {
-			isa = PBXGroup;
-			children = (
-				E4934B5A20D6048900A254E5 /* libSocialWeChat.a */,
-				E4934B5B20D6048900A254E5 /* UMSocialWechatHandler.h */,
-			);
-			path = WeChat;
-			sourceTree = "<group>";
-		};
-		E4934B5C20D6048900A254E5 /* UMSocialSDK */ = {
-			isa = PBXGroup;
-			children = (
-				E4934B5D20D6048900A254E5 /* UMSocialCore.framework */,
-				E4934B5E20D6048900A254E5 /* UMSocialNetwork.framework */,
-				E4934B5F20D6048900A254E5 /* UMSocialSDKPromptResources.bundle */,
-			);
-			path = UMSocialSDK;
-			sourceTree = "<group>";
-		};
-		E4934B6020D6048900A254E5 /* UMSocialSDKPlugin */ = {
-			isa = PBXGroup;
-			children = (
-				E4934B6120D6048900A254E5 /* libUMSocialLog.a */,
-			);
-			path = UMSocialSDKPlugin;
-			sourceTree = "<group>";
-		};
-		E4934B6220D6048900A254E5 /* UMSocialUI */ = {
-			isa = PBXGroup;
-			children = (
-				E4934B6320D6048900A254E5 /* UMSocialSDKResources.bundle */,
-				E4934B6420D6048900A254E5 /* UShareUI.framework */,
-			);
-			path = UMSocialUI;
 			sourceTree = "<group>";
 		};
 		E4B1196A208E1F2B0061A2CC /* Products */ = {
@@ -1501,12 +1404,11 @@
 				3FFB49E3CC0B443FA174AAFF /* Foundation.ttf in Resources */,
 				DBF10009474C4D878BDD0B87 /* Ionicons.ttf in Resources */,
 				B686E299ADA44AAA86931D2D /* MaterialCommunityIcons.ttf in Resources */,
-				E4934B9C20D6048A00A254E5 /* UMSocialSDKPromptResources.bundle in Resources */,
 				6E415E4373EA4489AC17BFD5 /* MaterialIcons.ttf in Resources */,
 				48D678E8FDDB4E3EA2C8EF96 /* Octicons.ttf in Resources */,
-				E4934B9E20D6048A00A254E5 /* UMSocialSDKResources.bundle in Resources */,
 				211DEE4248FB42C78BB4F3BF /* SimpleLineIcons.ttf in Resources */,
 				3B98FF93121D4AAC9EA4D6B1 /* Zocial.ttf in Resources */,
+				E43B292F20D66481009E9BD6 /* UMSocialSDKResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1543,11 +1445,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4C335252092101400D47356 /* IQKeyboardManager.m in Sources */,
-				E4934BA220D6049600A254E5 /* sharemodule.m in Sources */,
 				E4C3352A2092101400D47356 /* IQTitleBarButtonItem.m in Sources */,
 				E4C3351F2092101400D47356 /* IQNSArray+Sort.m in Sources */,
 				E4C3352C2092101400D47356 /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				E4DEA68D20BB600B00F40F14 /* PublicViewController.m in Sources */,
+				E43B28DE20D65CDA009E9BD6 /* UMShareModule.m in Sources */,
 				E4C335282092101400D47356 /* IQBarButtonItem.m in Sources */,
 				E4C335202092101400D47356 /* IQUIScrollView+Additions.m in Sources */,
 				E4C3352B2092101400D47356 /* IQToolbar.m in Sources */,
@@ -1666,6 +1568,9 @@
 					"$(PROJECT_DIR)/UMSocial/SocialLibraries/Facebook",
 					"$(PROJECT_DIR)/UMSocial/UMSocialSDK",
 					"$(PROJECT_DIR)/UMSocial/UMSocialUI",
+					"$(PROJECT_DIR)/UMShare",
+					"$(PROJECT_DIR)/UMShare/UMSocialUI",
+					"$(PROJECT_DIR)/UMSocial",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1684,6 +1589,9 @@
 					"$(PROJECT_DIR)/UMSocial/SocialLibraries/UniqueId",
 					"$(PROJECT_DIR)/UMSocial/SocialLibraries/WeChat",
 					"$(PROJECT_DIR)/UMSocial/UMSocialSDKPlugin",
+					"$(PROJECT_DIR)/UMShare/SocialLibraries/QQ",
+					"$(PROJECT_DIR)/UMShare/SocialLibraries/Sina",
+					"$(PROJECT_DIR)/UMShare/SocialLibraries/WeChat",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1708,6 +1616,9 @@
 					"$(PROJECT_DIR)/UMSocial/SocialLibraries/Facebook",
 					"$(PROJECT_DIR)/UMSocial/UMSocialSDK",
 					"$(PROJECT_DIR)/UMSocial/UMSocialUI",
+					"$(PROJECT_DIR)/UMShare",
+					"$(PROJECT_DIR)/UMShare/UMSocialUI",
+					"$(PROJECT_DIR)/UMSocial",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1726,6 +1637,9 @@
 					"$(PROJECT_DIR)/UMSocial/SocialLibraries/UniqueId",
 					"$(PROJECT_DIR)/UMSocial/SocialLibraries/WeChat",
 					"$(PROJECT_DIR)/UMSocial/UMSocialSDKPlugin",
+					"$(PROJECT_DIR)/UMShare/SocialLibraries/QQ",
+					"$(PROJECT_DIR)/UMShare/SocialLibraries/Sina",
+					"$(PROJECT_DIR)/UMShare/SocialLibraries/WeChat",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
