@@ -314,6 +314,7 @@ global.shipAreaTypes = ['取消', '沿海', '内河（可进川）', '内河（�
 global.shipCourseTypes = ['南上', '北下', '上江', '下江', '运河'];
 global.shipWastageTypes = ['取消', '船检量 -> 船检量', '罐发量 -> 入库量', '船检量 -> 入库量', '罐发量 -> 船检量'];
 global.transportStateTypes = ["抵锚", "靠泊", "开始装货", "装货完毕", "离港", "抵锚", "靠泊", "开始卸货", "卸货完毕", "离港"];
+global.shipTypes = ['取消', '油船1级', '油船2级', '油船3级', '化学品Ⅰ级', '化学品Ⅱ级', '化学品Ⅲ级', '液压气船全压', '液压气船全冷', '液压气船半压半冷', '油化船(油1化1)', '油化船(油1化Ⅱ)', '干货散船', '粮油船'];
 
 global.createShipWastageNumberTypes = function() : Array {
     let array = ['取消'];

@@ -22,7 +22,7 @@ export default class AddShip extends Component {
             title: "添加船舶"
         });
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
             ship_name: '',//船名
             ship_licence: '',//船舶国际证书
@@ -31,6 +31,7 @@ export default class AddShip extends Component {
             dieseloil: '',//可载柴油吨位
             gasoline: '',//可载汽油吨位
             area: 0,//航行区域 1：沿海 2：长江（可进川） 3：长江（不可进川)
+            ship_type: 0,
             goods: '',//可运油品
             goodsList: [],
 
@@ -38,32 +39,35 @@ export default class AddShip extends Component {
         };
         this.config = [
             {idKey:"ship_name", name:"船名", logo:require('../images/icon_blue.png'), disable:true},
-            {idKey:"tonnage", name:"吨位", logo:require('../images/icon_red.png'), disable:true},
+            {idKey:"tonnage", name:"参考载重量(吨)", logo:require('../images/icon_red.png'), disable:true},
             {idKey:"storage", name:"仓容", logo:require('../images/icon_orange.png'), disable:true},
-            {name:"可运油品", logo:require('../images/icon_green.png'), disable:false, subName:"324", onPress:this.cellSelected.bind(this, "SelectGoods")},
+            {idKey:"ship_type", name:"船舶类型", logo:require('../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "ship_type")},
+            // {idKey:"goods", name:"可运油品", logo:require('../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "goods")},
             {idKey:"gasoline", name:"可载汽油吨位（选填）", logo:require('../images/icon_orange.png'), disable:true},
             {idKey:"dieseloil", name:"可载柴油吨位（选填）", logo:require('../images/icon_red.png'), disable:true},
-            {name:"航行区域", logo:require('../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "area")},
+            {idKey:"area", name:"航行区域", logo:require('../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "area")},
             {idKey:"ship_licence", name:"船舶国际证书", logo:require('../images/icon_blue.png'), disable:false, subName:"", onPress:this.cellSelected.bind(this, "ship_licence")},
         ];
 
         this.areaTypes = global.shipAreaTypes;
     }
 
-
     cellSelected(key, data = {}){
         dismissKeyboard();
-        if (key === 'SelectGoods') {
+        if (key === 'goods') {
             this.toGoToSelectGoodsVC();
         }
         else if (key === 'area') {
-            this.areaTypeActionSheet.show();
+            this.refAreaTypeActionSheet.show();
+        }
+        else if (key === 'ship_type') {
+            this.refShipTypeActionSheet.show();
         }
         else if (key === 'ship_licence') {
             this.toSelectPhoto('ship_licence');
         }
         else {
-            PublicAlert(key);
+            this.refToast.show("精彩功能，敬请期待 " + key);
         }
     }
 
@@ -123,10 +127,13 @@ export default class AddShip extends Component {
             this.refToast.show("请输入船名");
         }
         else if (this.state.tonnage.length === 0) {
-            this.refToast.show("请输入吨位");
+            this.refToast.show("请输入参考载重量");
         }
         else if (this.state.storage.length === 0) {
             this.refToast.show("请输入仓容");
+        }
+        else if (this.state.ship_type === 0) {
+            this.refToast.show("请选择船舶类型");
         }
         else if (this.state.goodsList.length === 0) {
             this.refToast.show("请选择可运油品");
@@ -153,8 +160,8 @@ export default class AddShip extends Component {
                 area:'' + this.state.area,
                 ship_lience:this.state.ship_licence
             };
-            if (this.state.gasoline.length !== 0) data.gasoline = this.state.gasoline;
-            if (this.state.dieseloil.length !== 0) data.dieseloil = this.state.dieseloil;
+            if (this.state.gasoline.length > 0) data.gasoline = this.state.gasoline;
+            if (this.state.dieseloil.length > 0) data.dieseloil = this.state.dieseloil;
 
             NetUtil.post(appUrl + 'index.php/Mobile/Ship/add_ship/', data)
                 .then(
@@ -208,6 +215,14 @@ export default class AddShip extends Component {
         }
     }
 
+    onSelectShipType(index) {
+        if (index > 0) {
+            this.setState({
+                ship_type: index
+            });
+        }
+    }
+
     toSelectPhoto = (idKey) => {
         ImagePicker.showImagePicker(imagePickerOptions, (response) => {
             console.log('Response = ', response);
@@ -228,7 +243,7 @@ export default class AddShip extends Component {
                 this.submitImage(source, idKey);
             }
         });
-    }
+    };
 
     submitImage = (source, idKey) => {
         let formData = new FormData();
@@ -251,20 +266,37 @@ export default class AddShip extends Component {
                 },(error)=>{
                     PublicAlert(error);
                 });
+    };
+
+    renderSubNameForIndex(item, index) {
+        if (item.idKey === 'goods' && this.state.goodsList.length > 0) {
+            return this.state.goods;
+        }
+        else if (item.idKey === 'area' && this.state.area > 0) {
+            return getArrayTypesText(this.areaTypes, this.state.area);
+        }
+        else if (item.idKey === 'ship_type' && this.state.ship_type > 0) {
+            return getArrayTypesText(shipTypes, this.state.ship_type);
+        }
+        return '';
+    }
+
+    renderSubViewForIndex(item, index) {
+        if (item.idKey === 'ship_licence') {
+            if (objectNotNull(this.state.ship_licence_source)) {
+                return <Image style={styles.avatar} source={this.state.ship_licence_source}/>;
+            }
+        }
+        return null;
     }
 
     _renderListItem() {
         return this.config.map((item, i) => {
-            return (<CustomItem key={i} {...item} subName = {
-                (i === 6 && this.state.area > 0) ? this.areaTypes[this.state.area] :
-                    ((i === 3 && this.state.goods.length > 0) ? this.state.goods : '')
-            }
+            return (<CustomItem key={i} {...item}
+                                subName = {this.renderSubNameForIndex(item, i)}
                                 callback={this.textInputChanged.bind(this)}>
-                {(i === 7 && this.state.ship_licence_source != null)?(
-                        <Image style={styles.avatar} source={this.state.ship_licence_source} />
-                    )
-                    :null}
-            </CustomItem>);
+                {this.renderSubViewForIndex(item, i)}
+                </CustomItem>);
         })
     }
 
@@ -272,14 +304,6 @@ export default class AddShip extends Component {
         const { navigate } = this.props.navigation;
         return (
             <View style={appStyles.container}>
-                <ActionSheet
-                    ref={o => this.areaTypeActionSheet = o}
-                    title={'请选择航行区域'}
-                    options={this.areaTypes}
-                    cancelButtonIndex={0}
-                    // destructiveButtonIndex={1}
-                    onPress={this.onSelectAreaType.bind(this)}
-                />
                 <ScrollView style={styles.scrollView}>
                     {this._renderListItem()}
                 </ScrollView>
@@ -290,6 +314,22 @@ export default class AddShip extends Component {
                         </View>
                     </Button>
                 </View>
+                <ActionSheet
+                    ref={o => this.refAreaTypeActionSheet = o}
+                    title={'请选择航行区域'}
+                    options={this.areaTypes}
+                    cancelButtonIndex={0}
+                    // destructiveButtonIndex={1}
+                    onPress={this.onSelectAreaType.bind(this)}
+                />
+                <ActionSheet
+                    ref={o => this.refShipTypeActionSheet = o}
+                    title={'请选择船舶类型'}
+                    options={shipTypes}
+                    cancelButtonIndex={0}
+                    // destructiveButtonIndex={1}
+                    onPress={this.onSelectShipType.bind(this)}
+                />
                 <Toast ref={o => this.refToast = o} position={'center'}/>
             </View> );
     }
