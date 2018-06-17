@@ -16,6 +16,8 @@ import Item from '../components/Item'
 import StarScore from '../components/StarScore'
 import Communications from '../util/AKCommunications';
 import Toast from "react-native-easy-toast";
+import UShare from '../share/Share';
+import SharePlatform from '../share/SharePlatform';
 
 export default class MineVC extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -78,6 +80,19 @@ export default class MineVC extends Component {
     onAuthTextPress = () =>  {
         if (isAuthed()) {
             //审核通过
+            /**
+             * 参数说明：
+             * 1. 标题
+             * 2. 内容
+             * 3. 跳转链接
+             * 4. 图片链接
+             * 5. 分享平台
+             * 6. 分享结果回调
+             */
+            UShare.share('标题','内容','http://baidu.com','http://dev.umeng.com/images/tab2_1.png', SharePlatform.WECHAT, (message) => {
+                // message:分享成功、分享失败、取消分享
+                // ToastAndroid.show(message,ToastAndroid.SHORT);
+            });
         }
         else {
             //未审核/审核不通过
