@@ -52,6 +52,7 @@ export default class HomeShipDetailVC extends Component {
             {idKey:"empty_time",name:"空船期"},
             {idKey:"download_oil_list", name:"意向货品"},
             {idKey:"storage", name:"仓容"},
+            {idKey:"ship_type", name:"船舶类型"},
             {idKey:"course", name:"航行区域"},
             {idKey:"upload_oil_list", name:"上载货品"},
             {idKey:"credit", name:"船主信用"},
@@ -123,18 +124,19 @@ export default class HomeShipDetailVC extends Component {
     };
 
     onSubmitBtnAction = () => {
-        if (isAuthed()) {
-            appHomeVC.props.navigation.navigate('HomeOrderSelect',
-                {
-                    info: this.state.detailInfo,
-                });
-        }
-        else {
-            PublicAlert('请先认证才能预约，前去认证？','',
-                [{text:"取消"},
-                    {text:"去认证", onPress:backAndGoToAuth}]
-            );
-        }
+        PublicAlert(JSON.stringify(this.state.detailInfo));
+        // if (isAuthed()) {
+        //     appHomeVC.props.navigation.navigate('HomeOrderSelect',
+        //         {
+        //             info: this.state.detailInfo,
+        //         });
+        // }
+        // else {
+        //     PublicAlert('请先认证才能预约，前去认证？','',
+        //         [{text:"取消"},
+        //             {text:"去认证", onPress:backAndGoToAuth}]
+        //     );
+        // }
     };
 
     cellSelected = (key, data = {}) =>{
@@ -183,6 +185,12 @@ export default class HomeShipDetailVC extends Component {
         }
         else if (item.idKey === 'storage') {
             return info.storage + " m³";
+        }
+        else if (item.idKey === 'ship_type' && objectNotNull(info.ship_type)) {
+            let type = parseInt(info.ship_type);
+            if (type > 0) {
+                return getArrayTypesText(shipTypes, parseInt(info.ship_type));
+            }
         }
         else if (item.idKey === 'course') {
             let course = parseInt(info.course);
