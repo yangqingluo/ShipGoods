@@ -5,10 +5,10 @@ import {
     TouchableOpacity,
     StyleSheet,
     Image,
-    Modal,
     TextInput,
     ActivityIndicator,
 } from 'react-native';
+import Modal from 'react-native-root-modal';
 
 export default class IndicatorModal extends PureComponent{
     constructor(props){
@@ -60,14 +60,15 @@ export default class IndicatorModal extends PureComponent{
                 animationType={this.state.animationType}
                 transparent={this.state.transparent}
                 visible={this.state.modalVisible}
+                style={styles.modal}
                 // onRequestClose={this.onRequestClose.bind(this)}
             >
-                <View style={styles.container}>
+                {/*<View style={styles.container}>*/}
                     <View style={styles.indicatorContainer}>
                         <ActivityIndicator size="large" color={"#fff"} style={styles.indicator}/>
                         {message.length > 0 ? <Text style={{marginTop:10, color:'#fff', textAlign:'center'}}>{message}</Text> : null}
                     </View>
-                </View>
+                {/*</View>*/}
             </Modal>
         )
     }
@@ -79,6 +80,15 @@ const styles = StyleSheet.create({
         backgroundColor:'rgba(0, 0, 0, 0.1)',
         justifyContent:'center',
         alignItems:'center',
+    },
+    modal: {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.1)',
     },
     indicatorContainer: {
         marginTop: -80,

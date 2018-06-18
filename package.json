@@ -22,7 +22,9 @@
     "react-native-swiper": "^1.5.13",
     "react-native-vector-icons": "^4.0.0",
     "react-navigation": "^1.4.0",
-    "react-native-image-zoom-viewer": "^2.1.0"
+    "react-native-image-zoom-viewer": "^2.1.0",
+    "react-native-redux-router": "^1.0.6",
+    "react-native-root-modal": "^1.0.1"
   },
   "devDependencies": {
     "babel-jest": "23.0.0-alpha.0",
