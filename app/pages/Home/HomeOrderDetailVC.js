@@ -15,6 +15,7 @@ import CustomItem from '../../components/CustomItem';
 import ShareUtil from "../../share/ShareUtil";
 import SharePlatform from "../../share/SharePlatform";
 import Toast from "react-native-easy-toast";
+import IndicatorModal from '../../components/IndicatorModal';
 
 export default class HomeOrderDetailVC extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -70,6 +71,11 @@ export default class HomeOrderDetailVC extends Component {
                 });
     };
 
+    goBackToMain = () => {
+        appHomeVC.reloadSubListOrderVC();
+        this.props.navigation.goBack('Main');
+    };
+
     onFavorBtnAction = () => {
         this.props.navigation.setParams({
             favor: true,
@@ -101,28 +107,24 @@ export default class HomeOrderDetailVC extends Component {
         );
     };
 
-    deleteMyPost() {
+    deleteMyPost = () => {
         let data = {task_id: this.state.info.task_id};
-
+        this.refIndicator.show();
         NetUtil.post(appUrl + 'index.php/Mobile/Goods/del_good_post/', data)
             .then(
                 (result)=>{
-                    this.setState({
-                        refreshing: false,
-                    });
+                    this.refIndicator.hide();
                     if (result.code === 0) {
-                        appHomeVC.props.navigation.goBack('Main');
+                        this.goBackToMain();
                     }
                     else {
                         this.refToast.show(result.message);
                     }
                 },(error)=>{
-                    this.setState({
-                        refreshing: false,
-                    });
+                    this.refIndicator.hide();
                     this.refToast.show(error);
                 });
-    }
+    };
 
     cellSelected = (key, data = {}) =>{
         let info = this.state.detailInfo;
@@ -238,6 +240,7 @@ export default class HomeOrderDetailVC extends Component {
                     </View>
                 </View>
                 <Toast ref={o => this.refToast = o} position={'center'}/>
+                <IndicatorModal ref={o => this.refIndicator = o}/>
             </View> );
     }
 }
