@@ -28,6 +28,7 @@ export default class HomeGoodsCell extends Component {
 
     render() {
         let {info} = this.props;
+        let {dieseloil, gasoline, ship_type} = info.item;
         let downloadOilList = [];
         if (objectNotNull(info.item.download_oil_list)) {
             downloadOilList = info.item.download_oil_list.map(
@@ -81,16 +82,23 @@ export default class HomeGoodsCell extends Component {
                             :null}
                         <View>
                             <View style={styles.cellSeparator}/>
-                            <View style={styles.cellItemContainer}>
-                                <View style={{flexDirection: 'row',  alignItems: "center", justifyContent: "flex-start"}}>
-                                    <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{'可运柴油 '}</Text>
-                                    <Text style={{fontSize:14, color:appData.appLightTextColor}}>{info.item.dieseloil + ' T'}</Text>
+                            {(objectIsZero(dieseloil) || objectIsZero(gasoline) && objectNotNull(ship_type)) ?
+                                <View style={styles.cellItemContainer}>
+                                    <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{'船舶类型 '}</Text>
+                                    <Text style={{fontSize:14, color:appData.appLightTextColor}}>{getArrayTypesText(shipTypes, parseInt(ship_type))}</Text>
                                 </View>
-                                <View style={{flexDirection: 'row',  alignItems: "center", justifyContent: "flex-end"}}>
-                                    <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{'可运汽油 '}</Text>
-                                    <Text style={{fontSize:14, color:appData.appLightTextColor, textAlign: "right"}}>{info.item.gasoline + ' T'}</Text>
+                                :
+                                <View style={styles.cellItemContainer}>
+                                    <View style={{flexDirection: 'row',  alignItems: "center", justifyContent: "flex-start"}}>
+                                        <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{'可运柴油 '}</Text>
+                                        <Text style={{fontSize:14, color:appData.appLightTextColor}}>{dieseloil + ' T'}</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row',  alignItems: "center", justifyContent: "flex-end"}}>
+                                        <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{'可运汽油 '}</Text>
+                                        <Text style={{fontSize:14, color:appData.appLightTextColor, textAlign: "right"}}>{gasoline + ' T'}</Text>
+                                    </View>
                                 </View>
-                            </View>
+                            }
                         </View>
                     </View>
                 </TouchableHighlight>
