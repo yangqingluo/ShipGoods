@@ -124,19 +124,18 @@ export default class HomeShipDetailVC extends Component {
     };
 
     onSubmitBtnAction = () => {
-        PublicAlert(JSON.stringify(this.state.detailInfo));
-        // if (isAuthed()) {
-        //     appHomeVC.props.navigation.navigate('HomeOrderSelect',
-        //         {
-        //             info: this.state.detailInfo,
-        //         });
-        // }
-        // else {
-        //     PublicAlert('请先认证才能预约，前去认证？','',
-        //         [{text:"取消"},
-        //             {text:"去认证", onPress:backAndGoToAuth}]
-        //     );
-        // }
+        if (isAuthed()) {
+            appHomeVC.props.navigation.navigate('HomeOrderSelect',
+                {
+                    info: this.state.detailInfo,
+                });
+        }
+        else {
+            PublicAlert('请先认证才能预约，前去认证？','',
+                [{text:"取消"},
+                    {text:"去认证", onPress:backAndGoToAuth}]
+            );
+        }
     };
 
     cellSelected = (key, data = {}) =>{

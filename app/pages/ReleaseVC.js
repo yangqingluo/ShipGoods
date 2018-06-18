@@ -780,7 +780,7 @@ export default class ReleaseVC extends Component {
             if (offerIsShipPrice(this.state.is_shipprice)) {
                 return "船东开价";
             }
-            else if (this.state.price > 0) {
+            else if (this.state.price.length > 0) {
                 return this.state.price + ' 元/吨 ' + (offerIsBargain(this.state.is_bargain) ? "不议价" : "")
             }
         }
@@ -832,7 +832,7 @@ export default class ReleaseVC extends Component {
                 <ActionSheet
                     ref={o => this.areaTypeActionSheet = o}
                     title={'请选择运输航向'}
-                    options={this.courseTypes}
+                    options={shipCourseTypes}
                     cancelButtonIndex={0}
                     // destructiveButtonIndex={1}
                     onPress={this.onSelectInvoiceType.bind(this)}

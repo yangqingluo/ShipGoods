@@ -73,6 +73,7 @@ export default class Menu extends Component {
             empty_time: appHomeCondition.empty_time,
             empty_delay: appHomeCondition.empty_delay,
             goods: appHomeCondition.goods,
+            ship_type: appHomeCondition.ship_type,
             area: area,
             min_ton: appHomeCondition.min_ton,
             max_ton: appHomeCondition.max_ton,

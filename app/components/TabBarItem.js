@@ -8,7 +8,7 @@ export default class TabBarItem extends Component {
             radius = Platform.OS === 'ios' ? 60 : 40;
         }
         return(
-            <Image source={ this.props.focused ? (this.props.selectedImage || this.props.normalImage) : this.props.normalImage }
+            <Image source={ this.props.normalImage }
                    style={ this.props.isRelease ?
                        { tintColor:this.props.tintColor,
                            position: 'absolute',
@@ -18,7 +18,7 @@ export default class TabBarItem extends Component {
                            height:radius,
                        }
                    :
-                       { tintColor:this.props.tintColor, width:radius,height:radius}}
+                       { tintColor:this.props.tintColor, width:radius, height:radius}}
             />
         )
     }
