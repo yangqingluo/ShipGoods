@@ -354,7 +354,7 @@ global.getShipAreaTypesText = function(area : Number) : String {
     if (area < shipAreaTypes.length) {
         return shipAreaTypes[area];
     }
-    return "未知";
+    return "";
 };
 
 global.getShipCourseTypesText = function(course : String) : String {
@@ -436,6 +436,10 @@ global.itemIsFavor = function(iscollect) : boolean {
 
 global.objectNotNull = function(object) : boolean {
     return ((object !== null) && (typeof(object) !== appUndefined));
+};
+
+global.objectIsZero = function(object) : boolean {
+    return ((object === null) || (typeof(object) === appUndefined) || (parseInt(object) === 0));
 };
 
 global.createRequestTime = function(date : Date) : String {
