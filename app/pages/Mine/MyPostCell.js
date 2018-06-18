@@ -22,6 +22,7 @@ export default class MyPostCell extends PureComponent<Props> {
     render() {
         let {info, logo, selected} = this.props;
         let {item, index} = info;
+        let {dieseloil, gasoline, ship_type} = item;
         switch (index % 4) {
             case 0:
                 logo = require('../../images/icon_blue.png');
@@ -106,12 +107,19 @@ export default class MyPostCell extends PureComponent<Props> {
                                 :null}
                             <View style={[styles.cellContainer, {alignItems: "center"}]}>
                                 <Image source={require('../../images/icon_clip.png')} style={{width: 16, height: 16, marginLeft:12, resizeMode: "stretch"}}/>
-                                <Text style={{marginLeft:6, fontSize:14}}>
-                                    <Text style={{color:appData.appSecondaryTextColor}}>{'可运柴油 '}</Text>
-                                    <Text style={{color:appData.appTextColor}}>{item.dieseloil + '吨'}</Text>
-                                    <Text style={{color:appData.appSecondaryTextColor}}>{' 可运汽油 '}</Text>
-                                    <Text style={{color:appData.appTextColor}}>{item.gasoline + '吨'}</Text>
-                                </Text>
+                                {(objectIsZero(dieseloil) || objectIsZero(gasoline) && objectNotNull(ship_type)) ?
+                                    <Text style={{marginLeft:6, fontSize:14}}>
+                                        <Text style={{color:appData.appSecondaryTextColor}}>{'船舶类型 '}</Text>
+                                        <Text style={{color:appData.appTextColor}}>{getArrayTypesText(shipTypes, parseInt(ship_type))}</Text>
+                                    </Text>
+                                    :
+                                    <Text style={{marginLeft:6, fontSize:14}}>
+                                        <Text style={{color:appData.appSecondaryTextColor}}>{'可运柴油 '}</Text>
+                                        <Text style={{color:appData.appTextColor}}>{dieseloil + '吨'}</Text>
+                                        <Text style={{color:appData.appSecondaryTextColor}}>{' 可运汽油 '}</Text>
+                                        <Text style={{color:appData.appTextColor}}>{gasoline + '吨'}</Text>
+                                    </Text>
+                                }
                             </View>
                         </View>
                     </View>

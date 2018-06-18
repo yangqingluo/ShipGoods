@@ -170,6 +170,7 @@ export default class MyPostDetailVC extends Component {
     render() {
         const { navigate } = this.props.navigation;
         let info = this.state.detailInfo;
+        let {dieseloil, gasoline, ship_type} = info;
         let logo = require('../../images/icon_blue.png');
         let downloadOilList = [];
         if (objectNotNull(info.download_oil_list)) {
@@ -237,12 +238,19 @@ export default class MyPostDetailVC extends Component {
                                 :null}
                             <View style={[styles.cellContainer, {alignItems: "center"}]}>
                                 <Image source={require('../../images/icon_clip.png')} style={{width: 16, height: 16, marginLeft:12, resizeMode: "stretch"}}/>
-                                <Text style={{marginLeft:6, fontSize:14}}>
-                                    <Text style={{color:appData.appSecondaryTextColor}}>{'可运柴油 '}</Text>
-                                    <Text style={{color:appData.appTextColor}}>{info.dieseloil + '吨'}</Text>
-                                    <Text style={{color:appData.appSecondaryTextColor}}>{' 可运汽油 '}</Text>
-                                    <Text style={{color:appData.appTextColor}}>{info.gasoline + '吨'}</Text>
-                                </Text>
+                                {(objectIsZero(dieseloil) || objectIsZero(gasoline) && objectNotNull(ship_type)) ?
+                                    <Text style={{marginLeft:6, fontSize:14}}>
+                                        <Text style={{color:appData.appSecondaryTextColor}}>{'船舶类型 '}</Text>
+                                        <Text style={{color:appData.appTextColor}}>{getArrayTypesText(shipTypes, parseInt(ship_type))}</Text>
+                                    </Text>
+                                    :
+                                    <Text style={{marginLeft:6, fontSize:14}}>
+                                        <Text style={{color:appData.appSecondaryTextColor}}>{'可运柴油 '}</Text>
+                                        <Text style={{color:appData.appTextColor}}>{dieseloil + '吨'}</Text>
+                                        <Text style={{color:appData.appSecondaryTextColor}}>{' 可运汽油 '}</Text>
+                                        <Text style={{color:appData.appTextColor}}>{gasoline + '吨'}</Text>
+                                    </Text>
+                                }
                             </View>
                         </View>
                     </View>
