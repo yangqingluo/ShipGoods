@@ -19,7 +19,7 @@ export default class MyPostOrderVC extends HomeOrderVC {
             ship_task_id: this.props.navigation.state.params.info.task_id,
         };
 
-        NetUtil.post(appUrl + '/index.php/Mobile/Task/get_book_list/', data)
+        NetUtil.post(appUrl + 'index.php/Mobile/Task/get_book_list/', data)
             .then(
                 (result)=>{
                     if (result.code === 0) {

@@ -95,7 +95,7 @@ export default class OrderListVC extends Component {
         if (item.isnew === '0') {
             let data = {nid: item.nid};
 
-            NetUtil.post(appUrl + '/index.php/Mobile/Notification/change_notification_state/', data)
+            NetUtil.post(appUrl + 'index.php/Mobile/Notification/change_notification_state/', data)
                 .then(
                     (result)=>{
                         this.refToast.show(result.message);

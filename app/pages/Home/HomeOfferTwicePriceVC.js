@@ -46,9 +46,9 @@ export default class HomeOfferTwicePriceVC extends Component {
         this.goodsConfig = [
             {idKey:"ship_name",name:"报价船"},
             {idKey:"price", name:"报价"},
-            {idKey:"loading_time", name:"到港时间"},
+            {idKey:"arrive_time", name:"到港时间"},
             {idKey:"phone", name:"联系方式", onPress:this.cellSelected.bind(this, "SelectPhone")},
-            {idKey:"goodslist", name:"上载货品"},
+            {idKey:"last_goods", name:"上载货品"},
         ];
     }
 
@@ -127,15 +127,22 @@ export default class HomeOfferTwicePriceVC extends Component {
 
     onSubmitBtnAction = () => {
         //修改报价
-        this.refChangePriceAlert.show({text:'', onSureBtnAction:this.toChangePrice.bind(this)});
+        if (objectNotNull(this.state.detailInfo.book)) {
+            let book_num = parseInt(this.state.detailInfo.book.book_num);
+            if (book_num <= 2) {
+                this.refChangePriceAlert.show({text:'', onSureBtnAction:this.toChangePrice.bind(this)});
+                return;
+            }
+        }
+        this.refToast.show('修改次数受限，不能修改');
     };
 
     cellSelected = (key, data = {}) =>{
         let info = this.state.detailInfo;
         if (key === "SelectPhone") {
             if (objectNotNull(info.goods_owner)) {
-                let phone = info.goods_owner.phone;
-                if (phone !== null && phone.length > 0) {
+                let phone = info.goods_owner.contact;
+                if (!stringIsEmpty(phone)) {
                     Communications.phonecall(phone, true);
                     return;
                 }
@@ -170,13 +177,21 @@ export default class HomeOfferTwicePriceVC extends Component {
             if (objectNotNull(info.ship)) {
                 return info.ship.ship_name;
             }
-            // PublicAlert(JSON.stringify(info.ship));
         }
         else if (item.idKey === 'price') {
             return offerIsShipPrice(info.is_shipprice) ? "船东开价" : info.price;
         }
-        else if (item.idKey === 'loading_time') {
-            return info.loading_timetext;
+        else if (item.idKey === 'arrive_time') {
+            if (objectNotNull(info.book)) {
+                return info.book.arrive_time + " ± " + info.book.arrive_delay + "天";
+            }
+        }
+        else if (item.idKey === "last_goods") {
+            if (objectNotNull(info.book)) {
+                if (objectNotNull(info.book.last_goods_name)) {
+                    return info.book.last_goods_name.goods_name;
+                }
+            }
         }
 
         return '';
@@ -193,7 +208,7 @@ export default class HomeOfferTwicePriceVC extends Component {
         else if (item.idKey === 'phone') {
             if (objectNotNull(info.goods_owner)) {
                 return <Text style={{color: appData.appBlueColor, fontSize: 14}}>
-                    {info.goods_owner.phone}
+                    {info.goods_owner.contact}
                 </Text>
             }
         }

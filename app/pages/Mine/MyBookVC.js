@@ -52,7 +52,7 @@ export default class MyBookVC extends Component {
         }
         let data = {page: this.state.page, type: isShipOwner() ? 2 : 1};
 
-        NetUtil.post(appUrl + '/index.php/Mobile/Task/get_book_list/', data)
+        NetUtil.post(appUrl + 'index.php/Mobile/Task/get_book_list/', data)
             .then(
                 (result)=>{
                     if (result.code === 0) {
