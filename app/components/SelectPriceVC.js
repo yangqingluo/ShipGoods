@@ -9,6 +9,7 @@ import {
     View,
     TouchableOpacity
 } from "react-native";
+import Toast from "react-native-easy-toast";
 
 export default class SelectPriceVC extends Component {
     static navigationOptions = ({ navigation }) => (
@@ -43,12 +44,19 @@ export default class SelectPriceVC extends Component {
     }
 
     onSubmitBtnAction() {
-        if (this.state.price > 0) {
-            this.props.navigation.state.params.callBack(this.state.price, this.state.is_bargain, this.state.is_shipprice);
+        let isShipPrice = offerIsShipPrice(this.state.is_shipprice);
+        if (isShipPrice) {
+            this.props.navigation.state.params.callBack(0, 0, this.state.is_shipprice);
             this.props.navigation.goBack();
         }
         else {
-            PublicAlert("请输入价格");
+            if (this.state.price > 0) {
+                this.props.navigation.state.params.callBack(this.state.price, this.state.is_bargain, this.state.is_shipprice);
+                this.props.navigation.goBack();
+            }
+            else {
+                this.refToast.show("请输入价格");
+            }
         }
     }
 
@@ -115,6 +123,7 @@ export default class SelectPriceVC extends Component {
                         </View>
                     </TouchableOpacity>
                 </View>
+                <Toast ref={o => this.refToast = o} position={'center'}/>
             </View>
         );
     }

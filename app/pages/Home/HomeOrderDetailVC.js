@@ -14,6 +14,8 @@ import DashLine from '../../components/DashLine';
 import CustomItem from '../../components/CustomItem';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import ShareUtil from "../../share/ShareUtil";
+import SharePlatform from "../../share/SharePlatform";
 const Font = {
     Ionicons,
     FontAwesome
@@ -81,7 +83,14 @@ export default class HomeOrderDetailVC extends Component {
 
     onShareBtnAction = () => {
         //分享
-
+        ShareUtil.shareboard('分享的内容',
+            'http://dev.umeng.com/images/tab2_1.png',
+            'http://baidu.com',
+            '我在友船友货发现了好东西',
+            [SharePlatform.WECHAT, SharePlatform.WECHATMOMENT, SharePlatform.QQ],
+            (code, message) =>{
+                // this.refToast.show(code + '  ' + message);
+            });
     };
 
     onEditBtnAction = () => {
@@ -122,7 +131,7 @@ export default class HomeOrderDetailVC extends Component {
             return '完货' + info.clean_deley + '天内';
         }
         else if (item.idKey === 'remark') {
-            return info.remark.length === 0 ? '船主很懒没有留下备注' : info.remark;
+            return stringIsEmpty(info.remark) ? '船主很懒没有留下备注' : info.remark;
         }
         return '';
     }

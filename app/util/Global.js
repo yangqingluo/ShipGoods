@@ -451,6 +451,10 @@ global.objectIsZero = function(object) : boolean {
     return ((object === null) || (typeof(object) === appUndefined) || (parseInt(object) === 0));
 };
 
+global.stringIsEmpty = function(object) : boolean {
+    return ((object === null) || (typeof(object) === appUndefined) || object.length === 0);
+};
+
 global.createRequestTime = function(date : Date) : String {
     if (date !== null) {
         return date.Format("yyyy-MM-dd");

@@ -11,6 +11,23 @@ type Props = {
 }
 
 export default class OrderCenterView extends PureComponent<Props> {
+    renderGoodsName() {
+        let {info} = this.props;
+        if (objectNotNull(info.goods_name)) {
+            return info.goods_name;
+        }
+        else if (objectNotNull(info.goodslist)) {
+            if (info.goodslist.length > 0) {
+                let goodsList = info.goodslist.map(
+                    (item) => {
+                        return item.goods_name;
+                    }
+                );
+                return goodsList.join(",");
+            }
+        }
+        return "";
+    }
 
     render() {
         let {info, style} = this.props;
@@ -23,7 +40,7 @@ export default class OrderCenterView extends PureComponent<Props> {
                 </View>
                 <View style={{flex: 1, flexDirection: 'row', alignItems: "center", justifyContent: "space-between"}}>
                     <Text style={styles.textContainer}>{info.loading_timetext + ' ± ' + info.loading_delay + '天'}</Text>
-                    <Text style={[styles.textContainer, {flex: 1, marginLeft:20}]}>{info.goods_name + ' ' + info.tonnage + '+' + info.ton_section + '吨'}</Text>
+                    <Text style={[styles.textContainer, {flex: 1, marginLeft:20}]}>{this.renderGoodsName() + ' ' + info.tonnage + '±' + info.ton_section + '吨'}</Text>
                 </View>
             </View>
             <View style={{backgroundColor: '#81c6ff', height:26, alignItems: "center", justifyContent: "center"}}>

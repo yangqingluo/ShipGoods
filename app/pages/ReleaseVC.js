@@ -137,6 +137,7 @@ export default class ReleaseVC extends Component {
                 wastage: m_string, //否 损耗
                 goods: '', //货品
                 demurrage: 0, //否 滞期费
+                remark: '',//备注
 
                 goodsSelectedList: [],
                 wastageTitle: data1,
@@ -225,7 +226,7 @@ export default class ReleaseVC extends Component {
     }
 
     toReleaseForGoodsOwner() {
-        let {goodsSelectedList, tonnage, ton_section, price, is_bargain, loading_port, unloading_port, loading_time, loading_delay, wastage, demurrage, clean_deley, remark} = this.state;
+        let {goodsSelectedList, tonnage, ton_section, price, is_shipprice, is_bargain, loading_port, unloading_port, loading_time, loading_delay, wastage, demurrage, clean_deley, remark} = this.state;
         if (goodsSelectedList.length === 0) {
             this.refToast.show("请选择货品");
         }
@@ -268,6 +269,7 @@ export default class ReleaseVC extends Component {
                 tonnage: tonnage,
                 ton_section: ton_section,
                 price: price,
+                is_shipprice: is_shipprice,
                 is_bargain: is_bargain,
                 loading_port: loading_port.port_id,
                 loading_port_name: loading_port.port_name,
@@ -773,8 +775,13 @@ export default class ReleaseVC extends Component {
         else if (item.idKey === 'upload_oil_list' && this.state.upload_oil_list.length > 0) {
             return this.state.upload_oil_list;
         }
-        else if (item.idKey === 'price' && this.state.price > 0) {
-            return offerIsShipPrice(this.state.is_shipprice) ? "船东开价" : (this.state.price + ' 元/吨 ' + (offerIsBargain(this.state.is_bargain) ? "不议价" : ""));
+        else if (item.idKey === "price") {
+            if (offerIsShipPrice(this.state.is_shipprice)) {
+                return "船东开价";
+            }
+            else if (this.state.price > 0) {
+                return this.state.price + ' 元/吨 ' + (offerIsBargain(this.state.is_bargain) ? "不议价" : "")
+            }
         }
         else if (item.idKey === 'tonnage' && this.state.tonnage.length > 0) {
             return this.state.tonnage + '±' + this.state.ton_section + "吨";
