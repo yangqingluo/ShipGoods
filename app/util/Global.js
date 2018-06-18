@@ -276,6 +276,12 @@ global.backAndGoToAuth = function() : void {
     appMainTab.props.navigation.navigate('AddAuth');
 };
 
+global.backAndGoToMyRelease = function() : void {
+    appMainTab.props.navigation.goBack('Main');
+    appMainTab.props.navigation.navigate('MineVC');
+    appMainTab.props.navigation.navigate('MyPost');
+};
+
 global.renderSeparator = () => {
     return <View style={{height:0.5,backgroundColor:appData.appSeparatorColor}}/>;
 };

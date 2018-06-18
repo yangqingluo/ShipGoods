@@ -94,7 +94,20 @@ export default class ReleaseVC extends Component {
 
     refreshDefaultState() {
         if (isShipOwner()) {
+            this.setState({
+                ship: null,//船
+                upload_oil_list: '',//上载油品
+                download_oil_list: '',//下载油品
+                empty_port: null,//空船港
+                empty_time: new Date(),//空船期
+                empty_delay: 0,//空船延迟
+                course: '',//运输航向 1：南上 2：北下 3：上江 4：下江 5：运河（多选，用“##”隔开）
+                remark: '',//备注
 
+                uploadOilSelectedList: [],
+                downloadOilSelectedList: [],
+                courseList: [],
+            });
         }
         else {
             let data1 = 1;
@@ -111,9 +124,23 @@ export default class ReleaseVC extends Component {
             }
 
             this.setState({
+                tonnage: '',//否 装载吨位
+                ton_section: 0, //否 吨位区间值
+                price: '',//否 单价
+                loading_port: null,//否 装货港
+                unloading_port: null, //否 卸货港
+                loading_time: new Date(), //否 发货时间
+                loading_delay: 0, //否 发货延迟
+                is_bargain: 0, //否 是否接收议价 0：是（默认） 1：否
+                is_shipprice: 0, //是 是否船东开价 0：否 1：是
+                clean_deley: 0, //否 完货后多少天结算 15/30/45/60
+                wastage: m_string, //否 损耗
+                goods: '', //货品
+                demurrage: 0, //否 滞期费
+
+                goodsSelectedList: [],
                 wastageTitle: data1,
                 wastageNumber: data2,
-                wastage: m_string,
             })
         }
     }
@@ -182,8 +209,10 @@ export default class ReleaseVC extends Component {
                 .then(
                     (result)=>{
                         if (result.code === 0) {
-                            PublicAlert(result.message,'',
-                                [{text:"确定"}]
+                            this.refreshDefaultState();
+                            PublicAlert(result.message, "发布完成，请到\"我的发布\"中查看",
+                                [{text:"取消"},
+                                    {text:"去查看", onPress:backAndGoToMyRelease}]
                             );
                         }
                         else {
@@ -259,7 +288,8 @@ export default class ReleaseVC extends Component {
                 .then(
                     (result)=>{
                         if (result.code === 0) {
-                            PublicAlert(result.message,'',
+                            this.refreshDefaultState();
+                            PublicAlert(result.message, "发布完成，请到\"我的货\"中查看",
                                 [{text:"确定"}]
                             );
                         }
@@ -499,7 +529,7 @@ export default class ReleaseVC extends Component {
                     title: '可运货品',
                     dataList: appAllGoods,
                     selectedList:this.state.goodsSelectedList,
-                    maxSelectCount:5,
+                    maxSelectCount:1,
                     callBack:this.callBackFromGoodsVC.bind(this)
                 }
             );
@@ -531,7 +561,7 @@ export default class ReleaseVC extends Component {
             (info) => {
                 return info.goods_name;
             }
-        )
+        );
         this.setState({
             goods: dataList.join(','),
             goodsSelectedList: backData
@@ -593,7 +623,7 @@ export default class ReleaseVC extends Component {
                     title: '上载货品',
                     dataList: appAllGoods,
                     selectedList:this.state.uploadOilSelectedList,
-                    maxSelectCount:5,
+                    maxSelectCount:1,
                     callBack:this.callBackFromUpGoodsVC.bind(this)
                 }
             );
