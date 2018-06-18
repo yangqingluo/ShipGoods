@@ -16,8 +16,6 @@ import Item from '../components/Item'
 import StarScore from '../components/StarScore'
 import Communications from '../util/AKCommunications';
 import Toast from "react-native-easy-toast";
-import ShareUtil from '../share/ShareUtil';
-import SharePlatform from '../share/SharePlatform';
 
 export default class MineVC extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -80,14 +78,7 @@ export default class MineVC extends Component {
     onAuthTextPress = () =>  {
         if (isAuthed()) {
             //审核通过
-            ShareUtil.shareboard('分享的内容',
-                'http://dev.umeng.com/images/tab2_1.png',
-                'http://baidu.com',
-                '标题',
-                [SharePlatform.WECHAT, SharePlatform.WECHATMOMENT, SharePlatform.QQ],
-                (code, message) =>{
-                this.refToast.show(code + '  ' + message);
-            });
+
         }
         else {
             //未审核/审核不通过

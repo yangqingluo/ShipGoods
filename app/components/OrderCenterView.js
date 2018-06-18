@@ -27,7 +27,9 @@ export default class OrderCenterView extends PureComponent<Props> {
                 </View>
             </View>
             <View style={{backgroundColor: '#81c6ff', height:26, alignItems: "center", justifyContent: "center"}}>
-                <Text style={{fontSize:12, color:'white', fontWeight:'bold'}}>{'¥'+ info.price + ' 元/ 吨'}</Text>
+                <Text style={{fontSize:12, color:'white', fontWeight:'bold'}}>
+                    {offerIsShipPrice(info.is_shipprice) ? "船东开价" : info.price}
+                    </Text>
             </View>
         </View>;
     }

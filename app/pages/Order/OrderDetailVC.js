@@ -386,7 +386,7 @@ export default class OrderJudgementVC extends Component {
             return info.ship_name;
         }
         else if (item.idKey === 'price') {
-            return '¥'+ info.price + ' 元/ 吨'
+            return offerIsShipPrice(info.is_shipprice) ? "船东开价" : info.price;
         }
         else if (item.idKey === 'loading_time') {
             return info.loading_timetext;

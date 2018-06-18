@@ -173,7 +173,7 @@ export default class HomeOfferTwicePriceVC extends Component {
             // PublicAlert(JSON.stringify(info.ship));
         }
         else if (item.idKey === 'price') {
-            return '¥'+ info.price + ' 元/ 吨'
+            return offerIsShipPrice(info.is_shipprice) ? "船东开价" : info.price;
         }
         else if (item.idKey === 'loading_time') {
             return info.loading_timetext;
@@ -298,7 +298,7 @@ export default class HomeOfferTwicePriceVC extends Component {
                             showRenderList: !this.state.showRenderList,
                         })}}>
                             <View style={{backgroundColor: '#81c6ff', height: 26, flexDirection: 'row', alignItems: "center", justifyContent: "center"}}>
-                                <Text style={{fontSize: 12, color:'white', fontWeight:'bold'}}>{'¥'+ info.price + ' 元/ 吨'}</Text>
+                                <Text style={{fontSize: 12, color:'white', fontWeight:'bold'}}>{offerIsShipPrice(info.is_shipprice) ? "船东开价" : info.price}</Text>
                                 <Image source={showRenderList ? require('../../images/icon_rectangle_up.png') : require('../../images/icon_rectangle_down.png')} style={{marginLeft:5, width: 17, height: 11, resizeMode: "cover"}}/>
                             </View>
                         </TouchableOpacity>

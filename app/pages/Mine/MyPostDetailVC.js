@@ -12,6 +12,9 @@ import {
 } from 'react-native';
 import DashLine from '../../components/DashLine';
 import CustomItem from '../../components/CustomItem';
+import Toast from "react-native-easy-toast";
+import ShareUtil from "../../share/ShareUtil";
+import SharePlatform from "../../share/SharePlatform";
 
 export default class MyPostDetailVC extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -70,7 +73,14 @@ export default class MyPostDetailVC extends Component {
 
     onShareBtnAction = () => {
         //分享
-
+        ShareUtil.shareboard('分享的内容',
+            'http://dev.umeng.com/images/tab2_1.png',
+            'http://baidu.com',
+            '我在友船友货发现了好东西',
+            [SharePlatform.WECHAT, SharePlatform.WECHATMOMENT, SharePlatform.QQ],
+            (code, message) =>{
+                // this.refToast.show(code + '  ' + message);
+            });
     };
 
     onEditBtnAction = () => {
@@ -270,6 +280,7 @@ export default class MyPostDetailVC extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
+                <Toast ref={o => this.refToast = o} position={'center'}/>
             </View> );
     }
 }

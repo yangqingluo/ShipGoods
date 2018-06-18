@@ -433,7 +433,10 @@ global.offerIsBargain = function(is_bargain) : boolean {
     return (parseInt(is_bargain) === 0);
 };
 global.offerIsShipPrice = function(is_shipprice) : boolean {
-    return (parseInt(is_shipprice) === 1);
+    if (objectNotNull(is_shipprice)) {
+        return (parseInt(is_shipprice) === 1);
+    }
+    return false;
 };
 
 global.itemIsFavor = function(iscollect) : boolean {
