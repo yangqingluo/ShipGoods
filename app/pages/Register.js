@@ -75,14 +75,14 @@ export default class Register extends Component {
                 .then(
                     (result)=>{
                         this.refIndicator.hide();
-                        // if (result.code === 0) {
+                        if (result.code === 0) {
                             PublicAlert('注册完成', '',
                                 [{text:"确定", onPress:this.goBack.bind(this)}]
                             );
-                        // }
-                        // else {
-                        //     this.refs.toast.show(result.message);
-                        // }
+                        }
+                        else {
+                            this.refs.toast.show(result.message);
+                        }
                     },(error)=>{
                         this.refIndicator.hide();
                         this.refs.toast.show(error);

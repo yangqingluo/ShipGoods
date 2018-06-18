@@ -263,6 +263,7 @@ global.appUrl = 'http://shiphire.com.cn/';//服务器url
 global.appUndefined =  'undefined';
 global.NetUtil = NetUtil;
 global.appHomeVC = null;
+global.appMineVC = null;
 global.appMainTab = null;
 global.appDeviceId = DeviceInfo.getUniqueID();
 global.screenWidth = width;

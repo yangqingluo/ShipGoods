@@ -79,6 +79,9 @@ export default class DetailVC extends Component {
     }
 
     goBack() {
+        userData.authstate = 0;
+        saveUserData(userData);
+        appMineVC._onRefresh();
         this.props.navigation.goBack();
     }
 

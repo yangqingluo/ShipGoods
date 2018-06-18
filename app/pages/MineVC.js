@@ -16,6 +16,7 @@ import Item from '../components/Item'
 import StarScore from '../components/StarScore'
 import Communications from '../util/AKCommunications';
 import Toast from "react-native-easy-toast";
+import IndicatorModal from '../components/IndicatorModal';
 
 export default class MineVC extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -49,7 +50,7 @@ export default class MineVC extends Component {
     }
 
     componentDidMount() {
-        // this._onRefresh()
+        global.appMineVC = this;
     }
 
     goPage(key, data = {}){
@@ -82,26 +83,42 @@ export default class MineVC extends Component {
         }
         else {
             //未审核/审核不通过
-            this.props.navigation.navigate('AddAuth');
+            this.requestRecommend(true);
         }
     };
 
-    _onRefresh(){
-        this.setState({refreshing: true});
-        this.requestRecommend(true);
+    goToAddAuth() {
+        if (isAuthed()) {
+            //审核通过
+            this.refToast.show("已审核通过");
+        }
+        else {
+            //未审核/审核不通过
+            this.props.navigation.navigate('AddAuth');
+        }
     }
 
-    requestRecommend = async (isReset) => {
+    _onRefresh() {
+        this.setState({refreshing: true});
+        this.requestRecommend(false);
+    }
+
+    requestRecommend = async (isGoToAddAuth) => {
         let data = {suid: userData.uid};
 
+        this.refIndicator.show();
         NetUtil.post(appUrl + 'index.php/Mobile/User/get_user_info/', data)
             .then(
                 (result)=>{
+                    this.refIndicator.hide();
                     if (result.code === 0) {
                         saveUserData(result.data);
                         this.setState({
                             refreshing: false,
                         });
+                        if (isGoToAddAuth) {
+                            this.goToAddAuth();
+                        }
                     }
                     else {
                         this.setState({
@@ -109,6 +126,7 @@ export default class MineVC extends Component {
                         })
                     }
                 },(error)=>{
+                    this.refIndicator.hide();
                     this.setState({
                         refreshing: false,
                     })
@@ -177,6 +195,7 @@ export default class MineVC extends Component {
                     {this._renderHeader()}
                 </ScrollView>
                 <Toast ref={o => this.refToast = o} position={'center'}/>
+                <IndicatorModal ref={o => this.refIndicator = o}/>
             </View>
         )
     }
