@@ -108,6 +108,7 @@ export default class HomeVC extends Component {
             appHomeCondition.empty_time = this.rightMenu.state.empty_time;
             appHomeCondition.empty_delay = this.rightMenu.state.empty_delay;
             appHomeCondition.goods = this.rightMenu.state.goods;
+            appHomeCondition.ship_type = this.rightMenu.state.ship_type;
             appHomeCondition.area = this.rightMenu.state.area;
             appHomeCondition.min_ton = this.rightMenu.state.min_ton;
             appHomeCondition.max_ton = this.rightMenu.state.max_ton;

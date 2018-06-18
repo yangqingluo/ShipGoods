@@ -53,6 +53,7 @@ export default class HomeGoodsVC extends Component {
         if (appHomeCondition.min_ton > 0) data.min_ton = appHomeCondition.min_ton;
         if (appHomeCondition.max_ton > 0) data.max_ton = appHomeCondition.max_ton;
         if (appHomeCondition.goods !== null) data.goods_id = appHomeCondition.goods.goods_id;
+        if (objectNotNull(appHomeCondition.ship_type)) data.ship_type = appHomeCondition.ship_type.key;
         if (appHomeCondition.area.length > 0) {
             data.area = appHomeCondition.area.map(
                 (info) => {

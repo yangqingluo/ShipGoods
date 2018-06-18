@@ -11,7 +11,6 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
-import px2dp from "../../util";
 import CustomItem from '../../components/CustomItem'
 import CellTitleItem from '../../components/CellTitleItem'
 import TextCell from '../../components/TextCell'
@@ -24,6 +23,7 @@ export default class Menu extends Component {
             empty_time: null,//空船期
             empty_delay: 0,//空船延迟
             goods: null,//可运货品
+            ship_type: null,//船舶类型
             area: [],//航行区域
             min_ton: 0,//货量区间 最小吨位
             max_ton: 0,//货量区间 最大吨位
@@ -226,7 +226,7 @@ export default class Menu extends Component {
                                 noSeparator={true}
                                 callback={this.textInputChanged.bind(this)}>
                     </CustomItem>
-                    <View style={{marginLeft:px2dp(2), height: px2dp(5), backgroundColor: '#f3f6f9'}}/>
+                    <View style={{marginLeft:2, height: 5, backgroundColor: '#f3f6f9'}}/>
                 </View>);
         })
     }
@@ -244,6 +244,24 @@ export default class Menu extends Component {
                 showText={info.item.goods_name}
                 onPress={this.onGoodsCellSelected}
                 selected={info.item === this.state.goods}
+                lines={3}
+            />
+        )
+    };
+
+    onShipTypeCellSelected = (info: Object) => {
+        this.setState({
+            ship_type: info.item,
+        });
+    };
+
+    renderShipTypeCell = (info: Object) => {
+        return (
+            <TextCell
+                info={info}
+                showText={info.item.name}
+                onPress={this.onShipTypeCellSelected}
+                selected={info.item === this.state.ship_type}
                 lines={3}
             />
         )
@@ -279,22 +297,34 @@ export default class Menu extends Component {
     render() {
         const {onItemSelected} = this.props;
         return (
-            <View style={{flex: 1, borderLeftWidth: px2dp(0.5), borderLeftColor: appData.appBorderColor}}>
+            <View style={{flex: 1, borderLeftWidth: 0.5, borderLeftColor: appData.appBorderColor}}>
                 <ScrollView scrollsToTop={false} style={styles.menu}>
                     {this._renderListItem()}
-                    <CellTitleItem name={isShipOwner() ? '货品种类' : '可运货品'} disable={true} subName={''}>
-                        <FlatList
-                            numColumns ={3}
-                            data={appAllGoods}
-                            renderItem={this.renderGoodsCell}
-                            keyExtractor={this.keyExtractor}
-                            style={{marginLeft: px2dp(10), marginRight: px2dp(10)}}
-                        >
-                        </FlatList>
-                    </CellTitleItem>
-                    <View style={{marginLeft:px2dp(2), height: px2dp(5), backgroundColor: '#f3f6f9'}}/>
+                    {isShipOwner() ?
+                        <CellTitleItem name={isShipOwner() ? '货品种类' : '可运货品'} disable={true} subName={''}>
+                            <FlatList
+                                numColumns ={3}
+                                data={appAllGoods}
+                                renderItem={this.renderGoodsCell}
+                                keyExtractor={this.keyExtractor}
+                                style={{marginLeft: 10, marginRight: 10}}
+                            >
+                            </FlatList>
+                        </CellTitleItem>
+                    :
+                        <CellTitleItem name={"船舶类型"} disable={true} subName={''}>
+                            <FlatList
+                                numColumns ={3}
+                                data={shipTypeObjects}
+                                renderItem={this.renderShipTypeCell}
+                                keyExtractor={this.keyExtractor}
+                                style={{marginLeft: 10, marginRight: 10}}
+                            >
+                            </FlatList>
+                        </CellTitleItem>}
+                    <View style={{marginLeft:2, height: 5, backgroundColor: '#f3f6f9'}}/>
                     <CellTitleItem name={'货量区间'} disable={true} subName={''}>
-                        <View style={{marginLeft: px2dp(10), marginRight: px2dp(10), height: px2dp(50), flexDirection: 'row', alignItems: "center"}}>
+                        <View style={{marginLeft: 10, marginRight: 10, height: 50, flexDirection: 'row', alignItems: "center"}}>
                             <TextInput underlineColorAndroid="transparent"
                                        keyboardType={"numeric"}
                                        style={styles.textInput}
@@ -305,8 +335,8 @@ export default class Menu extends Component {
                                        }}
                                        value={this.state.min_ton > 0 ? this.state.min_ton + '' : ''}
                             />
-                            <View style={{width: px2dp(40), height: px2dp(50), alignItems: "center", justifyContent: "center",}}>
-                                <Text style={{fontSize:px2dp(16), textAlign: 'center', color: '#5d5d5d'}}>{"~"}</Text>
+                            <View style={{width: 40, height: 50, alignItems: "center", justifyContent: "center",}}>
+                                <Text style={{fontSize:16, textAlign: 'center', color: '#5d5d5d'}}>{"~"}</Text>
                             </View>
                             <TextInput underlineColorAndroid="transparent"
                                        keyboardType={"numeric"}
@@ -320,20 +350,20 @@ export default class Menu extends Component {
                             />
                         </View>
                     </CellTitleItem>
-                    <View style={{marginLeft:px2dp(2), height: px2dp(5), backgroundColor: '#f3f6f9'}}/>
+                    <View style={{marginLeft:2, height: 5, backgroundColor: '#f3f6f9'}}/>
                     <CellTitleItem name={'航行区域'} disable={true} subName={''}>
                         <FlatList
                             numColumns ={2}
                             data={shipAreaObjects}
                             renderItem={this.renderAreaCell}
                             keyExtractor={this.keyExtractor}
-                            style={{marginLeft: px2dp(10), marginRight: px2dp(10)}}
+                            style={{marginLeft: 10, marginRight: 10}}
                         >
                         </FlatList>
                     </CellTitleItem>
-                    <View style={{height: px2dp(120)}}/>
+                    <View style={{height: 120}}/>
                 </ScrollView>
-                <View style={{height:px2dp(46), flexDirection: 'row', alignItems: "center"}}>
+                <View style={{height:46, flexDirection: 'row', alignItems: "center"}}>
                     <TouchableOpacity style={{flex: 1}} onPress={() => onItemSelected('Cancel')}>
                         <View style={[styles.bottomButton, {backgroundColor: '#d8d8d8'}]}>
                             <Text style={[styles.bottomButtonText, {color: "#a9a9a9"}]}>{"取消"}</Text>
@@ -365,14 +395,14 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     bottomButtonText: {
-        fontSize: px2dp(18),
+        fontSize: 18,
         fontWeight: '900',
     },
     textInput: {
-        height: px2dp(27),
+        height: 27,
         flex: 1,
         textAlign: "center",
         backgroundColor: '#f3f6f9',
-        borderRadius: px2dp(4),
+        borderRadius: 4,
     },
 });
