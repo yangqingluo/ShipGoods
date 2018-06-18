@@ -12,14 +12,9 @@ import {
 } from 'react-native';
 import DashLine from '../../components/DashLine';
 import CustomItem from '../../components/CustomItem';
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import ShareUtil from "../../share/ShareUtil";
 import SharePlatform from "../../share/SharePlatform";
-const Font = {
-    Ionicons,
-    FontAwesome
-};
+import Toast from "react-native-easy-toast";
 
 export default class HomeOrderDetailVC extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -100,8 +95,34 @@ export default class HomeOrderDetailVC extends Component {
 
     onDeleteBtnAction = () => {
         //删除
-
+        PublicAlert("确定删除？", "",
+            [{text:"取消"},
+                {text:"删除", onPress:this.deleteMyPost.bind(this)}]
+        );
     };
+
+    deleteMyPost() {
+        let data = {task_id: this.state.info.task_id};
+
+        NetUtil.post(appUrl + 'index.php/Mobile/Goods/del_good_post/', data)
+            .then(
+                (result)=>{
+                    this.setState({
+                        refreshing: false,
+                    });
+                    if (result.code === 0) {
+                        appHomeVC.props.navigation.goBack('Main');
+                    }
+                    else {
+                        this.refToast.show(result.message);
+                    }
+                },(error)=>{
+                    this.setState({
+                        refreshing: false,
+                    });
+                    this.refToast.show(error);
+                });
+    }
 
     cellSelected = (key, data = {}) =>{
         let info = this.state.detailInfo;
@@ -157,8 +178,6 @@ export default class HomeOrderDetailVC extends Component {
         let info = this.state.detailInfo;
         let price = parseInt(info.price);
         let isBargain = offerIsBargain(this.state.detailInfo.is_bargain);
-        let font = font||"Ionicons";
-        const Icon = Font[font];
         return (
             <View style={appStyles.container}>
                 <ScrollView style={{flex: 1, backgroundColor:'#fff'}}
@@ -192,7 +211,7 @@ export default class HomeOrderDetailVC extends Component {
                                 <Text style={{color: appData.appBlueColor, fontSize: 14}}>
                                     {"已有" + info.offer_num + "艘船报价"}
                                 </Text>
-                                <Font.Ionicons style={{position: "absolute", right: 0, opacity: 1.0}} name="ios-arrow-forward-outline" size={18} color="#bbb" />
+                                <appFont.Ionicons style={{position: "absolute", right: 0, opacity: 1.0}} name="ios-arrow-forward-outline" size={18} color="#bbb" />
                             </View>
                         </TouchableOpacity>
                         <View style={{height: 1, marginLeft: 10}}>
@@ -218,6 +237,7 @@ export default class HomeOrderDetailVC extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
+                <Toast ref={o => this.refToast = o} position={'center'}/>
             </View> );
     }
 }

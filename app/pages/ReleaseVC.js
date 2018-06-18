@@ -734,10 +734,10 @@ export default class ReleaseVC extends Component {
 
                     }
                     else {
-                        PublicAlert(result.message);
+                        this.refToast.show(result.message);
                     }
                 },(error)=>{
-                    PublicAlert(error);
+                    this.refToast.show(error);
                 });
     };
 
