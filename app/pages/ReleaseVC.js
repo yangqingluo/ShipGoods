@@ -33,7 +33,7 @@ export default class ReleaseVC extends Component {
         this.state = {
             ship: null,//船
             upload_oil_list: '',//上载油品
-            download_oil_list: '',//下载油品
+            download_oil_list: '',//意向油品
             empty_port: null,//空船港
             empty_time: new Date(),//空船期
             empty_delay: 0,//空船延迟
@@ -66,7 +66,7 @@ export default class ReleaseVC extends Component {
         this.config = isShipOwner() ?
             [
                 {idKey:"ship_name", name:"船名", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectShip")},
-                {idKey:"download_oil_list", name:"下载可运货品", logo:require('../images/icon_red.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectDownload")},
+                {idKey:"download_oil_list", name:"意向货品", logo:require('../images/icon_red.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectDownload")},
                 {idKey:"empty_port", name:"空船港", logo:require('../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectPort")},
                 {idKey:"empty_time",name:"空船期", logo:require('../images/icon_green.png'), disable:false, subName:"324", onPress:this.cellSelected.bind(this, "SelectEmptyTime")},
                 {idKey:"course", name:"可运航向", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectCourse")},
@@ -97,7 +97,7 @@ export default class ReleaseVC extends Component {
             this.setState({
                 ship: null,//船
                 upload_oil_list: '',//上载油品
-                download_oil_list: '',//下载油品
+                download_oil_list: '',//意向油品
                 empty_port: null,//空船港
                 empty_time: new Date(),//空船期
                 empty_delay: 0,//空船延迟
@@ -160,7 +160,7 @@ export default class ReleaseVC extends Component {
             this.refToast.show("请选择船舶");
         }
         else if (downloadOilSelectedList.length === 0) {
-            this.refToast.show("请选择下载货品");
+            this.refToast.show("请选择意向货品");
         }
         else if (empty_port === null) {
             this.refToast.show("请选择空船港");
@@ -573,7 +573,7 @@ export default class ReleaseVC extends Component {
             this.props.navigation.navigate(
                 'CustomSectionSelect',
                 {
-                    title: '下载货品',
+                    title: '意向货品',
                     dataList: appAllGoods,
                     selectedList:this.state.downloadOilSelectedList,
                     maxSelectCount:5,

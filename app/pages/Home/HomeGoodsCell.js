@@ -66,7 +66,7 @@ export default class HomeGoodsCell extends Component {
                             <View>
                                 <View style={styles.cellSeparator}/>
                                 <View style={styles.cellItemContainer}>
-                                    <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>下载可运油品</Text>
+                                    <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{"意向货品"}</Text>
                                     <Text style={styles.cellItemRightText}>{downloadOilList.join(' ')}</Text>
                                 </View>
                             </View>

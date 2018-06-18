@@ -221,7 +221,7 @@ export default class MyPostDetailVC extends Component {
                                 <View style={[styles.cellContainer, {alignItems: "center"}]}>
                                     <Image source={require('../../images/icon_clip.png')} style={{width: 16, height: 16, marginLeft:12, resizeMode: "stretch"}}/>
                                     <Text style={{marginLeft:6, fontSize:14}}>
-                                        <Text style={{color:appData.appSecondaryTextColor}}>{'下载可运油品 '}</Text>
+                                        <Text style={{color:appData.appSecondaryTextColor}}>{'意向货品 '}</Text>
                                         <Text style={{color:appData.appTextColor}}>{downloadOilList.join(' ')}</Text>
                                     </Text>
                                 </View>

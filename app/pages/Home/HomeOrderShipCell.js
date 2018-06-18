@@ -66,7 +66,7 @@ export default class HomeOrderShipCell extends Component {
                             <View>
                                 <View style={{height:1, marginLeft:3, backgroundColor:appData.appSeparatorLightColor}} />
                                 <View style={{flexDirection: 'row',  alignItems: "center", justifyContent: "space-between", height:47}}>
-                                    <Text style={{fontSize:14, color:appData.appSecondaryTextColor, marginLeft:28}}>下载可运油品</Text>
+                                    <Text style={{fontSize:14, color:appData.appSecondaryTextColor, marginLeft:28}}>{"意向货品"}</Text>
                                     <Text style={{fontSize:14, color:appData.appLightTextColor, marginRight:18}}>{downloadOilList.join(' ')}</Text>
                                 </View>
                             </View>

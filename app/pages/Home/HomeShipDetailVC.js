@@ -61,7 +61,7 @@ export default class HomeShipDetailVC extends Component {
 
         this.config = [
             {idKey:"empty_time",name:"空船期"},
-            {idKey:"download_oil_list", name:"下载可运货品"},
+            {idKey:"download_oil_list", name:"意向货品"},
             {idKey:"storage", name:"仓容"},
             {idKey:"course", name:"航行区域"},
             {idKey:"upload_oil_list", name:"上载货品"},
