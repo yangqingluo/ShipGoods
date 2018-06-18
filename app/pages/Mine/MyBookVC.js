@@ -90,6 +90,7 @@ export default class MyBookVC extends Component {
     onCellSelected = (info: Object) => {
         this.props.navigation.navigate('HomeShipDetail',
             {
+                notBook: true,
                 info: info.item,
             });
     };

@@ -17,18 +17,6 @@ import Toast from 'react-native-easy-toast';
 
 
 class RightHeader extends Component {
-    // static props = {
-    //     favor: PropTypes.BOOL,
-    // };
-    //
-    // static defaultProps = {
-    //     favor: false,
-    // };
-    //
-    // constructor(props) {
-    //     super(props)
-    // }
-
     onFavorBtnPress = () => {
         this.props.navigation.state.params.clickParams();
     };
@@ -54,6 +42,7 @@ export default class HomeShipDetailVC extends Component {
     constructor(props) {
         super(props);
         this.state={
+            notBook: this.props.navigation.state.params.notBook || false,
             info: this.props.navigation.state.params.info,
             detailInfo: this.props.navigation.state.params.info,
             refreshing: false,
@@ -106,7 +95,7 @@ export default class HomeShipDetailVC extends Component {
     };
 
     isOrdered = function() : boolean {
-        return (this.state.detailInfo.state === '1');
+        return (this.state.detailInfo.state === '1') || this.state.notBook;
     };
 
     refreshFavor() {
@@ -151,8 +140,8 @@ export default class HomeShipDetailVC extends Component {
     cellSelected = (key, data = {}) =>{
         let info = this.state.detailInfo;
         if (key === "SelectPhone") {
-            if (objectNotNull(info.goods_owner)) {
-                let phone = info.goods_owner.phone;
+            if (objectNotNull(info.contact)) {
+                let phone = info.contact;
                 if (phone !== null && phone.length > 0) {
                     Communications.phonecall(phone, true);
                     return;
@@ -211,9 +200,9 @@ export default class HomeShipDetailVC extends Component {
             return <StarScore style={{marginLeft:5}} itemEdge={5} currentScore={info.credit}/>;
         }
         else if (item.idKey === 'phone' && this.isOrdered()) {
-            if (objectNotNull(info.goods_owner)) {
+            if (objectNotNull(info.contact)) {
                 return <Text style={{color: appData.appBlueColor, fontSize: 14}}>
-                    {info.goods_owner.phone}
+                    {info.contact}
                 </Text>
             }
         }
@@ -223,6 +212,9 @@ export default class HomeShipDetailVC extends Component {
 
     _renderListItem() {
         return this.config.map((item, i) => {
+            if (item.idKey === 'phone' && !this.isOrdered()) {
+                return null;
+            }
             return (
                 <View key={'cell' + i} style={{paddingLeft: 10, paddingRight: 20}}>
                     <CustomItem key={i} {...item}
