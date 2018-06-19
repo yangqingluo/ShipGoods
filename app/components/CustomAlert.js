@@ -93,7 +93,7 @@ export default class CustomAlert extends Component {
                 <TouchableOpacity style={styles.container} activeOpacity={1} onPress={this.tapToDismissKeyboard}>
                     <View style={styles.modalContainer}>
                         <View style={styles.mainContainer}>
-                            <View style={{flex: 1, alignItems:'center', justifyContent:'center',}}>
+                            <View style={{flex: 1, alignItems:'center', justifyContent:'center'}}>
                                 {title ? <Text style={styles.modalTitle}>{title}</Text> : null}
                                 {message ? <Text style={styles.modalMessage}>{message}</Text> : null}
                                 {showTextInput ? <TextInput underlineColorAndroid="transparent"
@@ -197,9 +197,11 @@ const styles = StyleSheet.create({
         position: 'absolute',
     },
     textInput: {
+        marginTop: 20,
         width: px2dp(240),
+        // height: 120,
         fontSize: 16,
-        minHeight: 40,
+        minHeight: 80,
         maxHeight: 120,
         color: appData.appTextColor,
     },
