@@ -16,6 +16,18 @@ export default class OrderVC extends Component {
         headerTitle: '订单',
         tabBarLabel: '订单',
     };
+
+    componentDidMount() {
+        global.appOrderVC = this;
+    }
+
+    reloadSubOrderingVC = () => {
+        if (objectNotNull(this.subOrderingVC)) {
+            this.subOrderingVC.state.dataList = [];
+            this.subOrderingVC.requestData();
+        }
+    };
+
     render() {
         let tabTitles = ['执行中', '历史订单'];
         const { navigate } = this.props.navigation;

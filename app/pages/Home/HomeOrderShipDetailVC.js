@@ -78,7 +78,10 @@ export default class HomeShipDetailVC extends Component {
     };
 
     goBackToMain = () => {
-        this.props.navigation.goBack('Main');
+        if (objectNotNull(appOrderVC)) {
+            appOrderVC.reloadSubOrderingVC();
+        }
+        backAndGoToOrder();
     };
 
     onAgreeBtnAction = () => {
@@ -143,8 +146,8 @@ export default class HomeShipDetailVC extends Component {
     cellSelected = (key, data = {}) =>{
         let info = this.state.detailInfo;
         if (key === "SelectPhone") {
-            if (objectNotNull(info.goods_owner)) {
-                let phone = info.goods_owner.phone;
+            if (objectNotNull(info.contact)) {
+                let phone = info.contact;
                 if (phone !== null && phone.length > 0) {
                     Communications.phonecall(phone, true);
                     return;

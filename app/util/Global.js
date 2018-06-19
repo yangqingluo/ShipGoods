@@ -263,6 +263,7 @@ global.appUrl = 'http://shiphire.com.cn/';//服务器url
 global.appUndefined =  'undefined';
 global.NetUtil = NetUtil;
 global.appHomeVC = null;
+global.appOrderVC = null;
 global.appMineVC = null;
 global.appMainTab = null;
 global.appDeviceId = DeviceInfo.getUniqueID();
@@ -275,6 +276,11 @@ global.backAndGoToAuth = function() : void {
     appMainTab.props.navigation.goBack('Main');
     appMainTab.props.navigation.navigate('MineVC');
     appMainTab.props.navigation.navigate('AddAuth');
+};
+
+global.backAndGoToOrder = function() : void {
+    appMainTab.props.navigation.goBack('Main');
+    appMainTab.props.navigation.navigate('OrderVC');
 };
 
 global.backAndGoToMyRelease = function() : void {
