@@ -64,7 +64,7 @@ export default class SelectPriceVC extends Component {
         const Icon = appFont["Ionicons"];
         let isBargain = offerIsBargain(this.state.is_bargain);
         let isShipPrice = offerIsShipPrice(this.state.is_shipprice);
-        let bargainTextColor = isBargain ? appData.appBlueColor : appData.appThirdTextColor;
+        let bargainTextColor = isBargain ? appData.appThirdTextColor : appData.appBlueColor;
         let shipPriceTextColor = isShipPrice ? appData.appBlueColor : appData.appThirdTextColor;
         let notShipPriceTextColor = isShipPrice ? appData.appThirdTextColor : appData.appBlueColor;
 

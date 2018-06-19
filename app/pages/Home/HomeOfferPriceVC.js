@@ -92,6 +92,7 @@ export default class HomeOfferPriceVC extends Component {
                 .then(
                     (result)=>{
                         if (result.code === 0) {
+                            appSecondPriceParams.book_id = result.data.book_id;
                             PublicAlert(result.message,'',
                                 [{text:"确定", onPress:this.toGotoTwicePriceVC.bind(this)}]
                             );

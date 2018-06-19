@@ -94,8 +94,10 @@ export default class HomeVC extends Component {
     }
 
     reloadSubListOrderVC = () => {
-        this.subListOrderVC.state.dataList = [];
-        this.subListOrderVC.requestData();
+        if (objectNotNull(this.subListOrderVC)) {
+            this.subListOrderVC.state.dataList = [];
+            this.subListOrderVC.requestData();
+        }
     };
 
     updateMenuState(isOpen) {

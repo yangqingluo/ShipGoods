@@ -738,7 +738,7 @@ export default class ReleaseVC extends Component {
                 return "船东开价";
             }
             else if (this.state.price.length > 0) {
-                return this.state.price + ' 元/吨 ' + (offerIsBargain(this.state.is_bargain) ? "不议价" : "")
+                return this.state.price + ' 元/吨 ' + (offerIsBargain(this.state.is_bargain) ? "" : "不议价")
             }
         }
         else if (item.idKey === 'tonnage' && this.state.tonnage.length > 0) {

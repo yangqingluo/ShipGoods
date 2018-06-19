@@ -234,7 +234,7 @@ export default class HomeOfferDetailVC extends Component {
     render() {
         const { navigate } = this.props.navigation;
         let info = this.state.detailInfo;
-        let price = parseInt(info.price);
+        let isShipPrice = offerIsShipPrice(this.state.detailInfo.is_shipprice);
         let isBargain = offerIsBargain(this.state.detailInfo.is_bargain);
         let {remark} = this.state.detailInfo;
         return (
@@ -283,7 +283,7 @@ export default class HomeOfferDetailVC extends Component {
                         </Text>
                     </View>
                 </ScrollView>
-                {price === 0 ?
+                {isShipPrice ?
                     <View style={{position: "absolute", bottom: 20, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
                         <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)}>
                             <View style={appStyles.sureBtnContainer}>
