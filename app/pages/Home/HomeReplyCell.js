@@ -28,7 +28,7 @@ export default class HomeReplyCell extends PureComponent {
             <View>
                 <TouchableOpacity style={styles.cellContainer}>
                     <Text style={{flex:1, fontSize:14}}>
-                        <Text style={{color:"#ff5700a6"}}>{"我的回复："}</Text>
+                        <Text style={{color:"#ff5700a6"}}>{isShipOwner() ? "货主回复：" : "我的回复："}</Text>
                         <Text style={{color:"#ff9d69"}}>{item.content}</Text>
                     </Text>
                     <Text style={styles.rightTextContainer}>{createTimeFormat(item.reply_time, "yyyy-MM-dd HH:mm")}</Text>
