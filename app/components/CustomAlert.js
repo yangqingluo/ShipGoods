@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-    Modal,
     Text,
     TextInput,
     TouchableOpacity,
@@ -9,6 +8,7 @@ import {
     StyleSheet,
     Image,
 } from 'react-native';
+import Modal from 'react-native-root-modal';
 import px2dp from "../util";
 
 export default class CustomAlert extends Component {
@@ -84,6 +84,7 @@ export default class CustomAlert extends Component {
     render() {
         let {title, message, placeholder, showTextInput, numeric} = this.props;
         return (<Modal
+                style={styles.container}
                 animationType={this.state.animationType}
                 transparent={this.state.transparent}
                 visible={this.state.modalVisible}
@@ -124,8 +125,9 @@ export default class CustomAlert extends Component {
 
 const styles = StyleSheet.create({
     container:{
-        flex:1,
-        backgroundColor:'rgba(0, 0, 0, 0.5)',
+        width:screenWidth,
+        height:screenHeight,
+        backgroundColor:'rgba(0, 0, 0, 0.1)',
         justifyContent:'center',
         alignItems:'center',
     },
