@@ -9,10 +9,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import ImagePicker from 'react-native-image-picker';
-
 import CustomItem from '../components/CustomItem';
-import {imagePickerOptions} from "../util/Global";
 import Toast from "react-native-easy-toast";
 
 export default class ReleaseVC extends Component {
@@ -701,46 +698,6 @@ export default class ReleaseVC extends Component {
             });
         }
     }
-
-    toSelectPhoto = (idKey) => {
-        ImagePicker.showImagePicker(imagePickerOptions, (response) => {
-            console.log('Response = ', response);
-
-            if (response.didCancel) {
-                console.log('User cancelled photo picker');
-            }
-            else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            }
-            else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
-            }
-            else {
-                let source = {
-                    uri: response.uri
-                };
-                this.submitImage(source, idKey);
-            }
-        });
-    };
-
-    submitImage = (source, idKey) => {
-        let formData = new FormData();
-        let file = {uri: source.uri, type: 'multipart/form-data', name: 'image.png'};
-        formData.append("filename", file);
-        NetUtil.postForm(appUrl + 'index.php/Mobile/Upload/upload_ship/', formData)
-            .then(
-                (result)=>{
-                    if (result.code === 0) {
-
-                    }
-                    else {
-                        this.refToast.show(result.message);
-                    }
-                },(error)=>{
-                    this.refToast.show(error);
-                });
-    };
 
     renderSubNameForIndex(item, index) {
         if (item.idKey === 'ship_name' && this.state.ship !== null) {
