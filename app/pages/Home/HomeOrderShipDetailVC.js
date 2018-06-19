@@ -7,6 +7,7 @@ import {
     TextInput,
     FlatList,
     ScrollView,
+    RefreshControl,
     TouchableOpacity
 } from 'react-native';
 import DashLine from '../../components/DashLine';
@@ -26,7 +27,7 @@ export default class HomeShipDetailVC extends Component {
 
     constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             info: this.props.navigation.state.params.info,
             detailInfo: this.props.navigation.state.params.info,
             refreshing: false,
@@ -34,10 +35,10 @@ export default class HomeShipDetailVC extends Component {
 
         this.config = [
             {idKey:"arrive_time",name:"预计到港时间"},
-            {idKey:"download_oil_list", name:"可运油品"},
+            {idKey:"goods", name:"可运油品"},
             {idKey:"storage", name:"仓容"},
-            {idKey:"course", name:"航行区域"},
-            {idKey:"upload_oil_list", name:"上载货品"},
+            {idKey:"area", name:"航行区域"},
+            {idKey:"last_goods", name:"上载货品"},
             {idKey:"credit", name:"船主信用"},
             {idKey:"phone", name:"联系方式", onPress:this.cellSelected.bind(this, "SelectPhone")},
         ];
@@ -125,6 +126,7 @@ export default class HomeShipDetailVC extends Component {
                     (result)=>{
                         if (result.code === 0) {
                             this.refToast.show("回复成功");
+                            this.requestData();
                         }
                         else {
                             this.refToast.show(result.message);
@@ -168,38 +170,30 @@ export default class HomeShipDetailVC extends Component {
     renderSubNameForIndex(item, index) {
         let info = this.state.detailInfo;
         if (item.idKey === 'arrive_time') {
-            return info.arrive_timetext;
+            return info.arrive_time + "±" + info.arrive_delay + "天";
         }
-        else if (item.idKey === 'download_oil_list') {
+        else if (item.idKey === "goods") {
             let oilList = [];
-            if (objectNotNull(info.download_oil_list)) {
-                oilList = info.download_oil_list.map(
+            if (arrayNotEmpty(info.goods)) {
+                oilList = info.goods.map(
                     (info) => {
                         return info.goods_name;
                     }
                 );
             }
-            return oilList.join(" ");
+            return oilList.join(",");
         }
-        else if (item.idKey === 'upload_oil_list') {
-            let oilList = [];
-            if (objectNotNull(info.upload_oil_list)) {
-                oilList = info.upload_oil_list.map(
-                    (info) => {
-                        return info.goods_name;
-                    }
-                );
+        else if (item.idKey === "last_goods") {
+            if (objectNotNull(info.last_goods_name)) {
+                return info.last_goods_name.goods_name;
             }
-            return oilList.join(" ");
         }
         else if (item.idKey === 'storage') {
             return info.storage + " m³";
         }
-        else if (item.idKey === 'course') {
-            let course = parseInt(info.course);
-            if (course > 0 && course < shipAreaTypes.length) {
-                return shipAreaTypes[course];
-            }
+        else if (item.idKey === "area") {
+            let area = parseInt(info.area);
+            return getShipAreaTypesText(area);
         }
 
         return '';
@@ -208,12 +202,14 @@ export default class HomeShipDetailVC extends Component {
     renderSubViewForIndex(item, index) {
         let info = this.state.detailInfo;
         if (item.idKey === 'credit') {
-            return <StarScore style={{marginLeft:5}} itemEdge={5} currentScore={info.credit}/>;
+            if (objectNotNull(info.credit)) {
+                return <StarScore style={{marginLeft:5}} itemEdge={5} currentScore={info.credit}/>;
+            }
         }
         else if (item.idKey === 'phone') {
-            if (objectNotNull(info.goods_owner)) {
+            if (objectNotNull(info.contact)) {
                 return <Text style={{color: appData.appBlueColor, fontSize: 14}}>
-                    {info.goods_owner.phone}
+                    {info.contact}
                 </Text>
             }
         }
@@ -278,7 +274,13 @@ export default class HomeShipDetailVC extends Component {
         let info = this.state.detailInfo;
         return (
             <View style={appStyles.container}>
-                <ScrollView style={{flex: 1, backgroundColor:'#fff'}}>
+                <ScrollView style={{flex: 1, backgroundColor:'#fff'}}
+                            refreshControl={
+                                <RefreshControl
+                                    onRefresh={this.requestData.bind(this)}
+                                    refreshing={this.state.refreshing}
+                                />}
+                >
                     <View style={{backgroundColor:'#81c6ff', flexDirection: 'row', justifyContent: "space-between", height:26}}>
                         <Text style={{fontSize:10, color:'white', marginLeft:10, marginTop:8}}>{'发票编号：' + info.goods_sn}</Text>
                         <Text style={{fontSize:10, color:'white', marginRight:10, marginTop:8}}>{info.add_timetext}</Text>
@@ -334,3 +336,60 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
 });
+
+
+// {"code":0,
+//     "message":"",
+//     "data":{
+//     "uid":"78",
+//         "sex":"1",
+//         "sign":null,
+//         "credit":"4",
+//         "bz_licence":"",
+//         "card_front":"",
+//         "card_con":"",
+//         "idcard_front":"",
+//         "idcard_con":"",
+//         "invoice_type":"1",
+//         "invoice_remark":null,
+//         "corporation":null,
+//         "phone":null,
+//         "remark":null,
+//         "auth_time":"0",
+//         "checker":"0",
+//         "check_time":"0",
+//         "name":"\u8d27",
+//         "contact":"13758727770",
+//         "ship_id":"1",
+//         "ship_name":"\u6768\u8239\u4e00",
+//         "ship_lience":"Uploads\/ship\/2018-06-06\/5b173d483d971.png",
+//         "projects":"",
+//         "tonnage":"666",
+//         "storage":"665",
+//         "state":"0",
+//         "dieseloil":"2000",
+//         "gasoline":"1000",
+//         "longitude":null,
+//         "latitude":null,
+//         "area":"3",
+//         "income_qua":"0",
+//         "usestate":"0",
+//         "create_time":"1528249673",
+//         "ship_type":"0",
+//         "good_task_id":"94",
+//         "qid":"74",
+//         "book_id":"10",
+//         "offer":"3547.00",
+//         "arrive_time":"2018-06-24",
+//         "arrive_delay":"4",
+//         "last_goods_id":"75",
+//         "add_time":"1529419452",
+//         "book_num":"3",
+//         "goods_sn":"GYY180619004",
+//         "goods":[
+//             {"transport_id":"1","goods_id":"30","ship_id":"1","goods_name":"\u5176\u4ed6\u6ca5\u9752 "},
+//         {"transport_id":"2","goods_id":"31","ship_id":"1","goods_name":"\u6c7d\u6cb9 "}],
+//         "last_goods_name":{"goods_id":"75","goods_name":"\u539f\u6cb9","iclose":"0","pid":"24","deep":"1"},
+//     "replylist":[{"r_id":"3","book_id":"10","content":"\u4f60\u597d\uff1f\uff1f\uff1f","reply_time":"1529423339"},
+//         {"r_id":"2","book_id":"10","content":"\u5feb\u70b9","reply_time":"1529423257"},
+//         {"r_id":"1","book_id":"10","content":"\u80fd\u4e0d\u80fd\u4fbf\u5b9c\uff1f","reply_time":"1529422944"}]}}

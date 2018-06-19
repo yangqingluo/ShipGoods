@@ -475,6 +475,11 @@ global.objectNotNull = function(object) : boolean {
     return ((object !== null) && (typeof(object) !== appUndefined));
 };
 
+global.arrayNotEmpty = function(object) : boolean {
+    return ((object !== null) && (typeof(object) !== appUndefined) && object.length > 0);
+};
+
+
 global.objectIsZero = function(object) : boolean {
     return ((object === null) || (typeof(object) === appUndefined) || (parseInt(object) === 0));
 };

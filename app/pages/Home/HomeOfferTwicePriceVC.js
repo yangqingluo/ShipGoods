@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import {
     StyleSheet,
     Text,
@@ -287,8 +286,7 @@ export default class HomeOfferTwicePriceVC extends Component {
                                 <RefreshControl
                                     onRefresh={this.requestData.bind(this)}
                                     refreshing={this.state.refreshing}
-                                />
-                            }
+                                />}
                 >
                     <View style={{height: 47, flexDirection: 'row', alignItems: "center", justifyContent: "space-between",}}>
                         <View style={{flexDirection: 'row'}}>
