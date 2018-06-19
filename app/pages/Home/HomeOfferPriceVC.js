@@ -52,7 +52,8 @@ export default class HomeOfferPriceVC extends Component {
         });
     };
 
-    toGotoTwicePriceVC= () =>{
+    toGotoTwicePriceVC = (book_id) =>{
+        this.state.info.book_id = book_id;
         appSecondPriceParams = {headerTitle: "二次报价", info: this.state.info};
         this.props.navigation.goBack('HomeOfferTwicePrice');
         // this.props.navigation.goBack('Main');
@@ -92,9 +93,8 @@ export default class HomeOfferPriceVC extends Component {
                 .then(
                     (result)=>{
                         if (result.code === 0) {
-                            appSecondPriceParams.book_id = result.data.book_id;
-                            PublicAlert(result.message,'',
-                                [{text:"确定", onPress:this.toGotoTwicePriceVC.bind(this)}]
+                            PublicAlert(result.message, "",
+                                [{text:"确定", onPress:this.toGotoTwicePriceVC.bind(this, result.data.book_id)}]
                             );
                         }
                         else {
