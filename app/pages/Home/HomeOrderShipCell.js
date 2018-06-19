@@ -60,8 +60,8 @@ export default class HomeOrderShipCell extends Component {
                             <Text style={{fontSize:12, color:appData.appRedColor, marginRight:18, fontWeight:'bold'}}>{parseInt(info.item.offer) === 0 ? "认同报价" : (info.item.offer + ' 元 / 吨')}</Text>
                         </View>
                         <View style={{flexDirection: 'row',  alignItems: "center", justifyContent: "space-between", height:47}}>
-                            <Text style={{fontSize:14, color:appData.appSecondaryTextColor, marginLeft:28}}>预计到港时间</Text>
-                            <Text style={{fontSize:14, color:appData.appLightTextColor, marginRight:18}}>{info.item.arrive_time}</Text>
+                            <Text style={{fontSize:14, color:appData.appSecondaryTextColor, marginLeft:28}}>{"预计到港时间"}</Text>
+                            <Text style={{fontSize:14, color:appData.appLightTextColor, marginRight:18}}>{info.item.arrive_time + "±" + info.item.arrive_delay + "天"}</Text>
                         </View>
                         {downloadOilList.length > 0 ?
                             <View>

@@ -26,7 +26,18 @@ export default class OrderVC extends Component {
             this.subOrderingVC.state.dataList = [];
             this.subOrderingVC.requestData();
         }
+        this.refTab.goToPage(0);
     };
+
+    reloadSubOrderedVC = () => {
+        if (objectNotNull(this.subOrderedVC)) {
+            this.subOrderedVC.state.dataList = [];
+            this.subOrderedVC.requestData();
+        }
+        this.refTab.goToPage(1);
+    };
+
+
 
     render() {
         let tabTitles = ['执行中', '历史订单'];
@@ -34,6 +45,7 @@ export default class OrderVC extends Component {
         return (
             <View style={styles.container}>
                 <ScrollableTabView
+                    ref={o => this.refTab = o}
                     renderTabBar={() =>
                         <TabTop tabNames={tabTitles}
                                 tabItemFlex={1}
