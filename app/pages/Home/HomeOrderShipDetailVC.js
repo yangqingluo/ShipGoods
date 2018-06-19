@@ -35,7 +35,7 @@ export default class HomeShipDetailVC extends Component {
 
         this.config = [
             {idKey:"arrive_time",name:"预计到港时间"},
-            {idKey:"goods", name:"可运油品"},
+            {idKey:"goods", name:"意向货品"},
             {idKey:"storage", name:"仓容"},
             {idKey:"area", name:"航行区域"},
             {idKey:"last_goods", name:"上载货品"},
