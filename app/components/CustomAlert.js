@@ -9,6 +9,7 @@ import {
     Image,
 } from 'react-native';
 import Modal from 'react-native-root-modal';
+import CustomInput from './CustomInput';
 import px2dp from "../util";
 
 export default class CustomAlert extends Component {
@@ -96,7 +97,7 @@ export default class CustomAlert extends Component {
                             <View style={{flex: 1, alignItems:'center', justifyContent:'center'}}>
                                 {title ? <Text style={styles.modalTitle}>{title}</Text> : null}
                                 {message ? <Text style={styles.modalMessage}>{message}</Text> : null}
-                                {showTextInput ? <TextInput underlineColorAndroid="transparent"
+                                {showTextInput ? <CustomInput underlineColorAndroid="transparent"
                                                             keyboardType={numeric ? "numeric" : "default"}
                                                             style={styles.textInput}
                                                             multiline={true}

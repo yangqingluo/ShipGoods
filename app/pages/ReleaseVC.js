@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import CustomItem from '../components/CustomItem';
+import CustomInput from '../components/CustomInput';
 import Toast from "react-native-easy-toast";
 
 export default class ReleaseVC extends Component {
@@ -772,7 +773,7 @@ export default class ReleaseVC extends Component {
                     <View style={{height: appData.appSeparatorHeight, backgroundColor: appData.appSeparatorLightColor}}/>
                     <View style={{paddingHorizontal:18, paddingVertical:15}}>
                         <Image source={require('../images/icon_beizhu.png')} style={{width: 57, height: 21, resizeMode: "cover"}}/>
-                        <TextInput underlineColorAndroid="transparent"
+                        <CustomInput underlineColorAndroid="transparent"
                                    style={styles.textInput}
                                    multiline={true}
                                    placeholder={"请在此输入您的备注"}
@@ -782,7 +783,7 @@ export default class ReleaseVC extends Component {
                                    }}
                                    value={remark}
                         >
-                        </TextInput>
+                        </CustomInput>
                     </View>
                     <View style={{height:80}} />
                 </ScrollView>
