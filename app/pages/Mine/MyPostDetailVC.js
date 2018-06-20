@@ -97,14 +97,14 @@ export default class MyPostDetailVC extends Component {
         let info = this.state.detailInfo;
         if (key === "SelectOffer") {
             let offer_num = parseInt(info.appoint_num);
-            // if (offer_num > 0) {
+            if (offer_num > 0) {
                 this.props.navigation.navigate('MyPostOrder',
                     {
                         info: info,
                         title: "已有" + offer_num + "人预约",
                         is_offer: "0",
                     });
-            // }
+            }
         }
         else {
             PublicAlert(key);

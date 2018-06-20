@@ -24,6 +24,7 @@ export default class HomeOfferPriceVC extends Component {
         super(props);
         this.state={
             info: this.props.navigation.state.params.info,
+            type: this.props.navigation.state.params.type || 2,
             ship: null,//船
             offer: 0.0,
             arrive_time: new Date(),//预计到港时间
@@ -84,10 +85,16 @@ export default class HomeOfferPriceVC extends Component {
                 last_goods_id: this.state.lastGoodsSelectedList[0].goods_id,
                 arrive_time: this.state.arrive_time.Format("yyyy-MM-dd"),
                 arrive_delay: this.state.arrive_delay,
-                type: 2,
+                type: this.state.type,
                 offer: price,
                 task_id: this.state.info.task_id,
             };
+
+            if (this.state.type === 1) {
+                if (objectNotNull(this.state.info.book_id)) {
+                    data.book_id = this.state.info.book_id;
+                }
+            }
 
             NetUtil.post(appUrl + 'index.php/Mobile/Task/add_book_good/', data)
                 .then(

@@ -163,7 +163,8 @@ export default class HomeOfferDetailVC extends Component {
             this.props.navigation.navigate('HomeOfferPrice',
                 {
                     title: title,
-                    info: this.state.detailInfo,
+                    info: this.state.info,
+                    type: this.props.navigation.state.params.type,
                 });
         }
         else {
