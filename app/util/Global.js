@@ -256,9 +256,22 @@ let OrderBtnEnum = {
     Transporting: 6,//正在运输
 };
 
+let OfferPriceEnum = {
+    ShipPrice: 0,//船东报价
+    AgreePrice: 1,//认同报价
+    BargainPrice: 2,//议价
+};
+
+let OfferOrderEnum = {
+    GoodsOrder: 1,//货主约船
+    ShipOrder: 2,//船东约货
+};
+
 global.appStyles = appStyles;
 global.appData = appData;
 global.OrderBtnEnum = OrderBtnEnum;
+global.OfferPriceEnum = OfferPriceEnum;
+global.OfferOrderEnum = OfferOrderEnum;
 global.appFont = Font;
 global.appUrl = 'http://shiphire.com.cn/';//服务器url
 global.appUndefined =  'undefined';

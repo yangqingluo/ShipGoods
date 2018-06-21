@@ -69,7 +69,7 @@ export default class MyPostOrderVC extends HomeOrderVC {
                 {
                     info: info.item,
                     is_offer: is_offer,
-                    type: 1,
+                    type: OfferOrderEnum.GoodsOrder,
                 });
         }
     };

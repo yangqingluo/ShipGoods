@@ -130,34 +130,39 @@ export default class HomeOfferDetailVC extends Component {
 
     onSubmitBtnAction = () => {
         //报价
-        this.goToOfferVC(0);
+        this.goToOfferVC(OfferPriceEnum.ShipPrice);
     };
 
     onAcceptBtnAction = () => {
         //认同报价
-        this.goToOfferVC(1);
+        this.goToOfferVC(OfferPriceEnum.AgreePrice);
     };
 
     onBargainBtnAction = () => {
         //议价
-        this.goToOfferVC(2);
+        this.goToOfferVC(OfferPriceEnum.BargainPrice);
     };
 
     goToOfferVC(type) {
         if (isAuthed()) {
             let title = null;
             switch (type) {
-                case 0:
+                case OfferPriceEnum.ShipPrice:
                     title = "报价";
                     break;
 
-                case 1:
+                case OfferPriceEnum.AgreePrice:
                     title = "认同报价";
                     break;
 
-                case 2:
+                case OfferPriceEnum.BargainPrice:
                     title = "议价";
                     break;
+
+                default: {
+                    this.refToast.show("出错");
+                    return;
+                }
             }
 
             this.props.navigation.navigate('HomeOfferPrice',
@@ -165,6 +170,7 @@ export default class HomeOfferDetailVC extends Component {
                     title: title,
                     info: this.state.info,
                     type: this.props.navigation.state.params.type,
+                    priceType: type,
                 });
         }
         else {

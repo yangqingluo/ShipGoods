@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import {
     StyleSheet,
     Text,
@@ -7,6 +6,7 @@ import {
     View,
     TextInput,
     ScrollView,
+    RefreshControl,
     TouchableOpacity
 } from 'react-native';
 
@@ -23,8 +23,11 @@ export default class HomeOfferPriceVC extends Component {
     constructor(props) {
         super(props);
         this.state={
+            refreshing: false,
+
             info: this.props.navigation.state.params.info,
-            type: this.props.navigation.state.params.type || 2,
+            type: this.props.navigation.state.params.type || OfferOrderEnum.ShipOrder,
+            priceType: this.props.navigation.state.params.priceType || OfferPriceEnum.BargainPrice,
             ship: null,//船
             offer: 0.0,
             arrive_time: new Date(),//预计到港时间
@@ -36,22 +39,64 @@ export default class HomeOfferPriceVC extends Component {
 
         this.config = [
             {idKey:"ship_name", name:"选择船只", logo:require('../../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectShip")},
-            {idKey:"offer", name:"运价", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
+            {idKey:"offer", name:"运价", logo:require('../../images/icon_red.png'), disable:!this.isAgreePrice(), numeric:true},
             {idKey:"arrive_time", name:"到港时间", logo:require('../../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectArriveTime")},
             {idKey:"last_goods",name:"上载货品", logo:require('../../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectLastGoods")},
 
         ];
     }
 
-    isBargain = function() : boolean {
-        return (this.state.info.is_bargain === '0');
+    componentDidMount() {
+        if (this.state.priceType === OfferPriceEnum.AgreePrice) {
+            this.requestData();
+        }
+    }
+
+    requestData = () => {
+        this.setState({refreshing: true});
+        this.requestRecommend(true);
     };
 
-    onFavorBtnAction = () => {
-        this.props.navigation.setParams({
-            favor: true,
-        });
+    requestRecommend = async (isReset) => {
+        let {info} = this.state;
+        let data = {book_id: info.book_id};
+
+        NetUtil.post(appUrl + 'index.php/Mobile/ship/get_default_ship', data)
+            .then(
+                (result)=>{
+                    if (result.code === 0) {
+                        let data = result.data;
+
+                        let lastGoodsSelectedList = [data.last_goods_name];
+                        let list = lastGoodsSelectedList.map(
+                            (info) => {
+                                return info.goods_name;
+                            }
+                        );
+
+                        this.setState({
+                            ship: data,
+                            offer: data.price,
+                            last_goods: list.join(','),
+                            lastGoodsSelectedList: lastGoodsSelectedList,
+                            refreshing: false,
+                        })
+                    }
+                    else {
+                        this.setState({
+                            refreshing: false,
+                        })
+                    }
+                },(error)=>{
+                    this.setState({
+                        refreshing: false,
+                    })
+                });
     };
+
+    isAgreePrice() {
+        return this.state.priceType === OfferPriceEnum.AgreePrice;
+    }
 
     toGotoTwicePriceVC = (book_id) =>{
         this.state.info.book_id = book_id;
@@ -90,7 +135,7 @@ export default class HomeOfferPriceVC extends Component {
                 task_id: this.state.info.task_id,
             };
 
-            if (this.state.type === 1) {
+            if (this.state.type === OfferOrderEnum.GoodsOrder) {
                 if (objectNotNull(this.state.info.book_id)) {
                     data.book_id = this.state.info.book_id;
                 }
@@ -123,11 +168,13 @@ export default class HomeOfferPriceVC extends Component {
 
     cellSelected = (key, data = {}) =>{
         if (key === "SelectShip") {
-            this.props.navigation.navigate(
-                "MyShip",
-                {
-                    callBack:this.callBackFromShipVC.bind(this)
-                });
+            if (!this.isAgreePrice()) {
+                this.props.navigation.navigate(
+                    "MyShip",
+                    {
+                        callBack:this.callBackFromShipVC.bind(this)
+                    });
+            }
         }
         else if (key === "SelectArriveTime") {
             this.props.navigation.navigate(
@@ -141,7 +188,9 @@ export default class HomeOfferPriceVC extends Component {
                 });
         }
         else if (key === "SelectLastGoods") {
-            this.toGoToGoodsVC();
+            if (!this.isAgreePrice()) {
+                this.toGoToGoodsVC();
+            }
         }
         else {
             PublicAlert(key);
@@ -264,9 +313,9 @@ export default class HomeOfferPriceVC extends Component {
 
     _renderListItem() {
         return this.config.map((item, i) => {
-            if (item.idKey === "offer" && !offerIsBargain(this.state.info.is_bargain)) {
-                return null;
-            }
+            // if (item.idKey === "offer" && !offerIsBargain(this.state.info.is_bargain)) {
+            //     return null;
+            // }
             return (<View key={'cell' + i}>
                 <CustomItem key={i} {...item}
                             subName = {this.renderSubNameForIndex(item, i)}
@@ -283,10 +332,15 @@ export default class HomeOfferPriceVC extends Component {
         const { navigate } = this.props.navigation;
         let {info} = this.state;
         let price = parseInt(info.price);
-        let bargain = this.isBargain();
         return (
             <View style={appStyles.container}>
-                <ScrollView style={{flex: 1, backgroundColor:'#fff'}}>
+                <ScrollView style={{flex: 1, backgroundColor:'#fff'}}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={this.state.refreshing}
+                                    onRefresh={this.requestData.bind(this)}
+                                />}
+                >
                     {this._renderListItem()}
                 </ScrollView>
                 <View style={{position: "absolute", bottom: 20, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
@@ -353,3 +407,56 @@ const shipStyles = StyleSheet.create({
         paddingRight: 10,
     },
 });
+
+// "uid":"95",
+//     "sex":"1",
+//     "sign":null,
+//     "credit":"5",
+//     "bz_licence":"",
+//     "card_front":"",
+//     "card_con":"",
+//     "idcard_front":"Uploads\/corporation\/2018-06-08\/5b19d90b985c4.png",
+//     "idcard_con":"Uploads\/corporation\/2018-06-08\/5b19d92731e6a.png",
+//     "invoice_type":"1",
+//     "invoice_remark":null,
+//     "corporation":null,
+//     "phone":null,
+//     "remark":null,
+//     "auth_time":"0",
+//     "checker":"0",
+//     "check_time":"0",
+//     "name":"\u8fbe",
+//     "contact":"13616647261",
+//     "ship_id":"2",
+//     "ship_name":"\u91d1\u822a\u6cb9",
+//     "ship_lience":"Uploads\/ship\/2018-06-06\/5b1798120f354.png",
+//     "projects":"",
+//     "tonnage":"5000",
+//     "storage":"6000",
+//     "state":"0",
+//     "dieseloil":"5000",
+//     "gasoline":"4000",
+//     "longitude":null,
+//     "latitude":null,
+//     "area":"2",
+//     "income_qua":"0",
+//     "usestate":"0",
+//     "create_time":"1528272919",
+//     "ship_type":"0",
+//     "good_task_id":"78",
+//     "qid":"1",
+//     "book_id":"2",
+//     "offer":"999.99",
+//     "arrive_time":"2018-06-08",
+//     "arrive_delay":"0",
+//     "last_goods_id":"93",
+//     "add_time":"1528420491",
+//     "book_num":"2",
+//     "goods_sn":"GYY180606001",
+//     "last_goods_name":{
+//     "goods_id":"93",
+//         "goods_name":"\u6ca5\u9752",
+//         "iclose":"0",
+//         "pid":"28",
+//         "deep":"1"},
+//     "price":"2000.00"}
