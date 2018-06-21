@@ -278,7 +278,10 @@ export default class HomeOfferTwicePriceVC extends Component {
         let {showRenderList} = this.state;
         let info = this.state.detailInfo;
         let price = parseInt(info.price);
-        let isBargain = offerIsBargain(this.state.detailInfo.is_bargain);
+        let isBargain = offerIsBargain(info.is_bargain);
+        let isShipPrice = offerIsShipPrice(info.is_shipprice);
+
+        let canChange = isShipPrice || isBargain;
         return (
             <View style={appStyles.container}>
                 <ScrollView style={{flex: 1, backgroundColor:'#fff'}}
@@ -328,9 +331,14 @@ export default class HomeOfferTwicePriceVC extends Component {
                     <View style={{marginTop:12, paddingHorizontal:18}}>
                         {this._renderReplyList()}
                     </View>
+                    {canChange ? null :
+                        <View style={{alignItems: "center", justifyContent: "space-between"}}>
+                            <Text style={{marginTop: 40, fontSize:20, color:appData.appBlueColor, fontWeight: appData.appFontWeightMedium}}>{isShipOwner() ? "报价已推送至货主" : "货盘已推送至船东"}</Text>
+                        </View>
+                    }
                     <View style={{height: 80}}/>
                 </ScrollView>
-                <View style={{position: "absolute", bottom: 5, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
+                {canChange ? <View style={{position: "absolute", bottom: 5, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
                     <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)}>
                         <View style={appStyles.sureBtnContainer}>
                             <Text style={{color: "#fff"}}>{"修改报价"}</Text>
@@ -338,6 +346,7 @@ export default class HomeOfferTwicePriceVC extends Component {
                     </TouchableOpacity>
                     <Text style={{marginTop:12, color: "#4a4a4aad", fontSize: 13}}>{"报价最多可修改2次"}</Text>
                 </View>
+                : null}
                 <Toast ref={o => this.refToast = o} position={'center'}/>
                 <CustomAlert ref={o => this.refChangePriceAlert = o} showTextInput={true} numeric={true} placeholder={"修改报价："}/>
             </View> );

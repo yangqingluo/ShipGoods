@@ -331,6 +331,16 @@ export default class OrderJudgementVC extends Component {
 
     renderFooter() {
         let {detailInfo} = this.state;
+        if (objectNotNull(detailInfo.iclose)) {
+            if (detailInfo.iclose === '1') {
+                return <View style={styles.footerContainer}>
+                    <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: '#dfdfdf', width: 102}]} onPress={() => this.onCellBottomBtnAction.bind(this, OrderBtnEnum.Default)} disabled={true}>
+                        <Text style={{fontSize:16, color:'#818181'}}>{"订单已关闭"}</Text>
+                    </TouchableOpacity>
+                </View>;
+            }
+        }
+
         if (detailInfo.order_state === '0') {
             if (isShipOwner()) {
                 return (
