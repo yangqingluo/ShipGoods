@@ -97,13 +97,12 @@ export default class CustomAlert extends Component {
                             <View style={{flex: 1, alignItems:'center', justifyContent:'center'}}>
                                 {title ? <Text style={styles.modalTitle}>{title}</Text> : null}
                                 {message ? <Text style={styles.modalMessage}>{message}</Text> : null}
-                                {showTextInput ? <CustomInput underlineColorAndroid="transparent"
+                                {showTextInput ? <TextInput underlineColorAndroid="transparent"
                                                             keyboardType={numeric ? "numeric" : "default"}
                                                             style={styles.textInput}
                                                             multiline={true}
                                                             placeholder={placeholder}
                                                             onChangeText={(text) => this.setState({text})}
-                                                            value={this.state.text}
                                                             /> : null}
                             </View>
                             <View style={styles.row}>

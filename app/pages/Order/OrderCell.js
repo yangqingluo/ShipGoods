@@ -40,7 +40,7 @@ export default class HomeOrderCell extends Component {
             let iscomment = commentIscomment(info.iscomment);
             return <View style={styles.bottomContainer}>
                 <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: appData.appBlueColor}]} onPress={() => this.props.onBottomBtnPress(info, iscomment ? OrderBtnEnum.JudgeCheck : OrderBtnEnum.JudgeOrder)}>
-                    <Text style={{fontSize:16, color:appData.appBlueColor}}>{iscomment ? "查看评价" : "评价"}</Text>
+                    <Text style={{fontSize:16, color:appData.appBlueColor}}>{iscomment ? "对方对我的评价" : "评价"}</Text>
                 </TouchableOpacity>
             </View>
         }

@@ -363,7 +363,7 @@ export default class OrderJudgementVC extends Component {
                     {commentIscomment(detailInfo.iscomment)
                         ?
                         <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: appData.appBlueColor, marginRight:10}]} onPress={this.onCellBottomBtnAction.bind(this, OrderBtnEnum.JudgeCheck)}>
-                            <Text style={{fontSize:16, color:appData.appBlueColor}}>{"查看评价"}</Text>
+                            <Text style={{fontSize:16, color:appData.appBlueColor}}>{"对方对我的评价"}</Text>
                         </TouchableOpacity>
                         :
                         <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: appData.appBlueColor, marginRight:10}]} onPress={this.onCellBottomBtnAction.bind(this, OrderBtnEnum.JudgeOrder)}>

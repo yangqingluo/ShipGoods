@@ -236,8 +236,9 @@ let appStyles = StyleSheet.create({
         justifyContent: "center",
     },
     orderBtnContainer:{
-        width: 91,
+        minWidth: 91,
         height: 33,
+        paddingHorizontal: 5,
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 100,

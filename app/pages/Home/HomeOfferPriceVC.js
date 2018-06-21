@@ -264,7 +264,7 @@ export default class HomeOfferPriceVC extends Component {
 
     _renderListItem() {
         return this.config.map((item, i) => {
-            if (item.idKey === 'offer' && !offerIsBargain(this.state.info.is_bargain)) {
+            if (item.idKey === "offer" && !offerIsBargain(this.state.info.is_bargain)) {
                 return null;
             }
             return (<View key={'cell' + i}>
