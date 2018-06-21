@@ -79,7 +79,7 @@ export default class HomeShipDetailVC extends Component {
 
     goBackToMain = () => {
         if (objectNotNull(appOrderVC)) {
-            appOrderVC.reloadSubOrderingVC();
+            appOrderVC.reloadSubOrderingVC(false);
         }
         backAndGoToOrder();
     };

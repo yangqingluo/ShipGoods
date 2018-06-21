@@ -101,7 +101,7 @@ export default class OrderListVC extends Component {
                     this.refToast.show(result.message);
                     if (result.code === 0) {
                         this.requestData();
-                        appOrderVC.reloadSubOrderedVC();
+                        appOrderVC.reloadSubOrderedVC(true);
                     }
                     // else {
                     //     this.refToast.show(result.message);

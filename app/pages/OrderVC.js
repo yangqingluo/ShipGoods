@@ -21,20 +21,24 @@ export default class OrderVC extends Component {
         global.appOrderVC = this;
     }
 
-    reloadSubOrderingVC = () => {
+    reloadSubOrderingVC = (switchPage) => {
         if (objectNotNull(this.subOrderingVC)) {
             this.subOrderingVC.state.dataList = [];
             this.subOrderingVC.requestData();
         }
-        this.refTab.goToPage(0);
+        if (switchPage && objectNotNull(this.refTab)) {
+            this.refTab.goToPage(0);
+        }
     };
 
-    reloadSubOrderedVC = () => {
+    reloadSubOrderedVC = (switchPage) => {
         if (objectNotNull(this.subOrderedVC)) {
             this.subOrderedVC.state.dataList = [];
             this.subOrderedVC.requestData();
         }
-        this.refTab.goToPage(1);
+        if (switchPage && objectNotNull(this.refTab)) {
+            this.refTab.goToPage(1);
+        }
     };
 
 

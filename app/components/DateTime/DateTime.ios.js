@@ -91,7 +91,7 @@ export default class DateTimePicker extends Component {
     }
 
     render() {
-        const styles = { ..._styles, ...this.props.styles}
+        const styles = { ..._styles, ...this.props.styles};
         return this.state.visible &&
             (
                 <Modal

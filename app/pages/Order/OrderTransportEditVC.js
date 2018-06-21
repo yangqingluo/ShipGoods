@@ -11,74 +11,24 @@ import {
 import OrderTransportCell from './OrderTransportEditCell'
 import DateTimePicker from '../../components/DateTime';
 import Toast from 'react-native-easy-toast';
+import IndicatorModal from '../../components/IndicatorModal';
 
 export default class OrderTransportEditVC extends Component {
     static navigationOptions = ({ navigation }) => ({
         title: "货运详情",
-        headerRight: <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
-            <TouchableOpacity
-                onPress={navigation.state.params.clickParams}
-            >
-                <Text style={{marginRight: 10, fontSize:16, color: appData.appBlueColor}}>修改</Text>
-            </TouchableOpacity>
-        </View>,
     });
-
-    submitBtnAction=()=> {
-        let {detailInfo, trans_index, trans_remark} = this.state;
-        if (trans_index === 0) {
-            this.refToast.show("请设置状态对应的时间");
-        }
-        else if (trans_index > detailInfo.translist) {
-            this.refToast.show("数组越界");
-        }
-        else if (trans_remark.length === 0) {
-            this.refToast.show("请输入货品状态描述");
-        }
-        else {
-            let item = detailInfo.translist[trans_index];
-
-            let data = {
-                or_id: item.or_id,
-                t_id: item.t_id,
-                state: item.state,
-                remark: trans_remark,
-                update_time: createRequestTime(item.update_time),
-            };
-
-            NetUtil.post(appUrl + 'index.php/Mobile/Order/change_transport_state/', data)
-                .then(
-                    (result)=>{
-                        this.refToast.show(result.message);
-                        if (result.code === 0) {
-                            this.setState({
-                                refreshing: true,
-                                trans_index: 0,
-                                trans_remark: '',
-                            });
-                            this.requestRecommend(true);
-                        }
-                        // else {
-                        //     this.refToast.show(result.message);
-                        // }
-                    },(error)=>{
-                        this.refToast.show(error);
-                    });
-        }
-    };
 
     constructor(props){
         super(props);
         this.state = {
             detailInfo: this.props.navigation.state.params.info,
             refreshing: false,
-            trans_index: 0,
+            trans_index: -1,
             trans_remark: '',
         }
     };
 
     componentDidMount() {
-        this.props.navigation.setParams({clickParams:this.submitBtnAction});
         this.requestData();
     }
 
@@ -112,6 +62,41 @@ export default class OrderTransportEditVC extends Component {
                 });
     };
 
+    submitInfoFunction = (item) => {
+        if (!objectNotNull(item.update_time)) {
+            this.refToast.show("请设置状态对应的时间");
+        }
+        else if (stringIsEmpty(item.remark)) {
+            this.refToast.show("请输入货品状态描述");
+        }
+        else {
+            let data = {
+                or_id: item.or_id,
+                t_id: item.t_id,
+                state: item.state,
+                remark: item.remark,
+                update_time: item.update_time,
+            };
+
+            this.refIndicator.show();
+            NetUtil.post(appUrl + 'index.php/Mobile/Order/change_transport_state/', data)
+                .then(
+                    (result)=>{
+                        this.refIndicator.hide();
+                        this.refToast.show(result.message);
+                        if (result.code === 0) {
+                            this.requestRecommend(true);
+                        }
+                        // else {
+                        //     this.refToast.show(result.message);
+                        // }
+                    },(error)=>{
+                        this.refIndicator.hide();
+                        this.refToast.show(error);
+                    });
+        }
+    };
+
     onCellSelected = (info: Object) => {
 
     };
@@ -123,6 +108,10 @@ export default class OrderTransportEditVC extends Component {
                 trans_index: info.index,
             });
         });
+    };
+
+    onCellSubmitSelected = (info: Object) => {
+        this.submitInfoFunction(info.item);
     };
 
     cellTextInputChanged = (text, info) => {
@@ -139,6 +128,7 @@ export default class OrderTransportEditVC extends Component {
                 info={info}
                 onPress={this.onCellSelected}
                 onTimePress={this.onCellTimeSelected}
+                onSubmitPress={this.onCellSubmitSelected}
                 textInputChanged={this.cellTextInputChanged}
                 trans_state={this.state.detailInfo.trans_state}
                 showLast={translist.indexOf(info.item) === (translist.length - 1)}
@@ -192,6 +182,7 @@ export default class OrderTransportEditVC extends Component {
                 />
                 <DateTimePicker title="请选择时间" ref={o => this.refTimePicker = o} />
                 <Toast ref={o => this.refToast = o} position={'center'}/>
+                <IndicatorModal ref={o => this.refIndicator = o}/>
             </View>
         );
     }

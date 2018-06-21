@@ -502,9 +502,16 @@ global.createRequestTime = function(date : Date) : String {
     return "1970-01-01";
 };
 
+global.createRequestDetailTime = function(date : Date) : String {
+    if (date !== null) {
+        return date.Format("yyyy-MM-dd hh:mm:ss");
+    }
+    return "1970-01-01 00:00:00";
+};
+
 global.createTimeFormat = function(time, format) : String {
     if (time !== null) {
-        let date = new Date(parseInt(time) * 1000);
+        let date = new Date(parseFloat(time) * 1000);
         // date.setTime(time * 1000);
         return date.pattern(format);
     }

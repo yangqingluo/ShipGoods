@@ -10,6 +10,8 @@ import {
     TouchableOpacity,
 } from 'react-native'
 import VDashLine from '../../components/VDashLine'
+import CustomInput from '../../components/CustomInput'
+import DateTimePicker from '../../components/DateTime';
 
 type Props = {
     info: Object,
@@ -26,26 +28,52 @@ export default class OrderTransportEditCell extends Component {
         }
     }
 
+    textInputChanged = (text) => {
+        // this.props.textInputChanged(text, this.props.info);
+        this.props.info.item.remark = text;
+    };
+
+    onSubmitBtnAction () {
+        this.props.onSubmitPress(this.props.info);
+    }
+
+    onTimeBtnAction() {
+        // let date = new Date(parseInt(this.props.info.item.update_time) * 1000);
+        this.refTimePicker.showDateTimePicker(null, (d)=>{
+            this.props.info.item.update_time = Date.parse(d) * 0.001;
+            this.forceUpdate();
+        });
+    }
+
     render() {
         let info = this.props.info.item;
         let {showLast, trans_state} = this.props;
         let passed = (parseInt(info.state) <= parseInt(trans_state));
-        let editable = (parseInt(info.state) === parseInt(trans_state) + 1);
+        let editable = (parseInt(info.state) <= parseInt(trans_state) + 1);
         let color = (passed || editable) ? appData.appBlueColor:appData.appGrayColor;
         let textColor = passed ? appData.appTextColor : "#8b8b8b";
         let stateText = getArrayTypesText(transportStateTypes, parseInt(info.state) - 1);
 
         let time = objectNotNull(info.update_time) ? info.update_time : info.create_time;
+        // let timeText = objectNotNull(info.update_time) ? info.update_time : info.create_timetext;
+        // let timeArray = timeText.split(" ");
+        // if (timeArray.length === 2) {
+        //     let dateString = timeArray[0].replace(/-/g, '/');
+        //     time = new Date(dateString + " " + timeArray[1]).getTime() * 0.001;
+        // }
         if (objectNotNull(info.update_time)) {
             time = info.update_time;
             textColor = appData.appTextColor;
+        }
+        else {
+            textColor = "#8b8b8b";
         }
 
         const Icon = appFont["Ionicons"];
         return (
             <View style={[styles.cellContainer, {opacity: (passed || editable) ? 1.0 : 0.5}]}>
                 <View style={styles.leftTime}>
-                    <TouchableOpacity style={{alignItems: "center"}} onPress={editable ? () => {this.props.onTimePress(this.props.info)} : null}>
+                    <TouchableOpacity style={{alignItems: "center"}} onPress={editable ? this.onTimeBtnAction.bind(this) : null}>
                         <Text style={{minHeight:22, fontSize:16, fontWeight:appData.appFontWeightMedium, color:textColor}}>
                             {createTimeFormat(time, "HH:mm")}
                         </Text>
@@ -67,21 +95,27 @@ export default class OrderTransportEditCell extends Component {
                         </Text>
                     </View>
                     {editable ?
-                        <TextInput style={styles.textContainer}
-                                   multiline={true}
-                                   placeholder={"请输入货品具体" + stateText + "状态"}
-                                   onChangeText={(text) => {
-                                       this.props.textInputChanged(text, this.props.info);
-                                   }}
-                                   editable={editable}
+                        <CustomInput style={styles.textContainer}
+                                     multiline={true}
+                                     placeholder={"请输入货品具体" + stateText + "状态"}
+                                     onChangeText={this.textInputChanged.bind(this)}
+                                     editable={editable}
+                                     value={passed ? info.remark : null}
                         >
-                            {passed ? info.remark : null}
-                        </TextInput>
+                        </CustomInput>
                     :
                         <Text style={styles.textContainer}>
                             {passed ? info.remark : null}
                         </Text>}
                 </View>
+                {editable ?
+                    <TouchableOpacity style={styles.rightBtn} onPress={this.onSubmitBtnAction.bind(this)}>
+                        <Text style={{fontSize:14, fontWeight:appData.appFontWeightMedium, color:appData.appBlueColor}}>
+                            {passed ? "修改" : "提交"}
+                        </Text>
+                    </TouchableOpacity>
+                : null}
+                <DateTimePicker title="请选择时间" ref={o => this.refTimePicker = o} />
             </View>
         )
     }
@@ -106,7 +140,7 @@ const styles = StyleSheet.create({
     rightContainer: {
         flex:1,
         marginLeft:15,
-        paddingRight:22,
+        paddingRight:5,
         justifyContent: "center",
     },
     textContainer: {
@@ -115,6 +149,13 @@ const styles = StyleSheet.create({
         fontSize:16,
         fontWeight:appData.appFontWeightMedium,
         color:appData.appLightTextColor,
+        justifyContent: "center",
+        alignItems: "center",
     },
+    rightBtn: {
+        marginRight: 10,
+        minHeight:30,
+        justifyContent: "center",
+    }
 });
 

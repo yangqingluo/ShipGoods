@@ -207,8 +207,15 @@ export default class OrderJudgementVC extends Component {
                     });
                 break;
 
-            case OrderBtnEnum.CheckTransport:
             case OrderBtnEnum.EditTransport:
+                this.props.navigation.navigate('OrderTransportEdit',
+                    {
+                        info: detailInfo,
+                        tag: tag,
+                    });
+                break;
+
+            case OrderBtnEnum.CheckTransport:
                 this.props.navigation.navigate('OrderTransport',
                     {
                         info: detailInfo,
