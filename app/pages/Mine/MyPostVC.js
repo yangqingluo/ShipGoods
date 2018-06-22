@@ -91,9 +91,18 @@ export default class MyPostVC extends Component {
         this.props.navigation.navigate('MyPostDetail',
             {
                 info: info.item,
+                callBack: this.callBackFromDetailVC.bind(this),
             });
     };
 
+    callBackFromDetailVC(key) {
+        this.setState({
+            dataList: [],
+            refreshing: true
+        });
+        this.requestRecommend(true);
+        // this.requestData();
+    }
 
     renderCell = (info: Object) => {
         return (

@@ -12,9 +12,11 @@ import {
 } from 'react-native';
 import DashLine from '../../components/DashLine';
 import CustomItem from '../../components/CustomItem';
-import Toast from "react-native-easy-toast";
+import CustomAlert from '../../components/CustomAlert';
 import ShareUtil from "../../share/ShareUtil";
 import SharePlatform from "../../share/SharePlatform";
+import Toast from "react-native-easy-toast";
+import IndicatorModal from '../../components/IndicatorModal';
 
 export default class MyPostDetailVC extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -90,8 +92,35 @@ export default class MyPostDetailVC extends Component {
 
     onDeleteBtnAction = () => {
         //删除
-
+        this.refDeleteAlert.show({onSureBtnAction:this.toDeleteShipPost.bind(this)});
     };
+
+    toDeleteShipPost() {
+        this.refDeleteAlert.hide();
+        let data = {task_id: this.state.info.task_id};
+        this.refIndicator.show();
+        NetUtil.post(appUrl + 'index.php/Mobile/Ship/del_ship_post/', data)
+            .then(
+                (result)=>{
+                    this.refIndicator.hide();
+                    if (result.code === 0) {
+                        this.goBack();
+                    }
+                    else {
+                        this.refToast.show(result.message);
+                    }
+                },(error)=>{
+                    this.refIndicator.hide();
+                    this.refToast.show(error);
+                });
+    }
+
+    goBack() {
+        if (objectNotNull(this.props.navigation.state.params.callBack)) {
+            this.props.navigation.state.params.callBack("DeleteShipPost");
+        }
+        this.props.navigation.goBack();
+    }
 
     cellSelected = (key, data = {}) =>{
         let info = this.state.detailInfo;
@@ -289,6 +318,8 @@ export default class MyPostDetailVC extends Component {
                     </View>
                 </View>
                 <Toast ref={o => this.refToast = o} position={'center'}/>
+                <CustomAlert ref={o => this.refDeleteAlert = o} message={"您确定删除此发布内容吗？"} />
+                <IndicatorModal ref={o => this.refIndicator = o}/>
             </View> );
     }
 }

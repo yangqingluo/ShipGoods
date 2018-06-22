@@ -63,7 +63,7 @@ export default class CustomItem extends Component {
                     {logo? (<Image source={logo} style={{width: logoWidth, height: logoHeight, resizeMode: "cover", overflow:"hidden"}}/>) : null}
                     {/*{color?(<View style={{width: radius, height:radius, marginRight:5, borderRadius: 0.5 * radius, backgroundColor:color || "#4da6f0"}} />):null}*/}
                     {disable?
-                        <CustomInput ref={o => this.refInput = o}
+                        <TextInput ref={o => this.refInput = o}
                             underlineColorAndroid="transparent"
                                    keyboardType={this.props.numeric ? "numeric" : "default"}
                                    secureTextEntry={this.props.secureTextEntry}
@@ -76,7 +76,7 @@ export default class CustomItem extends Component {
                                        this.props.callback(text, this.props.idKey);
                                    }}
                         >
-                        </CustomInput>
+                        </TextInput>
                     :
                         <Text style={styles.textLabel}
                         >{name}
