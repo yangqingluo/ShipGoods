@@ -24,11 +24,17 @@ export default class HomeOrderCell extends Component {
     }
 
     render() {
-        let {info} = this.props;
+        let {info, is_offer} = this.props;
+        let {status} = info.item;
         let isOrdered = false;
+        if (objectNotNull(is_offer)) {
+            if (!offerIsOffer(this.props.is_offer)) {
+                isOrdered = offerIsOrdered(status);
+            }
+        }
         return (
             <View style={{opacity: isOrdered ? 0.5 : 1.0}}>
-                <TouchableHighlight style={styles.cellContainer} onPress={() => this.props.onPress(info)}>
+                <TouchableHighlight style={styles.cellContainer} onPress={isOrdered ? null : () => this.props.onPress(info)}>
                     <View style={{flex: 1, backgroundColor:'white'}}>
                         <View style={{height:47, flexDirection: 'row', alignItems: "center", justifyContent: "space-between",}}>
                             <View style={{flexDirection: 'row'}}>
@@ -46,6 +52,7 @@ export default class HomeOrderCell extends Component {
                     </View>
                 </TouchableHighlight>
                 <View style={{height:12, backgroundColor: appData.appGrayColor}} />
+                {isOrdered ? <Image source={require('../../images/icon_ding.png')} style={{width: 87, height: 69, top: 0, right: 84, resizeMode: "cover", position: 'absolute',}} /> : null}
             </View>
         )
     }

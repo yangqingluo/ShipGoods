@@ -86,6 +86,7 @@ export default class HomeOfferVC extends HomeOrderVC {
                 info={info}
                 onPress={this.onCellSelected}
                 showCreateTime={true}
+                is_offer={this.props.is_offer}
             />
         )
     };

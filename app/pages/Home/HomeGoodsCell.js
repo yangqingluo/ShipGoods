@@ -28,7 +28,7 @@ export default class HomeGoodsCell extends Component {
 
     render() {
         let {info} = this.props;
-        let {dieseloil, gasoline, ship_type} = info.item;
+        let {dieseloil, gasoline, ship_type, status} = info.item;
         let downloadOilList = [];
         if (objectNotNull(info.item.download_oil_list)) {
             downloadOilList = info.item.download_oil_list.map(
@@ -45,10 +45,10 @@ export default class HomeGoodsCell extends Component {
                 }
             );
         }
-        let isOrdered = false;
+        let isOrdered = offerIsOrdered(status);
         return (
             <View style={{opacity: isOrdered ? 0.5 : 1.0, padding: 10}}>
-                <TouchableHighlight style={styles.cellContainer} onPress={() => this.props.onPress(info)}>
+                <TouchableHighlight style={styles.cellContainer} onPress={isOrdered ? null : () => this.props.onPress(info)}>
                     <View style={{flex: 1, backgroundColor:'white'}}>
                         <View style={{backgroundColor:'#81c6ff', flexDirection: 'row', justifyContent: "space-between", height:26}}>
                             <Text style={{fontSize:10, color:'white', marginLeft:3, marginTop:8}}>{'发票编号：' + info.item.billing_sn}</Text>

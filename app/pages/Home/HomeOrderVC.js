@@ -11,7 +11,7 @@ import ListLoadFooter from '../../components/ListLoadFooter';
 import CustomAlert from '../../components/CustomAlert';
 import Toast from "react-native-easy-toast";
 
-export default class HomeGoodsVC extends Component {
+export default class HomeOrderVC extends Component {
     constructor(props){
         super(props);
         this.state = {

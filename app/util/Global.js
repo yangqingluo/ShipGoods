@@ -473,6 +473,10 @@ global.offerIsOffer = function(is_offer) : boolean {
     return (is_offer === '1');
 };
 
+global.offerIsOrdered = function(status) : boolean {
+    return (status === '1');
+};
+
 global.commentIscomment = function(iscomment) : boolean {
     return (iscomment === '11');
 };
