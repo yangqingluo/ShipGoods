@@ -76,11 +76,9 @@ export default class HomeOrderDetailVC extends Component {
         this.props.navigation.goBack('Main');
     };
 
-    onFavorBtnAction = () => {
-        this.props.navigation.setParams({
-            favor: true,
-        });
-    };
+    callBackFromEditVC() {
+        this.requestData();
+    }
 
     onShareBtnAction = () => {
         //分享
@@ -96,7 +94,12 @@ export default class HomeOrderDetailVC extends Component {
 
     onEditBtnAction = () => {
         //编辑
-
+        // PublicAlert(JSON.stringify(this.state.detailInfo));
+        this.props.navigation.navigate('EditGoodsRelease',
+            {
+                info:this.state.detailInfo,
+                callBack: this.callBackFromEditVC.bind(this),
+            });
     };
 
     onDeleteBtnAction = () => {

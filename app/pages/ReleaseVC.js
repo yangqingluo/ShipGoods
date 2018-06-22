@@ -50,12 +50,11 @@ export default class ReleaseVC extends Component {
             loading_delay: 0, //否 发货延迟
             is_bargain: 0, //否 是否接收议价 0：是（默认） 1：否
             is_shipprice: 0, //是 是否船东开价 0：否 1：是
-            clean_deley: 0, //否 完货后多少天结算 15/30/45/60
+            clean_deley: '', //否 完货后多少天结算 15/30/45/60
             wastage: '', //否 损耗
-            goods: '', //货品
-            demurrage: 0, //否 滞期费
+            goods: [], //货品
+            demurrage: '', //否 滞期费
 
-            goodsSelectedList: [],
             wastageTitle: 0,
             wastageNumber: 0,
         };
@@ -127,13 +126,12 @@ export default class ReleaseVC extends Component {
                 loading_delay: 0, //否 发货延迟
                 is_bargain: 0, //否 是否接收议价 0：是（默认） 1：否
                 is_shipprice: 0, //是 是否船东开价 0：否 1：是
-                clean_deley: 0, //否 完货后多少天结算 15/30/45/60
+                clean_deley: '', //否 完货后多少天结算 15/30/45/60
                 wastage: m_string, //否 损耗
-                goods: '', //货品
-                demurrage: 0, //否 滞期费
+                goods: [], //货品
+                demurrage: '', //否 滞期费
                 remark: '',//备注
 
-                goodsSelectedList: [],
                 wastageTitle: data1,
                 wastageNumber: data2,
             })
@@ -223,8 +221,8 @@ export default class ReleaseVC extends Component {
     }
 
     toReleaseForGoodsOwner() {
-        let {goodsSelectedList, tonnage, ton_section, price, is_shipprice, is_bargain, loading_port, unloading_port, loading_time, loading_delay, wastage, demurrage, clean_deley, remark} = this.state;
-        if (goodsSelectedList.length === 0) {
+        let {goods, tonnage, ton_section, price, is_shipprice, is_bargain, loading_port, unloading_port, loading_time, loading_delay, wastage, demurrage, clean_deley, remark} = this.state;
+        if (goods.length === 0) {
             this.refToast.show("请选择货品");
         }
         else if (tonnage.length === 0) {
@@ -245,17 +243,17 @@ export default class ReleaseVC extends Component {
         else if (wastage.length === 0) {
             this.refToast.show("请设置损耗");
         }
-        else if (demurrage === 0) {
+        else if (stringIsEmpty(demurrage)) {
             this.refToast.show("请选择滞期费");
         }
-        else if (clean_deley === 0) {
+        else if (stringIsEmpty(clean_deley)) {
             this.refToast.show("请选择结算时间");
         }
         // else if (remark.length === 0) {
         //     this.refToast.show("请输入您的备注");
         // }
         else {
-            let goodsList = goodsSelectedList.map(
+            let goodsList = goods.map(
                 (info) => {
                     return {goods_id: info.goods_id};
                 }
@@ -275,17 +273,19 @@ export default class ReleaseVC extends Component {
                 loading_time: createRequestTime(loading_time),
                 loading_delay: loading_delay,
                 wastage: wastage,
-                demurrage: parseInt(demurrageTypes[demurrage]),
-                clean_deley: cleanDeleyTypes[clean_deley],
+                demurrage: demurrage,
+                clean_deley: clean_deley,
             };
 
-            if (remark.length > 0) {
+            if (!stringIsEmpty(remark)) {
                 data.remark = remark;
             }
 
+            this.refIndicator.show();
             NetUtil.post(appUrl + 'index.php/Mobile/Goods/add_goods_task/', data)
                 .then(
                     (result)=>{
+                        this.refIndicator.hide();
                         if (result.code === 0) {
                             this.refreshDefaultState();
                             appHomeVC.reloadSubListOrderVC();
@@ -297,6 +297,7 @@ export default class ReleaseVC extends Component {
                             this.refToast.show(result.message);
                         }
                     },(error)=>{
+                        this.refIndicator.hide();
                         this.refToast.show(error);
                     });
         }
@@ -527,7 +528,7 @@ export default class ReleaseVC extends Component {
                 {
                     title: '可运货品',
                     dataList: appAllGoods,
-                    selectedList:this.state.goodsSelectedList,
+                    selectedList:this.state.goods,
                     maxSelectCount:1,
                     callBack:this.callBackFromGoodsVC.bind(this)
                 }
@@ -556,14 +557,8 @@ export default class ReleaseVC extends Component {
     }
 
     callBackFromGoodsVC(backData) {
-        let dataList = backData.map(
-            (info) => {
-                return info.goods_name;
-            }
-        );
         this.setState({
-            goods: dataList.join(','),
-            goodsSelectedList: backData
+            goods: backData,
         });
     }
 
@@ -673,7 +668,7 @@ export default class ReleaseVC extends Component {
     onSelectCleanDelayType(index) {
         if (index > 0) {
             this.setState({
-                clean_deley: index
+                clean_deley: getArrayTypesText(cleanDeleyTypes, index),
             });
         }
     }
@@ -681,7 +676,7 @@ export default class ReleaseVC extends Component {
     onSelectDemurrageType(index) {
         if (index > 0) {
             this.setState({
-                demurrage: index
+                demurrage: getArrayTypesText(demurrageTypes, index),
             });
         }
     }
@@ -690,8 +685,13 @@ export default class ReleaseVC extends Component {
         if (item.idKey === 'ship_name' && this.state.ship !== null) {
             return this.state.ship.ship_name;
         }
-        else if (item.idKey === 'goods' && this.state.goods.length > 0) {
-            return this.state.goods;
+        else if (item.idKey === 'goods' && arrayNotEmpty(this.state.goods)) {
+            let dataList = this.state.goods.map(
+                (info) => {
+                    return info.goods_name;
+                }
+            );
+            return dataList.join(",");
         }
         else if (item.idKey === 'download_oil_list' && arrayNotEmpty(this.state.download_oil_list)) {
             let dataList = this.state.download_oil_list.map(
@@ -719,8 +719,9 @@ export default class ReleaseVC extends Component {
         else if (item.idKey === 'course' && this.state.course.length > 0) {
             return getShipCourseTypesText(this.state.course);
         }
-        else if (item.idKey === 'clean_deley' && this.state.clean_deley > 0) {
-            return '完货' + cleanDeleyTypes[this.state.clean_deley] + '天内';
+        else if (item.idKey === 'clean_deley' && !stringIsEmpty(this.state.clean_deley)) {
+            // return '完货' + getArrayTypesText(cleanDeleyTypes, this.state.clean_deley) + '天内';
+            return '完货' + this.state.clean_deley + '天内';
         }
         else if (item.idKey === 'upload_oil_list' && arrayNotEmpty(this.state.upload_oil_list)) {
             let dataList = this.state.upload_oil_list.map(
@@ -744,8 +745,8 @@ export default class ReleaseVC extends Component {
         else if (item.idKey === 'wastage') {
             return this.state.wastage;
         }
-        else if (item.idKey === 'demurrage' && this.state.demurrage > 0) {
-            return demurrageTypes[this.state.demurrage] + ' 元/天'
+        else if (item.idKey === 'demurrage' && !stringIsEmpty(this.state.demurrage)) {
+            return this.state.demurrage + ' 元/天'
         }
 
         return '';

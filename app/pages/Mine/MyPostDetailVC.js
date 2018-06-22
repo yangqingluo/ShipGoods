@@ -91,7 +91,6 @@ export default class MyPostDetailVC extends Component {
 
     onEditBtnAction = () => {
         //编辑
-        // PublicAlert(JSON.stringify(this.state.detailInfo));
         this.props.navigation.navigate('EditShipRelease',
             {
                 info:this.state.detailInfo,

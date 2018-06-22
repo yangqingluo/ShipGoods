@@ -68,6 +68,7 @@ export default class EditShip extends AddShip {
             );
 
             let data = {
+                ship_id: this.props.navigation.state.params.ship.ship_id,
                 ship_name:this.state.ship_name,
                 tonnage:this.state.tonnage,
                 storage:this.state.storage,

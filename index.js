@@ -50,7 +50,7 @@ import ChangeContactVC from './app/pages/Mine/ChangeContactVC';
 import ChangePasswordVC from './app/pages/Mine/ChangePasswordVC';
 import SuggestionVC from './app/pages/Mine/SuggestionVC';
 import EditShipReleaseVC from './app/pages/Mine/EditShipReleaseVC';
-
+import EditGoodsReleaseVC from './app/pages/Mine/EditGoodsReleaseVC';
 
 const MyNavigator = StackNavigator({
         Wait: {screen: WaitVC},
@@ -99,6 +99,7 @@ const MyNavigator = StackNavigator({
         ChangePwd:{screen:ChangePasswordVC},
         Suggestion:{screen:SuggestionVC},
         EditShipRelease:{screen:EditShipReleaseVC},
+        EditGoodsRelease:{screen:EditGoodsReleaseVC},
     }
     , {
         navigationOptions: {

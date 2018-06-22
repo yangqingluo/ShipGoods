@@ -104,7 +104,7 @@ export default class EditShipReleaseVC extends Release {
                 course: course,
             };
 
-            if (remark.length > 0) {
+            if (!stringIsEmpty(remark)) {
                 data.remark = remark;
             }
 
