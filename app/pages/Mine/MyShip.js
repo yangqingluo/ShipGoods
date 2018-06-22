@@ -33,10 +33,16 @@ export default class DetailVC extends Component {
         }
     }
 
-    addBtnAction=()=> {
-        const { navigate } = this.props.navigation;
-        navigate('AddShip');
+    addBtnAction =()=> {
+        this.props.navigation.navigate('AddShip', {callBack: this.callBackFromShipVC.bind(this)});
     };
+
+    callBackFromShipVC(key) {
+        // this.setState({
+        //     dataList: [],
+        // });
+        this.requestData();
+    }
 
     componentDidMount() {
         this.props.navigation.setParams({clickParams:this.addBtnAction});
@@ -110,7 +116,11 @@ export default class DetailVC extends Component {
     };
 
     onCellEditBtnAction = (info: Object) => {
-        PublicAlert(JSON.stringify(info));
+        this.props.navigation.navigate('EditShip',
+            {
+                ship:info.item,
+                callBack: this.callBackFromShipVC.bind(this),
+            });
     };
 
     onCellLicenceBtnAction = (info: Object) => {
@@ -125,7 +135,6 @@ export default class DetailVC extends Component {
     };
 
     onCellPriceBtnAction = (info: Object) => {
-        // PublicAlert(JSON.stringify(info));
         this.props.navigation.navigate('MyShipPrice',
             {
                 ship_id: info.item.ship_id,

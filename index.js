@@ -11,6 +11,7 @@ import LoginVC from './app/pages/LoginVC';
 import Register from './app/pages/Register';
 import AddAuth from './app/pages/Mine/AddAuth';
 import AddShip from './app/pages/Mine/AddShip';
+import EditShip from './app/pages/Mine/EditShip';
 import SelectText from './app/components/SelectTextVC';
 import SelectPort from './app/components/SelectPortVC';
 import SelectPortSecond from './app/components/SelectPortSecond'
@@ -57,7 +58,6 @@ const MyNavigator = StackNavigator({
         Main:{screen: MainTab},
         DetailVC:{screen:DetailVC},
         AddAuth:{screen: AddAuth},
-        AddShip:{screen: AddShip},
         SelectText:{screen: SelectText},
         SelectPort:{screen: SelectPort},
         SelectPortSecond:{screen: SelectPortSecond},
@@ -85,6 +85,8 @@ const MyNavigator = StackNavigator({
         OrderDetail:{screen:OrderDetailVC},
 
         MyShip:{screen: MyShip},
+        AddShip:{screen: AddShip},
+        EditShip:{screen: EditShip},
         MyShipPrice:{screen: MyShipPrice},
         MyBook:{screen:MyBookVC},
         MyPost:{screen:MyPostVC},
