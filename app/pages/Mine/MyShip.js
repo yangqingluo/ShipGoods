@@ -8,9 +8,9 @@ import {
 } from 'react-native';
 import ShipCell from './ShipCell';
 import ListLoadFooter from '../../components/ListLoadFooter';
+import MyShipPriceVC from "./MyShipPriceVC";
 
 export default class DetailVC extends Component {
-    //接收上一个页面传过来的title显示出来
     static navigationOptions = ({ navigation }) => (
         {
             title: '我的船队',
@@ -125,7 +125,11 @@ export default class DetailVC extends Component {
     };
 
     onCellPriceBtnAction = (info: Object) => {
-        PublicAlert(JSON.stringify(info));
+        // PublicAlert(JSON.stringify(info));
+        this.props.navigation.navigate('MyShipPrice',
+            {
+                ship_id: info.item.ship_id,
+            })
     };
 
     renderCell = (info: Object) => {
