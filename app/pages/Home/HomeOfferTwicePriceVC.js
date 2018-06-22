@@ -170,7 +170,7 @@ export default class HomeOfferTwicePriceVC extends Component {
             }
         }
         else if (item.idKey === 'remark') {
-            return info.remark.length === 0 ? "暂无" : info.remark;
+            return stringIsEmpty(info.remark) ? "暂无" : info.remark;
         }
         else if (item.idKey === 'ship_name') {
             if (objectNotNull(info.ship)) {

@@ -228,7 +228,6 @@ export default class OrderJudgementVC extends Component {
                 break;
 
             default:
-                PublicAlert(tag + JSON.stringify(detailInfo));
                 break;
         }
 

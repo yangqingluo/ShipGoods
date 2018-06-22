@@ -23,7 +23,7 @@ export default class CellTitleItem extends Component {
         first: PropTypes.bool,
         disable: PropTypes.bool,
         onPress: PropTypes.func
-    }
+    };
     _render(){
         let {name, subName} = this.props;
         return (

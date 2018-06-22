@@ -28,7 +28,7 @@ export default class HomeOfferPriceVC extends Component {
             info: this.props.navigation.state.params.info,
             type: this.props.navigation.state.params.type || OfferOrderEnum.ShipOrder,
             priceType: this.props.navigation.state.params.priceType || OfferPriceEnum.BargainPrice,
-            ship: null,//船
+            ship: this.props.navigation.state.params.ship || null,//船
             offer: 0.0,
             arrive_time: new Date(),//预计到港时间
             arrive_delay: 0,//到港延迟
@@ -37,13 +37,22 @@ export default class HomeOfferPriceVC extends Component {
             lastGoodsSelectedList: [],
         };
 
-        this.config = [
-            {idKey:"ship_name", name:"选择船只", logo:require('../../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectShip")},
-            {idKey:"offer", name:"运价", logo:require('../../images/icon_red.png'), disable:!this.isAgreePrice(), numeric:true},
-            {idKey:"arrive_time", name:"到港时间", logo:require('../../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectArriveTime")},
-            {idKey:"last_goods",name:"上载货品", logo:require('../../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectLastGoods")},
+        this.config = this.isAgreePrice() ?
+            [
+                {idKey:"ship_name", name:"船舶信息", logo:require('../../images/icon_blue.png'), disable:false, hideArrowForward:true},
+                {idKey:"offer", name:"运价", logo:require('../../images/icon_red.png'), disable:false, hideArrowForward:true},
+                {idKey:"arrive_time", name:"到港时间", logo:require('../../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectArriveTime")},
+                {idKey:"last_goods",name:"上载货品", logo:require('../../images/icon_green.png'), disable:false, hideArrowForward:true},
 
-        ];
+            ]
+        :
+            [
+                {idKey:"ship_name", name:"选择船只", logo:require('../../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectShip")},
+                {idKey:"offer", name:"运价", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
+                {idKey:"arrive_time", name:"到港时间", logo:require('../../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectArriveTime")},
+                {idKey:"last_goods",name:"上载货品", logo:require('../../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectLastGoods")},
+
+            ];
     }
 
     componentDidMount() {
@@ -85,12 +94,14 @@ export default class HomeOfferPriceVC extends Component {
                     else {
                         this.setState({
                             refreshing: false,
-                        })
+                        });
+                        this.refToast.show(result.message);
                     }
                 },(error)=>{
                     this.setState({
                         refreshing: false,
-                    })
+                    });
+                    this.refToast.show(error);
                 });
     };
 
@@ -263,6 +274,11 @@ export default class HomeOfferPriceVC extends Component {
         if (item.idKey === 'ship_name' && this.state.ship !== null) {
             return this.state.ship.ship_name;
         }
+        else if (item.idKey === 'offer') {
+            if (this.isAgreePrice()) {
+                return this.state.offer + "";
+            }
+        }
         else if (item.idKey === 'last_goods' && this.state.last_goods.length > 0) {
             return this.state.last_goods;
         }
@@ -316,7 +332,7 @@ export default class HomeOfferPriceVC extends Component {
             // if (item.idKey === "offer" && !offerIsBargain(this.state.info.is_bargain)) {
             //     return null;
             // }
-            return (<View key={'cell' + i}>
+            return (<View key={'cell' + i} >
                 <CustomItem key={i} {...item}
                             subName = {this.renderSubNameForIndex(item, i)}
                             callback={this.textInputChanged.bind(this)}>
@@ -332,14 +348,16 @@ export default class HomeOfferPriceVC extends Component {
         const { navigate } = this.props.navigation;
         let {info} = this.state;
         let price = parseInt(info.price);
+        let isAgreePrice = this.isAgreePrice();
         return (
             <View style={appStyles.container}>
                 <ScrollView style={{flex: 1, backgroundColor:'#fff'}}
-                            refreshControl={
+                            refreshControl={isAgreePrice ?
                                 <RefreshControl
                                     refreshing={this.state.refreshing}
                                     onRefresh={this.requestData.bind(this)}
-                                />}
+                                />
+                            :null}
                 >
                     {this._renderListItem()}
                 </ScrollView>

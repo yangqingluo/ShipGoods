@@ -42,18 +42,20 @@ export default class CustomItem extends Component {
         logoHeight: PropTypes.number,
         font: PropTypes.string,
         showArrowForward: PropTypes.bool,
+        hideArrowForward: PropTypes.bool,
         onPress: PropTypes.func
     };
 
     static defaultProps = {
         maxLength: appData.appMaxLengthInput,
         showArrowForward: true,
+        hideArrowForward: false,
         logoWidth: 10,
         logoHeight: 12,
     };
 
     _render(){
-        let {logo, iconSize, logoWidth, logoHeight, name, subName, color, noSeparator, avatar, disable, font, showArrowForward, maxLength} = this.props;
+        let {logo, iconSize, logoWidth, logoHeight, name, subName, color, noSeparator, avatar, disable, font, showArrowForward, hideArrowForward, maxLength} = this.props;
         let radius = 12;
         return (
             <View style={{flexDirection: "column"}}>
@@ -84,7 +86,7 @@ export default class CustomItem extends Component {
                     {subName?(<Text style={{flex: 1, minWidth:120, textAlign: 'right', color: "#000", fontSize:14}}>{subName}</Text>):null}
                     {avatar?(<Image source={avatar} style={{width: 36, height: 36, resizeMode: "cover", overflow:"hidden", borderRadius: 18}}/>):null}
                     {this.props.children}
-                    {showArrowForward ? <appFont.Ionicons style={{marginLeft: 10, paddingRight: 16, opacity: disable ? 0.0 : 1.0}} name="ios-arrow-forward-outline" size={18} color="#bbb" /> : null}
+                    {showArrowForward ? <appFont.Ionicons style={{marginLeft: 10, paddingRight: 16, opacity: disable ? 0.0 : 1.0}} name="ios-arrow-forward-outline" size={18} color= {hideArrowForward ? "#fff0" : "#bbb"} /> : null}
                 </View>
             </View>
         )

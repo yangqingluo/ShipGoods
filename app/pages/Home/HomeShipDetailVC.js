@@ -263,7 +263,7 @@ export default class HomeShipDetailVC extends Component {
                                    multiline={true}
                                    editable={false}
                         >
-                            {info.remark.length === 0 ? '此油品暂无备注' : info.remark}
+                            {stringIsEmpty(info.remark) ? '此油品暂无备注' : info.remark}
                         </Text>
                     </View>
                     {ordered ?
