@@ -336,6 +336,7 @@ global.getShipStateText = function(state : Number) : String {
     }
 };
 
+global.cleanDeleyTypes = ['取消', '15', '30', '45', '60'];
 global.shipAreaObjects = [{key: 1, name: '沿海'}, {key: 2, name: '内河（可进川）'}, {key: 3, name: '内河（不可进川)'}];
 global.shipAreaTypes = ['取消', '沿海', '内河（可进川）', '内河（不可进川)'];
 global.shipCourseTypes = ['南上', '北下', '上江', '下江', '运河'];

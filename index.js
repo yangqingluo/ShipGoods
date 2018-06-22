@@ -49,6 +49,7 @@ import MyFavorsVC from './app/pages/Mine/MyFavorsVC';
 import ChangeContactVC from './app/pages/Mine/ChangeContactVC';
 import ChangePasswordVC from './app/pages/Mine/ChangePasswordVC';
 import SuggestionVC from './app/pages/Mine/SuggestionVC';
+import EditShipReleaseVC from './app/pages/Mine/EditShipReleaseVC';
 
 
 const MyNavigator = StackNavigator({
@@ -97,6 +98,7 @@ const MyNavigator = StackNavigator({
         ChangeContact:{screen:ChangeContactVC},
         ChangePwd:{screen:ChangePasswordVC},
         Suggestion:{screen:SuggestionVC},
+        EditShipRelease:{screen:EditShipReleaseVC},
     }
     , {
         navigationOptions: {
@@ -131,6 +133,15 @@ MyNavigator.router.getStateForAction = (action, state) => {
             if (action.key === "HomeOfferTwicePrice") {
                 let routes = state.routes.slice(0, state.routes.length - 2);
                 routes.push({routeName: "HomeOfferTwicePrice"});
+                const purposeState = {
+                    ...state,
+                    routes: routes,
+                    index: routes.length - 1,
+                };
+                return purposeState;
+            }
+            else if (action.key === "GoBackSkip") {
+                let routes = state.routes.slice(0, state.routes.length - 2);
                 const purposeState = {
                     ...state,
                     routes: routes,

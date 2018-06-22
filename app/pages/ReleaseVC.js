@@ -12,6 +12,7 @@ import ActionSheet from 'react-native-actionsheet';
 import CustomItem from '../components/CustomItem';
 import CustomInput from '../components/CustomInput';
 import Toast from "react-native-easy-toast";
+import IndicatorModal from '../components/IndicatorModal';
 
 export default class ReleaseVC extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -30,16 +31,14 @@ export default class ReleaseVC extends Component {
         super(props);
         this.state = {
             ship: null,//船
-            upload_oil_list: '',//上载油品
-            download_oil_list: '',//意向油品
+            upload_oil_list: [],//上载油品
+            download_oil_list: [],//意向油品
             empty_port: null,//空船港
             empty_time: new Date(),//空船期
             empty_delay: 0,//空船延迟
             course: '',//运输航向 1：南上 2：北下 3：上江 4：下江 5：运河（多选，用“##”隔开）
             remark: '',//备注
 
-            uploadOilSelectedList: [],
-            downloadOilSelectedList: [],
             courseList: [],
 
             tonnage: '',//否 装载吨位
@@ -82,7 +81,6 @@ export default class ReleaseVC extends Component {
                 {idKey:"demurrage", name:"滞期费", logo:require('../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectDemurrage")},
                 {idKey:"clean_deley", name:"结算时间", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectCleanDeley")},
             ];
-        this.cleanDeleyTypes = ['取消', '15', '30', '45', '60'];
     }
 
     componentDidMount() {
@@ -94,16 +92,14 @@ export default class ReleaseVC extends Component {
         if (isShipOwner()) {
             this.setState({
                 ship: null,//船
-                upload_oil_list: '',//上载油品
-                download_oil_list: '',//意向油品
+                upload_oil_list: [],//上载油品
+                download_oil_list: [],//意向油品
                 empty_port: null,//空船港
                 empty_time: new Date(),//空船期
                 empty_delay: 0,//空船延迟
                 course: '',//运输航向 1：南上 2：北下 3：上江 4：下江 5：运河（多选，用“##”隔开）
                 remark: '',//备注
 
-                uploadOilSelectedList: [],
-                downloadOilSelectedList: [],
                 courseList: [],
             });
         }
@@ -154,11 +150,11 @@ export default class ReleaseVC extends Component {
     };
 
     toReleaseForShipOwner() {
-        let {ship, downloadOilSelectedList, empty_port, empty_time, empty_delay, course, uploadOilSelectedList, remark} = this.state;
+        let {ship, download_oil_list, empty_port, empty_time, empty_delay, course, upload_oil_list, remark} = this.state;
         if (ship === null) {
             this.refToast.show("请选择船舶");
         }
-        else if (downloadOilSelectedList.length === 0) {
+        else if (!arrayNotEmpty(download_oil_list)) {
             this.refToast.show("请选择意向货品");
         }
         else if (empty_port === null) {
@@ -170,20 +166,20 @@ export default class ReleaseVC extends Component {
         else if (course.length === 0) {
             this.refToast.show("请选择可运航向");
         }
-        else if (uploadOilSelectedList.length === 0) {
+        else if (!arrayNotEmpty(upload_oil_list)) {
             this.refToast.show("请选择上载货品");
         }
         // else if (remark.length === 0) {
         //     this.refToast.show("请输入您的备注");
         // }
         else {
-            let downloadList = downloadOilSelectedList.map(
+            let downloadList = download_oil_list.map(
                 (info) => {
                     return {goods_id: info.goods_id};
                 }
             );
 
-            let uploadList = uploadOilSelectedList.map(
+            let uploadList = upload_oil_list.map(
                 (info) => {
                     return {goods_id: info.goods_id};
                 }
@@ -204,9 +200,11 @@ export default class ReleaseVC extends Component {
                 data.remark = remark;
             }
 
+            this.refIndicator.show();
             NetUtil.post(appUrl + 'index.php/Mobile/Ship/add_ship_task/', data)
                 .then(
                     (result)=>{
+                        this.refIndicator.hide();
                         if (result.code === 0) {
                             this.refreshDefaultState();
                             PublicAlert(result.message, "发布完成，请到\"我的发布\"中查看",
@@ -218,6 +216,7 @@ export default class ReleaseVC extends Component {
                             this.refToast.show(result.message);
                         }
                     },(error)=>{
+                        this.refIndicator.hide();
                         this.refToast.show(error);
                     });
         }
@@ -277,7 +276,7 @@ export default class ReleaseVC extends Component {
                 loading_delay: loading_delay,
                 wastage: wastage,
                 demurrage: parseInt(demurrageTypes[demurrage]),
-                clean_deley: this.cleanDeleyTypes[clean_deley],
+                clean_deley: cleanDeleyTypes[clean_deley],
             };
 
             if (remark.length > 0) {
@@ -420,7 +419,6 @@ export default class ReleaseVC extends Component {
                     title: '选择港口',
                     dataList: appAllPortsFirst,
                     key: key,
-                    // selectedList:this.state.downloadOilSelectedList,
                     callBack:this.callBackFromPortVC.bind(this)
                 });
         }
@@ -576,7 +574,7 @@ export default class ReleaseVC extends Component {
                 {
                     title: '意向货品',
                     dataList: appAllGoods,
-                    selectedList:this.state.downloadOilSelectedList,
+                    selectedList:this.state.download_oil_list,
                     maxSelectCount:5,
                     callBack:this.callBackFromDownGoodsVC.bind(this)
                 }
@@ -605,14 +603,8 @@ export default class ReleaseVC extends Component {
     }
 
     callBackFromDownGoodsVC(backData) {
-        let dataList = backData.map(
-            (info) => {
-                return info.goods_name;
-            }
-        );
         this.setState({
-            download_oil_list: dataList.join(','),
-            downloadOilSelectedList: backData
+            download_oil_list: backData,
         });
     }
 
@@ -623,7 +615,7 @@ export default class ReleaseVC extends Component {
                 {
                     title: '上载货品',
                     dataList: appAllGoods,
-                    selectedList:this.state.uploadOilSelectedList,
+                    selectedList:this.state.upload_oil_list,
                     maxSelectCount:1,
                     callBack:this.callBackFromUpGoodsVC.bind(this)
                 }
@@ -652,14 +644,8 @@ export default class ReleaseVC extends Component {
     }
 
     callBackFromUpGoodsVC(backData) {
-        let dataList = backData.map(
-            (info) => {
-                return info.goods_name;
-            }
-        );
         this.setState({
-            upload_oil_list: dataList.join(','),
-            uploadOilSelectedList: backData
+            upload_oil_list: backData,
         });
     }
 
@@ -707,8 +693,13 @@ export default class ReleaseVC extends Component {
         else if (item.idKey === 'goods' && this.state.goods.length > 0) {
             return this.state.goods;
         }
-        else if (item.idKey === 'download_oil_list' && this.state.download_oil_list.length > 0) {
-            return this.state.download_oil_list;
+        else if (item.idKey === 'download_oil_list' && arrayNotEmpty(this.state.download_oil_list)) {
+            let dataList = this.state.download_oil_list.map(
+                (info) => {
+                    return info.goods_name;
+                }
+            );
+            return dataList.join(",");
         }
         else if (item.idKey === 'empty_port' && this.state.empty_port !== null) {
             return this.state.empty_port.port_name;
@@ -729,10 +720,15 @@ export default class ReleaseVC extends Component {
             return getShipCourseTypesText(this.state.course);
         }
         else if (item.idKey === 'clean_deley' && this.state.clean_deley > 0) {
-            return '完货' + this.cleanDeleyTypes[this.state.clean_deley] + '天内';
+            return '完货' + cleanDeleyTypes[this.state.clean_deley] + '天内';
         }
-        else if (item.idKey === 'upload_oil_list' && this.state.upload_oil_list.length > 0) {
-            return this.state.upload_oil_list;
+        else if (item.idKey === 'upload_oil_list' && arrayNotEmpty(this.state.upload_oil_list)) {
+            let dataList = this.state.upload_oil_list.map(
+                (info) => {
+                    return info.goods_name;
+                }
+            );
+            return dataList.join(",");
         }
         else if (item.idKey === "price") {
             if (offerIsShipPrice(this.state.is_shipprice)) {
@@ -798,7 +794,7 @@ export default class ReleaseVC extends Component {
                 <ActionSheet
                     ref={o => this.cleanDelayTypeActionSheet = o}
                     title={'请选择结算时间'}
-                    options={this.cleanDeleyTypes}
+                    options={cleanDeleyTypes}
                     cancelButtonIndex={0}
                     // destructiveButtonIndex={1}
                     onPress={this.onSelectCleanDelayType.bind(this)}
@@ -812,6 +808,7 @@ export default class ReleaseVC extends Component {
                     onPress={this.onSelectDemurrageType.bind(this)}
                 />
                 <Toast ref={o => this.refToast = o} position={'center'}/>
+                <IndicatorModal ref={o => this.refIndicator = o}/>
             </View>
         );
     }

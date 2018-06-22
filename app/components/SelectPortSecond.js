@@ -27,7 +27,7 @@ export default class SelectPortSecond extends Component {
         });
 
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
             key: this.props.navigation.state.params.key,
             selectedList: this.props.navigation.state.params.selectedList || [],
@@ -48,7 +48,7 @@ export default class SelectPortSecond extends Component {
 
     onCellSelected = (info: Object) => {
         this.props.navigation.state.params.callBack(this.state.key, info.item);
-        this.props.navigation.goBack('Main');
+        this.props.navigation.goBack('GoBackSkip');
 
         // if (this.state.maxSelectCount === 1) {
         //     this.state.selectedList = [info.item];

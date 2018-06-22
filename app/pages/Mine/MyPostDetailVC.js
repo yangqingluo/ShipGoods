@@ -73,6 +73,10 @@ export default class MyPostDetailVC extends Component {
                 });
     };
 
+    callBackFromEditVC() {
+        this.requestData();
+    }
+
     onShareBtnAction = () => {
         //分享
         ShareUtil.shareboard('分享的内容',
@@ -87,7 +91,12 @@ export default class MyPostDetailVC extends Component {
 
     onEditBtnAction = () => {
         //编辑
-
+        // PublicAlert(JSON.stringify(this.state.detailInfo));
+        this.props.navigation.navigate('EditShipRelease',
+            {
+                info:this.state.detailInfo,
+                callBack: this.callBackFromEditVC.bind(this),
+            });
     };
 
     onDeleteBtnAction = () => {
@@ -175,6 +184,9 @@ export default class MyPostDetailVC extends Component {
         }
         else if (item.idKey === 'course' && info.course.length > 0) {
             return getShipCourseTypesText(info.course);
+        }
+        else if (item.idKey === "remark" && !stringIsEmpty(info.remark)) {
+            return info.remark;
         }
 
         return '';
