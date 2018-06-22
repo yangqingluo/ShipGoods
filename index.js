@@ -9,8 +9,8 @@ import MainTab from './app/pages/MainTab'
 import DetailVC from './app/pages/DetailVC';
 import LoginVC from './app/pages/LoginVC';
 import Register from './app/pages/Register';
-import AddAuth from './app/pages/AddAuth';
-import AddShip from './app/pages/AddShip';
+import AddAuth from './app/pages/Mine/AddAuth';
+import AddShip from './app/pages/Mine/AddShip';
 import SelectText from './app/components/SelectTextVC';
 import SelectPort from './app/components/SelectPortVC';
 import SelectPortSecond from './app/components/SelectPortSecond'

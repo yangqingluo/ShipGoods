@@ -10,9 +10,9 @@ import {
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet'
 import ImagePicker from 'react-native-image-picker';
-import CustomItem from '../components/CustomItem'
-import Button from '../components/Button'
-import {imagePickerOptions} from "../util/Global";
+import CustomItem from '../../components/CustomItem'
+import Button from '../../components/Button'
+import {imagePickerOptions} from "../../util/Global";
 import Toast from "react-native-easy-toast";
 
 export default class DetailVC extends Component {
@@ -40,23 +40,23 @@ export default class DetailVC extends Component {
         };
         this.config = (userData.usertype === '1') ?
             [
-                {idKey:"corporation", name:"公司名称", logo:require('../images/icon_blue.png'), disable:true},
-                {idKey:"phone", name:"公司电话", logo:require('../images/icon_red.png'), disable:true, numeric:true},
-                {idKey:"name", name:"联系人姓名", logo:require('../images/icon_orange.png'), disable:true},
-                {idKey:"contact", name:"联系人手机号", logo:require('../images/icon_green.png'), disable:true, numeric:true},
-                {idKey:"bz_licence", name:"上传公司营业执照", logo:require('../images/icon_red.png'), disable:false, subName:"", onPress:this.cellSelected.bind(this, "bz_licence")},
-                {idKey:"idcard", name:"上传联系人身份证", disable:false, logo:require('../images/icon_orange.png'), subName:"123"},
-                {idKey:"invoice", name:"可开发票类型", disable:false, logo:require('../images/icon_green.png'), onPress:this.cellSelected.bind(this, "invoice_type")},
+                {idKey:"corporation", name:"公司名称", logo:require('../../images/icon_blue.png'), disable:true},
+                {idKey:"phone", name:"公司电话", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
+                {idKey:"name", name:"联系人姓名", logo:require('../../images/icon_orange.png'), disable:true},
+                {idKey:"contact", name:"联系人手机号", logo:require('../../images/icon_green.png'), disable:true, numeric:true},
+                {idKey:"bz_licence", name:"上传公司营业执照", logo:require('../../images/icon_red.png'), disable:false, subName:"", onPress:this.cellSelected.bind(this, "bz_licence")},
+                {idKey:"idcard", name:"上传联系人身份证", disable:false, logo:require('../../images/icon_orange.png'), subName:"123"},
+                {idKey:"invoice", name:"可开发票类型", disable:false, logo:require('../../images/icon_green.png'), onPress:this.cellSelected.bind(this, "invoice_type")},
             ]
                 :
             [
-                {idKey:"corporation", name:"公司名称", logo:require('../images/icon_blue.png'), disable:true},
-                {idKey:"name", name:"联系人姓名", logo:require('../images/icon_red.png'), disable:true},
-                {idKey:"contact", name:"联系人手机号", logo:require('../images/icon_orange.png'), disable:true, numeric:true},
-                {idKey:"bz_licence", name:"上传公司营业执照", logo:require('../images/icon_green.png'), disable:false, subName:"", onPress:this.cellSelected.bind(this, "bz_licence")},
-                {idKey:"idcard", name:"上传法人身份证", disable:false, logo:require('../images/icon_red.png'), subName:"123"},
-                {name:"添加船舶", disable:false, logo:require('../images/icon_orange.png'), subName:"324", onPress:this.cellSelected.bind(this, "AddShip")},
-                {idKey:"invoice", name:"可开发票类型", disable:false, logo:require('../images/icon_green.png'), onPress:this.cellSelected.bind(this, "invoice_type")},
+                {idKey:"corporation", name:"公司名称", logo:require('../../images/icon_blue.png'), disable:true},
+                {idKey:"name", name:"联系人姓名", logo:require('../../images/icon_red.png'), disable:true},
+                {idKey:"contact", name:"联系人手机号", logo:require('../../images/icon_orange.png'), disable:true, numeric:true},
+                {idKey:"bz_licence", name:"上传公司营业执照", logo:require('../../images/icon_green.png'), disable:false, subName:"", onPress:this.cellSelected.bind(this, "bz_licence")},
+                {idKey:"idcard", name:"上传法人身份证", disable:false, logo:require('../../images/icon_red.png'), subName:"123"},
+                {name:"添加船舶", disable:false, logo:require('../../images/icon_orange.png'), subName:"324", onPress:this.cellSelected.bind(this, "AddShip")},
+                {idKey:"invoice", name:"可开发票类型", disable:false, logo:require('../../images/icon_green.png'), onPress:this.cellSelected.bind(this, "invoice_type")},
             ];
 
         this.invoiceTypes = ['取消', '增值税专用发票(11%)', '增值税普通发票', '其他发票'];

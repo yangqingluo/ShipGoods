@@ -13,7 +13,7 @@ export default class MyShipPriceVC extends HomeOrderVC {
             this.state.page = 1;
         }
         let data = {page: this.state.page, ship_id: this.props.navigation.state.params.ship_id};
-        
+
         NetUtil.post(appUrl + 'index.php/Mobile/ship/get_my_offer', data)
             .then(
                 (result)=>{

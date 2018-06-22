@@ -11,9 +11,9 @@ import {
 import ActionSheet from 'react-native-actionsheet'
 import ImagePicker from 'react-native-image-picker';
 
-import CustomItem from '../components/CustomItem'
-import Button from '../components/Button'
-import {imagePickerOptions} from "../util/Global";
+import CustomItem from '../../components/CustomItem'
+import Button from '../../components/Button'
+import {imagePickerOptions} from "../../util/Global";
 import Toast from "react-native-easy-toast";
 
 export default class AddShip extends Component {
@@ -32,8 +32,7 @@ export default class AddShip extends Component {
             gasoline: '',//可载汽油吨位
             area: 0,//航行区域 1：沿海 2：长江（可进川） 3：长江（不可进川)
             ship_type: 0,
-            goods: '',//意向货品
-            goodsList: [],
+            goods: [],//意向货品
 
             ship_licence_source: null,
         };
@@ -48,8 +47,6 @@ export default class AddShip extends Component {
             // {idKey:"area", name:"航行区域", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "area")},
             // {idKey:"ship_licence", name:"船舶国际证书", logo:require('../images/icon_red.png'), disable:false, subName:"", onPress:this.cellSelected.bind(this, "ship_licence")},
         ];
-
-        this.areaTypes = global.shipAreaTypes;
     }
 
     cellSelected(key, data = {}){
@@ -78,7 +75,7 @@ export default class AddShip extends Component {
                 {
                     title: '请选择意向货品',
                     dataList: appAllGoods,
-                    selectedList:this.state.goodsList,
+                    selectedList:this.state.goods,
                     maxSelectCount:5,
                     callBack:this.callBackFromSelectGoodsVC.bind(this)
                 }
@@ -107,14 +104,8 @@ export default class AddShip extends Component {
     }
 
     callBackFromSelectGoodsVC(backData) {
-        let dataList = backData.map(
-            (info) => {
-                return info.goods_name;
-            }
-        );
         this.setState({
-            goodsList: backData,
-            goods: dataList.join(',')
+            goods: backData,
         });
     }
 
@@ -135,9 +126,9 @@ export default class AddShip extends Component {
         else if (this.state.ship_type === 0) {
             this.refToast.show("请选择船舶类型");
         }
-        else if (this.state.goodsList.length === 0) {
-            this.refToast.show("请选择意向货品");
-        }
+        // else if (this.state.goods.length === 0) {
+        //     this.refToast.show("请选择意向货品");
+        // }
         else if (this.state.area === 0) {
             this.refToast.show("请选择航行区域");
         }
@@ -146,7 +137,7 @@ export default class AddShip extends Component {
         }
 
         else {
-            let dataList = this.state.goodsList.map(
+            let dataList = this.state.goods.map(
                 (info) => {
                     return {goods_id: info.goods_id};
                 }
@@ -156,7 +147,7 @@ export default class AddShip extends Component {
                 ship_name:this.state.ship_name,
                 tonnage:this.state.tonnage,
                 storage:this.state.storage,
-                goods:dataList,
+                goods:null,
                 ship_type:this.state.ship_type,
                 area:'' + this.state.area,
                 ship_lience:this.state.ship_licence
@@ -286,52 +277,57 @@ export default class AddShip extends Component {
             if (type.search("油") !== -1) {
                 if (type === "油船3级") {
                     this.config = [
-                        {idKey:"ship_name", name:"船名", logo:require('../images/icon_blue.png'), disable:true},
-                        {idKey:"tonnage", name:"参考载重量(吨)", logo:require('../images/icon_red.png'), disable:true, numeric:true},
-                        {idKey:"storage", name:"仓容", logo:require('../images/icon_orange.png'), disable:true, numeric:true},
-                        {idKey:"ship_type", name:"船舶类型", logo:require('../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "ship_type")},
-                        {idKey:"goods", name:"意向货品", logo:require('../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "goods")},
-                        {idKey:"dieseloil", name:"可载柴油吨位（选填）", logo:require('../images/icon_green.png'), disable:true, numeric:true},
-                        {idKey:"area", name:"航行区域", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "area")},
-                        {idKey:"ship_licence", name:"船舶国际证书", logo:require('../images/icon_red.png'), disable:false, subName:"", onPress:this.cellSelected.bind(this, "ship_licence")},
+                        {idKey:"ship_name", name:"船名", logo:require('../../images/icon_blue.png'), disable:true},
+                        {idKey:"tonnage", name:"参考载重量(吨)", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
+                        {idKey:"storage", name:"仓容", logo:require('../../images/icon_orange.png'), disable:true, numeric:true},
+                        {idKey:"ship_type", name:"船舶类型", logo:require('../../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "ship_type")},
+                        // {idKey:"goods", name:"意向货品", logo:require('../../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "goods")},
+                        {idKey:"dieseloil", name:"可载柴油吨位（选填）", logo:require('../../images/icon_green.png'), disable:true, numeric:true},
+                        {idKey:"area", name:"航行区域", logo:require('../../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "area")},
+                        {idKey:"ship_licence", name:"船舶国际证书", logo:require('../../images/icon_red.png'), disable:false, subName:"", onPress:this.cellSelected.bind(this, "ship_licence")},
                     ];
                     this.state.gasoline = '';
                 }
                 else {
                     this.config = [
-                        {idKey:"ship_name", name:"船名", logo:require('../images/icon_blue.png'), disable:true},
-                        {idKey:"tonnage", name:"参考载重量(吨)", logo:require('../images/icon_red.png'), disable:true, numeric:true},
-                        {idKey:"storage", name:"仓容", logo:require('../images/icon_orange.png'), disable:true, numeric:true},
-                        {idKey:"ship_type", name:"船舶类型", logo:require('../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "ship_type")},
-                        {idKey:"goods", name:"意向货品", logo:require('../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "goods")},
-                        {idKey:"gasoline", name:"可载汽油吨位（选填）", logo:require('../images/icon_red.png'), disable:true, numeric:true},
-                        {idKey:"dieseloil", name:"可载柴油吨位（选填）", logo:require('../images/icon_green.png'), disable:true, numeric:true},
-                        {idKey:"area", name:"航行区域", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "area")},
-                        {idKey:"ship_licence", name:"船舶国际证书", logo:require('../images/icon_red.png'), disable:false, subName:"", onPress:this.cellSelected.bind(this, "ship_licence")},
+                        {idKey:"ship_name", name:"船名", logo:require('../../images/icon_blue.png'), disable:true},
+                        {idKey:"tonnage", name:"参考载重量(吨)", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
+                        {idKey:"storage", name:"仓容", logo:require('../../images/icon_orange.png'), disable:true, numeric:true},
+                        {idKey:"ship_type", name:"船舶类型", logo:require('../../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "ship_type")},
+                        // {idKey:"goods", name:"意向货品", logo:require('../../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "goods")},
+                        {idKey:"gasoline", name:"可载汽油吨位（选填）", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
+                        {idKey:"dieseloil", name:"可载柴油吨位（选填）", logo:require('../../images/icon_green.png'), disable:true, numeric:true},
+                        {idKey:"area", name:"航行区域", logo:require('../../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "area")},
+                        {idKey:"ship_licence", name:"船舶国际证书", logo:require('../../images/icon_red.png'), disable:false, subName:"", onPress:this.cellSelected.bind(this, "ship_licence")},
                     ];
                 }
                 return;
             }
         }
         this.config = [
-            {idKey:"ship_name", name:"船名", logo:require('../images/icon_blue.png'), disable:true},
-            {idKey:"tonnage", name:"参考载重量(吨)", logo:require('../images/icon_red.png'), disable:true, numeric:true},
-            {idKey:"storage", name:"仓容", logo:require('../images/icon_orange.png'), disable:true, numeric:true},
-            {idKey:"ship_type", name:"船舶类型", logo:require('../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "ship_type")},
-            {idKey:"goods", name:"意向货品", logo:require('../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "goods")},
-            {idKey:"area", name:"航行区域", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "area")},
-            {idKey:"ship_licence", name:"船舶国际证书", logo:require('../images/icon_red.png'), disable:false, subName:"", onPress:this.cellSelected.bind(this, "ship_licence")},
+            {idKey:"ship_name", name:"船名", logo:require('../../images/icon_blue.png'), disable:true},
+            {idKey:"tonnage", name:"参考载重量(吨)", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
+            {idKey:"storage", name:"仓容", logo:require('../../images/icon_orange.png'), disable:true, numeric:true},
+            {idKey:"ship_type", name:"船舶类型", logo:require('../../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "ship_type")},
+            // {idKey:"goods", name:"意向货品", logo:require('../../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "goods")},
+            {idKey:"area", name:"航行区域", logo:require('../../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "area")},
+            {idKey:"ship_licence", name:"船舶国际证书", logo:require('../../images/icon_red.png'), disable:false, subName:"", onPress:this.cellSelected.bind(this, "ship_licence")},
         ];
         this.state.gasoline = '';
         this.state.dieseloil = '';
     }
 
     renderSubNameForIndex(item, index) {
-        if (item.idKey === 'goods' && this.state.goodsList.length > 0) {
-            return this.state.goods;
+        if (item.idKey === 'goods' && this.state.goods.length > 0) {
+            let dataList = this.state.goods.map(
+                (info) => {
+                    return info.goods_name;
+                }
+            );
+            return dataList.join(",");
         }
         else if (item.idKey === 'area' && this.state.area > 0) {
-            return getArrayTypesText(this.areaTypes, this.state.area);
+            return getArrayTypesText(shipAreaTypes, this.state.area);
         }
         else if (item.idKey === 'ship_type' && this.state.ship_type > 0) {
             return getArrayTypesText(shipTypes, this.state.ship_type);
@@ -376,7 +372,7 @@ export default class AddShip extends Component {
                 <ActionSheet
                     ref={o => this.refAreaTypeActionSheet = o}
                     title={'请选择航行区域'}
-                    options={this.areaTypes}
+                    options={shipAreaTypes}
                     cancelButtonIndex={0}
                     // destructiveButtonIndex={1}
                     onPress={this.onSelectAreaType.bind(this)}
