@@ -4,10 +4,10 @@ import {
     View,
     StyleSheet,
     Text,
-    Modal,
     TouchableOpacity,
+    Modal,
     Dimensions
-} from 'react-native'
+} from 'react-native';
 
 export default class MyBottomSheet extends Component{
     static propTypes={
@@ -16,17 +16,17 @@ export default class MyBottomSheet extends Component{
         actionTitleStyle:PropTypes.object,
         itemTitleStyle:PropTypes.object,
         modalTitle:PropTypes.string,
-    }
+    };
     static defaultProps={
         items:[],
         itemStyle:{},
         actionTitleStyle:{},
         itemTitleStyle:{},
         modalTitle:''
-    }
+    };
 
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
             modalVisible:false,
         }
@@ -51,7 +51,7 @@ export default class MyBottomSheet extends Component{
                     >{item.title}</Text>
                 </TouchableOpacity>
             )
-        })
+        });
 
 
         return <Modal animationType="slide"
@@ -123,4 +123,4 @@ const styles = StyleSheet.create({
         color:'#444444',
         textAlign:'center',
     },
-})
+});

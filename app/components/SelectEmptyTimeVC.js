@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import DateTimePicker from './DateTime/index';
+import Toast from "react-native-easy-toast";
 
 export default class SelectEmptyTimeVC extends Component {
     static navigationOptions = ({ navigation }) => (
@@ -24,9 +25,10 @@ export default class SelectEmptyTimeVC extends Component {
 
     constructor(props) {
         super(props);
+        let date = this.props.navigation.state.params.date;
         this.state={
             key: this.props.navigation.state.params.key,
-            date: this.props.navigation.state.params.date || new Date(),
+            date: dateIsValid(date) ? date : new Date(),
             delay: this.props.navigation.state.params.delay || 0,
         };
         this.picker = null;
@@ -106,8 +108,9 @@ export default class SelectEmptyTimeVC extends Component {
                             {'船期前后延迟 ± ' + this.state.delay + ' 天'}
                         </Text>
                     </TouchableOpacity>
-                    <DateTimePicker title="请选择时间" ref={(picker)=>{this.picker=picker}} />
                 </ScrollView>
+                <DateTimePicker title="请选择时间" ref={(picker)=>{this.picker=picker}} />
+                <Toast ref={o => this.refToast = o} position={'center'}/>
             </View>
         );
     }

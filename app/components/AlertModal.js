@@ -8,10 +8,10 @@ import {
     Platform,
     Dimensions,
     Image,
-    Modal,
     TextInput,
     InteractionManager
 } from 'react-native';
+import Modal from 'react-native-root-modal';
 
 
 export default class AlertModal extends Component{

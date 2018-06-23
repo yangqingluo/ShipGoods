@@ -497,13 +497,23 @@ global.itemIsFavor = function(iscollect) : boolean {
 };
 
 global.objectNotNull = function(object) : boolean {
-    return ((object !== null) && (typeof(object) !== appUndefined));
+    return ((object !== null) && (object !== "<null>") && (typeof(object) !== appUndefined));
 };
 
 global.arrayNotEmpty = function(object) : boolean {
     return ((object !== null) && (typeof(object) !== appUndefined) && object.length > 0);
 };
 
+global.dateStringIsValid = function check(dateString) : boolean {
+    return (new Date(dateString).getDate() === dateString.substring(dateString.length - 2));
+};
+
+global.dateIsValid = function check(date) : boolean {
+    if (objectNotNull(date)) {
+        return date.Format("yyyy").search("NaN") === -1;
+    }
+    return false;
+};
 
 global.objectIsZero = function(object) : boolean {
     return ((object === null) || (typeof(object) === appUndefined) || (parseInt(object) === 0));

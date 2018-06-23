@@ -14,7 +14,7 @@ import Release from "../ReleaseVC";
 export default class EditGoodsReleaseVC extends Release {
     static navigationOptions = ({ navigation }) => (
         {
-            title: "编辑",
+            title: "编辑货品",
             headerRight: <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
                 <TouchableOpacity
                     onPress={navigation.state.params.clickSureBtn}

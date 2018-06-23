@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import DashLine from '../../components/DashLine';
 import CustomItem from '../../components/CustomItem';
+import OrderCenterView from "../../components/OrderCenterView";
 import ShareUtil from "../../share/ShareUtil";
 import SharePlatform from "../../share/SharePlatform";
 import Toast from "react-native-easy-toast";
@@ -195,20 +196,7 @@ export default class HomeOrderDetailVC extends Component {
                             <Text style={{fontSize: 10, color:appData.appSecondaryTextColor, marginLeft: 5}}>{'货物编号：' + info.goods_sn}</Text>
                         </View>
                     </View>
-                    <View style={styles.centerContainer}>
-                        <View style={{backgroundColor: '#f2f9ff', height: 73}}>
-                            <View style={{flex: 1, flexDirection: 'row', alignItems: "center"}}>
-                                <Text style={{marginLeft: 34, fontSize: 14, color: appData.appTextColor}}>{info.loading_port_name + ' → ' + info.unloading_port_name}</Text>
-                            </View>
-                            <View style={{flex: 1, flexDirection: 'row', alignItems: "center", justifyContent: "space-between"}}>
-                                <Text style={{marginLeft: 34, fontSize: 14, color: appData.appTextColor}}>{info.loading_timetext + ' ± ' + info.loading_delay + '天'}</Text>
-                                <Text style={{marginRight: 27, fontSize: 14, color: appData.appTextColor}}>{'原油 10000+10000吨'}</Text>
-                            </View>
-                        </View>
-                        <View style={{backgroundColor: '#81c6ff', height: 26, alignItems: "center", justifyContent: "center"}}>
-                            <Text style={{fontSize: 12, color:'white', fontWeight:'bold'}}>{offerIsShipPrice(info.is_shipprice) ? "船东开价" : info.price}</Text>
-                        </View>
-                    </View>
+                    <OrderCenterView info={info} style={styles.centerContainer}/>
                     {this._renderListItem()}
                     <View style={{paddingLeft: 10, paddingRight: 20}}>
                         <TouchableOpacity onPress={this.cellSelected.bind(this, "SelectOffer")}>

@@ -61,16 +61,16 @@ export default class DateTimePicker extends Component {
 
     async showDataPickerAndroid (value, showTime) {
         try {
-            let hourO, minuteO = null
+            let hourO, minuteO = null;
             if (value) {
-                const datetime = new Date(value)
-                hourO = datetime.getHours()
+                const datetime = new Date(value);
+                hourO = datetime.getHours();
                 minuteO = datetime.getMinutes()
             }
             const { action, year, month, day } = await DatePickerAndroid.open({
                 date: new Date(value),
                 minDate: value && value < new Date() ? new Date(value) : new Date()
-            })
+            });
             if (action !== DatePickerAndroid.dismissedAction) {
                 if (showTime) {
                     this.showTimePickerAndroid(new Date(year, month, day, hourO, minuteO));
