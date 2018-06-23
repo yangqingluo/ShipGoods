@@ -96,11 +96,30 @@ export default class HomeOrderDetailVC extends Component {
     onEditBtnAction = () => {
         //编辑
         // PublicAlert(JSON.stringify(this.state.detailInfo));
-        this.props.navigation.navigate('EditGoodsRelease',
-            {
-                info:this.state.detailInfo,
-                callBack: this.callBackFromEditVC.bind(this),
-            });
+
+        let data = {task_id: this.state.info.task_id};
+        this.refIndicator.show();
+        NetUtil.post(appUrl + 'index.php/Mobile/Goods/get_goods_detail/', data)
+            .then(
+                (result)=>{
+                    this.refIndicator.hide();
+                    if (result.code === 0) {
+                        this.props.navigation.navigate('EditGoodsRelease',
+                            {
+                                info: result.data,
+                                callBack: this.callBackFromEditVC.bind(this),
+                            });
+                    }
+                    else {
+                        this.refToast.show(result.message);
+                    }
+
+                },(error)=>{
+                    this.refIndicator.hide();
+                    this.refToast.show(error);
+                });
+
+
     };
 
     onDeleteBtnAction = () => {

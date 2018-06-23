@@ -32,7 +32,7 @@ export default class EditGoodsReleaseVC extends Release {
             remark: info.remark,//备注
             tonnage: info.tonnage,//否 装载吨位
             ton_section: info.ton_section, //否 吨位区间值
-            price: offerIsShipPrice(info.is_shipprice) ? 0 : info.price,//否 单价
+            price: offerIsShipPrice(info.is_shipprice) ? 0 : info.prices,//否 单价
             loading_port: {
                 port_id: info.loading_port,
                 port_name: info.loading_port_name,

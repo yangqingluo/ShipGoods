@@ -91,7 +91,7 @@ export default class EditShip extends AddShip {
             }
 
             this.refIndicator.show();
-            NetUtil.post(appUrl + 'index.php/Mobile/Ship/edit_ship/', data)
+            NetUtil.post(appUrl + 'index.php/Mobile/Ship/update_ship/', data)
                 .then(
                     (result)=>{
                         this.refIndicator.hide();
