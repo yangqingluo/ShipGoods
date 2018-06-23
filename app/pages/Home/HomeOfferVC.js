@@ -27,6 +27,11 @@ export default class HomeOfferVC extends HomeOrderVC {
             );
         }
 
+        if (objectNotNull(appHomeCondition.loadorder)) data.loadorder = appHomeCondition.loadorder;
+        if (objectNotNull(appHomeCondition.tonnageorder)) data.tonnageorder = appHomeCondition.tonnageorder;
+        if (objectNotNull(appHomeCondition.cleanorder)) data.loadorder = appHomeCondition.cleanorder;
+        if (objectNotNull(appHomeCondition.creditorder)) data.creditorder = appHomeCondition.creditorder;
+
         NetUtil.post(appUrl + 'index.php/Mobile/Ship/ship_index/', data)
             .then(
                 (result)=>{

@@ -9,7 +9,7 @@ import {
     ScrollView,
     TouchableOpacity,
 } from 'react-native'
-
+import ActionSheet from 'react-native-actionsheet';
 import Swiper from 'react-native-swiper';
 import ScrollableTabView,{DefaultTabBar, ScrollableTabBar} from 'react-native-scrollable-tab-view';
 import TabTop from '../components/TabTop';
@@ -21,7 +21,7 @@ import Menu from './Home/HomeMenu';
 import px2dp from "../util";
 
 
-//顶部右边的图标，这段代码不可复用，但是可以复制修改使用。
+
 class RightHeader extends Component {
     constructor(props) {
         super(props);
@@ -69,14 +69,109 @@ export default class HomeVC extends Component {
             isOpen: false,
             selectedItem: '',
         };
+
+        this.orderTypes = isShipOwner() ?
+            ["取消", "默认排序" , "空船时间正序", "空船时间倒序", "吨位正序", "吨位倒序", "船主信用正序", "船主信用倒序"]
+            :
+            ["取消", "默认排序" , "装货时间正序", "装货时间倒序", "吨位正序", "吨位倒序", "结算时间正序", "结算时间倒序", "货主信用正序", "货主信用倒序"];
     }
 
     componentDidMount() {
         global.appHomeVC = this;
     }
 
+    onSelectOrderType(index) {
+        if (index > 0) {
+            if (index === 1) {
+                appHomeCondition.emptyorder = null;
+                appHomeCondition.tonnageorder = null;
+                appHomeCondition.creditorder = null;
+
+                appHomeCondition.loadorder = null;
+                appHomeCondition.cleanorder = null;
+            }
+            else {
+                if (isShipOwner()) {
+                    switch (index){
+                        case 2:
+                            appHomeCondition.loadorder = "ASC";
+                            break;
+
+                        case 3:
+                            appHomeCondition.loadorder = "DESC";
+                            break;
+
+                        case 4:
+                            appHomeCondition.tonnageorder = "ASC";
+                            break;
+
+                        case 5:
+                            appHomeCondition.tonnageorder = "DESC";
+                            break;
+
+                        case 6:
+                            appHomeCondition.cleanorder = "ASC";
+                            break;
+
+                        case 7:
+                            appHomeCondition.cleanorder = "DESC";
+                            break;
+
+                        case 8:
+                            appHomeCondition.creditorder = "ASC";
+                            break;
+
+                        case 9:
+                            appHomeCondition.creditorder = "DESC";
+                            break;
+                    }
+                }
+                else {
+                    switch (index){
+                        case 2:
+                            appHomeCondition.emptyorder = "ASC";
+                            break;
+
+                        case 3:
+                            appHomeCondition.emptyorder = "DESC";
+                            break;
+
+                        case 4:
+                            appHomeCondition.tonnageorder = "ASC";
+                            break;
+
+                        case 5:
+                            appHomeCondition.tonnageorder = "DESC";
+                            break;
+
+                        case 6:
+                            appHomeCondition.creditorder = "ASC";
+                            break;
+
+                        case 7:
+                            appHomeCondition.creditorder = "DESC";
+                            break;
+                    }
+                }
+            }
+            this.refreshList();
+        }
+    }
+
+    refreshList() {
+        if (isShipOwner()) {
+            this.subListToOfferVC.requestData();
+            if (typeof(this.subListOfferedVC) !== appUndefined) {
+                this.subListOfferedVC.requestData();
+            }
+        }
+        else {
+            this.subListGoodsVC.requestData();
+        }
+    }
+
     onSortBtnAction() {
-        PublicAlert("精彩功能，敬请期待");
+        this.refOrderTypeSheet.show();
     }
 
     onFilterBtnAction() {
@@ -125,15 +220,7 @@ export default class HomeVC extends Component {
             appHomeCondition.loading_time = this.rightMenu.state.loading_time;
             appHomeCondition.loading_delay = this.rightMenu.state.loading_delay;
 
-            if (isShipOwner()) {
-                this.subListToOfferVC.requestData();
-                if (typeof(this.subListOfferedVC) !== appUndefined) {
-                    this.subListOfferedVC.requestData();
-                }
-            }
-            else {
-                this.subListGoodsVC.requestData();
-            }
+            this.refreshList();
         }
     };
 
@@ -186,7 +273,15 @@ export default class HomeVC extends Component {
                             :
                             <HomeListOrderVC ref={o => this.subListOrderVC = o} />}
                     </ScrollableTabView>
-                </View >
+                </View>
+                <ActionSheet
+                    ref={o => this.refOrderTypeSheet = o}
+                    title={'请选择排序方式'}
+                    options={this.orderTypes}
+                    cancelButtonIndex={0}
+                    // destructiveButtonIndex={1}
+                    onPress={this.onSelectOrderType.bind(this)}
+                />
             </SideMenu>
         )
     }

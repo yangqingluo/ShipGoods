@@ -497,7 +497,7 @@ global.itemIsFavor = function(iscollect) : boolean {
 };
 
 global.objectNotNull = function(object) : boolean {
-    return ((object !== null) && (object !== "<null>") && (typeof(object) !== appUndefined));
+    return ((object !== null) && (typeof(object) !== appUndefined));
 };
 
 global.arrayNotEmpty = function(object) : boolean {

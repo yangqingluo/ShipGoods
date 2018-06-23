@@ -62,6 +62,10 @@ export default class HomeGoodsVC extends Component {
             );
         }
 
+        if (objectNotNull(appHomeCondition.emptyorder)) data.emptyorder = appHomeCondition.emptyorder;
+        if (objectNotNull(appHomeCondition.tonnageorder)) data.tonnageorder = appHomeCondition.tonnageorder;
+        if (objectNotNull(appHomeCondition.creditorder)) data.creditorder = appHomeCondition.creditorder;
+
         NetUtil.post(appUrl + 'index.php/Mobile/Goods/goods_index/', data)
             .then(
                 (result)=>{
