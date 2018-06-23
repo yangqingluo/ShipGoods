@@ -8,6 +8,7 @@ import {
     Button,
     TextInput,
     ScrollView,
+    RefreshControl,
     TouchableOpacity
 } from 'react-native';
 import DashLine from '../../components/DashLine';
@@ -206,8 +207,11 @@ export default class HomeOrderDetailVC extends Component {
         return (
             <View style={appStyles.container}>
                 <ScrollView style={{flex: 1, backgroundColor:'#fff'}}
-                            onRefresh={this.requestData}
-                            refreshing={this.state.refreshing}
+                            refreshControl={
+                                <RefreshControl
+                                    onRefresh={this.requestData.bind(this)}
+                                    refreshing={this.state.refreshing}
+                                />}
                 >
                     <View style={{height: 47, flexDirection: 'row', alignItems: "center", justifyContent: "space-between",}}>
                         <View style={{flexDirection: 'row'}}>
