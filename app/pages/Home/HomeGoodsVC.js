@@ -118,10 +118,6 @@ export default class HomeGoodsVC extends Component {
         )
     };
 
-    keyExtractor = (item: Object, index: number) => {
-        return '' + index;
-    };
-
     renderFooter(){
         return <ListLoadFooter showFooter={this.state.showFooter}/>;
     }
@@ -134,7 +130,9 @@ export default class HomeGoodsVC extends Component {
                     data={this.state.dataList}
                     renderItem={this.renderCell}
 
-                    keyExtractor={this.keyExtractor}
+                    keyExtractor={(item: Object, index: number) => {
+                        return '' + index;
+                    }}
                     // ItemSeparatorComponent={global.renderSeparator}
                     // ListHeaderComponent={this.renderHeader}
 

@@ -4,9 +4,11 @@ import {
     Text,
     View,
     TouchableOpacity,
+    RefreshControl,
     FlatList,
 } from 'react-native';
 import OrderCell from './HomeOrderCell';
+import CustomFlatList from '../../components/CustomFlatList';
 import ListLoadFooter from '../../components/ListLoadFooter';
 import CustomAlert from '../../components/CustomAlert';
 import Toast from "react-native-easy-toast";
@@ -105,10 +107,6 @@ export default class HomeOrderVC extends Component {
         )
     };
 
-    keyExtractor = (item: Object, index: number) => {
-        return '' + index;
-    };
-
     renderFooter(){
         return <ListLoadFooter showFooter={this.state.showFooter}/>;
     }
@@ -121,16 +119,25 @@ export default class HomeOrderVC extends Component {
                     data={this.state.dataList}
                     renderItem={this.renderCell}
 
-                    keyExtractor={this.keyExtractor}
+                    keyExtractor={(item: Object, index: number) => {
+                        return '' + index;
+                    }}
                     // ItemSeparatorComponent={global.renderSeparator}
                     // ListHeaderComponent={this.renderHeader}
 
-                    onRefresh={this.requestData}
-                    refreshing={this.state.refreshing}
+                    // onRefresh={this.requestData}
+                    // refreshing={this.state.refreshing}
+                    //为刷新设置颜色
+                    refreshControl={
+                        <RefreshControl refreshing={this.state.refreshing}
+                                        onRefresh={this.requestData.bind(this)}
+                                        progressBackgroundColor="#ffffff" />
+                    }
+
 
                     ListFooterComponent={this.renderFooter.bind(this)}
                     onEndReached={this.loadMoreData.bind(this)}
-                    onEndReachedThreshold={0}
+                    onEndReachedThreshold={0.1}
                 />
                 <Toast ref={o => this.refToast = o} position={'center'}/>
                 <CustomAlert ref={o => this.refSelectAlert = o} message={"您确定选择该货品？"} />

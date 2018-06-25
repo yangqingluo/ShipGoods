@@ -160,8 +160,10 @@ export default class HomeVC extends Component {
 
     refreshList() {
         if (isShipOwner()) {
-            this.subListToOfferVC.requestData();
-            if (typeof(this.subListOfferedVC) !== appUndefined) {
+            if (objectNotNull(this.subListToOfferVC)) {
+                this.subListToOfferVC.requestData();
+            }
+            if (objectNotNull(this.subListOfferedVC)) {
                 this.subListOfferedVC.requestData();
             }
         }

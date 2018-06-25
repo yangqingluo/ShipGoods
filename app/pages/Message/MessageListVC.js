@@ -8,6 +8,7 @@ import {
     FlatList,
 } from 'react-native';
 import MessageCell from './MessageCell';
+import CustomFlatList from '../../components/CustomFlatList';
 import ListLoadFooter from '../../components/ListLoadFooter';
 import Toast from 'react-native-easy-toast';
 import px2dp from "../../util";
@@ -129,6 +130,13 @@ export default class OrderListVC extends Component {
         return <ListLoadFooter showFooter={this.state.showFooter}/>;
     }
 
+    renderEmptyComponent = () => {
+        return <TouchableOpacity style={{flex:1, alignItems: "center", backgroundColor:'white'}} onPress={this.requestData.bind(this)}>
+            <Image source={require("../../images/icon_no_message.png")} style={styles.noMsgImage}/>
+            <Text style={{marginTop:14, fontSize:14, color:'#494949'}}>{"啊哦，还没有消息哦..."}</Text>
+        </TouchableOpacity>;
+    };
+
     render() {
         if (this.state.dataList.length === 0) {
             return <TouchableOpacity style={{flex:1, alignItems: "center", backgroundColor:'white'}} onPress={this.requestData.bind(this)}>
@@ -153,6 +161,8 @@ export default class OrderListVC extends Component {
                     ListFooterComponent={this.renderFooter.bind(this)}
                     onEndReached={this.loadMoreData.bind(this)}
                     onEndReachedThreshold={0}
+
+                    // ListEmptyComponent={this.renderEmptyComponent}
                 />
                 <Toast ref={o => this.refToast = o} position={'center'}/>
             </View>
