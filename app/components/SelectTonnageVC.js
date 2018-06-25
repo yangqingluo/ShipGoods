@@ -63,7 +63,7 @@ export default class SelectTonnageVC extends Component {
                         <TextInput underlineColorAndroid="transparent"
                                    keyboardType={"numeric"}
                                    style={styles.textInput}
-                                   maxLength={appData.appMaxLengthTonnage}
+                                   maxLength={appData.appMaxLengthNumber}
                                    placeholder={'请输入货量'}
                                    placeholderTextColor={appData.appSecondaryTextColor}
                                    onChangeText={this.textInputChanged.bind(this)}

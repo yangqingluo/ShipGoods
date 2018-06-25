@@ -211,15 +211,17 @@ let appData = {
     appSureButtonWidth: 123,
     appSureButtonHeight: 44,
     appSureButtonRadius: 22,
+    appMaxImageUploadNumber: 5,
 
     appItemHeight: 50,
     appSeparatorHeight: 1,
 
     appMaxLengthInput: 100,
+    appMaxLengthName: 40,
+    appMaxLengthNumber: 10,
     appMaxLengthVerifyCode: 4,
     appMaxLengthPhone: 11,
     appMaxLengthPassword: 20,
-    appMaxLengthTonnage: 10,
 };
 
 let appStyles = StyleSheet.create({

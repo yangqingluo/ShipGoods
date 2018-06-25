@@ -6,7 +6,6 @@ import {
     CheckBox,
     TouchableOpacity
 } from 'react-native';
-import px2dp from "../util";
 
 type Props = {
     info: Object,
@@ -20,9 +19,9 @@ export default class TextCell extends PureComponent<Props> {
     render() {
         let {info, showText, selected, lines} = this.props;
         return (
-            <TouchableOpacity style={[styles.container, {width: (px2dp(-20) + screenWidth * 2 / 3) / lines}]} onPress={() => this.props.onPress(info)}>
+            <TouchableOpacity style={[styles.container, {width: (-20 + screenWidth * 2 / 3) / lines}]} onPress={() => this.props.onPress(info)}>
                 <View style={[styles.viewContainer, {backgroundColor: selected ? appData.appBlueColor : "#f3f6f9"}]}>
-                    <Text style={{fontSize:px2dp(14), textAlign: 'center', color:selected ? 'white' : appData.appTextColor}}>{showText}</Text>
+                    <Text style={{fontSize:14, textAlign: 'center', color:selected ? 'white' : appData.appTextColor}}>{showText}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -31,15 +30,15 @@ export default class TextCell extends PureComponent<Props> {
 
 const styles = StyleSheet.create({
     container: {
-        paddingVertical: px2dp(5),
-        paddingHorizontal: px2dp(9),
+        paddingVertical: 5,
+        paddingHorizontal: 9,
         backgroundColor: "white",
-        minHeight: px2dp(27 + 10),
+        minHeight: 27 + 10,
     },
     viewContainer: {
         flex: 1,
-        borderRadius: px2dp(4),
+        borderRadius: 4,
         alignItems: "center",
         justifyContent: "center",
     },
-})
+});

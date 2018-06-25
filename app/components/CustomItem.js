@@ -82,9 +82,9 @@ export default class CustomItem extends Component {
                         >{name}
                         </Text>
                     }
-                    {disable?null : <View style={{flex: 1}}/>}
-                    {subName?(<Text style={{flex: 1, minWidth:120, textAlign: 'right', color: "#000", fontSize:14}}>{subName}</Text>):null}
-                    {avatar?(<Image source={avatar} style={{width: 36, height: 36, resizeMode: "cover", overflow:"hidden", borderRadius: 18}}/>):null}
+                    {disable ? null : <View style={{flex: 1}}/>}
+                    {subName ? (<Text style={{flex: 1, minWidth:120, textAlign: 'right', color: "#000", fontSize:14}}>{subName}</Text>):null}
+                    {avatar ? (<Image source={avatar} style={{width: 36, height: 36, resizeMode: "cover", overflow:"hidden", borderRadius: 18}}/>):null}
                     {this.props.children}
                     {showArrowForward ? <appFont.Ionicons style={{marginLeft: 10, paddingRight: 16, opacity: disable ? 0.0 : 1.0}} name="ios-arrow-forward-outline" size={18} color= {hideArrowForward ? "#fff0" : "#bbb"} /> : null}
                 </View>
@@ -99,29 +99,13 @@ export default class CustomItem extends Component {
             <Button style={{marginTop: first?10:0}} onPress={onPress}>{this._render()}</Button>
     }
 }
-// CustomItem.Button = ItemButton
 const styles = StyleSheet.create({
     listItem: {
-        height: itemHeight,
+        minHeight: itemHeight,
         paddingLeft: 0,
         flexDirection: "row",
         // justifyContent: "center",
         alignItems: "center"
-    },
-    button:{
-        height: itemHeight,
-        backgroundColor: "#fff",
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    listInfoRight: {
-        flexDirection: "row",
-        alignItems: "center"
-    },
-    logo: {
-        marginRight:5,
-        width: 20,
-        height: 20,
     },
     textInput: {
         flex: 1,

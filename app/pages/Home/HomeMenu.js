@@ -11,9 +11,9 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
-import CustomItem from '../../components/CustomItem'
-import CellTitleItem from '../../components/CellTitleItem'
-import TextCell from '../../components/TextCell'
+import CustomItem from '../../components/CustomItem';
+import CellTitleItem from '../../components/CellTitleItem';
+import TextCell from '../../components/TextCell';
 
 export default class Menu extends Component {
     constructor(props){
@@ -309,8 +309,7 @@ export default class Menu extends Component {
                                 renderItem={this.renderGoodsCell}
                                 keyExtractor={this.keyExtractor}
                                 style={{marginLeft: 10, marginRight: 10}}
-                            >
-                            </FlatList>
+                            />
                         </CellTitleItem>
                     :
                         <CellTitleItem name={"船舶类型"} disable={true} subName={''}>
@@ -320,8 +319,7 @@ export default class Menu extends Component {
                                 renderItem={this.renderShipTypeCell}
                                 keyExtractor={this.keyExtractor}
                                 style={{marginLeft: 10, marginRight: 10}}
-                            >
-                            </FlatList>
+                            />
                         </CellTitleItem>}
                     <View style={{marginLeft:2, height: 5, backgroundColor: '#f3f6f9'}}/>
                     <CellTitleItem name={'货量区间'} disable={true} subName={''}>
@@ -359,8 +357,7 @@ export default class Menu extends Component {
                             renderItem={this.renderAreaCell}
                             keyExtractor={this.keyExtractor}
                             style={{marginLeft: 10, marginRight: 10}}
-                        >
-                        </FlatList>
+                        />
                     </CellTitleItem>
                     <View style={{height: 120}}/>
                 </ScrollView>

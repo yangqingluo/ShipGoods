@@ -22,13 +22,15 @@ export default class EditShip extends AddShip {
             area: ship.area,//航行区域 1：沿海 2：长江（可进川） 3：长江（不可进川)
             ship_type: stringIsEmpty(ship.ship_type) ? 0 : parseInt(ship.ship_type),
             goods: ship.goods,//意向货品
+            projects: ship.projects,//主要项目证书
 
             ship_lience_source: null,
         };
     }
 
-    // componentDidMount() {
-    // }
+    componentDidMount() {
+        PublicAlert(JSON.stringify(this.props.navigation.state.params.ship));
+    }
 
     goBack() {
         if (objectNotNull(this.props.navigation.state.params.callBack)) {
@@ -83,11 +85,16 @@ export default class EditShip extends AddShip {
             else {
                 data.gasoline = '0';
             }
+
             if (this.state.dieseloil.length > 0) {
                 data.dieseloil = this.state.dieseloil;
             }
             else {
                 data.dieseloil = '0';
+            }
+
+            if (this.state.projects.length > 0) {
+                data.projects = this.state.projects;
             }
 
             this.refIndicator.show();

@@ -6,13 +6,15 @@ import {
     Image,
     TouchableOpacity,
     ScrollView,
-    TextInput, Dimensions
+    FlatList,
+    TextInput,
+    Dimensions
 } from 'react-native';
-import ActionSheet from 'react-native-actionsheet'
+import ActionSheet from 'react-native-actionsheet';
 import ImagePicker from 'react-native-image-picker';
-
-import CustomItem from '../../components/CustomItem'
-import Button from '../../components/Button'
+import SelectImageCell from '../../components/SelectImageCell';
+import CustomItem from '../../components/CustomItem';
+import Button from '../../components/Button';
 import {imagePickerOptions} from "../../util/Global";
 import Toast from "react-native-easy-toast";
 import IndicatorModal from '../../components/IndicatorModal';
@@ -34,6 +36,7 @@ export default class AddShip extends Component {
             area: 0,//航行区域 1：沿海 2：长江（可进川） 3：长江（不可进川)
             ship_type: 0,
             goods: [],//意向货品
+            projects: [],//主要项目证书
 
             ship_lience_source: null,
         };
@@ -152,11 +155,16 @@ export default class AddShip extends Component {
             else {
                 data.gasoline = '0';
             }
+
             if (this.state.dieseloil.length > 0) {
                 data.dieseloil = this.state.dieseloil;
             }
             else {
                 data.dieseloil = '0';
+            }
+
+            if (this.state.projects.length > 0) {
+                data.projects = this.state.projects;
             }
 
             this.refIndicator.show();
@@ -248,9 +256,12 @@ export default class AddShip extends Component {
         let formData = new FormData();
         let file = {uri: source.uri, type: 'multipart/form-data', name: 'image.png'};
         formData.append("filename", file);
+
+        this.refIndicator.show();
         NetUtil.postForm(appUrl + 'index.php/Mobile/Upload/upload_ship/', formData)
             .then(
                 (result)=>{
+                    this.refIndicator.hide();
                     if (result.code === 0) {
                         if (idKey === 'ship_lience') {
                             this.setState({
@@ -258,11 +269,17 @@ export default class AddShip extends Component {
                                 ship_lience_source: source
                             });
                         }
+                        else if (idKey === 'projects') {
+                            // this.state.projects.splice(this.state.projects.length - 1, 0, result.data.filename);
+                            this.state.projects.push(result.data.filename);
+                            this.forceUpdate();
+                        }
                     }
                     else {
                         this.refToast.show(result.message);
                     }
                 },(error)=>{
+                    this.refIndicator.hide();
                     this.refToast.show(error);
                 });
     };
@@ -281,7 +298,8 @@ export default class AddShip extends Component {
                         // {idKey:"goods", name:"意向货品", logo:require('../../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "goods")},
                         {idKey:"dieseloil", name:"可载柴油吨位（选填）", logo:require('../../images/icon_green.png'), disable:true, numeric:true},
                         {idKey:"area", name:"航行区域", logo:require('../../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "area")},
-                        {idKey:"ship_lience", name:"船舶国际证书", logo:require('../../images/icon_red.png'), disable:false, subName:"", onPress:this.cellSelected.bind(this, "ship_lience")},
+                        {idKey:"ship_lience", name:"船舶国际证书", logo:require('../../images/icon_red.png'), disable:false, onPress:this.cellSelected.bind(this, "ship_lience")},
+                        {idKey:"projects", name:"主要项目证书", logo:require('../../images/icon_orange.png'), disable:false},
                     ];
                     this.state.gasoline = '';
                 }
@@ -295,7 +313,8 @@ export default class AddShip extends Component {
                         {idKey:"gasoline", name:"可载汽油吨位（选填）", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
                         {idKey:"dieseloil", name:"可载柴油吨位（选填）", logo:require('../../images/icon_green.png'), disable:true, numeric:true},
                         {idKey:"area", name:"航行区域", logo:require('../../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "area")},
-                        {idKey:"ship_lience", name:"船舶国际证书", logo:require('../../images/icon_red.png'), disable:false, subName:"", onPress:this.cellSelected.bind(this, "ship_lience")},
+                        {idKey:"ship_lience", name:"船舶国际证书", logo:require('../../images/icon_red.png'), disable:false, onPress:this.cellSelected.bind(this, "ship_lience")},
+                        {idKey:"projects", name:"主要项目证书", logo:require('../../images/icon_orange.png'), disable:false},
                     ];
                 }
                 return;
@@ -308,7 +327,8 @@ export default class AddShip extends Component {
             {idKey:"ship_type", name:"船舶类型", logo:require('../../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "ship_type")},
             // {idKey:"goods", name:"意向货品", logo:require('../../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "goods")},
             {idKey:"area", name:"航行区域", logo:require('../../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "area")},
-            {idKey:"ship_lience", name:"船舶国际证书", logo:require('../../images/icon_red.png'), disable:false, subName:"", onPress:this.cellSelected.bind(this, "ship_lience")},
+            {idKey:"ship_lience", name:"船舶国际证书", logo:require('../../images/icon_red.png'), disable:false, onPress:this.cellSelected.bind(this, "ship_lience")},
+            {idKey:"projects", name:"主要项目证书", logo:require('../../images/icon_orange.png'), disable:false},
         ];
         this.state.gasoline = '';
         this.state.dieseloil = '';
@@ -336,14 +356,57 @@ export default class AddShip extends Component {
         return '';
     }
 
+    onProjectCellSelected = (info) => {
+        dismissKeyboard();
+        if (info.index >= this.state.projects.length) {
+            if (info.index >= appData.appMaxImageUploadNumber) {
+                this.refToast.show("最多只能上传" + appData.appMaxImageUploadNumber + "张图片");
+            }
+            else {
+                this.toSelectPhoto('projects');
+            }
+        }
+    };
+
+    onProjectCellDelBtnAction = (info) => {
+        this.state.projects.splice(info.index, 1);
+        this.forceUpdate();
+    };
+
+    renderProjectCell = (info) => {
+        return (
+            <SelectImageCell
+                info={info}
+                onPress={this.onProjectCellSelected.bind(this)}
+                onDelPress={this.onProjectCellDelBtnAction.bind(this)}
+                last={info.index >= this.state.projects.length}
+            />
+        )
+    };
+
     renderSubViewForIndex(item, index) {
         if (item.idKey === 'ship_lience') {
-            if (objectNotNull(this.state.ship_lience_source)) {
-                return <Image style={styles.avatar} source={this.state.ship_lience_source}/>;
-            }
-            else if (!stringIsEmpty(this.state.ship_lience)) {
+            // if (objectNotNull(this.state.ship_lience_source)) {
+            //     return <Image style={styles.avatar} source={this.state.ship_lience_source}/>;
+            // }
+            // else
+            if (!stringIsEmpty(this.state.ship_lience)) {
                 return <Image style={styles.avatar} source={{uri:appUrl + this.state.ship_lience}}/>;
             }
+        }
+        else if (item.idKey === 'projects') {
+            let projects = arrayNotEmpty(this.state.projects) ? [].concat(this.state.projects) : [];
+            projects.push("add");
+            return <FlatList
+                numColumns ={3}
+                data={projects}
+                renderItem={this.renderProjectCell}
+                keyExtractor={(item: Object, index: number) => {
+                    return '' + index;
+                }}
+                style={{minWidth: 180}}
+                contentContainerStyle={{alignItems: "flex-end",}}
+            />
         }
         return null;
     }
@@ -352,6 +415,7 @@ export default class AddShip extends Component {
         this.refreshConfig();
         return this.config.map((item, i) => {
             return (<CustomItem key={i} {...item}
+                                maxLength={objectNotNull(item.numeric) ? appData.appMaxLengthNumber : appData.appMaxLengthName}
                                 subName = {this.renderSubNameForIndex(item, i)}
                                 editValue = {this.renderEditValueForIndex(item, i)}
                                 callback={this.textInputChanged.bind(this)}>

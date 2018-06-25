@@ -61,7 +61,7 @@ export default class EditGoodsReleaseVC extends Release {
 
     goBack() {
         if (objectNotNull(this.props.navigation.state.params.callBack)) {
-            this.props.navigation.state.params.callBack("EditShip");
+            this.props.navigation.state.params.callBack("EditGoods");
         }
         this.props.navigation.goBack();
     }
