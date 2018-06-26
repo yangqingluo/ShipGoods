@@ -72,7 +72,7 @@ export default class MineVC extends Component {
         else if (key === 'Share') {
             //分享
             ShareUtil.shareboard('找船寻货，就上友船友货！',
-                'http://dev.umeng.com/images/tab2_1.png',
+                appShareImage,
                 appShareUrl,
                 '友船友货',
                 [SharePlatform.WECHAT, SharePlatform.WECHATMOMENT, SharePlatform.QQ],
