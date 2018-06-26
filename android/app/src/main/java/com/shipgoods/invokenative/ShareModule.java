@@ -86,7 +86,7 @@ public class ShareModule extends ReactContextBaseJavaModule {
         });
 
     }
-    private UMShareListener getUMShareListener(final Callback successCallback){
+    private UMShareListener getUMShareListener(final Callback callback){
         return new UMShareListener() {
             @Override
             public void onStart(SHARE_MEDIA share_media) {
@@ -95,17 +95,17 @@ public class ShareModule extends ReactContextBaseJavaModule {
 
             @Override
             public void onResult(SHARE_MEDIA share_media) {
-                successCallback.invoke(SUCCESS, "success");
+                callback.invoke(SUCCESS, "success");
             }
 
             @Override
             public void onError(SHARE_MEDIA share_media, Throwable throwable) {
-                successCallback.invoke(ERROR, throwable.getMessage());
+                callback.invoke(ERROR, throwable.getMessage());
             }
 
             @Override
             public void onCancel(SHARE_MEDIA share_media) {
-                successCallback.invoke(CANCEL, "cancel");
+                callback.invoke(CANCEL, "已取消");
             }
         };
     }
@@ -123,7 +123,7 @@ public class ShareModule extends ReactContextBaseJavaModule {
         }
     }
     @ReactMethod
-    public void auth(final int  sharemedia, final Callback successCallback){
+    public void auth(final int  sharemedia, final Callback callback){
         runOnMainThread(new Runnable() {
             @Override
             public void run() {
@@ -140,19 +140,19 @@ public class ShareModule extends ReactContextBaseJavaModule {
                             result.putString(key,map.get(key));
                             Log.e("todoremove","key="+key+"   value"+map.get(key).toString());
                         }
-                        successCallback.invoke(0,result,"success");
+                        callback.invoke(0, result,"success");
                     }
 
                     @Override
                     public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
                         WritableMap result = Arguments.createMap();
-                        successCallback.invoke(1,result,throwable.getMessage());
+                        callback.invoke(1, result,throwable.getMessage());
                     }
 
                     @Override
                     public void onCancel(SHARE_MEDIA share_media, int i) {
                         WritableMap result = Arguments.createMap();
-                        successCallback.invoke(2,result,"cancel");
+                        callback.invoke(2, result,"cancel");
                     }
                 });
             }

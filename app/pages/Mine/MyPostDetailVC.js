@@ -79,11 +79,22 @@ export default class MyPostDetailVC extends Component {
     }
 
     onShareBtnAction = () => {
+        let info = this.state.detailInfo;
+        let ship_type = 0;
+        if (objectNotNull(info.ship_type)) {
+            ship_type = parseInt(info.ship_type);
+        }
+        let shareText = "我在友船友货发现了一条空船期！"
+            + getArrayTypesText(shipTypes, ship_type)
+            + " " + info.empty_time
+            + " " + info.empty_port_name
+            + " " + info.tonnage + "吨位";
+
         //分享
-        ShareUtil.shareboard('分享的内容',
+        ShareUtil.shareboard("找船寻货，就上友船友货！",
             appShareImage,
             appShareUrl,
-            '我在友船友货发现了好东西',
+            shareText,
             [SharePlatform.WECHAT, SharePlatform.WECHATMOMENT, SharePlatform.QQ],
             (code, message) =>{
                 // this.refToast.show(code + '  ' + message);

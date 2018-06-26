@@ -82,12 +82,35 @@ export default class HomeOrderDetailVC extends Component {
         this.requestData();
     }
 
+    renderGoodsName() {
+        let info = this.state.detailInfo;
+        if (objectNotNull(info.goods_name)) {
+            return info.goods_name;
+        }
+        else if (objectNotNull(info.goodslist)) {
+            if (info.goodslist.length > 0) {
+                let goodsList = info.goodslist.map(
+                    (item) => {
+                        return item.goods_name;
+                    }
+                );
+                return goodsList.join(",");
+            }
+        }
+        return "";
+    };
+
     onShareBtnAction = () => {
         //分享
-        ShareUtil.shareboard('分享的内容',
+        let info = this.state.detailInfo;
+        let shareText = "我在友船友货发现了一条货盘！"
+        + info.loading_port_name + "-" + info.unloading_port_name
+        + " " + this.renderGoodsName() + info.tonnage + "吨"
+        + " " + info.loading_timetext + "装货";
+        ShareUtil.shareboard("找船寻货，就上友船友货！",
             appShareImage,
             appShareUrl,
-            '我在友船友货发现了好东西',
+            shareText,
             [SharePlatform.WECHAT, SharePlatform.WECHATMOMENT, SharePlatform.QQ],
             (code, message) =>{
                 // this.refToast.show(code + '  ' + message);

@@ -71,10 +71,10 @@ export default class MineVC extends Component {
         }
         else if (key === 'Share') {
             //分享
-            ShareUtil.shareboard('找船寻货，就上友船友货！',
+            ShareUtil.shareboard('友船友货',
                 appShareImage,
                 appShareUrl,
-                '友船友货',
+                '找船寻货，就上友船友货！',
                 [SharePlatform.WECHAT, SharePlatform.WECHATMOMENT, SharePlatform.QQ],
                 (code, message) =>{
                     // this.refToast.show(code + '  ' + message);
