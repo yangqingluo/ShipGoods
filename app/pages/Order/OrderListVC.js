@@ -4,6 +4,7 @@ import {
     Text,
     View,
     TouchableOpacity,
+    RefreshControl,
     FlatList,
 } from 'react-native';
 import OrderCell from './OrderCell';
@@ -184,8 +185,10 @@ export default class OrderListVC extends Component {
                     // ItemSeparatorComponent={global.renderSeparator}
                     // ListHeaderComponent={this.renderHeader}
 
-                    onRefresh={this.requestData}
-                    refreshing={this.state.refreshing}
+                    // onRefresh={this.requestData}
+                    // refreshing={this.state.refreshing}
+                    refreshControl={<RefreshControl refreshing={this.state.refreshing}
+                                                    onRefresh={this.requestData.bind(this)}/>}
 
                     ListFooterComponent={this.renderFooter.bind(this)}
                     onEndReached={this.loadMoreData.bind(this)}

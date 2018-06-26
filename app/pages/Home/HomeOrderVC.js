@@ -127,13 +127,8 @@ export default class HomeOrderVC extends Component {
 
                     // onRefresh={this.requestData}
                     // refreshing={this.state.refreshing}
-                    //为刷新设置颜色
-                    refreshControl={
-                        <RefreshControl refreshing={this.state.refreshing}
-                                        onRefresh={this.requestData.bind(this)}
-                                        progressBackgroundColor="#ffffff" />
-                    }
-
+                    refreshControl={<RefreshControl refreshing={this.state.refreshing}
+                                        onRefresh={this.requestData.bind(this)}/>}
 
                     ListFooterComponent={this.renderFooter.bind(this)}
                     onEndReached={this.loadMoreData.bind(this)}
