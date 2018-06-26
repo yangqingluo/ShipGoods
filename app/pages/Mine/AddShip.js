@@ -164,7 +164,7 @@ export default class AddShip extends Component {
             }
 
             if (this.state.projects.length > 0) {
-                data.projects = this.state.projects;
+                data.projects = this.state.projects.join(",");
             }
 
             this.refIndicator.show();

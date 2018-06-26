@@ -13,6 +13,8 @@ export default class EditShip extends AddShip {
 
         let ship = this.props.navigation.state.params.ship;
         this.state = {
+            detailInfo: null,
+
             ship_name: ship.ship_name,//船名
             ship_lience: ship.ship_lience,//船舶国际证书
             tonnage: ship.tonnage,//吨位
@@ -22,15 +24,44 @@ export default class EditShip extends AddShip {
             area: ship.area,//航行区域 1：沿海 2：长江（可进川） 3：长江（不可进川)
             ship_type: stringIsEmpty(ship.ship_type) ? 0 : parseInt(ship.ship_type),
             goods: ship.goods,//意向货品
-            projects: ship.projects,//主要项目证书
+            projects: stringIsEmpty(ship.projects) ? [] : ship.projects.split(","),//主要项目证书
 
             ship_lience_source: null,
         };
     }
 
     componentDidMount() {
-        PublicAlert(JSON.stringify(this.props.navigation.state.params.ship));
+        // this.requestData();
     }
+
+    requestData = () => {
+        this.setState({refreshing: true});
+        this.requestRecommend(true);
+    };
+
+    requestRecommend = async (isReset) => {
+        let data = {ship_id: this.props.navigation.state.params.ship.ship_id};
+
+        NetUtil.post(appUrl + 'index.php/Mobile/Ship/get_ship_detail/', data)
+            .then(
+                (result)=>{
+                    if (result.code === 0) {
+                        this.setState({
+                            detailInfo: result.data,
+                            refreshing: false,
+                        })
+                    }
+                    else {
+                        this.setState({
+                            refreshing: false,
+                        })
+                    }
+                },(error)=>{
+                    this.setState({
+                        refreshing: false,
+                    })
+                });
+    };
 
     goBack() {
         if (objectNotNull(this.props.navigation.state.params.callBack)) {
@@ -94,7 +125,7 @@ export default class EditShip extends AddShip {
             }
 
             if (this.state.projects.length > 0) {
-                data.projects = this.state.projects;
+                data.projects = this.state.projects.join(",");
             }
 
             this.refIndicator.show();
