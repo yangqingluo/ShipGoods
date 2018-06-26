@@ -97,26 +97,34 @@ RCT_EXPORT_MODULE();
   }
 }
 
+- (id)createImage:(NSString *)icon {
+  id img = nil;
+  if ([icon hasPrefix:@"http"]) {
+    img = icon;
+  } else {
+    if ([icon hasPrefix:@"res/"]) {
+      img = [UIImage imageNamed:[icon stringByReplacingOccurrencesOfString:@"res/" withString:@""]];
+    }
+    else if ([icon hasPrefix:@"/"]) {
+      img = [UIImage imageWithContentsOfFile:icon];
+    } else {
+      img = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:icon ofType:nil]];
+    }
+  }
+  return img;
+}
+
 - (void)shareWithText:(NSString *)text icon:(NSString *)icon link:(NSString *)link title:(NSString *)title platform:(NSInteger)platform completion:(UMSocialRequestCompletionHandler)completion
 {
   UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
   
   if (link.length > 0) {
-    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:title descr:text thumImage:icon];
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:title descr:text thumImage:[self createImage:icon]];
     shareObject.webpageUrl = link;
     
     messageObject.shareObject = shareObject;
   } else if (icon.length > 0) {
-    id img = nil;
-    if ([icon hasPrefix:@"http"]) {
-      img = icon;
-    } else {
-      if ([icon hasPrefix:@"/"]) {
-        img = [UIImage imageWithContentsOfFile:icon];
-      } else {
-        img = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:icon ofType:nil]];
-      }
-    }
+    id img = [self createImage:icon];
     UMShareImageObject *shareObject = [[UMShareImageObject alloc] init];
     shareObject.thumbImage = img;
     shareObject.shareImage = img;

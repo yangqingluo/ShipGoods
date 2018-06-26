@@ -48,6 +48,7 @@
 		E43B292F20D66481009E9BD6 /* UMSocialSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E43B292A20D66480009E9BD6 /* UMSocialSDKResources.bundle */; };
 		E43B293020D66481009E9BD6 /* UShareUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E43B292B20D66480009E9BD6 /* UShareUI.framework */; };
 		E43B293220D665A7009E9BD6 /* UMCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E43B293120D665A7009E9BD6 /* UMCommon.framework */; };
+		E4886E2420E24F8400D91AB3 /* ic_launcher.png in Resources */ = {isa = PBXBuildFile; fileRef = E4886E2320E24F8400D91AB3 /* ic_launcher.png */; };
 		E4C3351F2092101400D47356 /* IQNSArray+Sort.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C334D22092101400D47356 /* IQNSArray+Sort.m */; };
 		E4C335202092101400D47356 /* IQUIScrollView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C334D42092101400D47356 /* IQUIScrollView+Additions.m */; };
 		E4C335212092101400D47356 /* IQUITextFieldView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C334D62092101400D47356 /* IQUITextFieldView+Additions.m */; };
@@ -432,6 +433,7 @@
 		E43B292A20D66480009E9BD6 /* UMSocialSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UMSocialSDKResources.bundle; sourceTree = "<group>"; };
 		E43B292B20D66480009E9BD6 /* UShareUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UShareUI.framework; sourceTree = "<group>"; };
 		E43B293120D665A7009E9BD6 /* UMCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMCommon.framework; sourceTree = "<group>"; };
+		E4886E2320E24F8400D91AB3 /* ic_launcher.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_launcher.png; sourceTree = "<group>"; };
 		E4934BA320D604E900A254E5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		E4934BA520D6050100A254E5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		E4934BA720D6050E00A254E5 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -612,6 +614,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				E4886E2220E24F8400D91AB3 /* Resource */,
 			);
 			name = ShipGoods;
 			sourceTree = "<group>";
@@ -830,6 +833,14 @@
 				E45502592086E745007CB211 /* libRNSpinkit.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		E4886E2220E24F8400D91AB3 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				E4886E2320E24F8400D91AB3 /* ic_launcher.png */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 		E4B1196A208E1F2B0061A2CC /* Products */ = {
@@ -1398,6 +1409,7 @@
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				7D0829D7E8CC43E8AE538F25 /* Entypo.ttf in Resources */,
 				C58ECE21A64B44CAA78AB903 /* EvilIcons.ttf in Resources */,
+				E4886E2420E24F8400D91AB3 /* ic_launcher.png in Resources */,
 				E4C3352D2092101400D47356 /* IQKeyboardManager.bundle in Resources */,
 				8FA70CFC1ABD4842B3148F14 /* Feather.ttf in Resources */,
 				0B61AACCEFF147EDADA5F080 /* FontAwesome.ttf in Resources */,
