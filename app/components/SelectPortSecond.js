@@ -17,13 +17,6 @@ export default class SelectPortSecond extends Component {
     static navigationOptions = ({ navigation }) => (
         {
             title: navigation.state.params.title,
-            // headerRight: <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
-            //     <TouchableOpacity
-            //         onPress={navigation.state.params.clickParams}
-            //     >
-            //         <Text style={{marginRight : 10}}>确定</Text>
-            //     </TouchableOpacity>
-            // </View>,
         });
 
     constructor(props){
@@ -69,7 +62,7 @@ export default class SelectPortSecond extends Component {
         // }
         // this.forceUpdate();
 
-    }
+    };
 
     onSectionSelected = (info: Object) => {
         // if (this.state.selectedSection === info.section.sectionIndex) {
@@ -82,11 +75,11 @@ export default class SelectPortSecond extends Component {
         //         selectedSection : info.section.sectionIndex,
         //     })
         // }
-    }
+    };
 
     keyExtractor = (item: Object, index: number) => {
         return '' + index;
-    }
+    };
 
     renderCell = (info) => {
         return (
@@ -97,7 +90,7 @@ export default class SelectPortSecond extends Component {
                 selected={(this.state.selectedList.indexOf(info.item) !== -1)}
             />
         )
-    }
+    };
 
     renderSectionHeader = (info) => {
         return (
@@ -107,7 +100,7 @@ export default class SelectPortSecond extends Component {
                 selected={info.section.sectionIndex === this.state.selectedSection}
             />
         )
-    }
+    };
     // _sectionComp = (info) => {
     //     let txt = info.section.goods_name;
     //     return <Text

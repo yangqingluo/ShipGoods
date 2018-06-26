@@ -3,22 +3,41 @@ import {
     StyleSheet,
     Text,
     View,
+    Image,
     TouchableOpacity,
     FlatList,
     ScrollView,
 } from 'react-native';
 
 import CellTitleItem from './CellTitleItem';
-import TextCell from './TextCell';
 import HotCell from './HotPortTextCell';
 import PortFirstCell from './PortFirstCell';
+import CustomInput from '../components/CustomInput';
 import Toast from "react-native-easy-toast";
 import IndicatorModal from './IndicatorModal';
 
 export default class SelectPortVC extends Component {
     static navigationOptions = ({ navigation }) => (
         {
-            title: navigation.state.params.title,
+            // title: navigation.state.params.title,
+            headerTitle: (
+                <View style={styles.inputBack}>
+                    <Image source={require('../images/icon_search.png')} style={{width: 20, height: 20, marginLeft:10, resizeMode: "cover"}}/>
+                    <CustomInput underlineColorAndroid="transparent"
+                                 style={styles.textInput}
+                                 returnKeyType={"search"}
+                                 maxLength={appData.appMaxLengthName}
+                                 placeholder={"港口"}
+                                 placeholderTextColor={appData.appSecondaryTextColor}
+                                 onSubmitEditing={() => {
+                                     navigation.state.params.clickParams();
+                                 }}
+                                 onChangeText={(text) => {
+                                     navigation.state.params.onChangeText(text, "search");
+                                 }}
+                    />
+                </View>
+            ),
         });
 
     constructor(props){
@@ -29,15 +48,50 @@ export default class SelectPortVC extends Component {
             hotList: [],
             maxSelectCount:this.props.navigation.state.params.maxSelectCount,
             refreshing: false,
+            search: "",
         }
     }
 
-    _btnClick=()=> {
-
+    _btnClick =()=> {
+        if (!stringIsEmpty(this.state.search)) {
+            let data = {port_name:this.state.search, deep: 1};
+            this.refIndicator.show();
+            NetUtil.post(appUrl + 'index.php/Mobile/Ship/get_all_port/', data)
+                .then(
+                    (result)=>{
+                        this.refIndicator.hide();
+                        if (result.code === 0) {
+                            let list = result.data;
+                            if (arrayNotEmpty(list)) {
+                                this.toGoToPortsVC(result.data, port);
+                            }
+                            else {
+                                this.refToast.show("没有搜索到结果");
+                            }
+                        }
+                        else {
+                            this.refToast.show(result.message);
+                        }
+                    },(error)=>{
+                        this.refToast.show(error);
+                        this.refIndicator.hide();
+                    });
+        }
     };
 
+    textInputChanged(text, key){
+        if (key === "search") {
+            this.setState({
+                search: text,
+            });
+        }
+    }
+
     componentDidMount() {
-        this.props.navigation.setParams({clickParams:this._btnClick});
+        this.props.navigation.setParams({
+            clickParams:this._btnClick.bind(this),
+            onChangeText:this.textInputChanged.bind(this),
+        });
         this.requestData();
     }
 
@@ -118,21 +172,20 @@ export default class SelectPortVC extends Component {
         }
         else {
             let data = {pid:port.port_id, deep:1};
+            this.refIndicator.show();
             NetUtil.post(appUrl + 'index.php/Mobile/Ship/get_all_port/', data)
                 .then(
                     (result)=>{
+                        this.refIndicator.hide();
                         if (result.code === 0) {
                             this.toGoToPortsVC(result.data, port);
                         }
                         else {
-                            this.setState({
-                                refreshing: false,
-                            })
+                            this.refToast.show(result.message);
                         }
                     },(error)=>{
-                        this.setState({
-                            refreshing: false,
-                        })
+                        this.refToast.show(error);
+                        this.refIndicator.hide();
                     });
         }
     }
@@ -206,5 +259,21 @@ export default class SelectPortVC extends Component {
     }
 }
 const styles = StyleSheet.create({
-
+    inputBack: {
+        width: 0.8 * screenWidth,
+        height: 30,
+        borderRadius: 20,
+        backgroundColor: "#e5e5e5",
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    textInput: {
+        // marginTop: 10,
+        // minHeight: 120,
+        flex: 1,
+        fontSize: 13,
+        paddingHorizontal: 10,
+        // paddingVertical: 15,
+        color: appData.appTextColor,
+    },
 });
