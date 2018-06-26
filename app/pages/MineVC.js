@@ -17,6 +17,8 @@ import StarScore from '../components/StarScore'
 import Communications from '../util/AKCommunications';
 import Toast from "react-native-easy-toast";
 import IndicatorModal from '../components/IndicatorModal';
+import SharePlatform from "../share/SharePlatform";
+import ShareUtil from "../share/ShareUtil";
 
 export default class MineVC extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -34,7 +36,7 @@ export default class MineVC extends Component {
             [
                 {logo:require('../images/icon_yuyue.png'), name:"我的预约", onPress:this.goPage.bind(this, "MyBook")},
                 {logo:require('../images/icon_colle.png'), name:"我的收藏", onPress:this.goPage.bind(this, "MyFavors")},
-                {logo:require('../images/icon_share.png'), name:"分享到好友", subName:"", onPress:this.goPage.bind(this, "分享到好友")},
+                {logo:require('../images/icon_share.png'), name:"分享到好友", subName:"", onPress:this.goPage.bind(this, "Share")},
                 {logo:require('../images/icon_share.png'), name:"一键客服", subName:"", onPress:this.goPage.bind(this, "Call")},
                 {logo:require('../images/icon_s.png'), name:"更多设置", subName:"", onPress:this.goPage.bind(this, "MoreSettings")},
             ]
@@ -43,7 +45,7 @@ export default class MineVC extends Component {
                 {logo:require('../images/icon_post.png'), name:"我的发布", onPress:this.goPage.bind(this, "MyPost")},
                 {logo:require('../images/icon_chuand.png'), name:"我的船队", onPress:this.goPage.bind(this, "MyShip")},
                 {logo:require('../images/icon_colle.png'), name:"我的收藏", onPress:this.goPage.bind(this, "MyFavors")},
-                {logo:require('../images/icon_share.png'), name:"分享到好友", subName:"", onPress:this.goPage.bind(this, "分享到好友")},
+                {logo:require('../images/icon_share.png'), name:"分享到好友", subName:"", onPress:this.goPage.bind(this, "Share")},
                 {logo:require('../images/icon_share.png'), name:"一键客服", subName:"", onPress:this.goPage.bind(this, "Call")},
                 {logo:require('../images/icon_s.png'), name:"更多设置", subName:"", onPress:this.goPage.bind(this, "MoreSettings")},
             ];
@@ -66,6 +68,17 @@ export default class MineVC extends Component {
         }
         else if (key === 'MyFavors' || key === 'MyBook' || key === 'MyPost') {
             navigate(key);
+        }
+        else if (key === 'Share') {
+            //分享
+            ShareUtil.shareboard('找船寻货，就上友船友货！',
+                'http://dev.umeng.com/images/tab2_1.png',
+                appShareUrl,
+                '友船友货',
+                [SharePlatform.WECHAT, SharePlatform.WECHATMOMENT, SharePlatform.QQ],
+                (code, message) =>{
+                    // this.refToast.show(code + '  ' + message);
+                });
         }
         else {
 

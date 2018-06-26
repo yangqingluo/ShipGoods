@@ -1598,7 +1598,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.hechuangnet.ShipGoods;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xuqingri.shipping;
 				PRODUCT_NAME = ShipGoods;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1646,7 +1646,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.hechuangnet.ShipGoods;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xuqingri.shipping;
 				PRODUCT_NAME = ShipGoods;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
