@@ -161,19 +161,28 @@ export default class HomeVC extends Component {
     refreshList() {
         if (isShipOwner()) {
             if (objectNotNull(this.subListToOfferVC)) {
-                this.subListToOfferVC.requestData();
+                this.subListToOfferVC.scrollAndRequestData();
             }
             if (objectNotNull(this.subListOfferedVC)) {
-                this.subListOfferedVC.requestData();
+                this.subListOfferedVC.scrollAndRequestData();
             }
         }
         else {
-            this.subListGoodsVC.requestData();
+            if (objectNotNull(this.subListGoodsVC)) {
+                this.subListGoodsVC.scrollAndRequestData();
+            }
         }
     }
 
     onSortBtnAction() {
-        this.refOrderTypeSheet.show();
+        // this.refOrderTypeSheet.show();
+        if (stringIsEmpty(appHomeCondition.timeorder)) {
+            appHomeCondition.timeorder = "ASC";
+        }
+        else {
+            appHomeCondition.timeorder = null;
+        }
+        this.refreshList();
     }
 
     onFilterBtnAction() {

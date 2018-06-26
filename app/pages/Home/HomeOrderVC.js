@@ -28,6 +28,15 @@ export default class HomeOrderVC extends Component {
         this.requestData();
     };
 
+    scrollAndRequestData = () => {
+        if (objectNotNull(this.refList)) {
+            if (!this.refList.scrollsToTop) {
+                this.refList.scrollToOffset({animated: true, offset: 0});
+            }
+        }
+        this.requestData();
+    };
+
     requestData = () => {
         this.setState({refreshing: true});
         this.requestRecommend(true);
@@ -115,6 +124,7 @@ export default class HomeOrderVC extends Component {
         return (
             <View style={styles.container}>
                 <FlatList
+                    ref={o => this.refList = o}
                     style={{flex:1}}
                     data={this.state.dataList}
                     renderItem={this.renderCell}
@@ -140,6 +150,7 @@ export default class HomeOrderVC extends Component {
         );
     }
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,

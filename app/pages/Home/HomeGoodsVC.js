@@ -25,6 +25,15 @@ export default class HomeGoodsVC extends Component {
         this.requestData();
     };
 
+    scrollAndRequestData = () => {
+        if (objectNotNull(this.refList)) {
+            if (!this.refList.scrollsToTop) {
+                this.refList.scrollToOffset({animated: true, offset: 0});
+            }
+        }
+        this.requestData();
+    };
+
     requestData = () => {
         this.setState({refreshing: true});
         this.requestRecommend(true);
@@ -66,6 +75,7 @@ export default class HomeGoodsVC extends Component {
         if (objectNotNull(appHomeCondition.emptyorder)) data.emptyorder = appHomeCondition.emptyorder;
         if (objectNotNull(appHomeCondition.tonnageorder)) data.tonnageorder = appHomeCondition.tonnageorder;
         if (objectNotNull(appHomeCondition.creditorder)) data.creditorder = appHomeCondition.creditorder;
+        if (objectNotNull(appHomeCondition.timeorder)) data.timeorder = appHomeCondition.timeorder;
 
         NetUtil.post(appUrl + 'index.php/Mobile/Goods/goods_index/', data)
             .then(
@@ -127,6 +137,7 @@ export default class HomeGoodsVC extends Component {
         return (
             <View style={styles.container}>
                 <FlatList
+                    ref={o => this.refList = o}
                     style={{flex:1}}
                     data={this.state.dataList}
                     renderItem={this.renderCell}

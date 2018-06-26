@@ -54,7 +54,7 @@ export default class SelectPortVC extends Component {
 
     _btnClick =()=> {
         if (!stringIsEmpty(this.state.search)) {
-            let data = {port_name:this.state.search, deep: 1};
+            let data = {port_name:this.state.search};
             this.refIndicator.show();
             NetUtil.post(appUrl + 'index.php/Mobile/Ship/get_all_port/', data)
                 .then(
