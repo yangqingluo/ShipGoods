@@ -276,6 +276,7 @@ global.OfferPriceEnum = OfferPriceEnum;
 global.OfferOrderEnum = OfferOrderEnum;
 global.appFont = Font;
 global.appUrl = 'http://shiphire.com.cn/';//服务器url
+global.appShareUrl = 'http://shiphire.com.cn/shared/mobile/';//服务器url
 global.appUndefined =  'undefined';
 global.NetUtil = NetUtil;
 global.appHomeVC = null;

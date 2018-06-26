@@ -86,7 +86,7 @@ export default class HomeOrderDetailVC extends Component {
         //分享
         ShareUtil.shareboard('分享的内容',
             'http://dev.umeng.com/images/tab2_1.png',
-            'http://baidu.com',
+            appShareUrl,
             '我在友船友货发现了好东西',
             [SharePlatform.WECHAT, SharePlatform.WECHATMOMENT, SharePlatform.QQ],
             (code, message) =>{

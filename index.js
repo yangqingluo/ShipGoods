@@ -14,7 +14,8 @@ import AddShip from './app/pages/Mine/AddShip';
 import EditShip from './app/pages/Mine/EditShip';
 import SelectText from './app/components/SelectTextVC';
 import SelectPort from './app/components/SelectPortVC';
-import SelectPortSecond from './app/components/SelectPortSecond'
+import SelectPortSecond from './app/components/SelectPortSecond';
+import SelectPortSearch from './app/components/SelectPortSearch';
 import SelectEmptyTimeVC from './app/components/SelectEmptyTimeVC';
 import SelectWastageVC from './app/components/SelectWastageVC';
 import SelectPrice from './app/components/SelectPriceVC';
@@ -62,6 +63,7 @@ const MyNavigator = StackNavigator({
         SelectText:{screen: SelectText},
         SelectPort:{screen: SelectPort},
         SelectPortSecond:{screen: SelectPortSecond},
+        SelectPortSearch:{screen: SelectPortSearch},
         CustomSelect:{screen: CustomSelect},
         CustomSectionSelect:{screen: CustomSectionSelect},
         SelectEmptyTimeVC:{screen: SelectEmptyTimeVC},

@@ -54,28 +54,7 @@ export default class SelectPortVC extends Component {
 
     _btnClick =()=> {
         if (!stringIsEmpty(this.state.search)) {
-            let data = {port_name:this.state.search};
-            this.refIndicator.show();
-            NetUtil.post(appUrl + 'index.php/Mobile/Ship/get_all_port/', data)
-                .then(
-                    (result)=>{
-                        this.refIndicator.hide();
-                        if (result.code === 0) {
-                            let list = result.data;
-                            if (arrayNotEmpty(list)) {
-                                this.toGoToPortsVC(result.data, port);
-                            }
-                            else {
-                                this.refToast.show("没有搜索到结果");
-                            }
-                        }
-                        else {
-                            this.refToast.show(result.message);
-                        }
-                    },(error)=>{
-                        this.refToast.show(error);
-                        this.refIndicator.hide();
-                    });
+            this.toGoToSearchPortsVC(null, this.state.search);
         }
     };
 
@@ -159,7 +138,7 @@ export default class SelectPortVC extends Component {
     };
 
     toGoToPortsVC(list, port) {
-        if (list.length > 0) {
+        if (arrayNotEmpty(list)) {
             this.props.navigation.navigate(
                 "SelectPortSecond",
                 {
@@ -179,6 +158,44 @@ export default class SelectPortVC extends Component {
                         this.refIndicator.hide();
                         if (result.code === 0) {
                             this.toGoToPortsVC(result.data, port);
+                        }
+                        else {
+                            this.refToast.show(result.message);
+                        }
+                    },(error)=>{
+                        this.refToast.show(error);
+                        this.refIndicator.hide();
+                    });
+        }
+    }
+
+    toGoToSearchPortsVC(list, key) {
+        if (arrayNotEmpty(list)) {
+            this.props.navigation.navigate(
+                "SelectPortSearch",
+                {
+                    title: this.props.navigation.state.params.title,
+                    dataList: list,
+                    key: this.props.navigation.state.params.key,
+                    // selectedList:this.state.downloadOilSelectedList,
+                    callBack:this.props.navigation.state.params.callBack
+                });
+        }
+        else {
+            let data = {port_name:key, pid:'0', deep:0};
+            this.refIndicator.show();
+            NetUtil.post(appUrl + 'index.php/Mobile/Ship/get_all_port/', data)
+                .then(
+                    (result)=>{
+                        this.refIndicator.hide();
+                        if (result.code === 0) {
+                            let list = result.data;
+                            if (arrayNotEmpty(list)) {
+                                this.toGoToSearchPortsVC(result.data, key);
+                            }
+                            else {
+                                this.refToast.show("没有搜索到结果");
+                            }
                         }
                         else {
                             this.refToast.show(result.message);

@@ -64,19 +64,6 @@ export default class SelectPortSecond extends Component {
 
     };
 
-    onSectionSelected = (info: Object) => {
-        // if (this.state.selectedSection === info.section.sectionIndex) {
-        //     this.setState({
-        //         selectedSection : -1,
-        //     })
-        // }
-        // else {
-        //     this.setState({
-        //         selectedSection : info.section.sectionIndex,
-        //     })
-        // }
-    };
-
     keyExtractor = (item: Object, index: number) => {
         return '' + index;
     };
@@ -92,39 +79,12 @@ export default class SelectPortSecond extends Component {
         )
     };
 
-    renderSectionHeader = (info) => {
-        return (
-            <PortSectionCell
-                info={info}
-                onPress={this.onSectionSelected}
-                selected={info.section.sectionIndex === this.state.selectedSection}
-            />
-        )
-    };
-    // _sectionComp = (info) => {
-    //     let txt = info.section.goods_name;
-    //     return <Text
-    //         style={{ height: 50, textAlign: 'center', textAlignVertical: 'center', backgroundColor: '#9CEBBC', color: 'white', fontSize: 30 }}>{txt}</Text>
-    // }
-
     render() {
-        let sectionData = this.state.dataList.map(
-            (info, index) => {
-                return {
-                    port_id: info.port_id,
-                    port_name: info.port_name,
-                    sectionIndex: index,
-                    data: (arrayNotEmpty(info.child) ? info.child[0] : []),
-                };
-            }
-        );
-
         return (
             <View style={{flex: 1}}>
-                <SectionList
-                    renderSectionHeader={this.renderSectionHeader}
+                <FlatList
                     renderItem={this.renderCell}
-                    sections={sectionData}
+                    data={this.state.dataList}
                     keyExtractor={this.keyExtractor}
                     ItemSeparatorComponent={global.renderSeparator}
                     // ListHeaderComponent={() => <View style={{ backgroundColor: '#25B960', alignItems: 'center', height: 30 }}><Text style={{ fontSize: 18, color: '#ffffff' }}>通讯录</Text></View>}
