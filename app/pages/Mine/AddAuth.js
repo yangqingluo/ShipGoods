@@ -14,6 +14,7 @@ import CustomItem from '../../components/CustomItem'
 import Button from '../../components/Button'
 import {imagePickerOptions} from "../../util/Global";
 import Toast from "react-native-easy-toast";
+import IndicatorModal from '../../components/IndicatorModal';
 
 export default class DetailVC extends Component {
     static navigationOptions = ({ navigation }) => (
@@ -37,25 +38,27 @@ export default class DetailVC extends Component {
             bz_licence_source: null,
             idcard_front_source: null,
             idcard_con_source: null,
+
+            hasAddShip: false,
         };
-        this.config = (userData.usertype === '1') ?
+        this.config = isShipOwner() ?
             [
                 {idKey:"corporation", name:"公司名称", logo:require('../../images/icon_blue.png'), disable:true},
-                {idKey:"phone", name:"公司电话", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
-                {idKey:"name", name:"联系人姓名", logo:require('../../images/icon_orange.png'), disable:true},
-                {idKey:"contact", name:"联系人手机号", logo:require('../../images/icon_green.png'), disable:true, numeric:true},
-                {idKey:"bz_licence", name:"上传公司营业执照", logo:require('../../images/icon_red.png'), disable:false, subName:"", onPress:this.cellSelected.bind(this, "bz_licence")},
-                {idKey:"idcard", name:"上传联系人身份证", disable:false, logo:require('../../images/icon_orange.png'), subName:"123"},
+                {idKey:"name", name:"联系人姓名", logo:require('../../images/icon_red.png'), disable:true},
+                {idKey:"contact", name:"联系人手机号", logo:require('../../images/icon_orange.png'), disable:true, numeric:true},
+                {idKey:"bz_licence", name:"上传公司营业执照", logo:require('../../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "bz_licence")},
+                {idKey:"idcard", name:"上传法人身份证", disable:false, logo:require('../../images/icon_red.png'),},
+                {idKey:"add_ship",name:"添加船舶", disable:false, logo:require('../../images/icon_orange.png'), onPress:this.cellSelected.bind(this, "add_ship")},
                 {idKey:"invoice", name:"可开发票类型", disable:false, logo:require('../../images/icon_green.png'), onPress:this.cellSelected.bind(this, "invoice_type")},
             ]
                 :
             [
                 {idKey:"corporation", name:"公司名称", logo:require('../../images/icon_blue.png'), disable:true},
-                {idKey:"name", name:"联系人姓名", logo:require('../../images/icon_red.png'), disable:true},
-                {idKey:"contact", name:"联系人手机号", logo:require('../../images/icon_orange.png'), disable:true, numeric:true},
-                {idKey:"bz_licence", name:"上传公司营业执照", logo:require('../../images/icon_green.png'), disable:false, subName:"", onPress:this.cellSelected.bind(this, "bz_licence")},
-                {idKey:"idcard", name:"上传法人身份证", disable:false, logo:require('../../images/icon_red.png'), subName:"123"},
-                {name:"添加船舶", disable:false, logo:require('../../images/icon_orange.png'), subName:"324", onPress:this.cellSelected.bind(this, "AddShip")},
+                {idKey:"phone", name:"公司电话", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
+                {idKey:"name", name:"联系人姓名", logo:require('../../images/icon_orange.png'), disable:true},
+                {idKey:"contact", name:"联系人手机号", logo:require('../../images/icon_green.png'), disable:true, numeric:true},
+                {idKey:"bz_licence", name:"上传公司营业执照", logo:require('../../images/icon_red.png'), disable:false, onPress:this.cellSelected.bind(this, "bz_licence")},
+                {idKey:"idcard", name:"上传联系人身份证", disable:false, logo:require('../../images/icon_orange.png')},
                 {idKey:"invoice", name:"可开发票类型", disable:false, logo:require('../../images/icon_green.png'), onPress:this.cellSelected.bind(this, "invoice_type")},
             ];
 
@@ -64,8 +67,8 @@ export default class DetailVC extends Component {
 
     cellSelected(key, data = {}){
         dismissKeyboard();
-        if (key === 'AddShip') {
-            this.props.navigation.navigate(key);
+        if (key === 'add_ship') {
+            this.props.navigation.navigate('AddShip', {callBack: this.callBackFromShipVC.bind(this)});
         }
         else if (key === 'invoice_type') {
             this.invoiceTypeActionSheet.show();
@@ -76,6 +79,12 @@ export default class DetailVC extends Component {
         else {
             PublicAlert(key);
         }
+    }
+
+    callBackFromShipVC(key) {
+        this.setState({
+            hasAddShip: true,
+        })
     }
 
     goBack() {
@@ -107,6 +116,9 @@ export default class DetailVC extends Component {
         else if (this.state.invoice_type === 0) {
             this.refToast.show("请选择发票类型");
         }
+        else if (isShipOwner() && !this.state.hasAddShip) {
+            this.refToast.show("请添加船舶");
+        }
         else {
             let data = {
                 corporation:this.state.corporation,
@@ -119,21 +131,28 @@ export default class DetailVC extends Component {
                 invoice_type:this.state.invoice_type
             };
 
-            NetUtil.post(appUrl + 'index.php/Mobile/Auth/add_auth/', data)
-                .then(
-                    (result)=>{
-                        if (result.code === 0) {
-                            PublicAlert('提交认证完成','请等待审核结果',
-                                [{text:"确定", onPress:this.goBack.bind(this)}]
-                            );
-                        }
-                        else {
-                            this.refToast.show(result.message);
-                        }
-                    },(error)=>{
-                        this.refToast.show(error);
-                    });
+            this.doAuthFunction(data);
         }
+    }
+
+    doAuthFunction(data) {
+        this.refIndicator.show();
+        NetUtil.post(appUrl + 'index.php/Mobile/Auth/add_auth/', data)
+            .then(
+                (result)=>{
+                    this.refIndicator.hide();
+                    if (result.code === 0) {
+                        PublicAlert('提交认证完成','请等待审核结果',
+                            [{text:"确定", onPress:this.goBack.bind(this)}]
+                        );
+                    }
+                    else {
+                        this.refToast.show(result.message);
+                    }
+                },(error)=>{
+                    this.refIndicator.hide();
+                    this.refToast.show(error);
+                });
     }
 
     textInputChanged(text, key){
@@ -202,9 +221,12 @@ export default class DetailVC extends Component {
         let formData = new FormData();
         let file = {uri: source.uri, type: 'multipart/form-data', name: 'image.png'};
         formData.append("filename", file);
+
+        this.refIndicator.show();
         NetUtil.postForm(appUrl + 'index.php/Mobile/Upload/upload_corporation/', formData)
             .then(
                 (result)=>{
+                    this.refIndicator.hide();
                     if (result.code === 0) {
                         if (idKey === 'bz_licence') {
                             this.setState({
@@ -226,16 +248,20 @@ export default class DetailVC extends Component {
                         }
                     }
                     else {
-                        PublicAlert(result.message);
+                        this.refToast.show(result.message);
                     }
                 },(error)=>{
-                    PublicAlert(error);
+                    this.refIndicator.hide();
+                    this.refToast.show(error);
                 });
     }
 
     renderSubNameForIndex(item, index) {
         if (item.idKey === 'invoice' && this.state.invoice_type > 0) {
             return this.invoiceTypes[this.state.invoice_type];
+        }
+        else if (item.idKey === 'add_ship' && this.state.hasAddShip) {
+            return "已添加";
         }
         return '';
     }
@@ -297,6 +323,7 @@ export default class DetailVC extends Component {
                     onPress={this.onSelectInvoiceType.bind(this)}
                 />
                 <Toast ref={o => this.refToast = o} position={'center'}/>
+                <IndicatorModal ref={o => this.refIndicator = o}/>
             </View> );
     }
 }

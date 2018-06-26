@@ -167,6 +167,11 @@ export default class AddShip extends Component {
                 data.projects = this.state.projects.join(",");
             }
 
+            if (!isAuthed()) {
+                //如果未认证
+                data.is_check = '0';
+            }
+
             this.refIndicator.show();
             NetUtil.post(appUrl + 'index.php/Mobile/Ship/add_ship/', data)
                 .then(
