@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import ShipCell from './ShipCell';
 import ListLoadFooter from '../../components/ListLoadFooter';
-import MyShipPriceVC from "./MyShipPriceVC";
 
 export default class DetailVC extends Component {
     static navigationOptions = ({ navigation }) => (

@@ -561,6 +561,7 @@ global.compare = function compare(val1, val2){
 };
 
 global.appAllGoods = [];
+global.appHotPorts = [];
 global.appAllPortsFirst = [];
 global.appAllPortsSecond = [];
 global.appHomeCondition = {

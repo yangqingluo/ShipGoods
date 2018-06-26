@@ -5,27 +5,28 @@ import {
     View,
     TouchableOpacity,
     FlatList,
+    ScrollView,
 } from 'react-native';
-import PortFirstCell from './PortFirstCell'
+
+import CellTitleItem from './CellTitleItem';
+import TextCell from './TextCell';
+import HotCell from './HotPortTextCell';
+import PortFirstCell from './PortFirstCell';
+import Toast from "react-native-easy-toast";
+import IndicatorModal from './IndicatorModal';
 
 export default class SelectPortVC extends Component {
     static navigationOptions = ({ navigation }) => (
         {
             title: navigation.state.params.title,
-            // headerRight: <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
-            //     <TouchableOpacity
-            //         onPress={navigation.state.params.clickParams}
-            //     >
-            //         <Text style={{marginRight : 10}}>确定</Text>
-            //     </TouchableOpacity>
-            // </View>,
         });
 
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
             selectedList: this.props.navigation.state.params.selectedList || [],
             dataList: this.props.navigation.state.params.dataList,
+            hotList: [],
             maxSelectCount:this.props.navigation.state.params.maxSelectCount,
             refreshing: false,
         }
@@ -34,14 +35,17 @@ export default class SelectPortVC extends Component {
     _btnClick=()=> {
 
     };
+
     componentDidMount() {
-        this.props.navigation.setParams({clickParams:this._btnClick})
+        this.props.navigation.setParams({clickParams:this._btnClick});
+        this.requestData();
     }
 
     requestData = () => {
-        this.setState({refreshing: true})
-        this.requestRecommend()
-    }
+        // this.setState({refreshing: true});
+        // this.requestRecommend();
+        this.requestHotPort();
+    };
 
     requestRecommend = async () => {
         let data = {pid:'0', deep:1};
@@ -64,12 +68,41 @@ export default class SelectPortVC extends Component {
                         refreshing: false,
                     })
                 });
-    }
+    };
+
+    requestHotPort = async () => {
+        if (appHotPorts.length > 0) {
+            this.setState({
+                hotList: appHotPorts,
+            })
+        }
+        else {
+            let data = {};
+            this.refIndicator.show();
+            NetUtil.post(appUrl + 'index.php/Mobile/Ship/get_hot_port', data)
+                .then(
+                    (result)=>{
+                        this.refIndicator.hide();
+                        if (result.code === 0) {
+                            appHotPorts = result.data;
+                            this.setState({
+                                hotList: result.data,
+                            })
+                        }
+                        else {
+                            this.refToast.show(result.message);
+                        }
+                    },(error)=>{
+                        this.refToast.show(error);
+                        this.refIndicator.hide();
+                    });
+        }
+    };
 
     onCellSelected = (info: Object) => {
         let port = info.item;
         this.toGoToPortsVC([], port);
-    }
+    };
 
     toGoToPortsVC(list, port) {
         if (list.length > 0) {
@@ -113,15 +146,48 @@ export default class SelectPortVC extends Component {
                 selected={this.state.selectedList.indexOf(info.item) !== -1}
             />
         )
-    }
+    };
+
+    onHotCellSelected = (info: Object) => {
+        this.props.navigation.state.params.callBack(this.props.navigation.state.params.key, info.item);
+        this.props.navigation.goBack();
+    };
+
+    renderHotCell = (info: Object) => {
+        return (
+            <HotCell
+                info={info}
+                onPress={this.onHotCellSelected}
+                lines={3}
+            />
+        )
+    };
 
     keyExtractor = (item: Object, index: number) => {
         return '' + index;
-    }
+    };
 
     render() {
+        let {hotList, dataList} = this.state;
         return (
             <View style={appStyles.container}>
+                {hotList.length > 0 ?
+                    <View style={{backgroundColor: '#fff'}}>
+                        <CellTitleItem name={'热门港口'}
+                                       disable={true}
+                                       subName={''}
+                        >
+                            <FlatList
+                                numColumns ={3}
+                                data={hotList}
+                                renderItem={this.renderHotCell}
+                                keyExtractor={this.keyExtractor}
+                                style={{margin: 0}}
+                            />
+                        </CellTitleItem>
+                        <View style={{height: 5, backgroundColor: '#f3f6f9'}}/>
+                    </View>
+                : null}
                 <FlatList
                     style={{flex:1}}
                     data={this.state.dataList}
@@ -133,6 +199,8 @@ export default class SelectPortVC extends Component {
                     ItemSeparatorComponent={global.renderSeparator}
                     // ListHeaderComponent={this.renderHeader}
                 />
+                <Toast ref={o => this.refToast = o} position={'center'}/>
+                <IndicatorModal ref={o => this.refIndicator = o}/>
             </View>
         );
     }
