@@ -168,7 +168,7 @@ export default class HomeOfferDetailVC extends Component {
             this.props.navigation.navigate('HomeOfferPrice',
                 {
                     title: title,
-                    info: this.state.info,
+                    info: stringIsEmpty(this.state.detailInfo.book_id) ? this.state.info : this.state.detailInfo,
                     type: this.props.navigation.state.params.type,
                     priceType: type,
                 });

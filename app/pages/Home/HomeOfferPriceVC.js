@@ -9,11 +9,10 @@ import {
     RefreshControl,
     TouchableOpacity
 } from 'react-native';
-
-import Toast from "react-native-easy-toast";
 import CustomItem from '../../components/CustomItem';
 import px2dp from "../../util";
-
+import Toast from "react-native-easy-toast";
+import IndicatorModal from '../../components/IndicatorModal';
 
 export default class HomeOfferPriceVC extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -334,6 +333,7 @@ export default class HomeOfferPriceVC extends Component {
 
     _renderShipCell() {
         let {ship} = this.state;
+        let {dieseloil, gasoline, ship_type} = ship;
         return (<View>
             <View style={shipStyles.centerViewContainer}>
                 <View style={{backgroundColor: appData.appBlueColor, width:9}}/>
@@ -363,10 +363,17 @@ export default class HomeOfferPriceVC extends Component {
                     </View>
                 </View>
             </View>
-            <View style={shipStyles.viewContainer}>
-                <Text style={{color:appData.appSecondaryTextColor, marginRight:7, fontSize:12}}>{'可运柴油 ' + ship.dieseloil + '吨'}</Text>
-                <Text style={{color:appData.appSecondaryTextColor, marginRight:15, fontSize:12}}>{'可运汽油 ' + ship.gasoline + '吨'}</Text>
-            </View>
+            {shipIsShowType(dieseloil, gasoline, ship_type) ?
+                <View style={shipStyles.viewContainer}>
+                    <Text style={{color:appData.appSecondaryTextColor, marginRight:7, fontSize:12}}>{'船舶类型 '}</Text>
+                    <Text style={{color:appData.appSecondaryTextColor, marginRight:15, fontSize:12}}>{getArrayTypesText(shipTypes, parseInt(ship_type))}</Text>
+                </View>
+                :
+                <View style={shipStyles.viewContainer}>
+                    <Text style={{color:appData.appSecondaryTextColor, marginRight:7, fontSize:12}}>{'可运柴油 ' + (objectIsZero(dieseloil) ? "" : dieseloil + '吨')}</Text>
+                    <Text style={{color:appData.appSecondaryTextColor, marginRight:15, fontSize:12}}>{'可运汽油 ' + (objectIsZero(gasoline) ? "" : gasoline + '吨')}</Text>
+                </View>
+            }
             <View style={{height:px2dp(12), backgroundColor: appData.appGrayColor}} />
         </View>);
     }
@@ -412,6 +419,7 @@ export default class HomeOfferPriceVC extends Component {
                     </TouchableOpacity>
                 </View>
                 <Toast ref={o => this.refToast = o} position={'center'}/>
+                <IndicatorModal ref={o => this.refIndicator = o}/>
             </View> );
     }
 }

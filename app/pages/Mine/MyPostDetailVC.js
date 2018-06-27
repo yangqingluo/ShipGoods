@@ -293,7 +293,7 @@ export default class MyPostDetailVC extends Component {
                                 :null}
                             <View style={[styles.cellContainer, {alignItems: "center"}]}>
                                 <Image source={require('../../images/icon_clip.png')} style={{width: 16, height: 16, marginLeft:12, resizeMode: "stretch"}}/>
-                                {(objectIsZero(dieseloil) || objectIsZero(gasoline) && objectNotNull(ship_type)) ?
+                                {shipIsShowType(dieseloil, gasoline, ship_type) ?
                                     <Text style={{marginLeft:6, fontSize:14}}>
                                         <Text style={{color:appData.appSecondaryTextColor}}>{'船舶类型 '}</Text>
                                         <Text style={{color:appData.appTextColor}}>{getArrayTypesText(shipTypes, parseInt(ship_type))}</Text>
@@ -301,9 +301,9 @@ export default class MyPostDetailVC extends Component {
                                     :
                                     <Text style={{marginLeft:6, fontSize:14}}>
                                         <Text style={{color:appData.appSecondaryTextColor}}>{'可运柴油 '}</Text>
-                                        <Text style={{color:appData.appTextColor}}>{dieseloil + '吨'}</Text>
+                                        <Text style={{color:appData.appTextColor}}>{objectIsZero(dieseloil) ? "" : dieseloil + '吨'}</Text>
                                         <Text style={{color:appData.appSecondaryTextColor}}>{' 可运汽油 '}</Text>
-                                        <Text style={{color:appData.appTextColor}}>{gasoline + '吨'}</Text>
+                                        <Text style={{color:appData.appTextColor}}>{objectIsZero(gasoline) ? "" : gasoline + '吨'}</Text>
                                     </Text>
                                 }
                             </View>
