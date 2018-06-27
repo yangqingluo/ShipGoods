@@ -6,6 +6,7 @@ import {
     Image,
     View,
     TextInput,
+    RefreshControl,
     ScrollView,
     TouchableOpacity
 } from 'react-native';
@@ -168,7 +169,7 @@ export default class HomeOfferDetailVC extends Component {
             this.props.navigation.navigate('HomeOfferPrice',
                 {
                     title: title,
-                    info: stringIsEmpty(this.state.detailInfo.book_id) ? this.state.info : this.state.detailInfo,
+                    info: stringIsEmpty(this.state.info.book_id) ? this.state.detailInfo : this.state.info,
                     type: this.props.navigation.state.params.type,
                     priceType: type,
                 });
@@ -247,8 +248,10 @@ export default class HomeOfferDetailVC extends Component {
         return (
             <View style={appStyles.container}>
                 <ScrollView style={{flex: 1, backgroundColor:'#fff'}}
-                            onRefresh={this.requestData}
-                            refreshing={this.state.refreshing}
+                            refreshControl={<RefreshControl
+                                refreshing={this.state.refreshing}
+                                onRefresh={this.requestData.bind(this)}
+                            />}
                 >
                     <View style={{height: 47, flexDirection: 'row', alignItems: "center", justifyContent: "space-between",}}>
                         <View style={{flexDirection: 'row'}}>

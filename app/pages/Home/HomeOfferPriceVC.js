@@ -78,7 +78,7 @@ export default class HomeOfferPriceVC extends Component {
         if (this.isAgreePrice() || this.isGoodsOrder()) {
             if (this.isFirstPrice()) {
                 this.setState({
-                    offer: this.state.info.price,
+                    offer: this.state.info.prices,
                 })
             }
             else {

@@ -8,7 +8,6 @@ import {
     FlatList,
 } from 'react-native';
 import OrderCell from './HomeOrderCell';
-import CustomFlatList from '../../components/CustomFlatList';
 import ListLoadFooter from '../../components/ListLoadFooter';
 import CustomAlert from '../../components/CustomAlert';
 import Toast from "react-native-easy-toast";
@@ -134,9 +133,6 @@ export default class HomeOrderVC extends Component {
                     }}
                     // ItemSeparatorComponent={global.renderSeparator}
                     // ListHeaderComponent={this.renderHeader}
-
-                    // onRefresh={this.requestData}
-                    // refreshing={this.state.refreshing}
                     refreshControl={<RefreshControl refreshing={this.state.refreshing}
                                         onRefresh={this.requestData.bind(this)}/>}
 

@@ -8,7 +8,6 @@ import {
     FlatList,
 } from 'react-native';
 import MessageCell from './MessageCell';
-import CustomFlatList from '../../components/CustomFlatList';
 import ListLoadFooter from '../../components/ListLoadFooter';
 import Toast from 'react-native-easy-toast';
 import px2dp from "../../util";

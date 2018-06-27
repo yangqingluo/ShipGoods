@@ -62,7 +62,8 @@ export default class OrderTransportEditVC extends Component {
                 });
     };
 
-    submitInfoFunction = (item) => {
+    submitInfoFunction = (info) => {
+        let {item ,index} = info;
         if (!objectNotNull(item.update_time)) {
             this.refToast.show("请设置状态对应的时间");
         }
@@ -108,7 +109,11 @@ export default class OrderTransportEditVC extends Component {
     };
 
     onCellSubmitSelected = (info: Object) => {
-        this.submitInfoFunction(info.item);
+        let translist = this.state.detailInfo.translist;
+        if (translist.indexOf(info.item) === (translist.length - 1)) {
+
+        }
+        this.submitInfoFunction(info);
     };
 
     cellTextInputChanged = (text, info) => {
@@ -174,8 +179,8 @@ export default class OrderTransportEditVC extends Component {
                     // ItemSeparatorComponent={global.renderSeparator}
                     ListHeaderComponent={this.renderHeader.bind(this)}
 
-                    onRefresh={this.requestData.bind(this)}
-                    refreshing={this.state.refreshing}
+                    refreshControl={<RefreshControl refreshing={this.state.refreshing}
+                                                    onRefresh={this.requestData.bind(this)}/>}
                 />
                 <DateTimePicker title="请选择时间" ref={o => this.refTimePicker = o} />
                 <Toast ref={o => this.refToast = o} position={'center'}/>
