@@ -48,8 +48,8 @@ export default class OrderTransportEditCell extends Component {
     render() {
         let info = this.props.info.item;
         let {showLast, trans_state} = this.props;
-        let passed = (parseInt(info.state) <= parseInt(trans_state));
-        let editable = (parseInt(info.state) === parseInt(trans_state) + 1) || (parseInt(info.state) === parseInt(trans_state));
+        let passed = shipTransportStateJudge(parseInt(trans_state), parseInt(info.state));
+        let editable = (parseInt(info.state) === parseInt(trans_state) - 1) || (parseInt(info.state) === parseInt(trans_state));
         let color = (passed || editable) ? appData.appBlueColor:appData.appGrayColor;
         let textColor = passed ? appData.appTextColor : "#8b8b8b";
         let stateText = getArrayTypesText(transportStateTypes, parseInt(info.state) - 1);

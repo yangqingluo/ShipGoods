@@ -254,10 +254,10 @@ export default class OrderJudgementVC extends Component {
             let radius = 16;
             let len = (screenWidth - 26 * 2 - radius * 4) / 3 /appData.appDashWidth;
             let state = parseInt(transportInfo.trans_state);
-            let color1 = state >= 1 ? appData.appBlueColor : appData.appDeepGrayColor;
-            let color5 = state >= 5 ? appData.appBlueColor : appData.appDeepGrayColor;
-            let color6 = state >= 6 ? appData.appBlueColor : appData.appDeepGrayColor;
-            let color10 = state >= 10 ? appData.appBlueColor : appData.appDeepGrayColor;
+            let color1 = shipTransportStateJudge(state, 1) ? appData.appBlueColor : appData.appDeepGrayColor;
+            let color5 = shipTransportStateJudge(state, 5) ? appData.appBlueColor : appData.appDeepGrayColor;
+            let color6 = shipTransportStateJudge(state, 6) ? appData.appBlueColor : appData.appDeepGrayColor;
+            let color10 = shipTransportStateJudge(state, 10) ? appData.appBlueColor : appData.appDeepGrayColor;
             let remark = transportInfo.trans_remark;
             if (objectNotNull(transportInfo.translist)) {
                 if (state > 0 && state <= transportInfo.translist.length) {

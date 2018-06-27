@@ -26,8 +26,8 @@ export default class OrderTransportCell extends Component {
     render() {
         let info = this.props.info.item;
         let {showLast, trans_state} = this.props;
-        let selected = (parseInt(info.state) <= parseInt(trans_state));
-        let color = selected ? appData.appBlueColor:appData.appGrayColor;
+        let passed = shipTransportStateJudge(parseInt(trans_state), parseInt(info.state));
+        let color = passed ? appData.appBlueColor:appData.appGrayColor;
 
         let create_time = info.create_timetext.split(" ");
         const Icon = appFont["Ionicons"];
@@ -48,10 +48,10 @@ export default class OrderTransportCell extends Component {
                     {showLast? <Icon name={'ios-checkmark-circle'} size={22} color={color} /> : null}
                 </View>
                 <View style={styles.rightContainer}>
-                    <Text style={{top: 5, left: 0, position: 'absolute', fontSize: 16, color: appData.appBlueColor, opacity: selected ? 1.0 : 0.5}}>
+                    <Text style={{top: 5, left: 0, position: 'absolute', fontSize: 16, color: appData.appBlueColor, opacity: passed ? 1.0 : 0.5}}>
                         {getArrayTypesText(transportStateTypes, parseInt(info.state) - 1)}
                     </Text>
-                    <Text style={{minHeight:22, fontSize:16, fontWeight:appData.appFontWeightMedium, color:selected ? appData.appLightTextColor : appData.appThirdTextColor}}>
+                    <Text style={{minHeight:22, fontSize:16, fontWeight:appData.appFontWeightMedium, color:passed ? appData.appLightTextColor : appData.appThirdTextColor}}>
                         {info.remark}
                     </Text>
                 </View>

@@ -77,7 +77,7 @@ export default class OrderTransportEditVC extends Component {
                 remark: item.remark,
                 update_time: item.update_time,
             };
-
+            
             this.refIndicator.show();
             NetUtil.post(appUrl + 'index.php/Mobile/Order/change_transport_state/', data)
                 .then(

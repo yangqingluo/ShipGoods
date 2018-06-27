@@ -487,19 +487,9 @@ global.shipIsShowType = function(dieseloil, gasoline, ship_type) : boolean {
     return false;
 };
 
-// global.shipShowTypeText = function(dieseloil, gasoline, ship_type) : String {
-//     // (objectIsZero(dieseloil) || objectIsZero(gasoline) && objectNotNull(ship_type)
-//     if (stringIsEmpty(ship_type)) {
-//         let typeIndex = parseInt(ship_type);
-//         if (typeIndex > 0 && typeIndex < shipTypes.length) {
-//             let type = shipTypes[typeIndex];
-//             if (type.search("油") !== -1) {
-//                 return false;
-//             }
-//         }
-//     }
-//     return true;
-// };
+global.shipTransportStateJudge = function(current, standard) : boolean {
+    return current > standard;
+};
 
 global.offerIsOffer = function(is_offer) : boolean {
     return (is_offer === '1');
