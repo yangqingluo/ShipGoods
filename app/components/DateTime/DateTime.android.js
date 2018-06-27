@@ -90,9 +90,11 @@ export default class DateTimePicker extends Component {
             minute: value.getMinutes() || new Date().getMinutes(),
             is24Hour: false
         }).then((actionResult) => {
-            const { action, hour, minute } = actionResult
+            const { action, hour, minute } = actionResult;
             if (action !== TimePickerAndroid.dismissedAction) {
-                this.selectedDone(new Date(value.getFullYear(), value.getMonth(), value.getDay(), hour, minute));
+                value.setHours(hour);
+                value.setMinutes(minute);
+                this.selectedDone(value);
             }
         })
     }
