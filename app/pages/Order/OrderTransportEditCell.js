@@ -30,6 +30,7 @@ export default class OrderTransportEditCell extends Component {
 
     textInputChanged = (text) => {
         this.props.info.item.remark = text;
+        this.forceUpdate();
     };
 
     onSubmitBtnAction () {
@@ -94,7 +95,8 @@ export default class OrderTransportEditCell extends Component {
                         </Text>
                     </View>
                     {editable ?
-                        <CustomInput style={styles.textContainer}
+                        <CustomInput underlineColorAndroid={'transparent'}
+                                     style={styles.textContainer}
                                      multiline={true}
                                      placeholder={"请输入货品具体" + stateText + "状态"}
                                      onChangeText={this.textInputChanged.bind(this)}
