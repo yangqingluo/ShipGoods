@@ -31,10 +31,10 @@ export default class OrderCenterView extends PureComponent<Props> {
 
     render() {
         let {info, style, type} = this.props;
-        let priceText = offerIsShipPrice(info.is_shipprice) ? "船东开价" : (info.price + " 元/吨");
+        let priceText = offerIsShipPrice(info.is_shipprice) ? "船东开价" : info.price;
         if (objectNotNull(type)) {
             if (type === OrderCenterEnum.Order) {
-                priceText = info.offer + " 元/吨";
+                priceText = info.offer;
             }
         } 
         return <View style={style}>
