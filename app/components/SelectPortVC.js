@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
     inputBack: {
         width: 0.8 * screenWidth,
         height: 30,
-        borderRadius: 20,
+        borderRadius: 15,
         backgroundColor: "#e5e5e5",
         flexDirection: 'row',
         alignItems: 'center',
