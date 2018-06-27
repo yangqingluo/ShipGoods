@@ -68,6 +68,7 @@ export default class NetUtil extends Component {
             body: body
         };
 
+        PublicLog(body);
         return new Promise((resolve, reject)=> {
             fetch(url, opts)
                 .then((response)=> {

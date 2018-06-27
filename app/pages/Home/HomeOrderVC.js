@@ -131,14 +131,12 @@ export default class HomeOrderVC extends Component {
                     keyExtractor={(item: Object, index: number) => {
                         return '' + index;
                     }}
-                    // ItemSeparatorComponent={global.renderSeparator}
-                    // ListHeaderComponent={this.renderHeader}
                     refreshControl={<RefreshControl refreshing={this.state.refreshing}
                                         onRefresh={this.requestData.bind(this)}/>}
 
-                    ListFooterComponent={this.renderFooter.bind(this)}
-                    onEndReached={this.loadMoreData.bind(this)}
-                    onEndReachedThreshold={0.1}
+                    // ListFooterComponent={this.renderFooter.bind(this)}
+                    // onEndReached={this.loadMoreData.bind(this)}
+                    // onEndReachedThreshold={0.1}
                 />
                 <Toast ref={o => this.refToast = o} position={'center'}/>
                 <CustomAlert ref={o => this.refSelectAlert = o} message={"您确定选择该货品？"} />

@@ -67,8 +67,8 @@ export default class ShipCell extends PureComponent<Props> {
                             </Text>
                             :
                             <Text style={{color:appData.appSecondaryTextColor, fontSize:12, marginLeft:16}}>
-                                <Text>{'可运柴油 ' + (objectIsZero(dieseloil) ? "" : dieseloil + '吨')}</Text>
-                                <Text>{'可运汽油 ' + (objectIsZero(gasoline) ? "" : gasoline + '吨')}</Text>
+                                <Text>{'可运柴油' + (objectIsZero(dieseloil) ? "" : dieseloil + '吨')}</Text>
+                                <Text>{' 可运汽油' + (objectIsZero(gasoline) ? "" : gasoline + '吨')}</Text>
                             </Text>
                         }
 

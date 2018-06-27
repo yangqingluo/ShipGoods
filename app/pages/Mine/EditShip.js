@@ -110,14 +110,14 @@ export default class EditShip extends AddShip {
                 area:'' + this.state.area,
                 ship_lience:this.state.ship_lience
             };
-            if (this.state.gasoline.length > 0) {
+            if (!stringIsEmpty(this.state.gasoline)) {
                 data.gasoline = this.state.gasoline;
             }
             else {
                 data.gasoline = '0';
             }
 
-            if (this.state.dieseloil.length > 0) {
+            if (!stringIsEmpty(this.state.dieseloil)) {
                 data.dieseloil = this.state.dieseloil;
             }
             else {
@@ -149,14 +149,20 @@ export default class EditShip extends AddShip {
     }
 
     renderEditValueForIndex(item, index) {
-        if (item.idKey === 'ship_name' && this.state.ship_name.length > 0) {
+        if (item.idKey === 'ship_name' && !stringIsEmpty(this.state.ship_name)) {
             return this.state.ship_name;
         }
-        else if (item.idKey === 'tonnage' && this.state.tonnage.length > 0) {
+        else if (item.idKey === 'tonnage' && !stringIsEmpty(this.state.tonnage)) {
             return this.state.tonnage;
         }
-        else if (item.idKey === 'storage' && this.state.storage.length > 0) {
+        else if (item.idKey === 'storage' && !stringIsEmpty(this.state.storage)) {
             return this.state.storage;
+        }
+        else if (item.idKey === 'dieseloil' && !stringIsEmpty(this.state.dieseloil)) {
+            return this.state.dieseloil;
+        }
+        else if (item.idKey === 'gasoline' && !stringIsEmpty(this.state.gasoline)) {
+            return this.state.gasoline;
         }
         return '';
     }
