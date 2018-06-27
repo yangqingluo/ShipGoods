@@ -256,6 +256,7 @@ let OrderBtnEnum = {
     JudgeCheck: 4,//查看评价
     EditTransport: 5,//编辑货运
     Transporting: 6,//正在运输
+    Transported: 7,//货运已完成
 };
 
 let OfferPriceEnum = {

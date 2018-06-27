@@ -5,6 +5,7 @@ import {
     TextInput,
     View,
     Image,
+    RefreshControl,
     FlatList,
     TouchableOpacity
 } from 'react-native';
@@ -114,8 +115,8 @@ export default class OrderTransportVC extends Component {
                     // ItemSeparatorComponent={global.renderSeparator}
                     ListHeaderComponent={this.renderHeader.bind(this)}
 
-                    onRefresh={this.requestData.bind(this)}
-                    refreshing={this.state.refreshing}
+                    refreshControl={<RefreshControl refreshing={this.state.refreshing}
+                                                    onRefresh={this.requestData.bind(this)}/>}
                 />
             </View>
         );

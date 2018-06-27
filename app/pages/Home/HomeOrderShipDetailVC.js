@@ -5,9 +5,9 @@ import {
     Image,
     View,
     TextInput,
+    RefreshControl,
     FlatList,
     ScrollView,
-    RefreshControl,
     TouchableOpacity
 } from 'react-native';
 import DashLine from '../../components/DashLine';

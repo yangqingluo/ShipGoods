@@ -4,6 +4,7 @@ import {
     Text,
     View,
     TouchableOpacity,
+    RefreshControl,
     FlatList,
 } from 'react-native';
 import SelectTextCell from './SelectTextCell'
@@ -91,8 +92,6 @@ export default class CustomSelect extends Component {
                     renderItem={this.renderCell}
 
                     keyExtractor={this.keyExtractor}
-                    // onRefresh={this.requestData}
-                    // refreshing={this.state.refreshing}
                     ItemSeparatorComponent={global.renderSeparator}
                     // ListHeaderComponent={this.renderHeader}
                 />

@@ -4,6 +4,7 @@ import {
     Text,
     View,
     TouchableOpacity,
+    RefreshControl,
     FlatList,
 } from 'react-native';
 import ShipCell from './ShipCell';

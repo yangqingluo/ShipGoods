@@ -4,6 +4,7 @@ import {
     Dimensions,
     StyleSheet,
     ScrollView,
+    RefreshControl,
     FlatList,
     Image,
     Text,

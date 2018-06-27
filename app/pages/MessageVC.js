@@ -3,8 +3,6 @@ import {
     StyleSheet,
     Text,
     View,
-    ScrollView,
-    FlatList,
     TouchableOpacity
 } from 'react-native';
 import MessageListVC from './Message/MessageListVC';

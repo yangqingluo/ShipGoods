@@ -116,9 +116,13 @@ export default class OrderListVC extends Component {
         this.props.navigation.navigate('OrderDetail',
             {
                 info: info.item,
-                order_state: this.props.order_state
+                order_state: this.props.order_state,
             });
     };
+
+    callBackFromEditVC(key) {
+        this.requestData();
+    }
 
     onCellBottomBtnAction = (info: Object, tag: number) => {
         switch (tag){
@@ -138,6 +142,7 @@ export default class OrderListVC extends Component {
                 this.props.navigation.navigate('OrderTransportEdit',
                     {
                         info: info,
+                        // callBack: this.callBackFromEditVC.bind(this)//直接调用appOrderVC.reload
                     });
                 break;
 
@@ -184,9 +189,6 @@ export default class OrderListVC extends Component {
                     keyExtractor={this.keyExtractor}
                     // ItemSeparatorComponent={global.renderSeparator}
                     // ListHeaderComponent={this.renderHeader}
-
-                    // onRefresh={this.requestData}
-                    // refreshing={this.state.refreshing}
                     refreshControl={<RefreshControl refreshing={this.state.refreshing}
                                                     onRefresh={this.requestData.bind(this)}/>}
 

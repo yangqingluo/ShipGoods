@@ -29,7 +29,6 @@ export default class OrderTransportEditCell extends Component {
     }
 
     textInputChanged = (text) => {
-        // this.props.textInputChanged(text, this.props.info);
         this.props.info.item.remark = text;
     };
 

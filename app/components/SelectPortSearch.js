@@ -5,6 +5,7 @@ import {
     View,
     Button,
     TouchableOpacity,
+    RefreshControl,
     FlatList,
     SectionList,
     Dimensions,

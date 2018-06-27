@@ -6,6 +6,7 @@ import {
     Image,
     TouchableOpacity,
     ScrollView,
+    RefreshControl,
     FlatList,
     TextInput,
     Dimensions

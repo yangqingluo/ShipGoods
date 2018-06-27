@@ -25,34 +25,40 @@ export default class HomeOrderCell extends Component {
     }
 
     _renderBottomButton() {
-        let info = this.props.info.item;
-        if (objectNotNull(info.iclose)) {
-            if (info.iclose === '1') {
+        let item = this.props.info.item;
+        if (objectNotNull(item.iclose)) {
+            if (item.iclose === '1') {
                 return <View style={styles.bottomContainer}>
-                    <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: '#dfdfdf', width: 102}]} onPress={() => this.props.onBottomBtnPress(info, OrderBtnEnum.Default)} disabled={true}>
+                    <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: '#dfdfdf', width: 102}]} onPress={() => this.props.onBottomBtnPress(item, OrderBtnEnum.Default)} disabled={true}>
                         <Text style={{fontSize:16, color:'#818181'}}>{"订单已关闭"}</Text>
                     </TouchableOpacity>
                 </View>;
             }
         }
 
-        if (info.order_state === '1') {
-            let iscomment = commentIscomment(info.iscomment);
+        if (item.order_state === '1') {
+            let iscomment = commentIscomment(item.iscomment);
             return <View style={styles.bottomContainer}>
-                <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: appData.appBlueColor}]} onPress={() => this.props.onBottomBtnPress(info, iscomment ? OrderBtnEnum.JudgeCheck : OrderBtnEnum.JudgeOrder)}>
+                <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: appData.appBlueColor}]} onPress={() => this.props.onBottomBtnPress(item, iscomment ? OrderBtnEnum.JudgeCheck : OrderBtnEnum.JudgeOrder)}>
                     <Text style={{fontSize:16, color:appData.appBlueColor}}>{iscomment ? "对方对我的评价" : "评价"}</Text>
                 </TouchableOpacity>
             </View>
         }
 
         let shipOwner = isShipOwner();
+        let transportDone = shipTransportStateJudge(parseInt(item.trans_state), 10);
         return (
             <View style={styles.bottomContainer}>
-                <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: '#dfdfdf', marginRight:10}]} onPress={() => this.props.onBottomBtnPress(info, shipOwner ? OrderBtnEnum.EditTransport: OrderBtnEnum.CheckTransport)}>
-                    <Text style={{fontSize:16, color:'#3c3c3c'}}>{shipOwner ? "编辑货运" : "查看货运"}</Text>
-                </TouchableOpacity>
+                {shipOwner ?
+                    <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: '#dfdfdf', marginRight:10}]} onPress={() => this.props.onBottomBtnPress(item, transportDone ? OrderBtnEnum.Transported : OrderBtnEnum.EditTransport)} disabled={transportDone}>
+                        <Text style={{fontSize:16, color:transportDone ? '#818181' : '#3c3c3c'}}>{transportDone ? "运输完成" : "编辑货运"}</Text>
+                    </TouchableOpacity>
+                :
+                    <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: '#dfdfdf', marginRight:10}]} onPress={() => this.props.onBottomBtnPress(item, OrderBtnEnum.CheckTransport)}>
+                        <Text style={{fontSize:16, color:'#3c3c3c'}}>{"查看货运"}</Text>
+                    </TouchableOpacity>}
                 {shipOwner ? null :
-                    <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: appData.appBlueColor}]} onPress={() => this.props.onBottomBtnPress(info, OrderBtnEnum.CollectGoods)}>
+                    <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: appData.appBlueColor}]} onPress={() => this.props.onBottomBtnPress(item, OrderBtnEnum.CollectGoods)}>
                         <Text style={{fontSize:16, color:appData.appBlueColor}}>{"确认收货"}</Text>
                     </TouchableOpacity>
                 }

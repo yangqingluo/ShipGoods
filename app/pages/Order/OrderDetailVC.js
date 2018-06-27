@@ -60,6 +60,10 @@ export default class OrderJudgementVC extends Component {
         this.props.navigation.setParams({clickMoreBtn:this.moreBtnClick});
     }
 
+    callBackFromEditVC(key) {
+        this.requestData();
+    }
+
     requestData = () => {
         this.setState({
             refreshing: true,
@@ -212,6 +216,7 @@ export default class OrderJudgementVC extends Component {
                     {
                         info: detailInfo,
                         tag: tag,
+                        callBack: this.callBackFromEditVC.bind(this),
                     });
                 break;
 
@@ -349,15 +354,23 @@ export default class OrderJudgementVC extends Component {
 
         if (detailInfo.order_state === '0') {
             if (isShipOwner()) {
+                let transportDone = shipTransportStateJudge(parseInt(detailInfo.trans_state), 10);
                 return (
-                    <View style={styles.footerContainer}>
-                        <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: '#dfdfdf', marginRight:10}]} onPress={this.onCellBottomBtnAction.bind(this, OrderBtnEnum.EditTransport)}>
-                            <Text style={{fontSize:16, color:'#3c3c3c'}}>{"编辑货运"}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: appData.appClearColor, marginRight:10}]} onPress={this.onCellBottomBtnAction.bind(this, OrderBtnEnum.Transporting)}>
-                            <Text style={{fontSize:16, color:appData.appBlueColor}}>{"正在运输"}</Text>
-                        </TouchableOpacity>
-                    </View>
+                    transportDone ?
+                        <View style={styles.footerContainer}>
+                            <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: appData.appClearColor, marginRight:10}]} onPress={this.onCellBottomBtnAction.bind(this, OrderBtnEnum.Transporting)}>
+                                <Text style={{fontSize:16, color:appData.appBlueColor}}>{"运输已完成"}</Text>
+                            </TouchableOpacity>
+                        </View>
+                        :
+                        <View style={styles.footerContainer}>
+                            <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: '#dfdfdf', marginRight:10}]} onPress={this.onCellBottomBtnAction.bind(this, OrderBtnEnum.EditTransport)}>
+                                <Text style={{fontSize:16, color:'#3c3c3c'}}>{"编辑货运"}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: appData.appClearColor, marginRight:10}]} onPress={this.onCellBottomBtnAction.bind(this, OrderBtnEnum.Transporting)}>
+                                <Text style={{fontSize:16, color:appData.appBlueColor}}>{"正在运输"}</Text>
+                            </TouchableOpacity>
+                        </View>
                 );
             }
             else {

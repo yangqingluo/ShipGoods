@@ -5,6 +5,7 @@ import {
     View,
     Image,
     TouchableOpacity,
+    RefreshControl,
     FlatList,
     ScrollView,
 } from 'react-native';
@@ -264,8 +265,6 @@ export default class SelectPortVC extends Component {
                     renderItem={this.renderCell}
 
                     keyExtractor={this.keyExtractor}
-                    // onRefresh={this.requestData}
-                    // refreshing={this.state.refreshing}
                     ItemSeparatorComponent={global.renderSeparator}
                     // ListHeaderComponent={this.renderHeader}
                 />

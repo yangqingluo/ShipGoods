@@ -5,11 +5,13 @@ import {
     TextInput,
     View,
     Image,
+    RefreshControl,
     FlatList,
     TouchableOpacity
 } from 'react-native';
 import OrderTransportCell from './OrderTransportEditCell'
 import DateTimePicker from '../../components/DateTime';
+import CustomAlert from '../../components/CustomAlert';
 import Toast from 'react-native-easy-toast';
 import IndicatorModal from '../../components/IndicatorModal';
 
@@ -23,13 +25,22 @@ export default class OrderTransportEditVC extends Component {
         this.state = {
             detailInfo: this.props.navigation.state.params.info,
             refreshing: false,
-            trans_index: -1,
-            trans_remark: '',
+            key: "Detail",
         }
     };
 
     componentDidMount() {
         this.requestData();
+    }
+
+    goBack() {
+        if (objectNotNull(appOrderVC)) {
+            appOrderVC.reloadSubOrderingVC(false);
+        }
+        if (objectNotNull(this.props.navigation.state.params.callBack)) {
+            this.props.navigation.state.params.callBack(this.state.key);
+        }
+        this.props.navigation.goBack('Main');
     }
 
     requestData = () => {
@@ -63,6 +74,7 @@ export default class OrderTransportEditVC extends Component {
     };
 
     submitInfoFunction = (info) => {
+        this.refEditLastAlert.hide();
         let {item ,index} = info;
         if (!objectNotNull(item.update_time)) {
             this.refToast.show("请设置状态对应的时间");
@@ -71,6 +83,9 @@ export default class OrderTransportEditVC extends Component {
             this.refToast.show("请输入货品状态描述");
         }
         else {
+            let translist = this.state.detailInfo.translist;
+            let last = translist.indexOf(info.item) === (translist.length - 1);
+
             let data = {
                 or_id: item.or_id,
                 t_id: item.t_id,
@@ -86,7 +101,14 @@ export default class OrderTransportEditVC extends Component {
                         this.refIndicator.hide();
                         this.refToast.show(result.message);
                         if (result.code === 0) {
-                            this.requestRecommend(true);
+                            if (last) {
+                                PublicAlert('本航次已结束', '',
+                                    [{text:"确定", onPress:this.goBack.bind(this)}]
+                                );
+                            }
+                            else {
+                                this.requestRecommend(true);
+                            }
                         }
                     },(error)=>{
                         this.refIndicator.hide();
@@ -99,28 +121,14 @@ export default class OrderTransportEditVC extends Component {
 
     };
 
-    onCellTimeSelected = (info: Object) => {
-        this.refTimePicker.showDateTimePicker(null, (d)=>{
-            info.item.update_time = Date.parse(d) * 0.001;
-            this.setState({
-                trans_index: info.index,
-            });
-        });
-    };
-
     onCellSubmitSelected = (info: Object) => {
         let translist = this.state.detailInfo.translist;
         if (translist.indexOf(info.item) === (translist.length - 1)) {
-
+            this.refEditLastAlert.show({onSureBtnAction:this.submitInfoFunction.bind(this, info)});
         }
-        this.submitInfoFunction(info);
-    };
-
-    cellTextInputChanged = (text, info) => {
-        info.item.remark = text;
-        this.setState({
-            trans_remark: text,
-        });
+        else {
+            this.submitInfoFunction(info);
+        }
     };
 
     renderCell = (info: Object) => {
@@ -129,9 +137,7 @@ export default class OrderTransportEditVC extends Component {
             <OrderTransportCell
                 info={info}
                 onPress={this.onCellSelected}
-                onTimePress={this.onCellTimeSelected}
                 onSubmitPress={this.onCellSubmitSelected}
-                textInputChanged={this.cellTextInputChanged}
                 trans_state={this.state.detailInfo.trans_state}
                 showLast={translist.indexOf(info.item) === (translist.length - 1)}
             />
@@ -183,6 +189,7 @@ export default class OrderTransportEditVC extends Component {
                                                     onRefresh={this.requestData.bind(this)}/>}
                 />
                 <DateTimePicker title="请选择时间" ref={o => this.refTimePicker = o} />
+                <CustomAlert ref={o => this.refEditLastAlert = o} title={"提交"} message={"请确认"} />
                 <Toast ref={o => this.refToast = o} position={'center'}/>
                 <IndicatorModal ref={o => this.refIndicator = o}/>
             </View>
