@@ -30,7 +30,13 @@ export default class OrderCenterView extends PureComponent<Props> {
     }
 
     render() {
-        let {info, style} = this.props;
+        let {info, style, type} = this.props;
+        let priceText = offerIsShipPrice(info.is_shipprice) ? "船东开价" : (info.price + " 元/吨");
+        if (objectNotNull(type)) {
+            if (type === OrderCenterEnum.Order) {
+                priceText = info.offer + " 元/吨";
+            }
+        } 
         return <View style={style}>
             <View style={{backgroundColor: '#f2f9ff', paddingLeft:34, paddingRight:10, minHeight:73}}>
                 <View style={{marginTop: 15, height: 20, flexDirection: 'row', alignItems: "center"}}>
@@ -45,7 +51,7 @@ export default class OrderCenterView extends PureComponent<Props> {
             </View>
             <View style={{backgroundColor: '#81c6ff', height:26, alignItems: "center", justifyContent: "center"}}>
                 <Text style={{fontSize:12, color:'white', fontWeight:'bold'}}>
-                    {offerIsShipPrice(info.is_shipprice) ? "船东开价" : info.price}
+                    {priceText}
                     </Text>
             </View>
         </View>;

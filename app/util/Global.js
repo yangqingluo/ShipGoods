@@ -248,6 +248,11 @@ let appStyles = StyleSheet.create({
     },
 });
 
+let OrderCenterEnum = {
+    Default: 0,
+    Order: 1,//订单
+};
+
 let OrderBtnEnum = {
     Default: 0,
     CollectGoods: 1,//收货
@@ -272,6 +277,7 @@ let OfferOrderEnum = {
 
 global.appStyles = appStyles;
 global.appData = appData;
+global.OrderCenterEnum = OrderCenterEnum;
 global.OrderBtnEnum = OrderBtnEnum;
 global.OfferPriceEnum = OfferPriceEnum;
 global.OfferOrderEnum = OfferOrderEnum;
