@@ -101,13 +101,21 @@ export default class MineVC extends Component {
     };
 
     goToAddAuth() {
-        if (isAuthed()) {
-            //审核通过
-            this.refToast.show("已审核通过");
-        }
-        else {
-            //未审核/审核不通过
-            this.props.navigation.navigate('AddAuth');
+        if (objectNotNull(userData) && userData.authstate) {
+            let state = parseInt(userData.authstate);
+            switch (state) {
+                case AuthStateEnum.Authing:
+                    this.refToast.show("认证中，请耐心等待");
+                    break;
+
+                case AuthStateEnum.Authed:
+                    this.refToast.show("已审核通过");
+                    break;
+
+                default:
+                    this.props.navigation.navigate('AddAuth');
+                    break;
+            }
         }
     }
 

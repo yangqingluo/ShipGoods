@@ -275,12 +275,20 @@ let OfferOrderEnum = {
     ShipOrder: 2,//船东约货
 };
 
+let AuthStateEnum = {
+    NotApply: -1,//未认证
+    Authing: 0,//认证中
+    Authed: 1,//已认证
+    Reject: 2,//认证不通过
+};
+
 global.appStyles = appStyles;
 global.appData = appData;
 global.OrderCenterEnum = OrderCenterEnum;
 global.OrderBtnEnum = OrderBtnEnum;
 global.OfferPriceEnum = OfferPriceEnum;
 global.OfferOrderEnum = OfferOrderEnum;
+global.AuthStateEnum = AuthStateEnum;
 global.appFont = Font;
 global.appUrl = 'http://shiphire.com.cn/';//服务器url
 global.appShareUrl = 'http://shiphire.com.cn/shared/mobile/';
@@ -441,8 +449,9 @@ global.getShipCourseTypesText = function(course : String) : String {
 };
 
 global.isAuthed = function() : boolean {
-    if (global.userData !== null) {
-        return global.userData.authstate === '1';
+    if (objectNotNull(global.userData) && global.userData.authstate) {
+        let state = parseInt(global.userData.authstate);
+        return state === AuthStateEnum.Authed;
     }
     return false;
 };
@@ -451,19 +460,19 @@ global.getAuthStateText = function(authState) : String {
     let stateText = "未知";
     let state = parseInt(authState);
     switch (state) {
-        case -1:
+        case AuthStateEnum.NotApply:
             stateText = "未认证";
             break;
 
-        case 0:
+        case AuthStateEnum.Authing:
             stateText = "认证中";
             break;
 
-        case 1:
+        case AuthStateEnum.Authed:
             stateText = "已认证";
             break;
 
-        case 2:
+        case AuthStateEnum.Reject:
             stateText = "认证未通过";
             break;
 
