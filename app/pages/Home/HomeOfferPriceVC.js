@@ -37,18 +37,28 @@ export default class HomeOfferPriceVC extends Component {
         };
 
         if (this.isAgreePrice()) {
-            this.config = [
-                {idKey:"ship_name", name:"船舶信息", logo:require('../../images/icon_blue.png'), disable:false, hideArrowForward:true},
-                {idKey:"offer", name:"运价", logo:require('../../images/icon_red.png'), disable:false, hideArrowForward:true},
-                {idKey:"arrive_time", name:"到港时间", logo:require('../../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectArriveTime")},
-                {idKey:"last_goods",name:"上载货品", logo:require('../../images/icon_green.png'), disable:false, hideArrowForward:true},
-            ];
+            if (this.isFirstPrice()) {
+                this.config = [
+                    {idKey:"ship_name", name:"船舶信息", logo:require('../../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectShip")},
+                    {idKey:"offer", name:"运价", logo:require('../../images/icon_red.png'), disable:false, hideArrowForward:true},
+                    {idKey:"arrive_time", name:"到港时间", logo:require('../../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectArriveTime")},
+                    {idKey:"last_goods",name:"上载货品", logo:require('../../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectLastGoods")},
+                ];
+            }
+            else {
+                this.config = [
+                    {idKey:"ship_name", name:"船舶信息", logo:require('../../images/icon_blue.png'), disable:false, hideArrowForward:true},
+                    {idKey:"offer", name:"运价", logo:require('../../images/icon_red.png'), disable:false, hideArrowForward:true},
+                    {idKey:"arrive_time", name:"到港时间", logo:require('../../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectArriveTime")},
+                    {idKey:"last_goods",name:"上载货品", logo:require('../../images/icon_green.png'), disable:false, hideArrowForward:true},
+                ];
+            }
         }
         else {
             this.config = this.isGoodsOrder() ?
                 [
                     {idKey:"ship_name", name:"船舶信息", logo:require('../../images/icon_blue.png'), disable:false, hideArrowForward:true},
-                    {idKey:"offer", name:"运价", logo:require('../../images/icon_red.png'), disable:true},
+                    {idKey:"offer", name:"运价", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
                     {idKey:"arrive_time", name:"到港时间", logo:require('../../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectArriveTime")},
                     {idKey:"last_goods",name:"上载货品", logo:require('../../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectLastGoods")},
 
@@ -66,7 +76,14 @@ export default class HomeOfferPriceVC extends Component {
 
     componentDidMount() {
         if (this.isAgreePrice() || this.isGoodsOrder()) {
-            this.requestData();
+            if (this.isFirstPrice()) {
+                this.setState({
+                    offer: this.state.info.price,
+                })
+            }
+            else {
+                this.requestData();
+            }
         }
     }
 
@@ -146,6 +163,10 @@ export default class HomeOfferPriceVC extends Component {
         return this.state.priceType === OfferPriceEnum.AgreePrice;
     }
 
+    isFirstPrice() {
+        return stringIsEmpty(this.state.info.book_id);
+    }
+
     isGoodsOrder() {
         return this.state.type === OfferOrderEnum.GoodsOrder;
     }
@@ -222,13 +243,11 @@ export default class HomeOfferPriceVC extends Component {
 
     cellSelected = (key, data = {}) =>{
         if (key === "SelectShip") {
-            if (!this.isAgreePrice()) {
-                this.props.navigation.navigate(
-                    "MyShip",
-                    {
-                        callBack:this.callBackFromShipVC.bind(this)
-                    });
-            }
+            this.props.navigation.navigate(
+                "MyShip",
+                {
+                    callBack:this.callBackFromShipVC.bind(this)
+                });
         }
         else if (key === "SelectArriveTime") {
             this.props.navigation.navigate(
@@ -242,12 +261,10 @@ export default class HomeOfferPriceVC extends Component {
                 });
         }
         else if (key === "SelectLastGoods") {
-            if (!this.isAgreePrice()) {
-                this.toGoToGoodsVC();
-            }
+            this.toGoToGoodsVC();
         }
         else {
-            PublicAlert(key);
+
         }
     };
 
@@ -402,7 +419,7 @@ export default class HomeOfferPriceVC extends Component {
         return (
             <View style={appStyles.container}>
                 <ScrollView style={{flex: 1, backgroundColor:'#fff'}}
-                            refreshControl={(this.isAgreePrice() || this.isGoodsOrder()) ?
+                            refreshControl={(this.isAgreePrice() || this.isGoodsOrder()) && !this.isFirstPrice() ?
                                 <RefreshControl
                                     refreshing={this.state.refreshing}
                                     onRefresh={this.requestData.bind(this)}

@@ -77,7 +77,7 @@ export default class OrderTransportEditVC extends Component {
                 remark: item.remark,
                 update_time: item.update_time,
             };
-            
+
             this.refIndicator.show();
             NetUtil.post(appUrl + 'index.php/Mobile/Order/change_transport_state/', data)
                 .then(
@@ -87,9 +87,6 @@ export default class OrderTransportEditVC extends Component {
                         if (result.code === 0) {
                             this.requestRecommend(true);
                         }
-                        // else {
-                        //     this.refToast.show(result.message);
-                        // }
                     },(error)=>{
                         this.refIndicator.hide();
                         this.refToast.show(error);
