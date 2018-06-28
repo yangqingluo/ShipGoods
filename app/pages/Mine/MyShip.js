@@ -8,7 +8,7 @@ import {
     FlatList,
 } from 'react-native';
 import ShipCell from './ShipCell';
-import ListLoadFooter from '../../components/ListLoadFooter';
+import ListLoadFooter, {canLoad, FooterTypeEnum} from '../../components/ListLoadFooter';
 
 export default class DetailVC extends Component {
     static navigationOptions = ({ navigation }) => (
@@ -57,17 +57,17 @@ export default class DetailVC extends Component {
     };
 
     loadMoreData() {
-        if (!this.state.refreshing && this.state.showFooter === 0) {
+        if (!this.state.refreshing && canLoad(this.state.showFooter)) {
             if (this.state.dataList.length === 0) {
                 return;
             }
             if (this.state.page === 1) {
                 return;
             }
-            this.setState({showFooter:2});
+            this.setState({showFooter: FooterTypeEnum.Loading});
             this.requestRecommend(false);
         }
-    }
+    };
 
     requestRecommend = async (isReset) => {
         if (isReset) {
@@ -83,29 +83,28 @@ export default class DetailVC extends Component {
                             list = list.concat(this.state.dataList);
                         }
                         list = list.concat(result.data);
-                        let footer = 0;
-                        if (result.data.length === 0) {
-                            footer = 1;
+                        let footer = FooterTypeEnum.default;
+                        if (result.data.length < appPageSize) {
+                            footer = FooterTypeEnum.NoMore;
                         }
 
                         this.setState({
                             page: this.state.page + 1,
                             dataList: list,
-                            refreshing: false,
+                            refreshing: isReset ? false : this.state.refreshing,
                             showFooter: footer,
                         })
-                        // PublicAlert(this.state.showFooter + '');
                     }
                     else {
                         this.setState({
-                            refreshing: false,
-                            showFooter: 0,
+                            refreshing: isReset ? false : this.state.refreshing,
+                            showFooter: FooterTypeEnum.default,
                         })
                     }
                 },(error)=>{
                     this.setState({
-                        refreshing: false,
-                        showFooter: 0,
+                        refreshing: isReset ? false : this.state.refreshing,
+                        showFooter: FooterTypeEnum.default,
                     })
                 });
     };
