@@ -160,7 +160,7 @@ export default class OrderListVC extends Component {
 
                     ListFooterComponent={this.renderFooter.bind(this)}
                     onEndReached={this.loadMoreData.bind(this)}
-                    onEndReachedThreshold={0}
+                    onEndReachedThreshold={appData.appOnEndReachedThreshold}
 
                     // ListEmptyComponent={this.renderEmptyComponent}
                 />

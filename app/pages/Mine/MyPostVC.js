@@ -139,7 +139,7 @@ export default class MyPostVC extends Component {
 
                     ListFooterComponent={this.renderFooter.bind(this)}
                     onEndReached={this.loadMoreData.bind(this)}
-                    onEndReachedThreshold={0}
+                    onEndReachedThreshold={appData.appOnEndReachedThreshold}
                 />
             </View>
         );

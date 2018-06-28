@@ -8,7 +8,7 @@ import {
     FlatList,
 } from 'react-native';
 import OrderCell from './HomeOrderCell';
-import ListLoadFooter from '../../components/ListLoadFooter';
+import ListLoadFooter, {FooterTypeEnum, canLoad} from '../../components/ListLoadFooter';
 import CustomAlert from '../../components/CustomAlert';
 import Toast from "react-native-easy-toast";
 
@@ -42,14 +42,14 @@ export default class HomeOrderVC extends Component {
     };
 
     loadMoreData() {
-        if (!this.state.refreshing && this.state.showFooter === 0) {
+        if (!this.state.refreshing && canLoad(this.state.showFooter)) {
             if (this.state.dataList.length === 0) {
                 return;
             }
             if (this.state.page === 1) {
                 return;
             }
-            this.setState({showFooter:2});
+            this.setState({showFooter: FooterTypeEnum.Loading});
             this.requestRecommend(false);
         }
     };
@@ -69,28 +69,28 @@ export default class HomeOrderVC extends Component {
                             list = list.concat(this.state.dataList);
                         }
                         list = list.concat(result.data);
-                        let footer = 0;
-                        if (result.data.length === 0) {
-                            footer = 1;
+                        let footer = FooterTypeEnum.default;
+                        if (result.data.length < appPageSize) {
+                            footer = FooterTypeEnum.NoMore;
                         }
 
                         this.setState({
                             page: this.state.page + 1,
                             dataList: list,
-                            refreshing: false,
+                            refreshing: isReset ? false : this.state.refreshing,
                             showFooter: footer,
                         })
                     }
                     else {
                         this.setState({
-                            refreshing: false,
-                            showFooter: 0,
+                            refreshing: isReset ? false : this.state.refreshing,
+                            showFooter: FooterTypeEnum.default,
                         })
                     }
                 },(error)=>{
                     this.setState({
-                        refreshing: false,
-                        showFooter: 0,
+                        refreshing: isReset ? false : this.state.refreshing,
+                        showFooter: FooterTypeEnum.default,
                     })
                 });
     };
@@ -136,7 +136,7 @@ export default class HomeOrderVC extends Component {
 
                     ListFooterComponent={this.renderFooter.bind(this)}
                     onEndReached={this.loadMoreData.bind(this)}
-                    onEndReachedThreshold={0.1}
+                    onEndReachedThreshold={appData.appOnEndReachedThreshold}
                 />
                 <Toast ref={o => this.refToast = o} position={'center'}/>
                 <CustomAlert ref={o => this.refSelectAlert = o} message={"您确定选择该货品？"} />

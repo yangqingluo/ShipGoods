@@ -104,7 +104,7 @@ export default class CustomFlatList extends Component {
             onRefresh={this.onRefresh}
             onEndReached={this.onEndReached}
             refreshing={refreshing}
-            onEndReachedThreshold={this.props.onEndReachedThreshold || 0.1}
+            onEndReachedThreshold={this.props.onEndReachedThreshold || appData.appOnEndReachedThreshold}
             ItemSeparatorComponent={()=>separatorComponent}
             keyExtractor={(item, index) => index}
             ListEmptyComponent={() => <View

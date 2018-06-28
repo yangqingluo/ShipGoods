@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import HomeOrderVC from "./HomeOrderVC"
 import OrderCell from './HomeOrderCell';
+import {FooterTypeEnum} from "../../components/ListLoadFooter";
 
 type Props = {
     is_offer: "0",
@@ -42,31 +43,29 @@ export default class HomeOfferVC extends HomeOrderVC {
                             list = list.concat(this.state.dataList);
                         }
                         list = list.concat(result.data);
-                        let footer = 0;
-                        if (result.data.length === 0) {
-                            footer = 1;
+                        let footer = FooterTypeEnum.default;
+                        if (result.data.length < appPageSize) {
+                            footer = FooterTypeEnum.NoMore;
                         }
 
                         this.setState({
                             page: this.state.page + 1,
                             dataList: list,
-                            refreshing: false,
+                            refreshing: isReset ? false : this.state.refreshing,
                             showFooter: footer,
                         })
                     }
                     else {
                         this.setState({
-                            refreshing: false,
-                            showFooter: 0,
-                        });
-                        this.refToast.show(result.message);
+                            refreshing: isReset ? false : this.state.refreshing,
+                            showFooter: FooterTypeEnum.default,
+                        })
                     }
                 },(error)=>{
                     this.setState({
-                        refreshing: false,
-                        showFooter: 0,
-                    });
-                    this.refToast.show(error);
+                        refreshing: isReset ? false : this.state.refreshing,
+                        showFooter: FooterTypeEnum.default,
+                    })
                 });
     };
 

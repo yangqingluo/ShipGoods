@@ -222,6 +222,8 @@ let appData = {
     appMaxLengthVerifyCode: 4,
     appMaxLengthPhone: 11,
     appMaxLengthPassword: 20,
+
+    appOnEndReachedThreshold: 0.1,
 };
 
 let appStyles = StyleSheet.create({
@@ -294,6 +296,7 @@ global.appUrl = 'http://shiphire.com.cn/';//服务器url
 global.appShareUrl = 'http://shiphire.com.cn/shared/mobile/';
 global.appShareImage = 'res/ic_launcher';
 global.appUndefined =  'undefined';
+global.appPageSize = 15;
 global.NetUtil = NetUtil;
 global.appHomeVC = null;
 global.appOrderVC = null;

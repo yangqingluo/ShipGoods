@@ -194,7 +194,7 @@ export default class OrderListVC extends Component {
 
                     ListFooterComponent={this.renderFooter.bind(this)}
                     onEndReached={this.loadMoreData.bind(this)}
-                    onEndReachedThreshold={0}
+                    onEndReachedThreshold={appData.appOnEndReachedThreshold}
                 />
                 <CustomAlert ref={o => this.refSelectAlert = o} title={"确认收货"} message={"请收到货确认无误以后确认收货"} />
                 <Toast ref={o => this.refToast = o} position={'center'}/>
