@@ -34,7 +34,9 @@ export default class DetailVC extends Component {
     }
 
     addBtnAction =()=> {
-        this.props.navigation.navigate('AddShip', {callBack: this.callBackFromShipVC.bind(this)});
+        this.props.navigation.navigate('AddShip',
+            {callBack: this.callBackFromShipVC.bind(this)
+            });
     };
 
     callBackFromShipVC(key) {

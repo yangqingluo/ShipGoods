@@ -168,8 +168,8 @@ export default class AddShip extends Component {
                 data.projects = this.state.projects.join(",");
             }
 
-            if (!isAuthed()) {
-                //如果未认证
+            if (objectNotNull(this.props.navigation.state.params.key)) {
+                //从认证界面进入时添加该参数
                 data.is_check = '0';
             }
 
