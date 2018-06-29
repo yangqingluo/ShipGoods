@@ -1,4 +1,4 @@
-package com.shipgoods.invokenative;
+package com.xinfu.shipowner.invokenative;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

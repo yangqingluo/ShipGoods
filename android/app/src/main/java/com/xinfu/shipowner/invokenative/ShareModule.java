@@ -1,4 +1,4 @@
-package com.shipgoods.invokenative;
+package com.xinfu.shipowner.invokenative;
 
 import java.net.URLEncoder;
 import java.util.Map;

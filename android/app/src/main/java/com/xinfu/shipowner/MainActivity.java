@@ -1,4 +1,4 @@
-package com.shipgoods;
+package com.xinfu.shipowner;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,7 +11,7 @@ import android.text.TextUtils;
 import android.widget.Toast;
 import com.facebook.react.ReactActivity;
 import com.umeng.socialize.UMShareAPI;
-import com.shipgoods.invokenative.ShareModule;
+import com.xinfu.shipowner.invokenative.ShareModule;
 
 public class MainActivity extends ReactActivity {
 

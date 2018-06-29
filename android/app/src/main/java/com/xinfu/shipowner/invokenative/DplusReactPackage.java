@@ -1,4 +1,4 @@
-package com.shipgoods.invokenative;
+package com.xinfu.shipowner.invokenative;
 
 import java.util.ArrayList;
 import java.util.Arrays;

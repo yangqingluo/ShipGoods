@@ -1,4 +1,4 @@
-package com.shipgoods.wxapi;
+package com.xinfu.shipowner.wxapi;
 
 import com.umeng.socialize.weixin.view.WXCallbackActivity;
 

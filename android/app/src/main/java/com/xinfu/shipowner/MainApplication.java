@@ -1,4 +1,4 @@
-package com.shipgoods;
+package com.xinfu.shipowner;
 
 import android.app.Application;
 
@@ -13,8 +13,8 @@ import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
-import com.shipgoods.invokenative.DplusReactPackage;
-import com.shipgoods.invokenative.RNUMConfigure;
+import com.xinfu.shipowner.invokenative.DplusReactPackage;
+import com.xinfu.shipowner.invokenative.RNUMConfigure;
 
 import java.util.Arrays;
 import java.util.List;
