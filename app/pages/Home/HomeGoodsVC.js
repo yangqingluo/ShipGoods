@@ -22,7 +22,8 @@ export default class HomeGoodsVC extends Component {
     };
 
     componentDidMount() {
-        this.requestData();
+        this.requestRecommend(true);
+        // this.requestData();
     };
 
     scrollAndRequestData = () => {

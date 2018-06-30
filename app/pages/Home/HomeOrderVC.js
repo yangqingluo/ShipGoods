@@ -24,7 +24,8 @@ export default class HomeOrderVC extends Component {
     };
 
     componentDidMount() {
-        this.requestData();
+        this.requestRecommend(true);
+        // this.requestData();
     };
 
     scrollAndRequestData = () => {
