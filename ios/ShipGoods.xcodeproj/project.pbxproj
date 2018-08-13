@@ -1000,7 +1000,8 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = SLC55J99V5;
+						DevelopmentTeam = 3AB8HSWS5P;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -1572,9 +1573,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = SLC55J99V5;
+				DEVELOPMENT_TEAM = 3AB8HSWS5P;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/UMSocial/SocialLibraries/Facebook",
@@ -1612,6 +1615,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xuqingri.shipping;
 				PRODUCT_NAME = ShipGoods;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1621,8 +1625,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = SLC55J99V5;
+				DEVELOPMENT_TEAM = 3AB8HSWS5P;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/UMSocial/SocialLibraries/Facebook",
@@ -1660,6 +1666,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xuqingri.shipping;
 				PRODUCT_NAME = ShipGoods;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
