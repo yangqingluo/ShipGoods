@@ -34,7 +34,7 @@ const MainTabNavigator = TabNavigator(
                     } else if (routeName === 'OrderVC') {
                         iconPath = require("../images/tabbar_icon_business.png");
                     } else if (routeName === 'ReleaseVC') {
-                        iconPath = require("../images/tabPublish.png");
+                        iconPath = require("../images/tabAdd.png");
                         isRelease = true;
                     }
                     else if (routeName === 'MessageVC') {
@@ -102,10 +102,19 @@ const MainTabNavigator = TabNavigator(
             },
             //tabStyle的父容器
             style: {
-                //backgroundColor: '#0ff',
+                backgroundColor: '#fff',
                 height: 50,
-                //position: 'absolute',
-                //overflow: 'visible',
+                overflow: 'visible',
+                borderTopWidth: 0,
+                // borderTopColor: "#00000010",
+                shadowColor: '#000',
+                shadowOffset: {
+                    width: 0,
+                    height: -1
+                },
+                // shadowRadius: 10,
+                shadowOpacity: 0.1,
+                elevation: 4,
             },
             //tabImage的父容器
             tabStyle: {

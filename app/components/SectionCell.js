@@ -13,7 +13,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 const Font = {
     Ionicons,
     FontAwesome
-}
+};
 
 type Props = {
     info: Object,
@@ -24,8 +24,8 @@ type Props = {
 export default class SectionCell extends PureComponent<Props> {
 
     render() {
-        let {info, selected} = this.props
-        const Icon = Font["Ionicons"]
+        let {info, selected} = this.props;
+        const Icon = Font["Ionicons"];
         return (
             <TouchableOpacity style={styles.container} onPress={() => this.props.onPress(info)}>
                 <View style={{marginTop:0, height:px2dp(0.5),backgroundColor:appData.appSeparatorColor}}/>

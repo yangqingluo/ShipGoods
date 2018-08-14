@@ -10,12 +10,20 @@ export default class TabBarItem extends Component {
         return(
             <Image source={ this.props.normalImage }
                    style={ this.props.isRelease ?
-                       { tintColor:this.props.tintColor,
+                       {
                            position: 'absolute',
                            overflow: 'visible',
                            bottom: Platform.OS === 'ios' ? 5 : -3,
                            width: radius,
                            height:radius,
+                           shadowColor: '#000',
+                           shadowOffset: {
+                               width: 0,
+                               height: -1
+                           },
+                           // shadowRadius: 10,
+                           shadowOpacity: 0.1,
+                           elevation: 4,
                        }
                    :
                        { tintColor:this.props.tintColor, width:radius, height:radius}}
