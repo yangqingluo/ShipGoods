@@ -105,8 +105,8 @@ const MainTabNavigator = TabNavigator(
                 backgroundColor: '#fff',
                 height: 50,
                 overflow: 'visible',
-                borderTopWidth: 0,
-                // borderTopColor: "#00000010",
+                borderTopWidth: 1,
+                borderTopColor: "#00000010",
                 shadowColor: '#000',
                 shadowOffset: {
                     width: 0,
@@ -114,7 +114,7 @@ const MainTabNavigator = TabNavigator(
                 },
                 // shadowRadius: 10,
                 shadowOpacity: 0.1,
-                elevation: 4,
+                elevation: -4,
             },
             //tabImage的父容器
             tabStyle: {

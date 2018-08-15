@@ -16,14 +16,14 @@ export default class TabBarItem extends Component {
                            bottom: Platform.OS === 'ios' ? 5 : -3,
                            width: radius,
                            height:radius,
-                           shadowColor: '#000',
-                           shadowOffset: {
-                               width: 0,
-                               height: -1
-                           },
-                           // shadowRadius: 10,
-                           shadowOpacity: 0.1,
-                           elevation: 4,
+                           // shadowColor: '#000',
+                           // shadowOffset: {
+                           //     width: 0,
+                           //     height: -1
+                           // },
+                           // // shadowRadius: 10,
+                           // shadowOpacity: 0.1,
+                           // // elevation: -4,
                        }
                    :
                        { tintColor:this.props.tintColor, width:radius, height:radius}}
