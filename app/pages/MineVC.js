@@ -58,7 +58,8 @@ export default class MineVC extends Component {
     goPage(key, data = {}){
         const { navigate } = this.props.navigation;
         if (key === 'Call') {
-            Communications.phonecall(appData.appCustomerServicePhone, true);
+            navigate("CustomTabVC");
+            // Communications.phonecall(appData.appCustomerServicePhone, true);
         }
         else if (key === 'MyShip') {
             navigate(key, { title: '我的船队', callBack: null});

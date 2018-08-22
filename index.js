@@ -52,6 +52,7 @@ import ChangePasswordVC from './app/pages/Mine/ChangePasswordVC';
 import SuggestionVC from './app/pages/Mine/SuggestionVC';
 import EditShipReleaseVC from './app/pages/Mine/EditShipReleaseVC';
 import EditGoodsReleaseVC from './app/pages/Mine/EditGoodsReleaseVC';
+import CustomTabVC from './app/pages/CustomTabVC';
 
 const MyNavigator = StackNavigator({
         Wait: {screen: WaitVC},
@@ -72,6 +73,7 @@ const MyNavigator = StackNavigator({
         SelectTonnage:{screen: SelectTonnage},
         PublicWeb:{screen:PublicWebVC},
         PublicImageShow:{screen:PublicImageShowVC},
+        CustomTabVC:{screen:CustomTabVC},
 
         HomeShipDetail:{screen: HomeShipDetailVC},
         HomeOrderDetail:{screen: HomeOrderDetailVC},
