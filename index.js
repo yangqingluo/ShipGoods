@@ -5,7 +5,7 @@ import {StackNavigator, NavigationActions} from 'react-navigation';
 import './app/util/Global'
 
 import WaitVC from './app/pages/WaitVC'
-import MainTab from './app/pages/MainTab'
+// import MainTab from './app/pages/MainTab'
 import DetailVC from './app/pages/DetailVC';
 import LoginVC from './app/pages/LoginVC';
 import Register from './app/pages/Register';
@@ -53,6 +53,7 @@ import SuggestionVC from './app/pages/Mine/SuggestionVC';
 import EditShipReleaseVC from './app/pages/Mine/EditShipReleaseVC';
 import EditGoodsReleaseVC from './app/pages/Mine/EditGoodsReleaseVC';
 import CustomTabVC from './app/pages/CustomTabVC';
+import MainTab from './app/pages/MainTabVC'
 
 const MyNavigator = StackNavigator({
         Wait: {screen: WaitVC},

@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        minWidth: screenWidth / 5.0,
     },
     tabItem: {
         flex: 1,
