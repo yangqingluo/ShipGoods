@@ -301,6 +301,7 @@ global.appPageSize = 15;
 global.NetUtil = NetUtil;
 global.appHomeVC = null;
 global.appOrderVC = null;
+global.appReleaseVC = null;
 global.appMineVC = null;
 global.appMainTab = null;
 global.appDeviceId = DeviceInfo.getUniqueID();
@@ -311,18 +312,33 @@ global.appSecondPriceParams = null;
 global.dismissKeyboard = require('dismissKeyboard');
 global.backAndGoToAuth = function() : void {
     appMainTab.props.navigation.goBack('Main');
-    appMainTab.props.navigation.navigate('MineVC');
+    if (objectNotNull(appMainTab.refTab)) {
+        appMainTab.refTab.goToPage(4);
+    }
+    else {
+        appMainTab.props.navigation.navigate('MineVC');
+    }
     appMainTab.props.navigation.navigate('AddAuth');
 };
 
 global.backAndGoToOrder = function() : void {
     appMainTab.props.navigation.goBack('Main');
-    appMainTab.props.navigation.navigate('OrderVC');
+    if (objectNotNull(appMainTab.refTab)) {
+        appMainTab.refTab.goToPage(1);
+    }
+    else {
+        appMainTab.props.navigation.navigate('OrderVC');
+    }
 };
 
 global.backAndGoToMyRelease = function() : void {
     appMainTab.props.navigation.goBack('Main');
-    appMainTab.props.navigation.navigate('MineVC');
+    if (objectNotNull(appMainTab.refTab)) {
+        appMainTab.refTab.goToPage(4);
+    }
+    else {
+        appMainTab.props.navigation.navigate('MineVC');
+    }
     appMainTab.props.navigation.navigate('MyPost');
 };
 

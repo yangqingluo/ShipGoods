@@ -90,7 +90,7 @@ export default class HomeOrderShipListVC extends Component {
     };
 
     onCellSelected = (info: Object) => {
-        appHomeVC.props.navigation.navigate('HomeOrderShipDetail',
+        appMainTab.props.navigation.navigate('HomeOrderShipDetail',
             {
                 info: info.item,
             });

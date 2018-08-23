@@ -5,7 +5,7 @@ import {StackNavigator, NavigationActions} from 'react-navigation';
 import './app/util/Global'
 
 import WaitVC from './app/pages/WaitVC'
-// import MainTab from './app/pages/MainTab'
+import MainTab from './app/pages/MainTab'
 import DetailVC from './app/pages/DetailVC';
 import LoginVC from './app/pages/LoginVC';
 import Register from './app/pages/Register';
@@ -52,14 +52,13 @@ import ChangePasswordVC from './app/pages/Mine/ChangePasswordVC';
 import SuggestionVC from './app/pages/Mine/SuggestionVC';
 import EditShipReleaseVC from './app/pages/Mine/EditShipReleaseVC';
 import EditGoodsReleaseVC from './app/pages/Mine/EditGoodsReleaseVC';
-import CustomTabVC from './app/pages/CustomTabVC';
-import MainTab from './app/pages/MainTabVC'
+import CustomMainTab from './app/pages/MainTabVC';
 
 const MyNavigator = StackNavigator({
         Wait: {screen: WaitVC},
         Login: {screen: LoginVC},
         Register: {screen: Register},
-        Main:{screen: MainTab},
+        Main:{screen: CustomMainTab},
         DetailVC:{screen:DetailVC},
         AddAuth:{screen: AddAuth},
         SelectText:{screen: SelectText},
@@ -74,7 +73,6 @@ const MyNavigator = StackNavigator({
         SelectTonnage:{screen: SelectTonnage},
         PublicWeb:{screen:PublicWebVC},
         PublicImageShow:{screen:PublicImageShowVC},
-        CustomTabVC:{screen:CustomTabVC},
 
         HomeShipDetail:{screen: HomeShipDetailVC},
         HomeOrderDetail:{screen: HomeOrderDetailVC},

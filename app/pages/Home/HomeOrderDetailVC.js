@@ -178,7 +178,7 @@ export default class HomeOrderDetailVC extends Component {
         if (key === "SelectOffer") {
             let offer_num = parseInt(info.offer_num);
             if (offer_num > 0) {
-                appHomeVC.props.navigation.navigate('HomeOrderShipList',
+                appMainTab.props.navigation.navigate('HomeOrderShipList',
                     {
                         info: this.state.detailInfo,
                     });

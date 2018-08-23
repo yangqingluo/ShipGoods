@@ -20,7 +20,7 @@ export default class ReleaseVC extends Component {
         tabBarLabel: '发布',
         headerRight: <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
             <TouchableOpacity
-                onPress={navigation.state.params.clickSureBtn}
+                onPress={()=> {appReleaseVC.sureBtnClick()}}
             >
                 <Text style={{marginRight: 10, color: appData.appBlueColor}}>{'  提交  '}</Text>
             </TouchableOpacity>
@@ -83,7 +83,7 @@ export default class ReleaseVC extends Component {
     }
 
     componentDidMount() {
-        this.props.navigation.setParams({clickSureBtn:this.sureBtnClick});
+        global.appReleaseVC = this;
         this.refreshDefaultState();
     }
 

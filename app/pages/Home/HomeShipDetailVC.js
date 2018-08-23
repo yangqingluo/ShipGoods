@@ -125,7 +125,7 @@ export default class HomeShipDetailVC extends Component {
 
     onSubmitBtnAction = () => {
         if (isAuthed()) {
-            appHomeVC.props.navigation.navigate('HomeOrderSelect',
+            appMainTab.props.navigation.navigate('HomeOrderSelect',
                 {
                     info: this.state.detailInfo,
                 });

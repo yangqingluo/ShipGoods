@@ -18,9 +18,6 @@ import HomeListOrderVC from './Home/HomeOrderVC';
 import HomeListOfferVC from './Home/HomeOfferVC';
 import SideMenu from '../components/SideMenu';
 import Menu from './Home/HomeMenu';
-import px2dp from "../util";
-
-
 
 class RightHeader extends Component {
     constructor(props) {
@@ -39,15 +36,15 @@ class RightHeader extends Component {
     render() {
         return (
             <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                <TouchableOpacity onPress={this.onSortBtnPress} style={{minWidth: px2dp(51)}}>
+                <TouchableOpacity onPress={this.onSortBtnPress} style={{minWidth: 51}}>
                     <Image source={require('../images/navbar_icon_paixu.png')}
-                        style={{ width: px2dp(17), height: px2dp(21), marginLeft: px2dp(20), marginRight: px2dp(10),}}
+                        style={{ width: 17, height: 21, marginLeft: 20, marginRight: 10,}}
                     />
                 </TouchableOpacity>
                 <View style={{ width: 0, height: 15, borderWidth: 1, opacity: .1 }} />
-                <TouchableOpacity onPress={this.onScreenBtnPress} style={{minWidth: px2dp(51)}}>
+                <TouchableOpacity onPress={this.onScreenBtnPress} style={{minWidth: 51}}>
                     <Image source={require('../images/navbar_icon_shai.png')}
-                        style={{ width: px2dp(20), height: px2dp(16), marginLeft: px2dp(13), marginRight: px2dp(18), }}
+                        style={{ width: 20, height: 16, marginLeft: 13, marginRight: 18, }}
                     />
                 </TouchableOpacity>
             </View>

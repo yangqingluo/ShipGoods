@@ -56,7 +56,7 @@ export default class MineVC extends Component {
     }
 
     goPage(key, data = {}){
-        const { navigate } = this.props.navigation;
+        const { navigate } = appMainTab.props.navigation;
         if (key === 'Call') {
             Communications.phonecall(appData.appCustomerServicePhone, true);
         }
