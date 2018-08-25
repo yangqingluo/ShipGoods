@@ -53,12 +53,7 @@ export default class MoreSettingsVC extends Component {
 
     onSelectLogout(index) {
         if (index === 1) {
-            storage.remove({
-                key: 'userData'
-            });
-            global.userData = null;
-
-            this.props.navigation.dispatch(PublicResetAction('Login'));
+            appLogout();
         }
     }
 

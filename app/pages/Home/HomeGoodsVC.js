@@ -78,7 +78,6 @@ export default class HomeGoodsVC extends Component {
         if (objectNotNull(appHomeCondition.creditorder)) data.creditorder = appHomeCondition.creditorder;
         if (objectNotNull(appHomeCondition.timeorder)) data.timeorder = appHomeCondition.timeorder;
 
-        PublicAlert(JSON.stringify(data));
         NetUtil.post(appUrl + 'index.php/Mobile/Goods/goods_index/', data)
             .then(
                 (result)=>{

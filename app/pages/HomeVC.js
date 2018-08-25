@@ -234,7 +234,7 @@ export default class HomeVC extends Component {
 
     render() {
         let tabTitles = isShipOwner() ? ['等待报价', '已报价'] : ['空船', '我的货'];
-        const menu = <Menu ref={o => this.rightMenu = o} onItemSelected={this.onMenuItemSelected} navigation={this.props.navigation}/>;
+        const menu = <Menu ref={o => this.rightMenu = o} onItemSelected={this.onMenuItemSelected}/>;
         return (
             <SideMenu menu={menu}
                       disableGestures={true}

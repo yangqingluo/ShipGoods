@@ -91,7 +91,7 @@ export default class Menu extends Component {
             this.toGoToPortsVC(key);
         }
         else if (key === "SelectEmptyTime") {
-            this.props.navigation.navigate(
+            appMainTab.props.navigation.navigate(
                 "SelectEmptyTimeVC",
                 {
                     title: '承运时间',
@@ -102,7 +102,7 @@ export default class Menu extends Component {
                 });
         }
         else if (key === "SelectLoadingTime") {
-            this.props.navigation.navigate(
+            appMainTab.props.navigation.navigate(
                 "SelectEmptyTimeVC",
                 {
                     title: '发货时间',
@@ -119,7 +119,7 @@ export default class Menu extends Component {
 
     toGoToPortsVC(key) {
         if (appAllPortsFirst.length > 0) {
-            this.props.navigation.navigate(
+            appMainTab.props.navigation.navigate(
                 "SelectPort",
                 {
                     title: '选择港口',

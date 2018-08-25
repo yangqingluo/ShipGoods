@@ -299,11 +299,6 @@ global.appShareImage = 'res/ic_launcher';
 global.appUndefined =  'undefined';
 global.appPageSize = 15;
 global.NetUtil = NetUtil;
-global.appHomeVC = null;
-global.appOrderVC = null;
-global.appReleaseVC = null;
-global.appMineVC = null;
-global.appMainTab = null;
 global.appDeviceId = DeviceInfo.getUniqueID();
 global.screenWidth = width;
 global.screenHeight = height;
@@ -615,6 +610,11 @@ global.compare = function compare(val1, val2){
     return val1 > val2;
 };
 
+global.appHomeVC = null;
+global.appOrderVC = null;
+global.appReleaseVC = null;
+global.appMineVC = null;
+global.appMainTab = null;
 global.appAllGoods = [];
 global.appHotPorts = [];
 global.appAllPortsFirst = [];
@@ -632,6 +632,41 @@ global.appHomeCondition = {
     loading_time: null,//发货时间
     loading_delay: 0,//发货延迟
     unloading_port: null,//卸货港
+};
+
+global.appResetState = function () {
+    global.appHomeVC = null;
+    global.appOrderVC = null;
+    global.appReleaseVC = null;
+    global.appMineVC = null;
+    global.appMainTab = null;
+    global.appAllGoods = [];
+    global.appHotPorts = [];
+    global.appAllPortsFirst = [];
+    global.appAllPortsSecond = [];
+    global.appHomeCondition = {
+        empty_port: null,//空船港
+        empty_time: null,//空船期
+        empty_delay: 0,//空船延迟
+        goods: null,//可运货品
+        ship_type: null,//船舶类型
+        area: [],//航行区域
+        min_ton: 0,//货量区间 最小吨位
+        max_ton: 0,//货量区间 最大吨位
+        loading_port: null,//装货港
+        loading_time: null,//发货时间
+        loading_delay: 0,//发货延迟
+        unloading_port: null,//卸货港
+    };
+    storage.remove({
+        key: 'userData'
+    });
+    global.userData = null;
+};
+
+global.appLogout = function () {
+    appMainTab.props.navigation.dispatch(PublicResetAction('Login'));
+    global.appResetState();
 };
 
 export const imagePickerOptions = {
