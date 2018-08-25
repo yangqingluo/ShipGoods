@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+    Platform,
     AsyncStorage,
     Alert,
     View,
@@ -608,6 +609,10 @@ global.deepCopy = function(obj : Object) : Object {
 
 global.compare = function compare(val1, val2){
     return val1 > val2;
+};
+
+global.isIOS = function() : boolean {
+    return Platform.OS === 'ios';
 };
 
 global.appHomeVC = null;

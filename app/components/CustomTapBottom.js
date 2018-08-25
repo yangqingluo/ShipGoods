@@ -10,6 +10,7 @@ import {
     from
         'react-native';
 import PropTypes from 'prop-types';
+import {BoxShadow} from 'react-native-shadow';
 
 export default class TabBottom extends Component {
 
@@ -56,7 +57,7 @@ export default class TabBottom extends Component {
                             width:radius,
                             height:radius}}
                                source={icon}/>}
-                    <Text style={{color: color, fontSize: 10, marginTop: 5}}>
+                    <Text style={{color: color, fontSize: 10, fontWeight: appData.appFontWeightMedium, marginTop: 5}}>
                         {this.props.tabNames[i]}
                     </Text>
                 </TouchableOpacity>
@@ -65,9 +66,21 @@ export default class TabBottom extends Component {
     }
 
     render() {
+        const shadowOpt = {
+            width: screenWidth,
+            height: 0,
+            color:"#000",
+            border: 1,
+            // radius: 10,
+            opacity: 0.05,
+            x: 0,
+            y: -2,
+            style:{position: 'absolute',}
+        };
         return (
             <View style={{height: 50}}>
                 <View style={styles.tabShadow}/>
+                {isIOS() ? null : <BoxShadow setting={shadowOpt} />}
                 <View style={styles.tabs}>
                     {this.props.tabs.map((tab, i) => {
                         return this.renderTabItemForIndex(tab, i);
@@ -84,8 +97,10 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     tabShadow: {
-        height: 1,
-        backgroundColor: "#00000010",
+        width: screenWidth,
+        height: 50,
+        position: 'absolute',
+        backgroundColor: "#fff",
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
@@ -93,7 +108,7 @@ const styles = StyleSheet.create({
         },
         // shadowRadius: 10,
         shadowOpacity: 0.1,
-        elevation: -4,
+        elevation: 4,
     },
     tab: {
         flex: 1,
