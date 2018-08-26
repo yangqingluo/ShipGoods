@@ -70,7 +70,7 @@ export default class TabBottom extends Component {
             width: screenWidth,
             height: 0,
             color:"#000",
-            border: 2,
+            border: 5,
             // radius: 10,
             opacity: 0.05,
             x: 0,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
         },
         // shadowRadius: 10,
         shadowOpacity: 0.1,
-        elevation: 4,
+        // elevation: 4,
     },
     tab: {
         flex: 1,
