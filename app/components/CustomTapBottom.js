@@ -10,7 +10,7 @@ import {
     from
         'react-native';
 import PropTypes from 'prop-types';
-import {BoxShadow} from 'react-native-shadow';
+import {BoxShadow, BorderShadow} from 'react-native-shadow';
 
 export default class TabBottom extends Component {
 
@@ -70,17 +70,23 @@ export default class TabBottom extends Component {
             width: screenWidth,
             height: 0,
             color:"#000",
-            border: 5,
+            border: 3,
             // radius: 10,
             opacity: 0.05,
             x: 0,
             y: 0,
+            side: "top",
             style:{position: 'absolute',}
         };
         return (
             <View style={{height: 50}}>
-                <View style={styles.tabShadow}/>
-                {isIOS() ? null : <BoxShadow setting={shadowOpt} />}
+                {isIOS() ?
+                    <View style={styles.tabShadow}/>
+                    :
+                    <BorderShadow setting={shadowOpt}>
+                        <View style={styles.tabShadow}/>
+                    </BorderShadow>
+                }
                 <View style={styles.tabs}>
                     {this.props.tabs.map((tab, i) => {
                         return this.renderTabItemForIndex(tab, i);
