@@ -70,11 +70,11 @@ export default class TabBottom extends Component {
             width: screenWidth,
             height: 0,
             color:"#000",
-            border: 1,
+            border: 2,
             // radius: 10,
             opacity: 0.05,
             x: 0,
-            y: -2,
+            y: 0,
             style:{position: 'absolute',}
         };
         return (
@@ -100,6 +100,8 @@ const styles = StyleSheet.create({
         width: screenWidth,
         height: 50,
         position: 'absolute',
+        borderTopWidth: 0.5,
+        borderTopColor: "#00000006",
         backgroundColor: "#fff",
         shadowColor: '#000',
         shadowOffset: {
