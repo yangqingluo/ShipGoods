@@ -304,9 +304,10 @@ export default class ReleaseVC extends Component {
     }
 
     cellSelected(key, data = {}){
+        const { navigate } = appMainTab.props.navigation;
         dismissKeyboard();
         if (key === "SelectCourse") {
-            this.props.navigation.navigate(
+            navigate(
                 'SelectText',
                 {
                     key: key,
@@ -338,14 +339,14 @@ export default class ReleaseVC extends Component {
         }
 
         else if (key === "SelectShip") {
-            this.props.navigation.navigate(
+            navigate(
                 "MyShip",
                 {
                     callBack:this.callBackFromShipVC.bind(this)
                 });
         }
         else if (key === "SelectEmptyTime") {
-            this.props.navigation.navigate(
+            navigate(
                 "SelectEmptyTimeVC",
                 {
                     title: '空船期',
@@ -356,7 +357,7 @@ export default class ReleaseVC extends Component {
                 });
         }
         else if (key === "SelectLoadingTime") {
-            this.props.navigation.navigate(
+            navigate(
                 "SelectEmptyTimeVC",
                 {
                     title: '发货时间',
@@ -367,7 +368,7 @@ export default class ReleaseVC extends Component {
                 });
         }
         else if (key === "SelectWastage") {
-            this.props.navigation.navigate(
+            navigate(
                 "SelectWastageVC",
                 {
                     title: '选择损耗',
@@ -378,7 +379,7 @@ export default class ReleaseVC extends Component {
                 });
         }
         else if (key === "SelectPrice") {
-            this.props.navigation.navigate(
+            navigate(
                 "SelectPrice",
                 {
                     title: '选择运价',
@@ -389,7 +390,7 @@ export default class ReleaseVC extends Component {
                 });
         }
         else if (key === "SelectTonnage") {
-            this.props.navigation.navigate(
+            navigate(
                 "SelectTonnage",
                 {
                     title: '货量',
@@ -414,7 +415,7 @@ export default class ReleaseVC extends Component {
 
     toGoToPortsVC(key) {
         if (appAllPortsFirst.length > 0) {
-            this.props.navigation.navigate(
+            appMainTab.props.navigation.navigate(
                 "SelectPort",
                 {
                     title: '选择港口',
@@ -523,7 +524,7 @@ export default class ReleaseVC extends Component {
 
     toGoToGoodsVC() {
         if (appAllGoods.length > 0) {
-            this.props.navigation.navigate(
+            appMainTab.props.navigation.navigate(
                 'CustomSectionSelect',
                 {
                     title: '可运货品',
@@ -564,7 +565,7 @@ export default class ReleaseVC extends Component {
 
     toGoToDownGoodsVC() {
         if (appAllGoods.length > 0) {
-            this.props.navigation.navigate(
+            appMainTab.props.navigation.navigate(
                 'CustomSectionSelect',
                 {
                     title: '意向货品',
@@ -605,7 +606,7 @@ export default class ReleaseVC extends Component {
 
     toGoToUpGoodsVC() {
         if (appAllGoods.length > 0) {
-            this.props.navigation.navigate(
+            appMainTab.props.navigation.navigate(
                 'CustomSectionSelect',
                 {
                     title: '上载货品',

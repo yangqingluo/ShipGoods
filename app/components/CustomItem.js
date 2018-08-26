@@ -56,34 +56,63 @@ export default class CustomItem extends Component {
     _render(){
         let {logo, iconSize, logoWidth, logoHeight, name, subName, editValue, color, noSeparator, avatar, disable, font, showArrowForward, hideArrowForward, maxLength} = this.props;
         let radius = 12;
+        // return (
+        //     <View style={{flexDirection: "column"}}>
+        //         {noSeparator ? null : <View style={{height: appData.appSeparatorHeight, backgroundColor: appData.appSeparatorLightColor}}/>}
+        //         <View style={styles.listItem} {...this.props}>
+        //             {logo? (<Image source={logo} style={{width: logoWidth, height: logoHeight, resizeMode: "cover", overflow:"hidden"}}/>) : null}
+        //             {/*{color?(<View style={{width: radius, height:radius, marginRight:5, borderRadius: 0.5 * radius, backgroundColor:color || "#4da6f0"}} />):null}*/}
+        //             {disable?
+        //                 <TextInput ref={o => this.refInput = o}
+        //                     underlineColorAndroid="transparent"
+        //                            keyboardType={this.props.numeric ? "numeric" : "default"}
+        //                            secureTextEntry={this.props.secureTextEntry}
+        //                            maxLength={maxLength}
+        //                            style={styles.textInput}
+        //                            placeholder={name + " " + (objectNotNull(editValue) ? editValue : "")}
+        //                            placeholderTextColor={appData.appSecondaryTextColor}
+        //                            editable={disable}
+        //                            onChangeText={(text) => {
+        //                                this.props.callback(text, this.props.idKey);
+        //                            }}
+        //                 >
+        //                 </TextInput>
+        //             :
+        //                 <Text style={styles.textLabel}
+        //                 >{name}
+        //                 </Text>
+        //             }
+        //             {disable ? null : <View style={{flex: 1}}/>}
+        //             {subName ? (<Text style={{flex: 1, minWidth:120, textAlign: 'right', color: "#000", fontSize:14}}>{subName}</Text>):null}
+        //             {avatar ? (<Image source={avatar} style={{width: 36, height: 36, resizeMode: "cover", overflow:"hidden", borderRadius: 18}}/>):null}
+        //             {this.props.children}
+        //             {showArrowForward ? <appFont.Ionicons style={{marginLeft: 10, paddingRight: 16, opacity: disable ? 0.0 : 1.0}} name="ios-arrow-forward-outline" size={18} color= {hideArrowForward ? "#fff0" : "#bbb"} /> : null}
+        //         </View>
+        //     </View>
+        // )
         return (
             <View style={{flexDirection: "column"}}>
                 {noSeparator ? null : <View style={{height: appData.appSeparatorHeight, backgroundColor: appData.appSeparatorLightColor}}/>}
                 <View style={styles.listItem} {...this.props}>
                     {logo? (<Image source={logo} style={{width: logoWidth, height: logoHeight, resizeMode: "cover", overflow:"hidden"}}/>) : null}
-                    {/*{color?(<View style={{width: radius, height:radius, marginRight:5, borderRadius: 0.5 * radius, backgroundColor:color || "#4da6f0"}} />):null}*/}
-                    {disable?
-                        <TextInput ref={o => this.refInput = o}
-                            underlineColorAndroid="transparent"
-                                   keyboardType={this.props.numeric ? "numeric" : "default"}
-                                   secureTextEntry={this.props.secureTextEntry}
-                                   maxLength={maxLength}
-                                   style={styles.textInput}
-                                   placeholder={name + " " + (objectNotNull(editValue) ? editValue : "")}
-                                   placeholderTextColor={appData.appSecondaryTextColor}
-                                   editable={disable}
-                                   onChangeText={(text) => {
-                                       this.props.callback(text, this.props.idKey);
-                                   }}
-                        >
-                        </TextInput>
-                    :
-                        <Text style={styles.textLabel}
-                        >{name}
-                        </Text>
-                    }
+                    <Text style={styles.textLabel}>{name}</Text>
                     {disable ? null : <View style={{flex: 1}}/>}
-                    {subName ? (<Text style={{flex: 1, minWidth:120, textAlign: 'right', color: "#000", fontSize:14}}>{subName}</Text>):null}
+                    {disable ? <TextInput ref={o => this.refInput = o}
+                                          underlineColorAndroid="transparent"
+                                          keyboardType={this.props.numeric ? "numeric" : "default"}
+                                          secureTextEntry={this.props.secureTextEntry}
+                                          maxLength={maxLength}
+                                          style={styles.textInput}
+                                          placeholder={name + " " + (objectNotNull(editValue) ? editValue : "")}
+                                          placeholderTextColor={appData.appSecondaryTextColor}
+                                          editable={disable}
+                                          onChangeText={(text) => {
+                                              this.props.callback(text, this.props.idKey);
+                                          }}
+                    />
+                    :
+                        (subName ? (<Text style={styles.subTextLabel}>{subName}</Text>):null)
+                    }
                     {avatar ? (<Image source={avatar} style={{width: 36, height: 36, resizeMode: "cover", overflow:"hidden", borderRadius: 18}}/>):null}
                     {this.props.children}
                     {showArrowForward ? <appFont.Ionicons style={{marginLeft: 10, paddingRight: 16, opacity: disable ? 0.0 : 1.0}} name="ios-arrow-forward-outline" size={18} color= {hideArrowForward ? "#fff0" : "#bbb"} /> : null}
@@ -112,13 +141,22 @@ const styles = StyleSheet.create({
         paddingVertical: 0,
         height: 30,
         fontSize: 14,
-        paddingHorizontal: 10,
+        paddingLeft: 10,
         color: appData.appTextColor,
+        textAlign: 'right',
+
     },
     textLabel: {
         paddingVertical: 0,
         fontSize: 14,
         paddingHorizontal: 10,
         color: appData.appTextColor,
+    },
+    subTextLabel: {
+        flex: 1,
+        minWidth:120,
+        textAlign: 'right',
+        color: appData.appTextColor,
+        fontSize:14
     },
 });

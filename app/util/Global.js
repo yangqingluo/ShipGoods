@@ -314,7 +314,7 @@ global.backAndGoToAuth = function() : void {
     else {
         appMainTab.props.navigation.navigate('MineVC');
     }
-    appMainTab.props.navigation.navigate('AddAuth');
+    appMineVC.requestRecommend(true);
 };
 
 global.backAndGoToOrder = function() : void {

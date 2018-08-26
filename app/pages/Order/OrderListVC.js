@@ -113,7 +113,7 @@ export default class OrderListVC extends Component {
     };
 
     onCellSelected = (info: Object) => {
-        this.props.navigation.navigate('OrderDetail',
+        appMainTab.props.navigation.navigate('OrderDetail',
             {
                 info: info.item,
                 order_state: this.props.order_state,
@@ -125,6 +125,7 @@ export default class OrderListVC extends Component {
     }
 
     onCellBottomBtnAction = (info: Object, tag: number) => {
+        const { navigate } = appMainTab.props.navigation;
         switch (tag){
             case OrderBtnEnum.CollectGoods:
                 this.refSelectAlert.show({onSureBtnAction:this.toCollectGoods.bind(this, info)});
@@ -132,14 +133,14 @@ export default class OrderListVC extends Component {
 
             case OrderBtnEnum.JudgeOrder:
             case OrderBtnEnum.JudgeCheck:
-                this.props.navigation.navigate('OrderJudgement',
+                navigate('OrderJudgement',
                     {
                         info: info,
                     });
                 break;
 
             case OrderBtnEnum.EditTransport:
-                this.props.navigation.navigate('OrderTransportEdit',
+                navigate('OrderTransportEdit',
                     {
                         info: info,
                         // callBack: this.callBackFromEditVC.bind(this)//直接调用appOrderVC.reload
@@ -147,7 +148,7 @@ export default class OrderListVC extends Component {
                 break;
 
             case OrderBtnEnum.CheckTransport:
-                this.props.navigation.navigate('OrderTransport',
+                navigate('OrderTransport',
                     {
                         info: info,
                     });
