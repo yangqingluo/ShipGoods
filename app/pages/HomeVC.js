@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import {
+    Animated,
     Image,
     Text,
     View,
@@ -8,6 +9,8 @@ import {
     TouchableHighlight,
     ScrollView,
     TouchableOpacity,
+    RefreshControl,
+    FlatList,
 } from 'react-native'
 import ActionSheet from 'react-native-actionsheet';
 import Swiper from 'react-native-swiper';
@@ -65,6 +68,7 @@ export default class HomeVC extends Component {
         this.state = {
             isOpen: false,
             selectedItem: '',
+            scrollHeight: new Animated.Value(0),
         };
 
         this.orderTypes = isShipOwner() ?
@@ -232,7 +236,18 @@ export default class HomeVC extends Component {
         }
     };
 
+    onScroll(event) {
+        Animated.event(
+            [{nativeEvent: {contentOffset: {y: this.state.scrollHeight}}}]
+        )(event);
+    }
+
     render() {
+        let t_y = this.state.scrollHeight.interpolate({
+            inputRange: [-1000, 0, 2 * TopHeight, 1000],
+            outputRange: [TopHeight, TopHeight, 0, 0]
+        });
+
         let tabTitles = isShipOwner() ? ['等待报价', '已报价'] : ['空船', '我的货'];
         const menu = <Menu ref={o => this.rightMenu = o} onItemSelected={this.onMenuItemSelected}/>;
         return (
@@ -242,7 +257,7 @@ export default class HomeVC extends Component {
                       onChange={isOpen => this.updateMenuState(isOpen)}
                       menuPosition={'right'}>
                 <View style={styles.container}>
-                    <View style={styles.swiperWrap}>
+                    <Animated.View style={{height: t_y}}>
                         <Swiper
                             style={styles.swiperWrap}
                             showsButtons={false}
@@ -260,7 +275,7 @@ export default class HomeVC extends Component {
                                 <Image source={require('../images/swiper.png')} style={styles.swiperImg}/>
                             </View>
                         </Swiper>
-                    </View>
+                    </Animated.View>
                     <ScrollableTabView
                         renderTabBar={() =>
                             <TabTop tabNames={tabTitles}
@@ -295,17 +310,16 @@ export default class HomeVC extends Component {
     }
 }
 
+const TopHeight = 140;
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
     },
-    swiperWrap: {
-        height: 140,
-    },
     swiperView: {
         padding: 10,
-        height: 140,
+        height: TopHeight,
         alignItems: 'center',
         justifyContent: 'center',
     },

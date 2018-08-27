@@ -6,6 +6,7 @@ import './app/util/Global'
 
 import WaitVC from './app/pages/WaitVC'
 import MainTab from './app/pages/MainTab'
+import CustomMainTab from './app/pages/MainTabVC';
 import DetailVC from './app/pages/DetailVC';
 import LoginVC from './app/pages/LoginVC';
 import Register from './app/pages/Register';
@@ -52,7 +53,7 @@ import ChangePasswordVC from './app/pages/Mine/ChangePasswordVC';
 import SuggestionVC from './app/pages/Mine/SuggestionVC';
 import EditShipReleaseVC from './app/pages/Mine/EditShipReleaseVC';
 import EditGoodsReleaseVC from './app/pages/Mine/EditGoodsReleaseVC';
-import CustomMainTab from './app/pages/MainTabVC';
+import ScrollTopVC from './app/pages/ScrollTopVC';
 
 const MyNavigator = StackNavigator({
         Wait: {screen: WaitVC},
@@ -103,6 +104,7 @@ const MyNavigator = StackNavigator({
         Suggestion:{screen:SuggestionVC},
         EditShipRelease:{screen:EditShipReleaseVC},
         EditGoodsRelease:{screen:EditGoodsReleaseVC},
+        ScrollTopVC:{screen:ScrollTopVC},
     }
     , {
         navigationOptions: {

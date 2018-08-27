@@ -134,6 +134,10 @@ export default class HomeGoodsVC extends Component {
         return <ListLoadFooter showFooter={this.state.showFooter}/>;
     }
 
+    onScroll(event) {
+        appHomeVC.onScroll(event);
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -142,7 +146,8 @@ export default class HomeGoodsVC extends Component {
                     style={{flex:1}}
                     data={this.state.dataList}
                     renderItem={this.renderCell}
-
+                    onScroll={this.onScroll.bind(this)}
+                    scrollEventThrottle={10}
                     keyExtractor={(item: Object, index: number) => {
                         return '' + index;
                     }}
