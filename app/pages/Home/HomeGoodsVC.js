@@ -138,6 +138,14 @@ export default class HomeGoodsVC extends Component {
         appHomeVC.onScroll(event);
     }
 
+    onScrollBeginDrag() {
+        appHomeVC.onScrollBeginDrag();
+    }
+
+    onScrollEndDrag(event) {
+        appHomeVC.onScrollEndDrag(event);
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -147,6 +155,8 @@ export default class HomeGoodsVC extends Component {
                     data={this.state.dataList}
                     renderItem={this.renderCell}
                     onScroll={this.onScroll.bind(this)}
+                    onScrollBeginDrag={this.onScrollBeginDrag.bind(this)}
+                    onScrollEndDrag={this.onScrollEndDrag.bind(this)}
                     scrollEventThrottle={10}
                     keyExtractor={(item: Object, index: number) => {
                         return '' + index;

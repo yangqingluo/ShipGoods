@@ -120,6 +120,23 @@ export default class HomeOrderVC extends Component {
         return <ListLoadFooter showFooter={this.state.showFooter}/>;
     }
 
+    onScroll(event) {
+        appHomeVC.onScroll(event);
+    }
+
+    onScrollBeginDrag() {
+        appHomeVC.onScrollBeginDrag();
+    }
+
+    onScrollEndDrag(event) {
+        appHomeVC.onScrollEndDrag(event);
+    }
+
+    onRefreshControl() {
+        appHomeVC.onRefreshControl();
+        this.requestData();
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -128,12 +145,15 @@ export default class HomeOrderVC extends Component {
                     style={{flex:1}}
                     data={this.state.dataList}
                     renderItem={this.renderCell}
-
+                    onScroll={this.onScroll.bind(this)}
+                    onScrollBeginDrag={this.onScrollBeginDrag.bind(this)}
+                    onScrollEndDrag={this.onScrollEndDrag.bind(this)}
+                    scrollEventThrottle={10}
                     keyExtractor={(item: Object, index: number) => {
                         return '' + index;
                     }}
                     refreshControl={<RefreshControl refreshing={this.state.refreshing}
-                                        onRefresh={this.requestData.bind(this)}/>}
+                                        onRefresh={this.onRefreshControl.bind(this)}/>}
 
                     ListFooterComponent={this.renderFooter.bind(this)}
                     onEndReached={this.loadMoreData.bind(this)}
