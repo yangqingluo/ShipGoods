@@ -124,12 +124,16 @@ export default class HomeOrderVC extends Component {
         appHomeVC.onScroll(event);
     }
 
-    onScrollBeginDrag() {
-        appHomeVC.onScrollBeginDrag();
+    onScrollBeginDrag(event) {
+        appHomeVC.onScrollBeginDrag(event);
     }
 
     onScrollEndDrag(event) {
         appHomeVC.onScrollEndDrag(event);
+    }
+
+    onMomentumScrollEnd(event) {
+        appHomeVC.onMomentumScrollEnd(event);
     }
 
     onRefreshControl() {
@@ -148,6 +152,7 @@ export default class HomeOrderVC extends Component {
                     onScroll={this.onScroll.bind(this)}
                     onScrollBeginDrag={this.onScrollBeginDrag.bind(this)}
                     onScrollEndDrag={this.onScrollEndDrag.bind(this)}
+                    onMomentumScrollEnd={this.onMomentumScrollEnd.bind(this)}
                     scrollEventThrottle={10}
                     keyExtractor={(item: Object, index: number) => {
                         return '' + index;

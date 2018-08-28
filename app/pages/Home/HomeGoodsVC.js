@@ -138,12 +138,21 @@ export default class HomeGoodsVC extends Component {
         appHomeVC.onScroll(event);
     }
 
-    onScrollBeginDrag() {
-        appHomeVC.onScrollBeginDrag();
+    onScrollBeginDrag(event) {
+        appHomeVC.onScrollBeginDrag(event);
     }
 
     onScrollEndDrag(event) {
         appHomeVC.onScrollEndDrag(event);
+    }
+
+    onMomentumScrollEnd(event) {
+        appHomeVC.onMomentumScrollEnd(event);
+    }
+
+    onRefreshControl(event) {
+        appHomeVC.onRefreshControl();
+        this.requestData();
     }
 
     render() {
@@ -154,9 +163,12 @@ export default class HomeGoodsVC extends Component {
                     style={{flex:1}}
                     data={this.state.dataList}
                     renderItem={this.renderCell}
+                    alwaysBounceVertical={true}
+                    bounces={true}
                     onScroll={this.onScroll.bind(this)}
                     onScrollBeginDrag={this.onScrollBeginDrag.bind(this)}
                     onScrollEndDrag={this.onScrollEndDrag.bind(this)}
+                    onMomentumScrollEnd={this.onMomentumScrollEnd.bind(this)}
                     scrollEventThrottle={10}
                     keyExtractor={(item: Object, index: number) => {
                         return '' + index;
@@ -164,7 +176,7 @@ export default class HomeGoodsVC extends Component {
                     // ItemSeparatorComponent={global.renderSeparator}
                     // ListHeaderComponent={this.renderHeader}
                     refreshControl={<RefreshControl refreshing={this.state.refreshing}
-                                                    onRefresh={this.requestData.bind(this)}/>}
+                                                    onRefresh={this.onRefreshControl.bind(this)}/>}
 
                     ListFooterComponent={this.renderFooter.bind(this)}
                     onEndReached={this.loadMoreData.bind(this)}

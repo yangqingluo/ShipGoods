@@ -56,8 +56,6 @@ class RightHeader extends Component {
 }
 
 export default class HomeVC extends Component {
-    isScrolling = false;
-
     static navigationOptions = ({ navigation }) => ({
         headerLeft: <Text style={{marginLeft: 10}}>友船友货</Text>,
         headerRight: <RightHeader navigation={navigation}/>,
@@ -247,56 +245,41 @@ export default class HomeVC extends Component {
         }
     }
 
-    onScrollBeginDrag() {
-        this.isScrolling = true;
+    onScrollBeginDrag(event) {
     }
 
     onScrollEndDrag(event) {
-        this.isScrolling = false;
-        Animated.event(
-            [{nativeEvent: {contentOffset: {y: this.state.scrollHeight}}}]
-        )(event);
+        let {contentSize, layoutMeasurement, contentOffset} = event.nativeEvent;
+        Animated.timing(
+            this.state.scrollHeight,
+            {
+                toValue: contentOffset.y > 0 ? AnimatedHeight + 1 : 0,
+                duration: 10,
+            },
+        ).start();
+    }
+
+    onMomentumScrollEnd(event) {
+
     }
 
     onRefreshControl() {
         if (!isIOS()) {
-            this.isScrolling = false;
-            this.setState({
-                scrollHeight: new Animated.Value(0),
-            });
-            Animated.event(
-                [{0: this.state.scrollHeight}]
-            );
+            Animated.timing(
+                this.state.scrollHeight,
+                {
+                    toValue: 0,
+                    duration: 10,
+                },
+            ).start();
         }
     }
 
     render() {
-        let t_y;
-        if (this.isScrolling) {
-            if (isIOS()) {
-                t_y = this.state.scrollHeight.interpolate({
-                    inputRange: [-1, 0, 2 * TopHeight, 3 * TopHeight],
-                    outputRange: [TopHeight, TopHeight, 0, 0]
-                    // inputRange: [-0.1 * TopHeight, 0, 0.1 * TopHeight,],
-                    // outputRange: [TopHeight, TopHeight, 0]
-                });
-            }
-            else {
-                t_y = this.state.scrollHeight.interpolate({
-                    inputRange: [-1, 0, TopHeight, 3 * TopHeight],
-                    outputRange: [TopHeight, TopHeight, 0, 0]
-                });
-            }
-        }
-        else {
-            t_y = this.state.scrollHeight.interpolate({
-                inputRange: [-1, 0, 1, 3 * TopHeight],
-                outputRange: [TopHeight, TopHeight, 0, 0]
-            });
-        }
-        // PublicAlert(this.isScrolling + "**" + JSON.stringify(t_y ) + "**" + JSON.stringify(this.state.scrollHeight));
-
-
+        let t_y = this.state.scrollHeight.interpolate({
+            inputRange: [-1, 0, AnimatedHeight, AnimatedHeight + 1],
+            outputRange: [TopHeight, TopHeight, 0.6 * TopHeight, 0]
+        });
         let tabTitles = isShipOwner() ? ['等待报价', '已报价'] : ['空船', '我的货'];
         const menu = <Menu ref={o => this.rightMenu = o} onItemSelected={this.onMenuItemSelected}/>;
         return (
@@ -360,6 +343,7 @@ export default class HomeVC extends Component {
 }
 
 const TopHeight = 140;
+const AnimatedHeight = Math.max(4 * TopHeight, screenHeight);
 
 const styles = StyleSheet.create({
     container: {
