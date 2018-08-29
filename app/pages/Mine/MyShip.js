@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import ShipCell from './ShipCell';
 import ListLoadFooter, {canLoad, FooterTypeEnum} from '../../components/ListLoadFooter';
+import IndicatorModal from "../../components/IndicatorModal";
+import Toast from "react-native-easy-toast";
 
 export default class DetailVC extends Component {
     static navigationOptions = ({ navigation }) => (
@@ -34,9 +36,24 @@ export default class DetailVC extends Component {
     }
 
     addBtnAction =()=> {
-        this.props.navigation.navigate('AddShip',
-            {callBack: this.callBackFromShipVC.bind(this)
-            });
+        if (objectNotNull(userData) && userData.authstate) {
+            let state = parseInt(userData.authstate);
+            switch (state) {
+                case AuthStateEnum.Authing:
+                    this.refToast.show("您的资质认证正在审核，不能添加更多船舶");
+                    break;
+
+                case AuthStateEnum.Authed:
+                    this.props.navigation.navigate('AddShip',
+                        {callBack: this.callBackFromShipVC.bind(this)
+                        });
+                    break;
+
+                default:
+                    this.requestShipsNumber();
+                    break;
+            }
+        }
     };
 
     callBackFromShipVC(key) {
@@ -69,6 +86,25 @@ export default class DetailVC extends Component {
         }
     };
 
+    refreshRequestData(isReset, result) {
+        let list = [];
+        if (!isReset) {
+            list = list.concat(this.state.dataList);
+        }
+        list = list.concat(result.data);
+        let footer = FooterTypeEnum.default;
+        if (result.data.length < appPageSize) {
+            footer = FooterTypeEnum.NoMore;
+        }
+
+        this.setState({
+            page: this.state.page + 1,
+            dataList: list,
+            refreshing: isReset ? false : this.state.refreshing,
+            showFooter: footer,
+        })
+    }
+
     requestRecommend = async (isReset) => {
         if (isReset) {
             this.state.page = 1;
@@ -78,22 +114,7 @@ export default class DetailVC extends Component {
             .then(
                 (result)=>{
                     if (result.code === 0) {
-                        let list = [];
-                        if (!isReset) {
-                            list = list.concat(this.state.dataList);
-                        }
-                        list = list.concat(result.data);
-                        let footer = FooterTypeEnum.default;
-                        if (result.data.length < appPageSize) {
-                            footer = FooterTypeEnum.NoMore;
-                        }
-
-                        this.setState({
-                            page: this.state.page + 1,
-                            dataList: list,
-                            refreshing: isReset ? false : this.state.refreshing,
-                            showFooter: footer,
-                        })
+                        this.refreshRequestData(isReset, result);
                     }
                     else {
                         this.setState({
@@ -106,6 +127,36 @@ export default class DetailVC extends Component {
                         refreshing: isReset ? false : this.state.refreshing,
                         showFooter: FooterTypeEnum.default,
                     })
+                });
+    };
+
+    requestShipsNumber = async () => {
+        let data = {page: this.state.page, state:2};
+
+        this.refIndicator.show();
+        NetUtil.post(appUrl + 'index.php/Mobile/Ship/get_my_ship/', data)
+            .then(
+                (result)=>{
+                    this.refIndicator.hide();
+                    if (result.code === 0) {
+                        if (result.data.length === 0) {
+                            this.props.navigation.navigate('AddShip',
+                                {callBack: this.callBackFromShipVC.bind(this)
+                                });
+                        }
+                        else {
+                            if (this.state.dataList.length === 0) {
+                                this.refreshRequestData(true, result);
+                            }
+                            this.refToast.show("未认证不能添加更多船舶");
+                        }
+                    }
+                    else {
+                        this.refToast.show(result.message);
+                    }
+                },(error)=>{
+                    this.refIndicator.hide();
+                    this.refToast.show(error);
                 });
     };
 
@@ -182,6 +233,8 @@ export default class DetailVC extends Component {
                     onEndReached={this.loadMoreData.bind(this)}
                     onEndReachedThreshold={appData.appOnEndReachedThreshold}
                 />
+                <Toast ref={o => this.refToast = o} position={'center'}/>
+                <IndicatorModal ref={o => this.refIndicator = o}/>
             </View>
         );
     }
