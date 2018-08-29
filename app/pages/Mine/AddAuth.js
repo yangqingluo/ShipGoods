@@ -62,7 +62,7 @@ export default class DetailVC extends Component {
                 {idKey:"invoice", name:"可开发票类型", disable:false, logo:require('../../images/icon_green.png'), onPress:this.cellSelected.bind(this, "invoice_type")},
             ];
 
-        this.invoiceTypes = ['取消', '增值税专用发票(11%)', '增值税普通发票', '其他发票'];
+        this.invoiceTypes = ['取消', '增值税专用发票(10%)', '增值税普通发票', '其他发票'];
     }
 
     cellSelected(key, data = {}){
