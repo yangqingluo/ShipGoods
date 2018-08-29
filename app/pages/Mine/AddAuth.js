@@ -68,10 +68,15 @@ export default class DetailVC extends Component {
     cellSelected(key, data = {}){
         dismissKeyboard();
         if (key === 'add_ship') {
-            this.props.navigation.navigate('AddShip',
-                {callBack: this.callBackFromShipVC.bind(this),
-                    key:"FromAuth",
-                });
+            if (!this.state.hasAddShip) {
+                this.props.navigation.navigate('AddShip',
+                    {callBack: this.callBackFromShipVC.bind(this),
+                        key:"FromAuth",
+                    });
+            }
+            else {
+                this.refToast.show("船舶已添加");
+            }
         }
         else if (key === 'invoice_type') {
             this.invoiceTypeActionSheet.show();

@@ -29,7 +29,7 @@ export default class AddShip extends Component {
         super(props);
         this.state = {
             ship_name: '',//船名
-            ship_lience: '',//船舶国际证书
+            ship_lience: '',//船舶国籍证书
             tonnage: '',//吨位
             storage: '',//仓容
             dieseloil: '',//可载柴油吨位
@@ -57,6 +57,14 @@ export default class AddShip extends Component {
         }
         else if (key === 'ship_lience') {
             this.toSelectPhoto('ship_lience');
+        }
+        else if (key === 'projects') {
+            if (this.state.projects.length >= appData.appMaxImageUploadNumber) {
+                this.refToast.show("最多只能上传" + appData.appMaxImageUploadNumber + "张图片");
+            }
+            else {
+                this.toSelectPhoto('projects');
+            }
         }
         else {
             this.refToast.show("精彩功能，敬请期待 " + key);
@@ -131,7 +139,7 @@ export default class AddShip extends Component {
             this.refToast.show("请选择航行区域");
         }
         else if (this.state.ship_lience.length === 0) {
-            this.refToast.show("请上传船舶国际证书");
+            this.refToast.show("请上传船舶国籍证书");
         }
 
         else {
@@ -292,52 +300,40 @@ export default class AddShip extends Component {
 
     refreshConfig() {
         let {ship_type} = this.state;
-        if (ship_type > 0 && ship_type < shipTypes.length) {
-            let type = shipTypes[ship_type];
-            if (type.search("油") !== -1) {
-                if (type === "油船3级") {
-                    this.config = [
-                        {idKey:"ship_name", name:"船名", logo:require('../../images/icon_blue.png'), disable:true},
-                        {idKey:"tonnage", name:"参考载重量(吨)", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
-                        {idKey:"storage", name:"仓容", logo:require('../../images/icon_orange.png'), disable:true, numeric:true},
-                        {idKey:"ship_type", name:"船舶类型", logo:require('../../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "ship_type")},
-                        // {idKey:"goods", name:"意向货品", logo:require('../../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "goods")},
-                        {idKey:"dieseloil", name:"可载柴油吨位（选填）", logo:require('../../images/icon_green.png'), disable:true, numeric:true},
-                        {idKey:"area", name:"航行区域", logo:require('../../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "area")},
-                        {idKey:"ship_lience", name:"船舶国际证书", logo:require('../../images/icon_red.png'), disable:false, onPress:this.cellSelected.bind(this, "ship_lience")},
-                        {idKey:"projects", name:"主要项目证书", logo:require('../../images/icon_orange.png'), disable:false},
-                    ];
-                    this.state.gasoline = '';
-                }
-                else {
-                    this.config = [
-                        {idKey:"ship_name", name:"船名", logo:require('../../images/icon_blue.png'), disable:true},
-                        {idKey:"tonnage", name:"参考载重量(吨)", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
-                        {idKey:"storage", name:"仓容", logo:require('../../images/icon_orange.png'), disable:true, numeric:true},
-                        {idKey:"ship_type", name:"船舶类型", logo:require('../../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "ship_type")},
-                        // {idKey:"goods", name:"意向货品", logo:require('../../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "goods")},
-                        {idKey:"gasoline", name:"可载汽油吨位（选填）", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
-                        {idKey:"dieseloil", name:"可载柴油吨位（选填）", logo:require('../../images/icon_green.png'), disable:true, numeric:true},
-                        {idKey:"area", name:"航行区域", logo:require('../../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "area")},
-                        {idKey:"ship_lience", name:"船舶国际证书", logo:require('../../images/icon_red.png'), disable:false, onPress:this.cellSelected.bind(this, "ship_lience")},
-                        {idKey:"projects", name:"主要项目证书", logo:require('../../images/icon_orange.png'), disable:false},
-                    ];
-                }
-                return;
-            }
-        }
         this.config = [
             {idKey:"ship_name", name:"船名", logo:require('../../images/icon_blue.png'), disable:true},
             {idKey:"tonnage", name:"参考载重量(吨)", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
             {idKey:"storage", name:"仓容", logo:require('../../images/icon_orange.png'), disable:true, numeric:true},
             {idKey:"ship_type", name:"船舶类型", logo:require('../../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "ship_type")},
             // {idKey:"goods", name:"意向货品", logo:require('../../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "goods")},
-            {idKey:"area", name:"航行区域", logo:require('../../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "area")},
-            {idKey:"ship_lience", name:"船舶国际证书", logo:require('../../images/icon_red.png'), disable:false, onPress:this.cellSelected.bind(this, "ship_lience")},
-            {idKey:"projects", name:"主要项目证书", logo:require('../../images/icon_orange.png'), disable:false},
         ];
-        this.state.gasoline = '';
-        this.state.dieseloil = '';
+        let type = null;
+        if (ship_type > 0 && ship_type < shipTypes.length) {
+            type = shipTypes[ship_type];
+        }
+        if (objectNotNull(type) && type.search("油") !== -1) {
+            if (type === "油船3级") {
+                this.config = this.config.concat([
+                    {idKey:"dieseloil", name:"可载柴油吨位（选填）", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
+                ]);
+                this.state.gasoline = '';
+            }
+            else {
+                this.config = this.config.concat([
+                    {idKey:"gasoline", name:"可载汽油吨位（选填）", logo:require('../../images/icon_orange.png'), disable:true, numeric:true},
+                    {idKey:"dieseloil", name:"可载柴油吨位（选填）", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
+                ]);
+            }
+        }
+        else {
+            this.state.gasoline = '';
+            this.state.dieseloil = '';
+        }
+        this.config = this.config.concat([
+            {idKey:"area", name:"航行区域", logo:require('../../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "area")},
+            {idKey:"ship_lience", name:"上传船舶国籍证书", logo:require('../../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "ship_lience")},
+            {idKey:"projects", name:"上传船舶主要项目证书", logo:require('../../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "projects")},
+        ]);
     }
 
     renderSubNameForIndex(item, index) {
@@ -364,14 +360,14 @@ export default class AddShip extends Component {
 
     onProjectCellSelected = (info) => {
         dismissKeyboard();
-        if (info.index >= this.state.projects.length) {
-            if (info.index >= appData.appMaxImageUploadNumber) {
-                this.refToast.show("最多只能上传" + appData.appMaxImageUploadNumber + "张图片");
-            }
-            else {
-                this.toSelectPhoto('projects');
-            }
-        }
+        // if (info.index >= this.state.projects.length) {
+        //     if (info.index >= appData.appMaxImageUploadNumber) {
+        //         this.refToast.show("最多只能上传" + appData.appMaxImageUploadNumber + "张图片");
+        //     }
+        //     else {
+        //         this.toSelectPhoto('projects');
+        //     }
+        // }
     };
 
     onProjectCellDelBtnAction = (info) => {
@@ -392,17 +388,13 @@ export default class AddShip extends Component {
 
     renderSubViewForIndex(item, index) {
         if (item.idKey === 'ship_lience') {
-            // if (objectNotNull(this.state.ship_lience_source)) {
-            //     return <Image style={styles.avatar} source={this.state.ship_lience_source}/>;
-            // }
-            // else
             if (!stringIsEmpty(this.state.ship_lience)) {
                 return <Image style={styles.avatar} source={{uri:appUrl + this.state.ship_lience}}/>;
             }
         }
         else if (item.idKey === 'projects') {
             let projects = arrayNotEmpty(this.state.projects) ? [].concat(this.state.projects) : [];
-            projects.push("add");
+            // projects.push("add");
             return <FlatList
                 numColumns ={3}
                 data={projects}
@@ -410,7 +402,7 @@ export default class AddShip extends Component {
                 keyExtractor={(item: Object, index: number) => {
                     return '' + index;
                 }}
-                style={{minWidth: 180}}
+                style={{minWidth: 140}}
                 contentContainerStyle={{alignItems: "flex-end",}}
             />
         }

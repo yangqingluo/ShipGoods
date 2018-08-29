@@ -187,7 +187,6 @@ export default class HomeVC extends Component {
     }
 
     onFilterBtnAction() {
-        // this.props.navigation.navigate('HomeFilter', { title: '筛选条件'});
         this.toggle();
     }
 
@@ -310,14 +309,10 @@ export default class HomeVC extends Component {
                     </Animated.View>
                     <ScrollableTabView
                         renderTabBar={() =>
-                            <TabTop tabNames={tabTitles}
-                                //FIXME:tabIconNames={tabIcon}
-                                //FIXME:selectedTabIconNames={tabSelectedIcon}
-                            />}
+                            <TabTop tabNames={tabTitles} />}
                         style={styles.tabView}
                         tabBarPosition='top'
                         tabBarActiveTextColor={appData.appBlueColor}
-                        //onChangeTab={this.onChangeTabs}>
                     >
                         {isShipOwner() ?
                             <HomeListOfferVC ref={o => this.subListToOfferVC = o} is_offer={"0"}/>

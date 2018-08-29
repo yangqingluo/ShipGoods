@@ -36,8 +36,6 @@ export default class SelectImageCell extends PureComponent<Props> {
 
 const styles = StyleSheet.create({
     container: {
-        // paddingVertical: 5,
-        // paddingHorizontal: 5,
         height: 70,
         width: 70,
     },

@@ -213,7 +213,7 @@ let appData = {
     appSureButtonWidth: 123,
     appSureButtonHeight: 44,
     appSureButtonRadius: 22,
-    appMaxImageUploadNumber: 5,
+    appMaxImageUploadNumber: 2,
 
     appItemHeight: 50,
     appSeparatorHeight: 1,
