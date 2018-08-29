@@ -175,9 +175,9 @@ export default class HomeOfferDetailVC extends Component {
                 });
         }
         else {
-            PublicAlert('请先认证才能发布，前去认证？','',
+            PublicAlert('未认证不可约船/约货，去认证？','',
                 [{text:"取消"},
-                    {text:"去认证", onPress:backAndGoToAuth}]
+                    {text:"确定", onPress:backAndGoToAuth}]
             );
         }
     }

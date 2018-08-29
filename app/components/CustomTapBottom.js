@@ -32,6 +32,18 @@ export default class TabBottom extends Component {
         console.log(value);
     }
 
+
+    onPressTabItemForIndex(i) {
+        if (i === 2 && !isAuthed()) {
+            PublicAlert('未认证不可发布，去认证？','',
+                [{text:"取消"},
+                    {text:"确定", onPress:backAndGoToAuth}]
+            );
+            return;
+        }
+        this.props.goToPage(i);
+    }
+
     renderTabItemForIndex(tab, i) {
         let radius = 25;
         let color = this.props.activeTab === i ? '#2D9BFD' : '#6A6A6A';
@@ -41,13 +53,13 @@ export default class TabBottom extends Component {
                 {i === 2 ? <TouchableOpacity style={{
                         position: 'absolute',
                         bottom: 18,
-                    }} onPress={()=>this.props.goToPage(i)}>
+                    }} onPress={this.onPressTabItemForIndex.bind(this, i)}>
                     <Image style={{width: 60,
                         height: 60,}} source={icon}/>
                 </TouchableOpacity>: null}
                 <TouchableOpacity activeOpacity={0.8}
                 style={styles.tab}
-                onPress={()=>this.props.goToPage(i)}>
+                onPress={this.onPressTabItemForIndex.bind(this, i)}>
                     {i === 2 ? <View style={{
                             width:radius,
                             height:radius}}/>
