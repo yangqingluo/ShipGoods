@@ -29,7 +29,7 @@ export default class AddShip extends Component {
         super(props);
         this.state = {
             ship_name: '',//船名
-            ship_lience: '',//船舶国籍证书
+            ship_lience: [],//船舶国籍证书
             tonnage: '',//吨位
             storage: '',//仓容
             dieseloil: '',//可载柴油吨位
@@ -38,8 +38,6 @@ export default class AddShip extends Component {
             ship_type: 0,
             goods: [],//意向货品
             projects: [],//主要项目证书
-
-            ship_lience_source: null,
         };
         this.config = [];
     }
@@ -56,11 +54,16 @@ export default class AddShip extends Component {
             this.refShipTypeActionSheet.show();
         }
         else if (key === 'ship_lience') {
-            this.toSelectPhoto('ship_lience');
+            if (this.state.ship_lience.length >= 2) {
+                this.refToast.show("最多只能上传" + 2 + "张国籍图片");
+            }
+            else {
+                this.toSelectPhoto('ship_lience');
+            }
         }
         else if (key === 'projects') {
-            if (this.state.projects.length >= appData.appMaxImageUploadNumber) {
-                this.refToast.show("最多只能上传" + appData.appMaxImageUploadNumber + "张图片");
+            if (this.state.projects.length >= 1) {
+                this.refToast.show("最多只能上传" + 1 + "张主要项目证书图片");
             }
             else {
                 this.toSelectPhoto('projects');
@@ -138,8 +141,8 @@ export default class AddShip extends Component {
         else if (this.state.area === 0) {
             this.refToast.show("请选择航行区域");
         }
-        else if (this.state.ship_lience.length === 0) {
-            this.refToast.show("请上传船舶国籍证书");
+        else if (this.state.ship_lience.length !== 2) {
+            this.refToast.show("请上传船舶国籍证书2张");
         }
 
         else {
@@ -156,7 +159,7 @@ export default class AddShip extends Component {
                 goods:null,
                 ship_type:this.state.ship_type,
                 area:'' + this.state.area,
-                ship_lience:this.state.ship_lience
+                ship_lience:this.state.ship_lience.join(","),
             };
             if (this.state.gasoline.length > 0) {
                 data.gasoline = this.state.gasoline;
@@ -278,10 +281,8 @@ export default class AddShip extends Component {
                     this.refIndicator.hide();
                     if (result.code === 0) {
                         if (idKey === 'ship_lience') {
-                            this.setState({
-                                ship_lience: result.data.filename,
-                                ship_lience_source: source
-                            });
+                            this.state.ship_lience.push(result.data.filename);
+                            this.forceUpdate();
                         }
                         else if (idKey === 'projects') {
                             // this.state.projects.splice(this.state.projects.length - 1, 0, result.data.filename);
@@ -358,21 +359,35 @@ export default class AddShip extends Component {
         return '';
     }
 
+    onLicenceCellSelected = (info) => {
+        dismissKeyboard();
+        this.cellSelected("ship_lience");
+    };
+
+    onLicenceCellDelBtnAction = (info) => {
+        this.state.ship_lience.splice(info.index, 1);
+        this.forceUpdate();
+    };
+
     onProjectCellSelected = (info) => {
         dismissKeyboard();
-        // if (info.index >= this.state.projects.length) {
-        //     if (info.index >= appData.appMaxImageUploadNumber) {
-        //         this.refToast.show("最多只能上传" + appData.appMaxImageUploadNumber + "张图片");
-        //     }
-        //     else {
-        //         this.toSelectPhoto('projects');
-        //     }
-        // }
+        this.cellSelected("projects");
     };
 
     onProjectCellDelBtnAction = (info) => {
         this.state.projects.splice(info.index, 1);
         this.forceUpdate();
+    };
+
+    renderLicenceCell = (info) => {
+        return (
+            <SelectImageCell
+                info={info}
+                onPress={this.onLicenceCellSelected.bind(this)}
+                onDelPress={this.onLicenceCellDelBtnAction.bind(this)}
+                last={info.index >= this.state.ship_lience.length}
+            />
+        )
     };
 
     renderProjectCell = (info) => {
@@ -388,15 +403,23 @@ export default class AddShip extends Component {
 
     renderSubViewForIndex(item, index) {
         if (item.idKey === 'ship_lience') {
-            if (!stringIsEmpty(this.state.ship_lience)) {
-                return <Image style={styles.avatar} source={{uri:appUrl + this.state.ship_lience}}/>;
-            }
+            let ship_lience = arrayNotEmpty(this.state.ship_lience) ? [].concat(this.state.ship_lience) : [];
+            return <FlatList
+                numColumns ={2}
+                data={ship_lience}
+                renderItem={this.renderLicenceCell}
+                keyExtractor={(item: Object, index: number) => {
+                    return '' + index;
+                }}
+                style={{minWidth: 140}}
+                contentContainerStyle={{alignItems: "flex-end",}}
+            />
         }
         else if (item.idKey === 'projects') {
             let projects = arrayNotEmpty(this.state.projects) ? [].concat(this.state.projects) : [];
             // projects.push("add");
             return <FlatList
-                numColumns ={3}
+                numColumns ={2}
                 data={projects}
                 renderItem={this.renderProjectCell}
                 keyExtractor={(item: Object, index: number) => {

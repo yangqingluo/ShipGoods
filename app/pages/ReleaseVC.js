@@ -772,14 +772,14 @@ export default class ReleaseVC extends Component {
                     <View style={{paddingHorizontal:18, paddingVertical:15}}>
                         <Image source={require('../images/icon_beizhu.png')} style={{width: 57, height: 21, resizeMode: "cover"}}/>
                         <CustomInput underlineColorAndroid="transparent"
-                                   style={styles.textInput}
-                                   multiline={true}
-                                   placeholder={"请在此输入您的备注"}
-                                   placeholderTextColor={appData.appSecondaryTextColor}
-                                   onChangeText={(text) => {
-                                       this.textInputChanged(text, "remark");
-                                   }}
-                                   value={remark}
+                                     style={styles.textInput}
+                                     multiline={true}
+                                     placeholder={"请在此输入您的备注"}
+                                     placeholderTextColor={appData.appSecondaryTextColor}
+                                     onChangeText={(text) => {
+                                         this.textInputChanged(text, "remark");
+                                     }}
+                                     value={remark}
                         >
                         </CustomInput>
                     </View>
@@ -829,5 +829,6 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         color: appData.appTextColor,
         backgroundColor: appData.appGrayColor,
+        textAlignVertical: "top",
     },
 });
