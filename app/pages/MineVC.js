@@ -114,7 +114,7 @@ export default class MineVC extends Component {
                     break;
 
                 default:
-                    this.props.navigation.navigate('AddAuth');
+                    appMainTab.props.navigation.navigate('AddAuth');
                     break;
             }
         }

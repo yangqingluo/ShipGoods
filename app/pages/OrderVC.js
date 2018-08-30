@@ -45,7 +45,7 @@ export default class OrderVC extends Component {
 
     render() {
         let tabTitles = ['执行中', '历史订单'];
-        const { navigate } = this.props.navigation;
+        const { navigate } = appMainTab.props.navigation;
         return (
             <View style={styles.container}>
                 <ScrollableTabView
@@ -61,8 +61,8 @@ export default class OrderVC extends Component {
                     tabBarActiveTextColor={appData.appBlueColor}
                     //onChangeTab={this.onChangeTabs}>
                 >
-                    <OrderListVC ref={o => this.subOrderingVC = o} order_state={"0"} navigation={this.props.navigation}/>
-                    <OrderListVC ref={o => this.subOrderedVC = o} order_state={"1"} navigation={this.props.navigation}/>
+                    <OrderListVC ref={o => this.subOrderingVC = o} order_state={"0"} navigation={navigate}/>
+                    <OrderListVC ref={o => this.subOrderedVC = o} order_state={"1"} navigation={navigate}/>
                 </ScrollableTabView>
             </View>
         );

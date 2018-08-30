@@ -65,17 +65,18 @@ export default class DetailVC extends Component {
         this.invoiceTypes = ['取消', '增值税专用发票(10%)', '增值税普通发票', '其他发票'];
     }
 
+    componentDidMount() {
+        this.requestShipsNumber(false);
+    }
+
     cellSelected(key, data = {}){
         dismissKeyboard();
         if (key === 'add_ship') {
-            if (!this.state.hasAddShip) {
-                this.props.navigation.navigate('AddShip',
-                    {callBack: this.callBackFromShipVC.bind(this),
-                        key:"FromAuth",
-                    });
+            if (this.state.hasAddShip) {
+                this.refToast.show("船舶已添加");
             }
             else {
-                this.refToast.show("船舶已添加");
+                this.requestShipsNumber(true);
             }
         }
         else if (key === 'invoice_type') {
@@ -162,6 +163,41 @@ export default class DetailVC extends Component {
                     this.refToast.show(error);
                 });
     }
+
+    requestShipsNumber = async (isGoToAdd) => {
+        let data = {page: this.state.page, state:2};
+
+        this.refIndicator.show();
+        NetUtil.post(appUrl + 'index.php/Mobile/Ship/get_my_ship/', data)
+            .then(
+                (result)=>{
+                    this.refIndicator.hide();
+                    if (result.code === 0) {
+                        if (result.data.length === 0) {
+                            if (isGoToAdd) {
+                                this.props.navigation.navigate('AddShip',
+                                    {callBack: this.callBackFromShipVC.bind(this),
+                                        key:"FromAuth",
+                                    });
+                            }
+                        }
+                        else {
+                            this.setState({
+                                hasAddShip: true,
+                            });
+                            if (isGoToAdd) {
+                                this.refToast.show("未认证不能添加更多船舶");
+                            }
+                        }
+                    }
+                    else {
+                        this.refToast.show(result.message);
+                    }
+                },(error)=>{
+                    this.refIndicator.hide();
+                    this.refToast.show(error);
+                });
+    };
 
     textInputChanged(text, key){
         if (key === 'contact') {
