@@ -420,6 +420,7 @@
 		846AC02A4E4848108582964A /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		86FDE80EC17E4F72817097D0 /* libRNSpinkit.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSpinkit.a; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
+		C6B8564495C04F30A89AD6B0 /* libRCTBEEPickerManager.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTBEEPickerManager.a; sourceTree = "<group>"; };
 		CD60117D17054702B8432C43 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/ios/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		D02DA6E9630347509DA3855B /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		DF1B693FCACF42B1B0614B94 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
@@ -742,6 +743,7 @@
 				86FDE80EC17E4F72817097D0 /* libRNSpinkit.a */,
 				EB21DAB00DB34EE3B3899F9F /* libRNVectorIcons.a */,
 				2DF3B675E13949FA984F6B73 /* libRNSVG.a */,
+				C6B8564495C04F30A89AD6B0 /* libRCTBEEPickerManager.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -1466,6 +1468,7 @@
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-picker/ios/RCTBEEPickerManager",
 				);
 				INFOPLIST_FILE = ShipGoods/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1477,6 +1480,7 @@
 					"\"$(SRCROOT)/ShipGoods\"",
 					"$(PROJECT_DIR)/UMSocial/SocialLibraries/QQ",
 					"$(PROJECT_DIR)/UMSocial/SocialLibraries/WeChat",
+					"\"$(SRCROOT)/ShipGoods\"",
 					"\"$(SRCROOT)/ShipGoods\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1509,6 +1513,7 @@
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-picker/ios/RCTBEEPickerManager",
 				);
 				INFOPLIST_FILE = ShipGoods/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1520,6 +1525,7 @@
 					"\"$(SRCROOT)/ShipGoods\"",
 					"$(PROJECT_DIR)/UMSocial/SocialLibraries/QQ",
 					"$(PROJECT_DIR)/UMSocial/SocialLibraries/WeChat",
+					"\"$(SRCROOT)/ShipGoods\"",
 					"\"$(SRCROOT)/ShipGoods\"",
 				);
 				OTHER_LDFLAGS = (
