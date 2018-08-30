@@ -38,7 +38,7 @@ export default class EditShipReleaseVC extends Release {
             },//空船港
             empty_time: new Date(info.empty_time),//空船期
             empty_delay: parseInt(info.empty_delay),//空船延迟
-            course: info.course,//运输航向 1：南上 2：北下 3：上江 4：下江 5：运河（多选，用“##”隔开）
+            course: info.course,//运输航向 1：南下 2：北上 3：上江 4：下江 5：运河（多选，用“##”隔开）
             remark: info.remark,//备注
 
             courseList: [],

@@ -36,7 +36,7 @@ export default class ReleaseVC extends Component {
             empty_port: null,//空船港
             empty_time: new Date(),//空船期
             empty_delay: 0,//空船延迟
-            course: '',//运输航向 1：南上 2：北下 3：上江 4：下江 5：运河（多选，用“##”隔开）
+            course: '',//运输航向 1：南下 2：北上 3：上江 4：下江 5：运河（多选，用“##”隔开）
             remark: '',//备注
 
             courseList: [],
@@ -96,7 +96,7 @@ export default class ReleaseVC extends Component {
                 empty_port: null,//空船港
                 empty_time: new Date(),//空船期
                 empty_delay: 0,//空船延迟
-                course: '',//运输航向 1：南上 2：北下 3：上江 4：下江 5：运河（多选，用“##”隔开）
+                course: '',//运输航向 1：南下 2：北上 3：上江 4：下江 5：运河（多选，用“##”隔开）
                 remark: '',//备注
 
                 courseList: [],
