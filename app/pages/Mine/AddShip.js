@@ -9,7 +9,7 @@ import {
     RefreshControl,
     FlatList,
     TextInput,
-    Dimensions
+    Dimensions,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import ImagePicker from 'react-native-image-picker';
@@ -44,6 +44,16 @@ export default class AddShip extends Component {
 
     cellSelected(key, data = {}){
         dismissKeyboard();
+
+        //设置延时函数使得隐藏键盘后才弹出ActionSheet，否则可能会出现ActionSheet收回后键盘依旧会弹出
+        //解决键盘收回可能无效的bug
+        let that = this;
+        setTimeout(function () {
+            that.cellSelectedDone(key);
+        }, 10);
+    }
+
+    cellSelectedDone(key) {
         if (key === 'goods') {
             this.toGoToSelectGoodsVC();
         }
@@ -449,7 +459,7 @@ export default class AddShip extends Component {
         const { navigate } = this.props.navigation;
         return (
             <View style={appStyles.container}>
-                <ScrollView style={styles.scrollView}>
+                <ScrollView style={styles.scrollView} keyboardShouldPersistTaps={"always"}>
                     {this._renderListItem()}
                 </ScrollView>
                 <View style={{position: "absolute", bottom: 20, height:45, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
