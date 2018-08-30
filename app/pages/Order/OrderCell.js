@@ -51,7 +51,7 @@ export default class HomeOrderCell extends Component {
             <View style={styles.bottomContainer}>
                 {shipOwner ?
                     <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: '#dfdfdf', marginRight:10}]} onPress={() => this.props.onBottomBtnPress(item, transportDone ? OrderBtnEnum.Transported : OrderBtnEnum.EditTransport)} disabled={transportDone}>
-                        <Text style={{fontSize:16, color:transportDone ? '#818181' : '#3c3c3c'}}>{transportDone ? "运输已完成" : "编辑货运"}</Text>
+                        <Text style={{fontSize:16, color:transportDone ? '#818181' : '#3c3c3c'}}>{transportDone ? "等待货主确认" : "编辑货运"}</Text>
                     </TouchableOpacity>
                 :
                     <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: '#dfdfdf', marginRight:10}]} onPress={() => this.props.onBottomBtnPress(item, OrderBtnEnum.CheckTransport)}>

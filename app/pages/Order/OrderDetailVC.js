@@ -359,7 +359,7 @@ export default class OrderJudgementVC extends Component {
                     transportDone ?
                         <View style={styles.footerContainer}>
                             <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: appData.appClearColor, marginRight:10}]} onPress={this.onCellBottomBtnAction.bind(this, OrderBtnEnum.Transporting)}>
-                                <Text style={{fontSize:16, color:appData.appBlueColor}}>{"运输已完成"}</Text>
+                                <Text style={{fontSize:16, color:appData.appBlueColor}}>{"等待货主确认"}</Text>
                             </TouchableOpacity>
                         </View>
                         :
