@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import Modal from 'react-native-root-modal';
 import PickerAndroid from './PickerAndroid';
-let Picker = PickerAndroid;
+let Picker = (Platform.OS === 'ios') ? PickerIOS : PickerAndroid;
 
 export default class ActionPicker extends Component {
     static propTypes = {
@@ -58,9 +58,9 @@ export default class ActionPicker extends Component {
         this.callback(this.state.choice, this.options.indexOf(this.state.choice));
     }
 
-    // onValueChange(choice) {
-    //     this.setState({choice: choice});
-    // }
+    onValueChange(choice) {
+        this.setState({choice: choice});
+    }
 
     render() {
         const styles = { ..._styles, ...this.props.styles};
@@ -91,8 +91,9 @@ export default class ActionPicker extends Component {
                             <View style={{height:0.5, backgroundColor: appData.appSeparatorColor}}/>
                             <Picker
                                 style={styles.picker}
+                                itemStyle={isIOS() ? styles.itemPicker : {}}
                                 selectedValue={this.state.choice}
-                                onValueChange={choice => this.setState({choice: choice})}>
+                                onValueChange={this.onValueChange.bind(this)}>
                                 {this.options.map((aOption) =>
                                     <Picker.Item label={aOption}
                                                  value={aOption}
@@ -146,8 +147,7 @@ const _styles = StyleSheet.create({
         minHeight: 200,
     },
     itemPicker:{
-        fontSize:19,
-        height:161,
+        fontSize: 24,
         color: appData.appTextColor,
     }
 });
