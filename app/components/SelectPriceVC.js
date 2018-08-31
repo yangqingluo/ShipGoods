@@ -84,7 +84,8 @@ export default class SelectPriceVC extends Component {
                         </View>
                         :
                         <View>
-                            <View style = {styles.cell}>
+                            <View style = {styles.priceCell}>
+                                <Text style={styles.priceText} />
                                 <TextInput underlineColorAndroid="transparent"
                                            keyboardType={"numeric"}
                                            style={styles.textInput}
@@ -94,7 +95,7 @@ export default class SelectPriceVC extends Component {
                                            value = {this.state.price}
                                 >
                                 </TextInput>
-                                <Text style={{color:appData.appYellowColor, right:30, fontSize:18, textAlign: 'right', position: 'absolute',}}>{'¥元 / 吨'}</Text>
+                                <Text style={styles.priceText}>{'¥元/吨(不含港建)'}</Text>
                             </View>
                             <View style={{height:43, justifyContent: "center", alignItems: "center", backgroundColor: appData.appGrayColor}}>
                                 <TouchableOpacity onPress={this.onBargainBtnAction.bind(this)}>
@@ -107,12 +108,12 @@ export default class SelectPriceVC extends Component {
                     <View style={{width: 240, height:80, marginTop:60, alignSelf: "center", flexDirection: 'row',}}>
                         <TouchableOpacity onPress={this.onPriceBtnAction.bind(this, 0)} style={{flex:1, alignItems: "center", justifyContent: "center"}}>
                             <Icon name={'ios-checkmark-circle'} size={32} style={{minWidth:32}} color={notShipPriceTextColor}/>
-                            <Text style={{color:notShipPriceTextColor, fontSize:18, textAlign: 'right',}}>{'我开价'}</Text>
+                            <Text style={{color:notShipPriceTextColor, fontSize:16, textAlign: 'right',}}>{'我开价'}</Text>
                         </TouchableOpacity>
                         <View style={{top:26, width: 86, height:6, borderRadius:3, backgroundColor:'#ebebeb'}} />
                         <TouchableOpacity onPress={this.onPriceBtnAction.bind(this, 1)} style={{flex:1, alignItems: "center", justifyContent: "center"}}>
                             <Icon name={'ios-checkmark-circle'} size={32} style={{minWidth:32}} color={shipPriceTextColor}/>
-                            <Text style={{color:shipPriceTextColor, fontSize:18, textAlign: 'right',}}>{'船东开价'}</Text>
+                            <Text style={{color:shipPriceTextColor, fontSize:16, textAlign: 'right',}}>{'船东开价'}</Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
@@ -140,15 +141,29 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-    textInput: {
+    priceCell : {
+        flex: 1,
+        minHeight: 50,
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "row",
+    },
+    priceText : {
         flex: 1,
         minWidth: 80,
-        fontSize: 18,
+        color:appData.appYellowColor,
+        fontSize:16,
+    },
+    textInput: {
+        flex: 1,
+        marginHorizontal: 5,
+        minWidth: 60,
+        fontSize: 16,
         color: appData.appTextColor,
         textAlign: "center",
     },
     text: {
-        fontSize: 18,
+        fontSize: 16,
         color: appData.appTextColor,
         textAlign: "center",
     },
