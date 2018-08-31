@@ -55,14 +55,6 @@ export default class SelectWastageVC extends Component {
         }
     }
 
-    onSelectWastageNumberType(index) {
-        if (index > 0) {
-            this.setState({
-                wastageNumber: index
-            });
-        }
-    }
-
     render() {
         return (
             <View style={appStyles.container}>
@@ -99,14 +91,6 @@ export default class SelectWastageVC extends Component {
                     // destructiveButtonIndex={1}
                     onPress={this.onSelectWastageType.bind(this)}
                 />
-                {/*<ActionSheet*/}
-                    {/*ref={o => this.wastageNumberTypeActionSheet = o}*/}
-                    {/*title={''}*/}
-                    {/*options={shipWastageNumberTypes}*/}
-                    {/*cancelButtonIndex={0}*/}
-                    {/*// destructiveButtonIndex={1}*/}
-                    {/*onPress={this.onSelectWastageNumberType.bind(this)}*/}
-                {/*/>*/}
                 <ActionPicker ref={o => this.wastageNumberTypePicker = o}
                               title={''}
                               options={shipWastageNumberTypes}

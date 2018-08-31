@@ -97,13 +97,13 @@ export default class SelectPriceVC extends Component {
                                 </TextInput>
                                 <Text style={styles.priceText}>{'¥元/吨(不含港建)'}</Text>
                             </View>
-                            <View style={{height:43, justifyContent: "center", alignItems: "center", backgroundColor: appData.appGrayColor}}>
-                                <TouchableOpacity onPress={this.onBargainBtnAction.bind(this)}>
+                            <TouchableOpacity onPress={this.onBargainBtnAction.bind(this)}>
+                                <View style={{height:43, justifyContent: "center", alignItems: "center", backgroundColor: appData.appGrayColor}}>
                                     <Icon name={'ios-checkmark-circle'} size={20} style={{minWidth:120, marginRight:5, textAlign:"center", fontSize: 14}} color={bargainTextColor}>
                                         {' 不议价'}
                                     </Icon>
-                                </TouchableOpacity>
-                            </View>
+                                </View>
+                            </TouchableOpacity>
                         </View>}
                     <View style={{width: 240, height:80, marginTop:60, alignSelf: "center", flexDirection: 'row',}}>
                         <TouchableOpacity onPress={this.onPriceBtnAction.bind(this, 0)} style={{flex:1, alignItems: "center", justifyContent: "center"}}>

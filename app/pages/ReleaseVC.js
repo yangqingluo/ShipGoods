@@ -400,7 +400,7 @@ export default class ReleaseVC extends Component {
             navigate(
                 "SelectTonnage",
                 {
-                    title: '货量',
+                    title: '货量吨位',
                     tonnage: this.state.tonnage,
                     ton_section: this.state.ton_section,
                     callBack:this.callBackFromTonnageVC.bind(this)

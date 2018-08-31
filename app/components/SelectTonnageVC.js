@@ -9,7 +9,8 @@ import {
     View,
     TouchableOpacity
 } from "react-native";
-import ActionSheet from 'react-native-actionsheet';
+import ActionPicker from './ActionPicker';
+import Toast from "react-native-easy-toast";
 
 export default class SelectTonnageVC extends Component {
     static navigationOptions = ({ navigation }) => (
@@ -36,20 +37,17 @@ export default class SelectTonnageVC extends Component {
             this.props.navigation.goBack();
         }
         else {
-            PublicAlert("请输入货量");
+            this.refToast.show("请输入货量吨位");
         }
     }
 
     showTonSectionPicker() {
-        this.tonSectionTypeActionSheet.show();
-    }
-
-    onSelectTonSectionType(index) {
-        if (index > 0) {
-            this.setState({
-                ton_section: parseInt(tonSectionTypes[index]),
+        this.refTonSectionPicker.show(this.state.ton_section,
+            (choice, index)=>{
+                this.setState({
+                    ton_section: tonSectionTypes[index],
+                });
             });
-        }
     }
 
     render() {
@@ -58,43 +56,41 @@ export default class SelectTonnageVC extends Component {
                 <ScrollView
                     style={styles.scrollView}
                 >
-                    <View style={{height:2}} />
-                    <View style = {styles.cell}>
-                        <TextInput underlineColorAndroid="transparent"
-                                   keyboardType={"numeric"}
-                                   style={styles.textInput}
-                                   maxLength={appData.appMaxLengthNumber}
-                                   placeholder={'请输入货量'}
-                                   placeholderTextColor={appData.appSecondaryTextColor}
-                                   onChangeText={this.textInputChanged.bind(this)}
-                                   value = {this.state.tonnage}
-                        >
-                        </TextInput>
+                    <View>
+                        <View style = {styles.cell}>
+                            <Text style={styles.cellText} />
+                            <TextInput underlineColorAndroid="transparent"
+                                       keyboardType={"numeric"}
+                                       style={styles.textInput}
+                                       placeholder={'货量吨位键入'}
+                                       placeholderTextColor={appData.appSecondaryTextColor}
+                                       onChangeText={this.textInputChanged.bind(this)}
+                                       value = {this.state.tonnage}
+                            >
+                            </TextInput>
+                            <Text style={styles.cellText}>{'吨'}</Text>
+                        </View>
+                        <TouchableOpacity onPress={()=>this.showTonSectionPicker()}>
+                            <View style={{height:43, justifyContent: "center", alignItems: "center", backgroundColor: appData.appGrayColor}}>
+                                <Text style={styles.text}>
+                                    {this.state.ton_section >= 0 ? '增减范围 ± ' + this.state.ton_section + " %" : '请选择增减范围'}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
                     </View>
-                    <View style={{height:2}} />
-                    <TouchableOpacity
-                        style = {styles.cell}
-                        onPress={()=>this.showTonSectionPicker()}>
-                        <Text style={styles.text}>
-                            {this.state.ton_section >= 0 ? '货量区间 ± ' + this.state.ton_section + " 吨" : '请选择货量区间'}
-                        </Text>
-                    </TouchableOpacity>
                 </ScrollView>
                 <View style={{position: "absolute", bottom: 20, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
                     <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)}>
                         <View style={appStyles.sureBtnContainer}>
-                            <Text style={{color: "#fff"}}>{"确定"}</Text>
+                            <Text style={{color: "#fff"}}>{"提交"}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
-                <ActionSheet
-                    ref={o => this.tonSectionTypeActionSheet = o}
-                    title={'请选择货量区间'}
-                    options={tonSectionTypes}
-                    cancelButtonIndex={0}
-                    // destructiveButtonIndex={1}
-                    onPress={this.onSelectTonSectionType.bind(this)}
+                <ActionPicker ref={o => this.refTonSectionPicker = o}
+                              title={'请选择增减范围'}
+                              options={tonSectionTypes}
                 />
+                <Toast ref={o => this.refToast = o} position={'center'}/>
             </View>
         );
     }
@@ -103,21 +99,27 @@ export default class SelectTonnageVC extends Component {
 const styles = StyleSheet.create({
     scrollView: {
         flex: 1,
+        backgroundColor: '#fff',
     },
     cell: {
         flex: 1,
-        backgroundColor: '#fff',
         minHeight: 50,
         justifyContent: "center",
         alignItems: "center",
+        flexDirection: "row",
+    },
+    cellText : {
+        flex: 1,
+        minWidth: 60,
+        color:appData.appYellowColor,
+        fontSize:16,
     },
     textInput: {
         flex: 1,
-        width: screenWidth,
-        height: 30,
+        marginHorizontal: 5,
+        minWidth: 60,
         fontSize: 16,
-        paddingHorizontal: 10,
-        color: appData.appBlueColor,
+        color: appData.appTextColor,
         textAlign: "center",
     },
     text: {

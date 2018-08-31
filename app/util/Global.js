@@ -416,7 +416,7 @@ global.createShipWastageNumberTypes = function() : Array {
 global.shipWastageNumberTypes = createShipWastageNumberTypes();
 
 global.createTonSectionTypes = function() : Array {
-    let array = ['取消'];
+    let array = [];
     for (let i = 0; i <= 5000; i += 500) {
         array.push(i + '');
     }
