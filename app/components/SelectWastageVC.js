@@ -6,7 +6,7 @@ import {
     ScrollView,
     TouchableOpacity
 } from 'react-native';
-import CustomPicker from './ActionPicker';
+import ActionPicker from './ActionPicker';
 import ActionSheet from 'react-native-actionsheet';
 
 export default class SelectWastageVC extends Component {
@@ -39,7 +39,6 @@ export default class SelectWastageVC extends Component {
     }
 
     showWastageNumberPicker() {
-        // this.wastageNumberTypeActionSheet.show();
         this.wastageNumberTypePicker.show(shipWastageNumberTypes[this.state.wastageNumber],
             (choice, index)=>{
                 this.setState({
@@ -100,15 +99,15 @@ export default class SelectWastageVC extends Component {
                     // destructiveButtonIndex={1}
                     onPress={this.onSelectWastageType.bind(this)}
                 />
-                <ActionSheet
-                    ref={o => this.wastageNumberTypeActionSheet = o}
-                    title={''}
-                    options={shipWastageNumberTypes}
-                    cancelButtonIndex={0}
-                    // destructiveButtonIndex={1}
-                    onPress={this.onSelectWastageNumberType.bind(this)}
-                />
-                <CustomPicker ref={o => this.wastageNumberTypePicker = o}
+                {/*<ActionSheet*/}
+                    {/*ref={o => this.wastageNumberTypeActionSheet = o}*/}
+                    {/*title={''}*/}
+                    {/*options={shipWastageNumberTypes}*/}
+                    {/*cancelButtonIndex={0}*/}
+                    {/*// destructiveButtonIndex={1}*/}
+                    {/*onPress={this.onSelectWastageNumberType.bind(this)}*/}
+                {/*/>*/}
+                <ActionPicker ref={o => this.wastageNumberTypePicker = o}
                               title={''}
                               options={shipWastageNumberTypes}
                 />

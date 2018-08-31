@@ -9,6 +9,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
+import ActionPicker from '../components/ActionPicker';
 import CustomItem from '../components/CustomItem';
 import CustomInput from '../components/CustomInput';
 import Toast from "react-native-easy-toast";
@@ -129,7 +130,7 @@ export default class ReleaseVC extends Component {
                 clean_deley: '', //否 完货后多少天结算 15/30/45/60
                 wastage: m_string, //否 损耗
                 goods: [], //货品
-                demurrage: '', //否 滞期费
+                demurrage: '20000', //否 滞期费
                 remark: '',//备注
 
                 wastageTitle: data1,
@@ -323,7 +324,13 @@ export default class ReleaseVC extends Component {
             this.cleanDelayTypeActionSheet.show();
         }
         else if (key === "SelectDemurrage") {
-            this.demurrageTypeActionSheet.show();
+            // this.demurrageTypeActionSheet.show();
+            this.refDemurrageTypePicker.show(this.state.demurrage,
+                (choice, index)=>{
+                    this.setState({
+                        demurrage: choice
+                    });
+                });
         }
         else if (key === "SelectGoods") {
             this.toGoToGoodsVC();
@@ -808,6 +815,10 @@ export default class ReleaseVC extends Component {
                     cancelButtonIndex={0}
                     // destructiveButtonIndex={1}
                     onPress={this.onSelectDemurrageType.bind(this)}
+                />
+                <ActionPicker ref={o => this.refDemurrageTypePicker = o}
+                              title={'请选择滞期费（单位：元/天）'}
+                              options={demurrageTypes}
                 />
                 <Toast ref={o => this.refToast = o} position={'center'}/>
                 <IndicatorModal ref={o => this.refIndicator = o}/>

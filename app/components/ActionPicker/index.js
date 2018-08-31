@@ -4,7 +4,6 @@ import React,{Component} from 'react';
 import PropTypes from 'prop-types';
 import {
     PickerIOS,
-    Platform,
     StyleSheet,
     Text,
     TouchableOpacity,
@@ -12,7 +11,7 @@ import {
 } from 'react-native';
 import Modal from 'react-native-root-modal';
 import PickerAndroid from './PickerAndroid';
-let Picker = (Platform.OS === 'ios') ? PickerIOS : PickerAndroid;
+let Picker = isIOS() ? PickerIOS : PickerAndroid;
 
 export default class ActionPicker extends Component {
     static propTypes = {
@@ -81,11 +80,11 @@ export default class ActionPicker extends Component {
                             <View style={{height:0.5, backgroundColor: appData.appSeparatorColor}}/>
                             <View style={styles.modalTitleContainer}>
                                 <TouchableOpacity onPress={()=>this.onClose()} style={[styles.modalTitleTouch, {left: 5}]}>
-                                    <Text style={styles.modalTitle}>{this.props.cancelText}</Text>
+                                    <Text style={styles.modalButtonTitle}>{this.props.cancelText}</Text>
                                 </TouchableOpacity>
-                                {this.props.title.length ? <Text style={{fontSize:18, alignSelf:'center'}}>{this.props.title}</Text> : null}
+                                {this.props.title.length ? <Text style={styles.modalTitle}>{this.props.title}</Text> : null}
                                 <TouchableOpacity style={[styles.modalTitleTouch, {right: 5}]} onPress={()=>this.onComplete()}>
-                                    <Text style={styles.modalTitle}>{this.props.okText}</Text>
+                                    <Text style={styles.modalButtonTitle}>{this.props.okText}</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={{height:0.5, backgroundColor: appData.appSeparatorColor}}/>
@@ -112,8 +111,6 @@ const _styles = StyleSheet.create({
         width:screenWidth,
         height:screenHeight,
         backgroundColor:'rgba(0, 0, 0, 0.1)',
-        // justifyContent:'center',
-        // alignItems:'center',
     },
     modalContainer: {
         flex: 1,
@@ -132,15 +129,20 @@ const _styles = StyleSheet.create({
     },
     modalTitleTouch: {
         position: 'absolute',
-        width: 80,
+        minWidth: 60,
         height: 44,
         justifyContent: 'center',
         alignItems: 'center',
     },
-    modalTitle: {
-        fontSize:18,
+    modalButtonTitle: {
+        fontSize: 16,
         color: appData.appBlueColor,
         // alignSelf:'center',
+    },
+    modalTitle: {
+        fontSize:14,
+        alignSelf:'center',
+        color: appData.appLightGrayColor,
     },
     picker:{
         width: screenWidth,
