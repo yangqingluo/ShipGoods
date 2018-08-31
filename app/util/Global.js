@@ -407,7 +407,7 @@ global.shipTypeObjects = [
     {key: 13, name: '粮油船'}];
 
 global.createShipWastageNumberTypes = function() : Array {
-    let array = ['取消'];
+    let array = [];
     for (let i = 0.0; i <= 4; i += 0.1) {
         array.push(i.Format(1) + '‰');
     }

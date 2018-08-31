@@ -41,8 +41,10 @@ export default class SelectWastageVC extends Component {
     showWastageNumberPicker() {
         // this.wastageNumberTypeActionSheet.show();
         this.wastageNumberTypePicker.show(shipWastageNumberTypes[this.state.wastageNumber],
-            (choice)=>{
-                PublicAlert(choice);
+            (choice, index)=>{
+                this.setState({
+                    wastageNumber: index
+                });
             });
     }
 
@@ -79,7 +81,7 @@ export default class SelectWastageVC extends Component {
                         style = {styles.cell}
                         onPress={()=>this.showWastageNumberPicker()}>
                         <Text style={styles.text}>
-                            {this.state.wastageNumber > 0 ? shipWastageNumberTypes[this.state.wastageNumber] : '请选择损耗千分比'}
+                            {this.state.wastageNumber >= 0 ? shipWastageNumberTypes[this.state.wastageNumber] : '请选择损耗千分比'}
                         </Text>
                     </TouchableOpacity>
                 </ScrollView>

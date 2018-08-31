@@ -55,7 +55,7 @@ export default class ActionPicker extends Component {
         this.setState({
             visible: false
         });
-        this.callback(this.state.choice);
+        this.callback(this.state.choice, this.options.indexOf(this.state.choice));
     }
 
     // onValueChange(choice) {
@@ -91,12 +91,10 @@ export default class ActionPicker extends Component {
                             <View style={{height:0.5, backgroundColor: appData.appSeparatorColor}}/>
                             <Picker
                                 style={styles.picker}
-                                itemStyle={styles.itemPicker}
                                 selectedValue={this.state.choice}
                                 onValueChange={choice => this.setState({choice: choice})}>
                                 {this.options.map((aOption) =>
-                                    <Picker.Item color={appData.appTextColor}
-                                                 label={aOption}
+                                    <Picker.Item label={aOption}
                                                  value={aOption}
                                                  key={aOption}
                                     /> )}
@@ -144,7 +142,6 @@ const _styles = StyleSheet.create({
         // alignSelf:'center',
     },
     picker:{
-        justifyContent:'center',
         width: screenWidth,
         minHeight: 200,
     },

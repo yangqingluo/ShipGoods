@@ -56,7 +56,7 @@ export default class ReleaseVC extends Component {
             demurrage: '', //否 滞期费
 
             wastageTitle: 0,
-            wastageNumber: 0,
+            wastageNumber: -1,
         };
 
         this.config = isShipOwner() ?
@@ -104,12 +104,12 @@ export default class ReleaseVC extends Component {
         }
         else {
             let data1 = 1;
-            let data2 = 21;
+            let data2 = 20;
             let m_string = '';
             if (data1 > 0) {
                 m_string += shipWastageTypes[data1];
             }
-            if (data1 > 0) {
+            if (data2 >= 0) {
                 if (m_string.length > 0) {
                     m_string += ' ';
                 }
@@ -492,7 +492,7 @@ export default class ReleaseVC extends Component {
             if (data1 > 0) {
                 m_string += shipWastageTypes[data1];
             }
-            if (data1 > 0) {
+            if (data2 > 0) {
                 if (m_string.length > 0) {
                     m_string += ' ';
                 }
