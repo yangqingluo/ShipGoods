@@ -113,10 +113,21 @@ export default class MineVC extends Component {
                     break;
 
                 default:
-                    appMainTab.props.navigation.navigate('AddAuth');
+                    appMainTab.props.navigation.navigate('AddAuth',
+                        {
+                            callBack:this.callBackFromAddAuthVC.bind(this)
+                        });
                     break;
             }
         }
+    }
+
+    callBackFromAddAuthVC(authstate) {
+        userData.authstate = authstate;
+        saveUserData(userData);
+
+        this.forceUpdate();
+        this.refToast.show("认证中，请耐心等待");
     }
 
     _onRefresh() {
@@ -185,9 +196,13 @@ export default class MineVC extends Component {
                     <Icon name="ios-arrow-forward-outline" size={ 22} color="#fff" />
                 </View>
             </TouchableWithoutFeedback>
-            <View style={styles.authShow}>
-                <Text style={{color: appData.appSecondaryTextColor, fontSize: 12, marginLeft: 40}}>{"资质认证"}</Text>
-                <Text style={{color: appData.appBlueColor, fontSize: 12, marginLeft: 10}} onPress={this.onAuthTextPress}>{getAuthStateText(userData.authstate)}</Text>
+            <View style={styles.authBack}>
+                <TouchableWithoutFeedback onPress={this.onAuthTextPress.bind(this)}>
+                    <View style={styles.authShow}>
+                        <Text style={{color: appData.appSecondaryTextColor, fontSize: 12}}>{"资质认证"}</Text>
+                        <Text style={{color: appData.appBlueColor, fontSize: 12, marginLeft: 10}} >{getAuthStateText(userData.authstate)}</Text>
+                    </View>
+                </TouchableWithoutFeedback>
             </View>
             <View>
                 {this._renderListItem()}
@@ -238,11 +253,18 @@ const styles = StyleSheet.create({
         paddingVertical: 20,
         backgroundColor: '#fff'
     },
+    authBack: {
+        backgroundColor: '#f3f3f3',
+        width: screenWidth,
+        height: 30,
+        flexDirection: "row",
+    },
     authShow: {
         flexDirection: "row",
         alignItems: "center",
-        backgroundColor: '#f3f3f3',
-        height: 30
+        height: 30,
+        marginLeft: 20,
+        paddingHorizontal: 20,
     },
     numItem: {
         flex: 1,

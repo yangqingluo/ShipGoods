@@ -85,9 +85,6 @@ export default class DetailVC extends Component {
         else if (key === 'bz_licence') {
             this.toSelectPhoto('bz_licence');
         }
-        else {
-            PublicAlert(key);
-        }
     }
 
     callBackFromShipVC(key) {
@@ -97,9 +94,7 @@ export default class DetailVC extends Component {
     }
 
     goBack() {
-        userData.authstate = 0;
-        saveUserData(userData);
-        appMineVC._onRefresh();
+        this.props.navigation.state.params.callBack(AuthStateEnum.Authing);
         this.props.navigation.goBack();
     }
 
