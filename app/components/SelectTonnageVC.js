@@ -73,7 +73,7 @@ export default class SelectTonnageVC extends Component {
                         <TouchableOpacity onPress={()=>this.showTonSectionPicker()}>
                             <View style={{height:43, justifyContent: "center", alignItems: "center", backgroundColor: appData.appGrayColor}}>
                                 <Text style={styles.text}>
-                                    {this.state.ton_section >= 0 ? '增减范围 ± ' + this.state.ton_section + " %" : '请选择增减范围'}
+                                    {objectNotNull(this.state.ton_section) ? '增减范围 ± ' + this.state.ton_section : '请选择增减范围'}
                                 </Text>
                             </View>
                         </TouchableOpacity>

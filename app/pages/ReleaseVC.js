@@ -43,7 +43,7 @@ export default class ReleaseVC extends Component {
             courseList: [],
 
             tonnage: '',//否 装载吨位
-            ton_section: 0, //否 吨位区间值
+            ton_section: "5%", //否 吨位区间值
             price: '',//否 单价
             loading_port: null,//否 装货港
             unloading_port: null, //否 卸货港
@@ -119,7 +119,7 @@ export default class ReleaseVC extends Component {
 
             this.setState({
                 tonnage: '',//否 装载吨位
-                ton_section: 0, //否 吨位区间值
+                ton_section: "5%", //否 吨位区间值
                 price: '',//否 单价
                 loading_port: null,//否 装货港
                 unloading_port: null, //否 卸货港
@@ -748,7 +748,7 @@ export default class ReleaseVC extends Component {
             }
         }
         else if (item.idKey === 'tonnage' && this.state.tonnage.length > 0) {
-            return this.state.tonnage + '±' + this.state.ton_section + "吨";
+            return this.state.tonnage  + "吨" + '±' + this.state.ton_section;
         }
         else if (item.idKey === 'wastage') {
             return this.state.wastage;

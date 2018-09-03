@@ -417,8 +417,8 @@ global.shipWastageNumberTypes = createShipWastageNumberTypes();
 
 global.createTonSectionTypes = function() : Array {
     let array = [];
-    for (let i = 0; i <= 5000; i += 500) {
-        array.push(i + '');
+    for (let i = 1; i <= 20; i += 1) {
+        array.push(i + '%');
     }
     return array;
 };

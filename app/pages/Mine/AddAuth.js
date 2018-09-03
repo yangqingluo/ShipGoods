@@ -146,9 +146,10 @@ export default class DetailVC extends Component {
                 (result)=>{
                     this.refIndicator.hide();
                     if (result.code === 0) {
-                        PublicAlert('提交认证完成','请等待审核结果',
-                            [{text:"确定", onPress:this.goBack.bind(this)}]
-                        );
+                        // PublicAlert('提交认证完成','请等待审核结果',
+                        //     [{text:"确定", onPress:this.goBack.bind(this)}]
+                        // );
+                        this.goBack();
                     }
                     else {
                         this.refToast.show(result.message);
