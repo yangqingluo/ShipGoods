@@ -599,6 +599,23 @@ global.createTimeFormat = function(time, format) : String {
     return "1970-01-01";
 };
 
+global.createGoodsName = function(info) : String {
+    if (objectNotNull(info.goods_name)) {
+        return info.goods_name;
+    }
+    else if (objectNotNull(info.goodslist)) {
+        if (info.goodslist.length > 0) {
+            let goodsList = info.goodslist.map(
+                (item) => {
+                    return item.goods_name;
+                }
+            );
+            return goodsList.join(",");
+        }
+    }
+    return "";
+};
+
 global.deepCopy = function(obj : Object) : Object {
     let newobj = {};
     for (let attr in obj) {

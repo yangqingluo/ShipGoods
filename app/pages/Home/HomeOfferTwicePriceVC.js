@@ -301,15 +301,17 @@ export default class HomeOfferTwicePriceVC extends Component {
                         </View>
                     </View>
                     <View style={styles.centerContainer}>
-                        <View style={{backgroundColor: '#f2f9ff', paddingLeft:34, paddingRight:10, minHeight:73}}>
-                            <View style={{marginTop: 15, height: 20, flexDirection: 'row', alignItems: "center"}}>
-                                <Text style={styles.textContainer}>{info.loading_port_name}</Text>
-                                <Image source={require('../../images/icon_arrow_right_half.png')} style={styles.arrowContainer}/>
+                        <View style={{backgroundColor: '#f2f9ff', paddingLeft:34, paddingRight:10, paddingVertical: 10, minHeight:73}}>
+                            <View style={{marginTop: 5, flex: 1, flexDirection: 'row', alignItems: "center"}}>
+                                <View style={{flex: 1, flexDirection: 'row', alignItems: "center"}}>
+                                    <Text style={styles.textContainer}>{info.loading_port_name}</Text>
+                                    <Image source={require('../../images/icon_arrow_right_half.png')} style={styles.arrowContainer}/>
+                                </View>
                                 <Text style={styles.textContainer}>{info.unloading_port_name}</Text>
                             </View>
-                            <View style={{flex: 1, flexDirection: 'row', alignItems: "center", justifyContent: "space-between"}}>
+                            <View style={{marginTop: 5, flex: 1, flexDirection: 'row', alignItems: "center"}}>
                                 <Text style={styles.textContainer}>{info.loading_timetext + ' ± ' + info.loading_delay + '天'}</Text>
-                                <Text style={[styles.textContainer, {flex: 1, marginLeft:20}]}>{this.state.info.goods_name + ' ' + this.state.info.tonnage  + '吨' + '±' + this.state.info.ton_section}</Text>
+                                <Text style={styles.textContainer}>{createGoodsName(info) + ' ' + info.tonnage + '吨'+ '±' + info.ton_section}</Text>
                             </View>
                         </View>
                         <TouchableOpacity onPress={() => {this.setState({
@@ -353,6 +355,11 @@ export default class HomeOfferTwicePriceVC extends Component {
     }
 }
 const styles = StyleSheet.create({
+    textContainer: {
+        flex: 1,
+        fontSize:14,
+        color: appData.appTextColor,
+    },
     textInput: {
         marginTop: 10,
         minHeight: 46,
@@ -371,107 +378,7 @@ const styles = StyleSheet.create({
         width:32,
         height:4,
         marginLeft:20,
-        marginRight:20,
+        marginRight:45,
         resizeMode: "stretch",
     }
 });
-
-
-// {"code":0,"message":"",
-//     "data":{"task_id":"94",
-//     "goods_sn":"GYY180619004",
-//     "tonnage":"3568",
-//     "ton_section":"500",
-//     "price":"\u00a53568.00 \u5143\/\u5428",
-//     "loading_port":"225",
-//     "loading_port_name":"\u77f3\u5c9b\u6e2f",
-//     "unloading_port":"129",
-//     "unloading_port_name":"\u91cd\u5e86\u6e2f",
-//     "create_time":"1529419412",
-//     "loading_time":"2018-06-19",
-//     "loading_delay":"0",
-//     "clean_time":null,
-//     "uid":"74",
-//     "remark":null,
-//     "status":"0",
-//     "wastage":"\u8239\u68c0\u91cf -> \u8239\u68c0\u91cf 2.0\u2030",
-//     "clean_deley":"15",
-//     "demurrage":"1000",
-//     "collect_num":"0",
-//     "view_num":"9",
-//     "is_delete":"0",
-//     "is_bargain":"1",
-//     "area":"0",
-//     "offer_num":"1",
-//     "is_shipprice":"0",
-//     "goodslist":[{"transport_id":"17","goods_id":"75","task_id":"94","goods_name":"\u539f\u6cb9"}],
-//     "goods_owner":{"uid":"74","username":"chuanyun_74","mobile":"17681981616","email":null,"password":"f63d4b2d7d6e1b332b265b85d3f8c5f0","usertype":"1","state":"0","create_time":"1522732798","authstate":"1","sex":"1","sign":"\u4e2a\u4eba\u7b7e\u540d","credit":"5","bz_licence":"68","card_front":"","card_con":"","idcard_front":"Uploads\/corporation\/2018-06-08\/5b19d90761db8.png","idcard_con":"Uploads\/corporation\/2018-06-08\/5b19d90e2cdaa.png","invoice_type":"1","invoice_remark":"\u662f","corporation":"68","phone":"","name":"\u6768","contact":"17681981616"},
-//     "book":{
-//         "uid":"78",
-//             "sex":"1",
-//             "sign":null,
-//             "credit":"4",
-//             "bz_licence":"",
-//             "card_front":"",
-//             "card_con":"",
-//             "idcard_front":"",
-//             "idcard_con":"",
-//             "invoice_type":"1",
-//             "invoice_remark":null,
-//             "corporation":null,
-//             "phone":null,
-//             "remark":null,
-//             "auth_time":"0",
-//             "checker":"0",
-//             "check_time":"0",
-//             "name":"\u8d27",
-//             "contact":"13758727770",
-//             "ship_id":"1",
-//             "ship_name":"\u6768\u8239\u4e00",
-//             "ship_lience":"Uploads\/ship\/2018-06-06\/5b173d483d971.png",
-//             "projects":"",
-//             "tonnage":"666",
-//             "storage":"665",
-//             "state":"0",
-//             "dieseloil":"2000",
-//             "gasoline":"1000",
-//             "longitude":null,
-//             "latitude":null,
-//             "area":"3",
-//             "income_qua":"0",
-//             "usestate":"0",
-//             "create_time":"1528249673",
-//             "ship_type":"0",
-//             "good_task_id":"94",
-//             "qid":"74",
-//             "book_id":"10",
-//             "offer":"0.00",
-//             "arrive_time":"2018-06-24",
-//             "arrive_delay":"4",
-//             "last_goods_id":"75",
-//             "add_time":"1529419452",
-//             "book_num":"1",
-//             "goods_sn":"GYY180619004",
-//             "last_goods_name":{"goods_id":"75","goods_name":"\u539f\u6cb9","iclose":"0","pid":"24","deep":"1"}},
-//     "ship":{"ship_id":"2",
-//         "ship_name":"\u91d1\u822a\u6cb9",
-//         "ship_lience":"Uploads\/ship\/2018-06-06\/5b1798120f354.png",
-//         "projects":"",
-//         "tonnage":"5000",
-//         "storage":"6000",
-//         "uid":"95",
-//         "state":"0",
-//         "dieseloil":"5000",
-//         "gasoline":"4000",
-//         "longitude":null,
-//         "latitude":null,
-//         "area":"2",
-//         "income_qua":"0",
-//         "usestate":"0",
-//         "create_time":"1528272919",
-//         "ship_type":"0"},
-//     "iscollect":0,
-//         "create_timetext":"2018-06-19",
-//         "loading_timetext":"2018-06-19",
-//         "clean_timetext":" ",
-//         "replylist":[]}}

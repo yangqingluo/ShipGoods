@@ -263,15 +263,17 @@ export default class HomeOfferDetailVC extends Component {
                         </View>
                     </View>
                     <View style={styles.centerContainer}>
-                        <View style={{backgroundColor: '#f2f9ff', paddingLeft:34, paddingRight:10, minHeight:73}}>
-                            <View style={{marginTop: 15, height: 20, flexDirection: 'row', alignItems: "center"}}>
-                                <Text style={styles.textContainer}>{info.loading_port_name}</Text>
-                                <Image source={require('../../images/icon_arrow_right_half.png')} style={styles.arrowContainer}/>
+                        <View style={{backgroundColor: '#f2f9ff', paddingLeft:34, paddingRight:10, paddingVertical: 10, minHeight:73}}>
+                            <View style={{marginTop: 5, flex: 1, flexDirection: 'row', alignItems: "center"}}>
+                                <View style={{flex: 1, flexDirection: 'row', alignItems: "center"}}>
+                                    <Text style={styles.textContainer}>{info.loading_port_name}</Text>
+                                    <Image source={require('../../images/icon_arrow_right_half.png')} style={styles.arrowContainer}/>
+                                </View>
                                 <Text style={styles.textContainer}>{info.unloading_port_name}</Text>
                             </View>
-                            <View style={{flex: 1, flexDirection: 'row', alignItems: "center", justifyContent: "space-between"}}>
+                            <View style={{marginTop: 5, flex: 1, flexDirection: 'row', alignItems: "center"}}>
                                 <Text style={styles.textContainer}>{info.loading_timetext + ' ± ' + info.loading_delay + '天'}</Text>
-                                <Text style={[styles.textContainer, {flex: 1, marginLeft:20}]}>{this.state.info.goods_name + ' ' + this.state.info.tonnage + '吨'+ '±' + this.state.info.ton_section}</Text>
+                                <Text style={styles.textContainer}>{createGoodsName(info) + ' ' + info.tonnage + '吨'+ '±' + info.ton_section}</Text>
                             </View>
                         </View>
                         <View style={{backgroundColor: '#81c6ff', height: 26, alignItems: "center", justifyContent: "center"}}>
@@ -316,6 +318,11 @@ export default class HomeOfferDetailVC extends Component {
     }
 }
 const styles = StyleSheet.create({
+    textContainer: {
+        flex: 1,
+        fontSize:14,
+        color: appData.appTextColor,
+    },
     textInput: {
         marginTop: 10,
         minHeight: 46,
@@ -334,7 +341,7 @@ const styles = StyleSheet.create({
         width:32,
         height:4,
         marginLeft:20,
-        marginRight:20,
+        marginRight:45,
         resizeMode: "stretch",
     }
 });
