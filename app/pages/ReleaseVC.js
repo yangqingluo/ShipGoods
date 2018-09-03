@@ -792,6 +792,13 @@ export default class ReleaseVC extends Component {
                     </View>
                     <View style={{height:80}} />
                 </ScrollView>
+                <View style={{position: "absolute", bottom: 30, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
+                    <TouchableOpacity onPress={this.sureBtnClick.bind(this)}>
+                        <View style={appStyles.sureBtnContainer}>
+                            <Text style={{color: "#fff"}}>{"提交"}</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
                 <ActionSheet
                     ref={o => this.areaTypeActionSheet = o}
                     title={'请选择运输航向'}

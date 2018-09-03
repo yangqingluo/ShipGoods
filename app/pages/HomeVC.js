@@ -338,7 +338,7 @@ export default class HomeVC extends Component {
 }
 
 const TopHeight = 140;
-const AnimatedHeight = Math.max(4 * TopHeight, screenHeight);
+const AnimatedHeight = isIOS ? 1 : Math.max(4 * TopHeight, screenHeight);
 
 const styles = StyleSheet.create({
     container: {

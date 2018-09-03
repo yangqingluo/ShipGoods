@@ -271,7 +271,7 @@ export default class HomeOfferDetailVC extends Component {
                             </View>
                             <View style={{flex: 1, flexDirection: 'row', alignItems: "center", justifyContent: "space-between"}}>
                                 <Text style={styles.textContainer}>{info.loading_timetext + ' ± ' + info.loading_delay + '天'}</Text>
-                                <Text style={[styles.textContainer, {flex: 1, marginLeft:20}]}>{this.state.info.goods_name + ' ' + this.state.info.tonnage + '±' + this.state.info.ton_section + '吨'}</Text>
+                                <Text style={[styles.textContainer, {flex: 1, marginLeft:20}]}>{this.state.info.goods_name + ' ' + this.state.info.tonnage + '吨'+ '±' + this.state.info.ton_section}</Text>
                             </View>
                         </View>
                         <View style={{backgroundColor: '#81c6ff', height: 26, alignItems: "center", justifyContent: "center"}}>
