@@ -103,14 +103,11 @@ export default class HomeOrderVC extends Component {
             });
     };
 
-    onAlertSureBtnAction = () => {
-
-    };
-
     renderCell = (info: Object) => {
         return (
             <OrderCell
                 info={info}
+                showCreateTime={true}
                 onPress={this.onCellSelected}
             />
         )
