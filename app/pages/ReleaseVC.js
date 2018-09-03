@@ -289,9 +289,12 @@ export default class ReleaseVC extends Component {
                         this.refIndicator.hide();
                         if (result.code === 0) {
                             this.refreshDefaultState();
-                            appHomeVC.reloadSubListOrderVC();
-                            PublicAlert(result.message, "发布完成，请到\"我的货\"中查看",
-                                [{text:"确定"}]
+                            PublicAlert(stringIsEmpty(result.message) ? "已发布" : result.message, "发布完成，请到\"我的货\"中查看",
+                                [{text:"取消"},
+                                    {text:"去查看", onPress:(() => {
+                                        appMainTab.refTab.goToPage(0);
+                                        appHomeVC.reloadSubListOrderVC(true);
+                                    })}]
                             );
                         }
                         else {

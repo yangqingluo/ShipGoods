@@ -199,10 +199,13 @@ export default class HomeVC extends Component {
         });
     }
 
-    reloadSubListOrderVC = () => {
+    reloadSubListOrderVC = (switchPage = false) => {
         if (objectNotNull(this.subListOrderVC)) {
             this.subListOrderVC.state.dataList = [];
             this.subListOrderVC.requestData();
+        }
+        if (switchPage && objectNotNull(this.refTab)) {
+            this.refTab.goToPage(1);
         }
     };
 
@@ -308,6 +311,7 @@ export default class HomeVC extends Component {
                         </Swiper>
                     </Animated.View>
                     <ScrollableTabView
+                        ref={o => this.refTab = o}
                         renderTabBar={() =>
                             <TabTop tabNames={tabTitles} />}
                         style={styles.tabView}
