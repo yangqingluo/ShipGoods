@@ -59,8 +59,8 @@ export default class HomeGoodsCell extends Component {
                             <Text style={{fontSize:14, color:appData.appBlueColor, marginRight:18, fontWeight:'bold'}}>{info.item.tonnage + ' T'}</Text>
                         </View>
                         <View style={styles.cellItemContainer}>
-                            <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>空船期</Text>
-                            <Text style={{fontSize:14, color:appData.appLightTextColor}}>{info.item.empty_timetext}</Text>
+                            <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{"空船期"}</Text>
+                            <Text style={{fontSize:14, color:appData.appLightTextColor}}>{info.item.empty_timetext + "±" + info.item.empty_delay}</Text>
                         </View>
                         {downloadOilList.length > 0 ?
                             <View>

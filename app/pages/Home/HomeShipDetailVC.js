@@ -159,7 +159,7 @@ export default class HomeShipDetailVC extends Component {
     renderSubNameForIndex(item, index) {
         let info = this.state.detailInfo;
         if (item.idKey === 'empty_time') {
-            return info.empty_timetext;
+            return info.empty_timetext + "±" + info.empty_delay;
         }
         else if (item.idKey === 'download_oil_list') {
             let oilList = [];
