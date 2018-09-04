@@ -103,7 +103,7 @@ export default class CustomItem extends Component {
                                           secureTextEntry={this.props.secureTextEntry}
                                           maxLength={maxLength}
                                           style={styles.textInput}
-                                          placeholder={name + " " + (objectNotNull(editValue) ? editValue : "")}
+                                          placeholder={objectNotNull(editValue) ? editValue : ""}
                                           placeholderTextColor={appData.appSecondaryTextColor}
                                           editable={disable}
                                           onChangeText={(text) => {

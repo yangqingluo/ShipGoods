@@ -377,7 +377,7 @@ global.shipAreaTypes = ['取消', '沿海', '内河（可进川）', '内河（�
 global.shipCourseTypes = ['南下', '北上', '上江', '下江', '运河'];
 global.shipWastageTypes = ['取消', '船板量 -> 船板量', '罐发量 -> 入库量', '船板量 -> 入库量', '罐发量 -> 船板量'];
 global.transportStateTypes = ["抵锚", "靠泊", "开始装货", "装货完毕", "离港", "抵锚", "靠泊", "开始卸货", "卸货完毕", "离港"];
-global.shipTypes = ['取消',
+global.shipTypes = [
     '油船1级',
     '油船2级',
     '油船3级',
@@ -510,8 +510,21 @@ global.shipIsShowType = function(dieseloil, gasoline, ship_type) : boolean {
     if (!stringIsEmpty(ship_type)) {
         let typeIndex = parseInt(ship_type);
         if (typeIndex > 0 && typeIndex < shipTypes.length) {
-            let type = shipTypes[typeIndex];
+            let type = shipTypes[typeIndex - 1];
             if (type.search("油") === -1) {
+                return true;
+            }
+        }
+    }
+    return false;
+};
+
+global.shipIsOilThreeLevel = function(ship_type) : boolean {
+    if (!stringIsEmpty(ship_type)) {
+        let typeIndex = parseInt(ship_type);
+        if (typeIndex > 0 && typeIndex < shipTypes.length) {
+            let type = shipTypes[typeIndex - 1];
+            if (type.search("油船3级") !== -1) {
                 return true;
             }
         }

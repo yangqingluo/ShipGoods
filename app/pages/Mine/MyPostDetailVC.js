@@ -85,7 +85,7 @@ export default class MyPostDetailVC extends Component {
             ship_type = parseInt(info.ship_type);
         }
         let shareText = "我在友船友货发现了一条空船期！"
-            + getArrayTypesText(shipTypes, ship_type)
+            + getArrayTypesText(shipTypes, ship_type - 1)
             + " " + info.empty_time
             + " " + info.empty_port_name
             + " " + info.tonnage + "吨位";
@@ -296,7 +296,7 @@ export default class MyPostDetailVC extends Component {
                                 {shipIsShowType(dieseloil, gasoline, ship_type) ?
                                     <Text style={{marginLeft:6, fontSize:14}}>
                                         <Text style={{color:appData.appSecondaryTextColor}}>{'船舶类型 '}</Text>
-                                        <Text style={{color:appData.appTextColor}}>{getArrayTypesText(shipTypes, parseInt(ship_type))}</Text>
+                                        <Text style={{color:appData.appTextColor}}>{getArrayTypesText(shipTypes, parseInt(ship_type) - 1)}</Text>
                                     </Text>
                                     :
                                     <Text style={{marginLeft:6, fontSize:14}}>

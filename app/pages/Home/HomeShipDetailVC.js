@@ -188,7 +188,7 @@ export default class HomeShipDetailVC extends Component {
         else if (item.idKey === 'ship_type' && objectNotNull(info.ship_type)) {
             let type = parseInt(info.ship_type);
             if (type > 0) {
-                return getArrayTypesText(shipTypes, parseInt(info.ship_type));
+                return getArrayTypesText(shipTypes, parseInt(info.ship_type) - 1);
             }
         }
         else if (item.idKey === 'course') {

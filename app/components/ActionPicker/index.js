@@ -40,7 +40,7 @@ export default class ActionPicker extends Component {
 
         this.setState({
             visible: true,
-            choice: choice,
+            choice: choice || (this.options.length && this.options[0]),
         });
     }
 
@@ -88,6 +88,7 @@ export default class ActionPicker extends Component {
                                 </TouchableOpacity>
                             </View>
                             <View style={{height:0.5, backgroundColor: appData.appSeparatorColor}}/>
+                            <View style={{height: 10}}/>
                             <Picker
                                 style={styles.picker}
                                 itemStyle={isIOS() ? styles.itemPicker : {}}
@@ -99,6 +100,7 @@ export default class ActionPicker extends Component {
                                                  key={aOption}
                                     /> )}
                             </Picker>
+                            <View style={{height: 30}}/>
                         </View>
                     </View>
                 </Modal>
@@ -146,10 +148,11 @@ const _styles = StyleSheet.create({
     },
     picker:{
         width: screenWidth,
-        minHeight: 200,
+        minHeight: 220,
     },
     itemPicker:{
         fontSize: 24,
+        fontWeight: appData.appFontWeightLight,
         color: appData.appTextColor,
     }
 });

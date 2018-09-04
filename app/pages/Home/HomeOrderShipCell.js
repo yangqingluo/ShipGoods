@@ -86,7 +86,7 @@ export default class HomeOrderShipCell extends Component {
                             {shipIsShowType(dieseloil, gasoline, ship_type) ?
                                 <View style={styles.cellItemContainer}>
                                     <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{'船舶类型 '}</Text>
-                                    <Text style={{fontSize:14, color:appData.appLightTextColor}}>{getArrayTypesText(shipTypes, parseInt(ship_type))}</Text>
+                                    <Text style={{fontSize:14, color:appData.appLightTextColor}}>{getArrayTypesText(shipTypes, parseInt(ship_type) - 1)}</Text>
                                 </View>
                                 :
                                 <View style={styles.cellItemContainer}>

@@ -110,7 +110,7 @@ export default class MyPostCell extends PureComponent<Props> {
                                 {shipIsShowType(dieseloil, gasoline, ship_type) ?
                                     <Text style={{marginLeft:6, fontSize:14}}>
                                         <Text style={{color:appData.appSecondaryTextColor}}>{'船舶类型 '}</Text>
-                                        <Text style={{color:appData.appTextColor}}>{getArrayTypesText(shipTypes, parseInt(ship_type))}</Text>
+                                        <Text style={{color:appData.appTextColor}}>{getArrayTypesText(shipTypes, parseInt(ship_type) - 1)}</Text>
                                     </Text>
                                     :
                                     <Text style={{marginLeft:6, fontSize:14}}>

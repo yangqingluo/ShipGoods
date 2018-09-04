@@ -16,6 +16,7 @@ import ImagePicker from 'react-native-image-picker';
 import SelectImageCell from '../../components/SelectImageCell';
 import CustomItem from '../../components/CustomItem';
 import Button from '../../components/Button';
+import ActionPicker from '../../components/ActionPicker';
 import {imagePickerOptions} from "../../util/Global";
 import Toast from "react-native-easy-toast";
 import IndicatorModal from '../../components/IndicatorModal';
@@ -61,7 +62,12 @@ export default class AddShip extends Component {
             this.refAreaTypeActionSheet.show();
         }
         else if (key === 'ship_type') {
-            this.refShipTypeActionSheet.show();
+            this.refShipTypePicker.show(getArrayTypesText(shipTypes, this.state.ship_type - 1),
+                (choice, index)=>{
+                    this.setState({
+                        ship_type: index + 1,
+                    });
+                });
         }
         else if (key === 'ship_lience') {
             if (this.state.ship_lience.length >= 2) {
@@ -249,14 +255,6 @@ export default class AddShip extends Component {
         }
     }
 
-    onSelectShipType(index) {
-        if (index > 0) {
-            this.setState({
-                ship_type: index
-            });
-        }
-    }
-
     toSelectPhoto = (idKey) => {
         ImagePicker.showImagePicker(imagePickerOptions, (response) => {
             console.log('Response = ', response);
@@ -318,12 +316,12 @@ export default class AddShip extends Component {
             {idKey:"ship_type", name:"船舶类型", logo:require('../../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "ship_type")},
             // {idKey:"goods", name:"意向货品", logo:require('../../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "goods")},
         ];
-        let type = null;
-        if (ship_type > 0 && ship_type < shipTypes.length) {
-            type = shipTypes[ship_type];
+        if (shipIsShowType(null, null, ship_type)) {
+            this.state.gasoline = '';
+            this.state.dieseloil = '';
         }
-        if (objectNotNull(type) && type.search("油") !== -1) {
-            if (type === "油船3级") {
+        else {
+            if (shipIsOilThreeLevel(ship_type)) {
                 this.config = this.config.concat([
                     {idKey:"dieseloil", name:"可载柴油吨位（选填）", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
                 ]);
@@ -335,10 +333,6 @@ export default class AddShip extends Component {
                     {idKey:"dieseloil", name:"可载柴油吨位（选填）", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
                 ]);
             }
-        }
-        else {
-            this.state.gasoline = '';
-            this.state.dieseloil = '';
         }
         this.config = this.config.concat([
             {idKey:"area", name:"航行区域", logo:require('../../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "area")},
@@ -360,7 +354,7 @@ export default class AddShip extends Component {
             return getArrayTypesText(shipAreaTypes, this.state.area);
         }
         else if (item.idKey === 'ship_type' && this.state.ship_type > 0) {
-            return getArrayTypesText(shipTypes, this.state.ship_type);
+            return getArrayTypesText(shipTypes, this.state.ship_type - 1);
         }
         return '';
     }
@@ -477,13 +471,9 @@ export default class AddShip extends Component {
                     // destructiveButtonIndex={1}
                     onPress={this.onSelectAreaType.bind(this)}
                 />
-                <ActionSheet
-                    ref={o => this.refShipTypeActionSheet = o}
-                    title={'请选择船舶类型'}
-                    options={shipTypes}
-                    cancelButtonIndex={0}
-                    // destructiveButtonIndex={1}
-                    onPress={this.onSelectShipType.bind(this)}
+                <ActionPicker ref={o => this.refShipTypePicker = o}
+                              title={'请选择船舶类型'}
+                              options={shipTypes}
                 />
                 <Toast ref={o => this.refToast = o} position={'center'}/>
                 <IndicatorModal ref={o => this.refIndicator = o}/>

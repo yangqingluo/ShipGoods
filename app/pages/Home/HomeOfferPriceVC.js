@@ -383,7 +383,7 @@ export default class HomeOfferPriceVC extends Component {
             {shipIsShowType(dieseloil, gasoline, ship_type) ?
                 <View style={shipStyles.viewContainer}>
                     <Text style={{color:appData.appSecondaryTextColor, marginRight:7, fontSize:12}}>{'船舶类型 '}</Text>
-                    <Text style={{color:appData.appSecondaryTextColor, marginRight:15, fontSize:12}}>{getArrayTypesText(shipTypes, parseInt(ship_type))}</Text>
+                    <Text style={{color:appData.appSecondaryTextColor, marginRight:15, fontSize:12}}>{getArrayTypesText(shipTypes, parseInt(ship_type) - 1)}</Text>
                 </View>
                 :
                 <View style={shipStyles.viewContainer}>

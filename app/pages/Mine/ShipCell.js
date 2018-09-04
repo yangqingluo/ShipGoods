@@ -63,12 +63,12 @@ export default class ShipCell extends PureComponent<Props> {
                     <View style={styles.viewContainer}>
                         {shipIsShowType(dieseloil, gasoline, ship_type) ?
                             <Text style={{color:appData.appSecondaryTextColor, fontSize:12, marginLeft:16}}>
-                                <Text>{getArrayTypesText(shipTypes, parseInt(ship_type))}</Text>
+                                <Text>{getArrayTypesText(shipTypes, parseInt(ship_type) - 1)}</Text>
                             </Text>
                             :
                             <Text style={{color:appData.appSecondaryTextColor, fontSize:12, marginLeft:16}}>
                                 <Text>{'可运柴油' + (objectIsZero(dieseloil) ? "" : dieseloil + '吨')}</Text>
-                                <Text>{' 可运汽油' + (objectIsZero(gasoline) ? "" : gasoline + '吨')}</Text>
+                                {shipIsOilThreeLevel(ship_type) ? null : <Text>{' 可运汽油' + (objectIsZero(gasoline) ? "" : gasoline + '吨')}</Text>}
                             </Text>
                         }
 
