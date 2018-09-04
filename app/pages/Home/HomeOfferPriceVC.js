@@ -10,7 +10,6 @@ import {
     TouchableOpacity
 } from 'react-native';
 import CustomItem from '../../components/CustomItem';
-import px2dp from "../../util";
 import Toast from "react-native-easy-toast";
 import IndicatorModal from '../../components/IndicatorModal';
 
@@ -358,7 +357,7 @@ export default class HomeOfferPriceVC extends Component {
                     <View style={shipStyles.cellContainer}>
                         <View style={[shipStyles.cellContainer, {alignItems: "center"}]}>
                             <Image source={require('../../images/icon_word_hang.png')} style={{width:19, height: 29, marginLeft:12, resizeMode: "cover"}}/>
-                            <Text style={{color:appData.appTextColor, marginLeft:6, fontSize:14}}>{getShipAreaTypesText(parseInt(ship.area))}</Text>
+                            <Text style={{color:appData.appTextColor, marginLeft:6, fontSize:14}}>{getArrayTypesText(shipAreaTypes, parseInt(ship.area) - 1)}</Text>
                         </View>
                         <View style={[shipStyles.cellContainer, {alignItems: "center"}]}>
                             <Text style={{color:appData.appTextColor, marginLeft:12, fontSize:14}}>{ship.storage + ' m³ / ' + ship.tonnage + ' T'}</Text>
@@ -391,7 +390,7 @@ export default class HomeOfferPriceVC extends Component {
                     <Text style={{color:appData.appSecondaryTextColor, marginRight:15, fontSize:12}}>{'可运汽油 ' + (objectIsZero(gasoline) ? "" : gasoline + '吨')}</Text>
                 </View>
             }
-            <View style={{height:px2dp(12), backgroundColor: appData.appGrayColor}} />
+            <View style={{height:12, backgroundColor: appData.appGrayColor}} />
         </View>);
     }
 
@@ -493,56 +492,3 @@ const shipStyles = StyleSheet.create({
         paddingRight: 10,
     },
 });
-
-// "uid":"95",
-//     "sex":"1",
-//     "sign":null,
-//     "credit":"5",
-//     "bz_licence":"",
-//     "card_front":"",
-//     "card_con":"",
-//     "idcard_front":"Uploads\/corporation\/2018-06-08\/5b19d90b985c4.png",
-//     "idcard_con":"Uploads\/corporation\/2018-06-08\/5b19d92731e6a.png",
-//     "invoice_type":"1",
-//     "invoice_remark":null,
-//     "corporation":null,
-//     "phone":null,
-//     "remark":null,
-//     "auth_time":"0",
-//     "checker":"0",
-//     "check_time":"0",
-//     "name":"\u8fbe",
-//     "contact":"13616647261",
-//     "ship_id":"2",
-//     "ship_name":"\u91d1\u822a\u6cb9",
-//     "ship_lience":"Uploads\/ship\/2018-06-06\/5b1798120f354.png",
-//     "projects":"",
-//     "tonnage":"5000",
-//     "storage":"6000",
-//     "state":"0",
-//     "dieseloil":"5000",
-//     "gasoline":"4000",
-//     "longitude":null,
-//     "latitude":null,
-//     "area":"2",
-//     "income_qua":"0",
-//     "usestate":"0",
-//     "create_time":"1528272919",
-//     "ship_type":"0",
-//     "good_task_id":"78",
-//     "qid":"1",
-//     "book_id":"2",
-//     "offer":"999.99",
-//     "arrive_time":"2018-06-08",
-//     "arrive_delay":"0",
-//     "last_goods_id":"93",
-//     "add_time":"1528420491",
-//     "book_num":"2",
-//     "goods_sn":"GYY180606001",
-//     "last_goods_name":{
-//     "goods_id":"93",
-//         "goods_name":"\u6ca5\u9752",
-//         "iclose":"0",
-//         "pid":"28",
-//         "deep":"1"},
-//     "price":"2000.00"}

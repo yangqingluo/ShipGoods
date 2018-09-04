@@ -38,7 +38,7 @@ export default class ShipCell extends PureComponent<Props> {
                             <View style={styles.cellContainer}>
                                 <View style={[styles.cellContainer, {alignItems: "center"}]}>
                                     <Image source={require('../../images/icon_word_hang.png')} style={{width: 19, height: 29, marginLeft:12, resizeMode: "cover"}}/>
-                                    <Text style={{color:appData.appTextColor, marginLeft:6, fontSize:14}}>{getShipAreaTypesText(parseInt(info.item.area))}</Text>
+                                    <Text style={{color:appData.appTextColor, marginLeft:6, fontSize:14}}>{getArrayTypesText(shipAreaTypes, parseInt(info.item.area) - 1)}</Text>
                                 </View>
                                 <View style={[styles.cellContainer, {alignItems: "center"}]}>
                                     <Text style={{color:appData.appTextColor, marginLeft:12, fontSize:14}}>{info.item.storage + ' m³ / ' + info.item.tonnage + ' T'}</Text>

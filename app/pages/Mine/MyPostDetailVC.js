@@ -188,10 +188,7 @@ export default class MyPostDetailVC extends Component {
             return info.storage + " m³";
         }
         else if (item.idKey === 'area') {
-            let course = parseInt(info.area);
-            if (course > 0 && course < shipAreaTypes.length) {
-                return shipAreaTypes[course];
-            }
+            return getArrayTypesText(shipAreaTypes, parseInt(info.area) - 1);
         }
         else if (item.idKey === 'course' && info.course.length > 0) {
             return getShipCourseTypesText(info.course);

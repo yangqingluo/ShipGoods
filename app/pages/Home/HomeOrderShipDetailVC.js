@@ -195,8 +195,7 @@ export default class HomeShipDetailVC extends Component {
             return info.storage + " m³";
         }
         else if (item.idKey === "area") {
-            let area = parseInt(info.area);
-            return getShipAreaTypesText(area);
+            return getArrayTypesText(shipAreaTypes, parseInt(info.area) - 1);
         }
 
         return '';

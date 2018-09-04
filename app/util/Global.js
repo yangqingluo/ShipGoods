@@ -371,11 +371,10 @@ global.getShipStateText = function(state : Number) : String {
     }
 };
 
-global.cleanDeleyTypes = ['取消', '15', '30', '45', '60'];
-global.shipAreaObjects = [{key: 1, name: '沿海'}, {key: 2, name: '内河（可进川）'}, {key: 3, name: '内河（不可进川)'}];
-global.shipAreaTypes = ['取消', '沿海', '内河（可进川）', '内河（不可进川)'];
+global.cleanDeleyTypes = ['15', '30', '45', '60'];
+global.shipAreaTypes = ['沿海', '内河（可进川）', '内河（不可进川)'];
 global.shipCourseTypes = ['南下', '北上', '上江', '下江', '运河'];
-global.shipWastageTypes = ['取消', '船板量 -> 船板量', '罐发量 -> 入库量', '船板量 -> 入库量', '罐发量 -> 船板量'];
+global.shipWastageTypes = ['船板量 -> 船板量', '罐发量 -> 入库量', '船板量 -> 入库量', '罐发量 -> 船板量'];
 global.transportStateTypes = ["抵锚", "靠泊", "开始装货", "装货完毕", "离港", "抵锚", "靠泊", "开始卸货", "卸货完毕", "离港"];
 global.shipTypes = [
     '油船1级',
@@ -391,20 +390,6 @@ global.shipTypes = [
     '油化船(油1化Ⅱ)',
     '干货散船',
     '粮油船'];
-global.shipTypeObjects = [
-    {key: 1, name: '油船1级'},
-    {key: 2, name: '油船2级'},
-    {key: 3, name: '油船3级'},
-    {key: 4, name: '化学品Ⅰ级'},
-    {key: 5, name: '化学品Ⅱ级'},
-    {key: 6, name: '化学品Ⅲ级'},
-    {key: 7, name: '液压气船全压'},
-    {key: 8, name: '液压气船全冷'},
-    {key: 9, name: '液压气船半压半冷'},
-    {key: 10, name: '油化船(油1化Ⅰ)'},
-    {key: 11, name: '油化船(油1化Ⅱ)'},
-    {key: 12, name: '干货散船'},
-    {key: 13, name: '粮油船'}];
 
 global.createShipWastageNumberTypes = function() : Array {
     let array = [];
@@ -425,7 +410,7 @@ global.createTonSectionTypes = function() : Array {
 global.tonSectionTypes = createTonSectionTypes();
 
 global.createDemurrageTypes = function() : Array {
-    let array = ['取消'];
+    let array = [];
     for (let i = 0; i <= 100000; i += 1000) {
         array.push(i + '');
     }
@@ -433,16 +418,13 @@ global.createDemurrageTypes = function() : Array {
 };
 global.demurrageTypes = createDemurrageTypes();
 
+global.addCancelForArray = function(array) : Array {
+    return ["取消"].concat(array);
+};
+
 global.getArrayTypesText = function(array, index) : String {
     if (index >= 0 && index < array.length) {
         return array[index];
-    }
-    return "";
-};
-
-global.getShipAreaTypesText = function(area : Number) : String {
-    if (area < shipAreaTypes.length) {
-        return shipAreaTypes[area];
     }
     return "";
 };

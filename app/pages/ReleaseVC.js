@@ -108,7 +108,7 @@ export default class ReleaseVC extends Component {
             let data2 = 20;
             let m_string = '';
             if (data1 > 0) {
-                m_string += shipWastageTypes[data1];
+                m_string += shipWastageTypes[data1 - 1];
             }
             if (data2 >= 0) {
                 if (m_string.length > 0) {
@@ -500,7 +500,7 @@ export default class ReleaseVC extends Component {
         if (key === "SelectWastage") {
             let m_string = '';
             if (data1 > 0) {
-                m_string += shipWastageTypes[data1];
+                m_string += shipWastageTypes[data1 - 1];
             }
             if (data2 > 0) {
                 if (m_string.length > 0) {
@@ -679,7 +679,7 @@ export default class ReleaseVC extends Component {
     onSelectCleanDelayType(index) {
         if (index > 0) {
             this.setState({
-                clean_deley: getArrayTypesText(cleanDeleyTypes, index),
+                clean_deley: getArrayTypesText(cleanDeleyTypes, index - 1),
             });
         }
     }
@@ -731,7 +731,6 @@ export default class ReleaseVC extends Component {
             return getShipCourseTypesText(this.state.course);
         }
         else if (item.idKey === 'clean_deley' && !stringIsEmpty(this.state.clean_deley)) {
-            // return '完货' + getArrayTypesText(cleanDeleyTypes, this.state.clean_deley) + '天内';
             return '完货' + this.state.clean_deley + '天内';
         }
         else if (item.idKey === 'upload_oil_list' && arrayNotEmpty(this.state.upload_oil_list)) {
@@ -813,7 +812,7 @@ export default class ReleaseVC extends Component {
                 <ActionSheet
                     ref={o => this.cleanDelayTypeActionSheet = o}
                     title={'请选择结算时间'}
-                    options={cleanDeleyTypes}
+                    options={addCancelForArray(cleanDeleyTypes)}
                     cancelButtonIndex={0}
                     // destructiveButtonIndex={1}
                     onPress={this.onSelectCleanDelayType.bind(this)}

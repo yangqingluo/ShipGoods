@@ -64,7 +64,7 @@ export default class SelectWastageVC extends Component {
                         style = {styles.cell}
                         onPress={()=>this.showWastagePicker()}>
                         <Text style={styles.text}>
-                            {this.state.wastageTitle > 0 ? shipWastageTypes[this.state.wastageTitle] : '请选择损耗类型'}
+                            {this.state.wastageTitle > 0 ? shipWastageTypes[this.state.wastageTitle - 1] : '请选择损耗类型'}
                         </Text>
                     </TouchableOpacity>
                     <View style={{height:2}} />
@@ -86,7 +86,7 @@ export default class SelectWastageVC extends Component {
                 <ActionSheet
                     ref={o => this.wastageTypeActionSheet = o}
                     title={''}
-                    options={shipWastageTypes}
+                    options={addCancelForArray(shipWastageTypes)}
                     cancelButtonIndex={0}
                     // destructiveButtonIndex={1}
                     onPress={this.onSelectWastageType.bind(this)}

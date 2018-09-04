@@ -53,7 +53,8 @@ export default class HomeShipDetailVC extends Component {
             {idKey:"download_oil_list", name:"意向货品"},
             {idKey:"storage", name:"仓容"},
             {idKey:"ship_type", name:"船舶类型"},
-            {idKey:"course", name:"航行区域"},
+            {idKey:"area", name:"航行区域"},
+            {idKey:"course", name:"可运航向"},
             {idKey:"upload_oil_list", name:"上载货品"},
             {idKey:"credit", name:"船主信用"},
             {idKey:"phone", name:"联系方式", onPress:this.cellSelected.bind(this, "SelectPhone")},
@@ -191,11 +192,11 @@ export default class HomeShipDetailVC extends Component {
                 return getArrayTypesText(shipTypes, parseInt(info.ship_type) - 1);
             }
         }
+        else if (item.idKey === 'area') {
+            return getArrayTypesText(shipAreaTypes, parseInt(info.area) - 1);
+        }
         else if (item.idKey === 'course') {
-            let course = parseInt(info.course);
-            if (course > 0 && course < shipAreaTypes.length) {
-                return shipAreaTypes[course];
-            }
+            return getArrayTypesText(shipCourseTypes, parseInt(info.course));
         }
 
         return '';

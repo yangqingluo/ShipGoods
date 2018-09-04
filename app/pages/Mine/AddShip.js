@@ -351,7 +351,7 @@ export default class AddShip extends Component {
             return dataList.join(",");
         }
         else if (item.idKey === 'area' && this.state.area > 0) {
-            return getArrayTypesText(shipAreaTypes, this.state.area);
+            return getArrayTypesText(shipAreaTypes, this.state.area - 1);
         }
         else if (item.idKey === 'ship_type' && this.state.ship_type > 0) {
             return getArrayTypesText(shipTypes, this.state.ship_type - 1);
@@ -466,7 +466,7 @@ export default class AddShip extends Component {
                 <ActionSheet
                     ref={o => this.refAreaTypeActionSheet = o}
                     title={'请选择航行区域'}
-                    options={shipAreaTypes}
+                    options={addCancelForArray(shipAreaTypes)}
                     cancelButtonIndex={0}
                     // destructiveButtonIndex={1}
                     onPress={this.onSelectAreaType.bind(this)}

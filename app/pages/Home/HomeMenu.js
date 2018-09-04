@@ -253,7 +253,7 @@ export default class Menu extends Component {
 
     onShipTypeCellSelected = (info: Object) => {
         this.setState({
-            ship_type: info.item,
+            ship_type: info.index + 1,
         });
     };
 
@@ -261,18 +261,18 @@ export default class Menu extends Component {
         return (
             <TextCell
                 info={info}
-                showText={info.item.name}
+                showText={info.item}
                 onPress={this.onShipTypeCellSelected}
-                selected={info.item === this.state.ship_type}
+                selected={info.index === this.state.ship_type - 1}
                 lines={3}
             />
         )
     };
 
     onAreaCellSelected = (info: Object) => {
-        let index = this.state.area.indexOf(info.item);
+        let index = this.state.area.indexOf(info.index);
         if (index === -1) {
-            this.state.area.push(info.item);
+            this.state.area.push(info.index);
         }
         else {
             this.state.area.splice(index, 1);
@@ -284,9 +284,9 @@ export default class Menu extends Component {
         return (
             <TextCell
                 info={info}
-                showText={info.item.name}
+                showText={info.item}
                 onPress={this.onAreaCellSelected}
-                selected={this.state.area.indexOf(info.item) !== -1}
+                selected={this.state.area.indexOf(info.index) !== -1}
                 lines={2}
             />
         )
@@ -316,7 +316,7 @@ export default class Menu extends Component {
                         <CellTitleItem name={"船舶类型"} disable={true} subName={''}>
                             <FlatList
                                 numColumns ={3}
-                                data={shipTypeObjects}
+                                data={shipTypes}
                                 renderItem={this.renderShipTypeCell}
                                 keyExtractor={this.keyExtractor}
                                 style={{marginLeft: 10, marginRight: 10}}
@@ -354,7 +354,7 @@ export default class Menu extends Component {
                     <CellTitleItem name={'航行区域'} disable={true} subName={''}>
                         <FlatList
                             numColumns ={2}
-                            data={shipAreaObjects}
+                            data={shipAreaTypes}
                             renderItem={this.renderAreaCell}
                             keyExtractor={this.keyExtractor}
                             style={{marginLeft: 10, marginRight: 10}}
