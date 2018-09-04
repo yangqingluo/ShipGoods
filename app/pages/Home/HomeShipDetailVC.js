@@ -50,11 +50,11 @@ export default class HomeShipDetailVC extends Component {
 
         this.config = [
             {idKey:"empty_time",name:"空船期"},
-            {idKey:"download_oil_list", name:"意向货品"},
-            {idKey:"storage", name:"仓容"},
             {idKey:"ship_type", name:"船舶类型"},
+            {idKey:"storage", name:"仓容"},
             {idKey:"area", name:"航行区域"},
             {idKey:"course", name:"可运航向"},
+            {idKey:"download_oil_list", name:"意向货品"},
             {idKey:"upload_oil_list", name:"上载货品"},
             {idKey:"credit", name:"船主信用"},
             {idKey:"phone", name:"联系方式", onPress:this.cellSelected.bind(this, "SelectPhone")},
@@ -264,7 +264,7 @@ export default class HomeShipDetailVC extends Component {
                                    multiline={true}
                                    editable={false}
                         >
-                            {stringIsEmpty(info.remark) ? '此油品暂无备注' : info.remark}
+                            {stringIsEmpty(info.remark) ? '此货品暂无备注' : info.remark}
                         </Text>
                     </View>
                     {ordered ?

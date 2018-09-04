@@ -7,8 +7,6 @@ export default class MyPostOrderVC extends HomeOrderVC {
         title: navigation.state.params.title,
     });
 
-
-
     requestRecommend = async (isReset) => {
         if (isReset) {
             this.state.page = 1;

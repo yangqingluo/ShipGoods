@@ -167,7 +167,7 @@ export default class HomeShipDetailVC extends Component {
                 return info.remark;
             }
         }
-        return '此油品暂无备注';
+        return '此货品暂无备注';
     }
 
     renderSubNameForIndex(item, index) {

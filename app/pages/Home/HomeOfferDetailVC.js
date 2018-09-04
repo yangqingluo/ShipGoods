@@ -291,7 +291,7 @@ export default class HomeOfferDetailVC extends Component {
                               multiline={true}
                               editable={false}
                         >
-                            {objectNotNull(remark) ? remark : '此油品暂无备注'}
+                            {objectNotNull(remark) ? remark : '此货品暂无备注'}
                         </Text>
                     </View>
                 </ScrollView>

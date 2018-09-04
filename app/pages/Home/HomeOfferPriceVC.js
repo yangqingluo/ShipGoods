@@ -387,7 +387,7 @@ export default class HomeOfferPriceVC extends Component {
                 :
                 <View style={shipStyles.viewContainer}>
                     <Text style={{color:appData.appSecondaryTextColor, marginRight:7, fontSize:12}}>{'可运柴油 ' + (objectIsZero(dieseloil) ? "" : dieseloil + '吨')}</Text>
-                    <Text style={{color:appData.appSecondaryTextColor, marginRight:15, fontSize:12}}>{'可运汽油 ' + (objectIsZero(gasoline) ? "" : gasoline + '吨')}</Text>
+                    {shipIsOilThreeLevel(ship_type) ? null : <Text style={{color:appData.appSecondaryTextColor, marginRight:15, fontSize:12}}>{'可运汽油 ' + (objectIsZero(gasoline) ? "" : gasoline + '吨')}</Text>}
                 </View>
             }
             <View style={{height:12, backgroundColor: appData.appGrayColor}} />

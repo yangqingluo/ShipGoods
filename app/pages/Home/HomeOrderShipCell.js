@@ -76,7 +76,7 @@ export default class HomeOrderShipCell extends Component {
                             <View>
                                 <View style={{height:1, marginLeft:3, backgroundColor:appData.appSeparatorLightColor}} />
                                 <View style={{flexDirection: 'row',  alignItems: "center", justifyContent: "space-between", height:47}}>
-                                    <Text style={{fontSize:14, color:appData.appSecondaryTextColor, marginLeft:28}}>上载油品</Text>
+                                    <Text style={{fontSize:14, color:appData.appSecondaryTextColor, marginLeft:28}}>{"上载货品"}</Text>
                                     <Text style={{fontSize:14, color:appData.appLightTextColor, marginRight:18}}>{uploadOilList.join(' ')}</Text>
                                 </View>
                             </View>
@@ -94,10 +94,12 @@ export default class HomeOrderShipCell extends Component {
                                         <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{'可运柴油 '}</Text>
                                         <Text style={{fontSize:14, color:appData.appLightTextColor}}>{objectIsZero(dieseloil) ? "" : dieseloil + ' T'}</Text>
                                     </View>
-                                    <View style={{flexDirection: 'row',  alignItems: "center", justifyContent: "flex-end"}}>
-                                        <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{'可运汽油 '}</Text>
-                                        <Text style={{fontSize:14, color:appData.appLightTextColor, textAlign: "right"}}>{objectIsZero(gasoline) ? "" : gasoline + ' T'}</Text>
-                                    </View>
+                                    {shipIsOilThreeLevel(ship_type) ? null :
+                                        <View style={{flexDirection: 'row',  alignItems: "center", justifyContent: "flex-end"}}>
+                                            <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{'可运汽油 '}</Text>
+                                            <Text style={{fontSize:14, color:appData.appLightTextColor, textAlign: "right"}}>{objectIsZero(gasoline) ? "" : gasoline + ' T'}</Text>
+                                        </View>
+                                    }
                                 </View>
                             }
                         </View>

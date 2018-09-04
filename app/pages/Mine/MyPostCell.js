@@ -100,7 +100,7 @@ export default class MyPostCell extends PureComponent<Props> {
                                 <View style={[styles.cellContainer, {alignItems: "center"}]}>
                                     <Image source={require('../../images/icon_clip.png')} style={{width: 16, height: 16, marginLeft:12, resizeMode: "stretch"}}/>
                                     <Text style={{marginLeft:6, fontSize:14}}>
-                                        <Text style={{color:appData.appSecondaryTextColor}}>{'上载油品 '}</Text>
+                                        <Text style={{color:appData.appSecondaryTextColor}}>{'上载货品 '}</Text>
                                         <Text style={{color:appData.appTextColor}}>{uploadOilList.join(' ')}</Text>
                                     </Text>
                                 </View>
@@ -116,8 +116,8 @@ export default class MyPostCell extends PureComponent<Props> {
                                     <Text style={{marginLeft:6, fontSize:14}}>
                                         <Text style={{color:appData.appSecondaryTextColor}}>{'可运柴油 '}</Text>
                                         <Text style={{color:appData.appTextColor}}>{objectIsZero(dieseloil) ? "" : dieseloil + '吨'}</Text>
-                                        <Text style={{color:appData.appSecondaryTextColor}}>{' 可运汽油 '}</Text>
-                                        <Text style={{color:appData.appTextColor}}>{objectIsZero(gasoline) ? "" : gasoline + '吨'}</Text>
+                                        {shipIsOilThreeLevel(ship_type) ? null : <Text style={{color:appData.appSecondaryTextColor}}>{' 可运汽油 '}</Text>}
+                                        {shipIsOilThreeLevel(ship_type) ? null : <Text style={{color:appData.appTextColor}}>{objectIsZero(gasoline) ? "" : gasoline + '吨'}</Text>}
                                     </Text>
                                 }
                             </View>

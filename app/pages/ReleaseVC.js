@@ -195,7 +195,7 @@ export default class ReleaseVC extends Component {
                 course: course,
             };
 
-            if (remark.length > 0) {
+            if (!stringIsEmpty(remark)) {
                 data.remark = remark;
             }
 

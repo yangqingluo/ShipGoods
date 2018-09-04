@@ -75,7 +75,7 @@ export default class HomeGoodsCell extends Component {
                             <View>
                                 <View style={styles.cellSeparator}/>
                                 <View style={styles.cellItemContainer}>
-                                    <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>上载油品</Text>
+                                    <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{"上载货品"}</Text>
                                     <Text style={styles.cellItemRightText}>{uploadOilList.join(' ')}</Text>
                                 </View>
                             </View>
@@ -93,10 +93,12 @@ export default class HomeGoodsCell extends Component {
                                         <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{'可运柴油 '}</Text>
                                         <Text style={{fontSize:14, color:appData.appLightTextColor}}>{objectIsZero(dieseloil) ? "" : dieseloil + ' T'}</Text>
                                     </View>
-                                    <View style={{flexDirection: 'row',  alignItems: "center", justifyContent: "flex-end"}}>
-                                        <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{'可运汽油 '}</Text>
-                                        <Text style={{fontSize:14, color:appData.appLightTextColor, textAlign: "right"}}>{objectIsZero(gasoline) ? "" : gasoline + ' T'}</Text>
-                                    </View>
+                                    {shipIsOilThreeLevel(ship_type) ? null :
+                                        <View style={{flexDirection: 'row',  alignItems: "center", justifyContent: "flex-end"}}>
+                                            <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{'可运汽油 '}</Text>
+                                            <Text style={{fontSize:14, color:appData.appLightTextColor, textAlign: "right"}}>{objectIsZero(gasoline) ? "" : gasoline + ' T'}</Text>
+                                        </View>
+                                    }
                                 </View>
                             }
                         </View>
