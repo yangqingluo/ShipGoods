@@ -130,6 +130,7 @@ export default class HomeOrderDetailVC extends Component {
                     if (result.code === 0) {
                         this.props.navigation.navigate('EditGoodsRelease',
                             {
+                                headerTitle: "编辑发布",
                                 info: result.data,
                                 callBack: this.callBackFromEditVC.bind(this),
                             });

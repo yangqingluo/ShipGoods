@@ -105,6 +105,7 @@ export default class MyPostDetailVC extends Component {
         //编辑
         this.props.navigation.navigate('EditShipRelease',
             {
+                headerTitle: "编辑发布",
                 info:this.state.detailInfo,
                 callBack: this.callBackFromEditVC.bind(this),
             });

@@ -1,13 +1,35 @@
 import React, { Component } from 'react';
-
-
-import HomeOrder from './HomeOrderVC'
-
+import {Text, TouchableOpacity, View} from "react-native";
+import HomeOrder from './HomeOrderVC';
 
 export default class HomeOrderSelectVC extends HomeOrder {
     static navigationOptions = ({ navigation }) => ({
         headerTitle: navigation.state.params.headerTitle || '选择货品',
+        headerRight: <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
+            <TouchableOpacity
+                onPress={navigation.state.params.clickParams}
+            >
+                <Text style={{marginRight: 10, color: appData.appBlueColor}}>{"添加货品"}</Text>
+            </TouchableOpacity>
+        </View>,
     });
+
+    componentDidMount() {
+        super.componentDidMount();
+        this.props.navigation.setParams({clickParams:this.addBtnAction});
+    }
+
+    addBtnAction =()=> {
+        this.props.navigation.navigate('AddGoodsRelease',
+            {
+                headerTitle: "添加货品",
+                callBack: this.callBackFromAddVC.bind(this),
+            });
+    };
+
+    callBackFromAddVC() {
+        this.requestData();
+    }
 
     onCellSelected = (info: Object) => {
         this.refSelectAlert.show({onSureBtnAction:this.toAddBookShip.bind(this, info.item)});

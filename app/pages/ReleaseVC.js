@@ -17,7 +17,7 @@ import IndicatorModal from '../components/IndicatorModal';
 
 export default class ReleaseVC extends Component {
     static navigationOptions = ({ navigation }) => ({
-        headerTitle: '发布',
+        headerTitle: navigation.state.params.headerTitle || '发布',
         tabBarLabel: '发布',
         headerRight: <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
             <TouchableOpacity
@@ -198,27 +198,30 @@ export default class ReleaseVC extends Component {
             if (!stringIsEmpty(remark)) {
                 data.remark = remark;
             }
-
-            this.refIndicator.show();
-            NetUtil.post(appUrl + 'index.php/Mobile/Ship/add_ship_task/', data)
-                .then(
-                    (result)=>{
-                        this.refIndicator.hide();
-                        if (result.code === 0) {
-                            this.refreshDefaultState();
-                            PublicAlert(result.message, "发布完成，请到\"我的发布\"中查看",
-                                [{text:"取消"},
-                                    {text:"去查看", onPress:backAndGoToMyRelease}]
-                            );
-                        }
-                        else {
-                            this.refToast.show(result.message);
-                        }
-                    },(error)=>{
-                        this.refIndicator.hide();
-                        this.refToast.show(error);
-                    });
+            this.doReleaseForShipOwner(data);
         }
+    }
+
+    doReleaseForShipOwner(data) {
+        this.refIndicator.show();
+        NetUtil.post(appUrl + 'index.php/Mobile/Ship/add_ship_task/', data)
+            .then(
+                (result)=>{
+                    this.refIndicator.hide();
+                    if (result.code === 0) {
+                        this.refreshDefaultState();
+                        PublicAlert(result.message, "发布完成，请到\"我的发布\"中查看",
+                            [{text:"取消"},
+                                {text:"去查看", onPress:backAndGoToMyRelease}]
+                        );
+                    }
+                    else {
+                        this.refToast.show(result.message);
+                    }
+                },(error)=>{
+                    this.refIndicator.hide();
+                    this.refToast.show(error);
+                });
     }
 
     toReleaseForGoodsOwner() {
@@ -281,30 +284,33 @@ export default class ReleaseVC extends Component {
             if (!stringIsEmpty(remark)) {
                 data.remark = remark;
             }
+            this.doReleaseForGoodsOwner(data);
+        }
+    }
 
-            this.refIndicator.show();
-            NetUtil.post(appUrl + 'index.php/Mobile/Goods/add_goods_task/', data)
-                .then(
-                    (result)=>{
-                        this.refIndicator.hide();
-                        if (result.code === 0) {
-                            this.refreshDefaultState();
-                            PublicAlert(stringIsEmpty(result.message) ? "已发布" : result.message, "发布完成，请到\"我的货\"中查看",
-                                [{text:"取消"},
-                                    {text:"去查看", onPress:(() => {
+    doReleaseForGoodsOwner(data) {
+        this.refIndicator.show();
+        NetUtil.post(appUrl + 'index.php/Mobile/Goods/add_goods_task/', data)
+            .then(
+                (result)=>{
+                    this.refIndicator.hide();
+                    if (result.code === 0) {
+                        this.refreshDefaultState();
+                        PublicAlert(stringIsEmpty(result.message) ? "已发布" : result.message, "发布完成，请到\"我的货\"中查看",
+                            [{text:"取消"},
+                                {text:"去查看", onPress:(() => {
                                         appMainTab.refTab.goToPage(0);
                                         appHomeVC.reloadSubListOrderVC(true);
                                     })}]
-                            );
-                        }
-                        else {
-                            this.refToast.show(result.message);
-                        }
-                    },(error)=>{
-                        this.refIndicator.hide();
-                        this.refToast.show(error);
-                    });
-        }
+                        );
+                    }
+                    else {
+                        this.refToast.show(result.message);
+                    }
+                },(error)=>{
+                    this.refIndicator.hide();
+                    this.refToast.show(error);
+                });
     }
 
     cellSelected(key, data = {}){
