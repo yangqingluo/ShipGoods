@@ -46,7 +46,7 @@ export default class HomeOfferTwicePriceVC extends Component {
             {idKey:"ship_name",name:"报价船"},
             {idKey:"offer", name:"报价"},
             {idKey:"arrive_time", name:"到港时间"},
-            {idKey:"phone", name:"联系方式", onPress:this.cellSelected.bind(this, "SelectPhone")},
+            {idKey:"phone", name:"联系方式", onCellSelected:this.cellSelected.bind(this, "SelectPhone")},
             {idKey:"last_goods", name:"上载货品"},
         ];
     }

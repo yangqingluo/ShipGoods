@@ -57,7 +57,7 @@ export default class HomeShipDetailVC extends Component {
             {idKey:"download_oil_list", name:"意向货品"},
             {idKey:"upload_oil_list", name:"上载货品"},
             {idKey:"credit", name:"船主信用"},
-            {idKey:"phone", name:"联系方式", onPress:this.cellSelected.bind(this, "SelectPhone")},
+            {idKey:"phone", name:"联系方式", onCellSelected:this.cellSelected.bind(this, "SelectPhone")},
         ];
     }
 

@@ -94,7 +94,7 @@ export default class CustomSectionSelect extends Component {
         return (
             <SelectCell
                 info={info}
-                onPress={this.onCellSelected}
+                onCellSelected={this.onCellSelected}
                 selected={(this.state.selectedList.indexOf(info.item) !== -1)}
             />
         )
@@ -104,7 +104,7 @@ export default class CustomSectionSelect extends Component {
         return (
             <SectionCell
                 info={info}
-                onPress={this.onSectionSelected}
+                onCellSelected={this.onSectionSelected}
                 selected={info.section.sectionIndex === this.state.selectedSection}
             />
         )

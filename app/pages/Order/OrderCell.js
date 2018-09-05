@@ -12,7 +12,7 @@ import OrderCenterView from "../../components/OrderCenterView";
 
 type Props = {
     info: Object,
-    onPress: Function,
+    onCellSelected: Function,
     onBottomBtnPress: Function,
 }
 
@@ -71,7 +71,7 @@ export default class HomeOrderCell extends Component {
         let isClosed = false;
         return (
             <View style={{opacity: isClosed ? 0.5 : 1.0}}>
-                <TouchableHighlight style={styles.cellContainer} onPress={() => this.props.onPress(info)}>
+                <TouchableHighlight style={styles.cellContainer} onPress={() => this.props.onCellSelected(info)}>
                     <View style={{flex: 1, backgroundColor:'white'}}>
                         <View style={{height:15}} />
                         <OrderCenterView info={info.item} style={styles.centerContainer} type={OrderCenterEnum.Order}/>

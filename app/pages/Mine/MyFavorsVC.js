@@ -10,8 +10,11 @@ import {
 import GoodsCell from '../Home/HomeGoodsCell';
 import OrderCell from '../Home/HomeOrderCell';
 import ListLoadFooter, {canLoad, FooterTypeEnum} from '../../components/ListLoadFooter';
+import { SwipeListView, SwipeRow } from '../../components/SwipeList';
+import Toast from "react-native-easy-toast";
+import IndicatorModal from "../../components/IndicatorModal";
 
-export default class HomeGoodsVC extends Component {
+export default class MyFavorsVC extends Component {
     static navigationOptions = ({ navigation }) => ({
         headerTitle: '我的收藏',
     });
@@ -89,6 +92,17 @@ export default class HomeGoodsVC extends Component {
                 });
     };
 
+    closeRow(rowMap, index) {
+        if (rowMap[index]) {
+            rowMap[index].closeRow();
+        }
+    }
+
+    deleteRow(rowMap, index) {
+        this.closeRow(rowMap, index);
+
+    }
+
     onCellSelected = (info: Object) => {
         if (isShipOwner()) {
             if (offerIsOffer(info.item.is_offer)) {
@@ -115,13 +129,12 @@ export default class HomeGoodsVC extends Component {
         }
     };
 
-
     renderCell = (info: Object) => {
         if (isShipOwner()) {
             return (
                 <OrderCell
                     info={info}
-                    onPress={this.onCellSelected}
+                    onCellSelected={this.onCellSelected}
                     showCreateTime={true}
                 />
             )
@@ -129,7 +142,7 @@ export default class HomeGoodsVC extends Component {
         return (
             <GoodsCell
                 info={info}
-                onPress={this.onCellSelected}
+                onCellSelected={this.onCellSelected}
             />
         )
     };
@@ -145,7 +158,17 @@ export default class HomeGoodsVC extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <FlatList
+                <SwipeListView
+                    useFlatList
+                    renderHiddenItem={(data, rowMap) => (
+                        <View style={appStyles.rowBack}>
+                            <TouchableOpacity style={[appStyles.backRightBtn, appStyles.backRightBtnRight]} onPress={ _ => this.deleteRow(rowMap, data.index) }>
+                                <Text style={appStyles.backTextWhite}>删除</Text>
+                            </TouchableOpacity>
+                        </View>
+                    )}
+                    disableRightSwipe={true}
+                    rightOpenValue={-1 * appData.DefaultOpenValue}
                     style={{flex:1}}
                     data={this.state.dataList}
                     renderItem={this.renderCell}
@@ -160,6 +183,8 @@ export default class HomeGoodsVC extends Component {
                     onEndReached={this.loadMoreData.bind(this)}
                     onEndReachedThreshold={appData.appOnEndReachedThreshold}
                 />
+                <Toast ref={o => this.refToast = o} position={'top'}/>
+                <IndicatorModal ref={o => this.refIndicator = o}/>
             </View>
         );
     }

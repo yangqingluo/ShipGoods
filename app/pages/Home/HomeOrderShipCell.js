@@ -16,7 +16,7 @@ import px2dp from "../../util";
 
 type Props = {
     info: Object,
-    onPress: Function,
+    onCellSelected: Function,
 }
 
 export default class HomeOrderShipCell extends Component {
@@ -49,7 +49,7 @@ export default class HomeOrderShipCell extends Component {
         let isOrdered = false;
         return (
             <View style={{opacity: isOrdered ? 0.5 : 1.0}}>
-                <TouchableHighlight style={styles.cellContainer} onPress={() => this.props.onPress(info)}>
+                <TouchableHighlight style={styles.cellContainer} onPress={() => this.props.onCellSelected(info)}>
                     <View style={{flex: 1, backgroundColor:'white'}}>
                         <View style={{backgroundColor:'#81c6ff', flexDirection: 'row', justifyContent: "space-between", height:26}}>
                             <Text style={{fontSize:10, color:'white', marginLeft:3, marginTop:8}}>{'发票编号：' + info.item.goods_sn}</Text>

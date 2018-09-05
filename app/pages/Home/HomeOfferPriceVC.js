@@ -38,17 +38,17 @@ export default class HomeOfferPriceVC extends Component {
         if (this.isAgreePrice()) {
             if (this.isFirstPrice()) {
                 this.config = [
-                    {idKey:"ship_name", name:"船舶信息", logo:require('../../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectShip")},
+                    {idKey:"ship_name", name:"船舶信息", logo:require('../../images/icon_blue.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectShip")},
                     {idKey:"offer", name:"运价", logo:require('../../images/icon_red.png'), disable:false, hideArrowForward:true},
-                    {idKey:"arrive_time", name:"到港时间", logo:require('../../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectArriveTime")},
-                    {idKey:"last_goods",name:"上载货品", logo:require('../../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectLastGoods")},
+                    {idKey:"arrive_time", name:"到港时间", logo:require('../../images/icon_orange.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectArriveTime")},
+                    {idKey:"last_goods",name:"上载货品", logo:require('../../images/icon_green.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectLastGoods")},
                 ];
             }
             else {
                 this.config = [
                     {idKey:"ship_name", name:"船舶信息", logo:require('../../images/icon_blue.png'), disable:false, hideArrowForward:true},
                     {idKey:"offer", name:"运价", logo:require('../../images/icon_red.png'), disable:false, hideArrowForward:true},
-                    {idKey:"arrive_time", name:"到港时间", logo:require('../../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectArriveTime")},
+                    {idKey:"arrive_time", name:"到港时间", logo:require('../../images/icon_orange.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectArriveTime")},
                     {idKey:"last_goods",name:"上载货品", logo:require('../../images/icon_green.png'), disable:false, hideArrowForward:true},
                 ];
             }
@@ -58,16 +58,16 @@ export default class HomeOfferPriceVC extends Component {
                 [
                     {idKey:"ship_name", name:"船舶信息", logo:require('../../images/icon_blue.png'), disable:false, hideArrowForward:true},
                     {idKey:"offer", name:"运价", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
-                    {idKey:"arrive_time", name:"到港时间", logo:require('../../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectArriveTime")},
-                    {idKey:"last_goods",name:"上载货品", logo:require('../../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectLastGoods")},
+                    {idKey:"arrive_time", name:"到港时间", logo:require('../../images/icon_orange.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectArriveTime")},
+                    {idKey:"last_goods",name:"上载货品", logo:require('../../images/icon_green.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectLastGoods")},
 
                 ]
                 :
                 [
-                    {idKey:"ship_name", name:"选择船只", logo:require('../../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectShip")},
+                    {idKey:"ship_name", name:"选择船只", logo:require('../../images/icon_blue.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectShip")},
                     {idKey:"offer", name:"运价", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
-                    {idKey:"arrive_time", name:"到港时间", logo:require('../../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectArriveTime")},
-                    {idKey:"last_goods",name:"上载货品", logo:require('../../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectLastGoods")},
+                    {idKey:"arrive_time", name:"到港时间", logo:require('../../images/icon_orange.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectArriveTime")},
+                    {idKey:"last_goods",name:"上载货品", logo:require('../../images/icon_green.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectLastGoods")},
 
                 ];
         }

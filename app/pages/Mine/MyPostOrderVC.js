@@ -76,7 +76,7 @@ export default class MyPostOrderVC extends HomeOrderVC {
         return (
             <OrderCell
                 info={info}
-                onPress={this.onCellSelected}
+                onCellSelected={this.onCellSelected}
                 showCreateTime={true}
             />
         )

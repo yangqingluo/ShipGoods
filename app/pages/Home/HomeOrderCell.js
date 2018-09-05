@@ -11,7 +11,7 @@ import OrderCenterView from "../../components/OrderCenterView";
 
 type Props = {
     info: Object,
-    onPress: Function,
+    onCellSelected: Function,
     showCreateTime: boolean,
 }
 
@@ -34,7 +34,7 @@ export default class HomeOrderCell extends Component {
         }
         return (
             <View style={{opacity: isOrdered ? 0.5 : 1.0}}>
-                <TouchableHighlight style={styles.cellContainer} onPress={isOrdered ? null : () => this.props.onPress(info)}>
+                <TouchableHighlight style={styles.cellContainer} onPress={isOrdered ? null : () => this.props.onCellSelected(info)}>
                     <View style={{flex: 1, backgroundColor:'white'}}>
                         <View style={{height:47, flexDirection: 'row', alignItems: "center", justifyContent: "space-between",}}>
                             <View style={{flexDirection: 'row'}}>

@@ -15,7 +15,7 @@ import DateTimePicker from '../../components/DateTime';
 
 type Props = {
     info: Object,
-    onPress: Function,
+    onCellSelected: Function,
     onTimePress: Function,
     textInputChanged: Function,
 }

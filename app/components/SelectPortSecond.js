@@ -86,7 +86,7 @@ export default class SelectPortSecond extends Component {
         return (
             <PortFirstCell
                 info={info}
-                onPress={this.onCellSelected}
+                onCellSelected={this.onCellSelected}
                 isSecond={true}
                 selected={(this.state.selectedList.indexOf(info.item) !== -1)}
             />
@@ -97,7 +97,7 @@ export default class SelectPortSecond extends Component {
         return (
             <PortSectionCell
                 info={info}
-                onPress={this.onSectionSelected}
+                onCellSelected={this.onSectionSelected}
                 selected={info.section.sectionIndex === this.state.selectedSection}
             />
         )

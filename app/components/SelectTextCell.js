@@ -16,7 +16,7 @@ const Font = {
 
 type Props = {
     info: Object,
-    onPress: Function,
+    onCellSelected: Function,
     selected: boolean,
 }
 
@@ -26,7 +26,7 @@ export default class SelectTextCell extends PureComponent<Props> {
         let {info, selected} = this.props;
         const Icon = Font["Ionicons"];
         return (
-            <TouchableOpacity style={styles.container} onPress={() => this.props.onPress(info)}>
+            <TouchableOpacity style={styles.container} onPress={() => this.props.onCellSelected(info)}>
                 <View style={styles.rightContainer}>
                     <Text style={{color:selected ? appData.appBlueColor : appData.appSecondaryTextColor}}>{info.item}</Text>
                 </View>

@@ -57,7 +57,7 @@ export default class MyShipPriceVC extends HomeOrderVC {
         return (
             <OrderCell
                 info={info}
-                onPress={this.onCellSelected}
+                onCellSelected={this.onCellSelected}
                 showCreateTime={true}
             />
         )

@@ -6,12 +6,11 @@ import {
     Image,
     TouchableOpacity
 } from 'react-native';
-import px2dp from "../../util";
 
 type Props = {
     info: Object,
     logo: Number,
-    onPress: Function,
+    onCellSelected: Function,
     onLicencePress: Function,
     onPricePress: Function,
     selected: boolean,
@@ -63,7 +62,7 @@ export default class MyPostCell extends PureComponent<Props> {
 
         return (
             <View>
-                <TouchableOpacity style={styles.container} onPress={() => this.props.onPress(info)}>
+                <TouchableOpacity style={styles.container} onPress={() => this.props.onCellSelected(info)}>
                     <View style={styles.viewContainer}>
                         <View style={{flexDirection: 'row'}}>
                             {logo? (<Image source={logo} style={{width: 10, height: 12, resizeMode: "stretch", overflow:"hidden"}}/>) : null}

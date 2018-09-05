@@ -313,8 +313,8 @@ export default class AddShip extends Component {
             {idKey:"ship_name", name:"船名", logo:require('../../images/icon_blue.png'), disable:true},
             {idKey:"tonnage", name:"参考载重量(吨)", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
             {idKey:"storage", name:"仓容", logo:require('../../images/icon_orange.png'), disable:true, numeric:true},
-            {idKey:"ship_type", name:"船舶类型", logo:require('../../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "ship_type")},
-            // {idKey:"goods", name:"意向货品", logo:require('../../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "goods")},
+            {idKey:"ship_type", name:"船舶类型", logo:require('../../images/icon_green.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "ship_type")},
+            // {idKey:"goods", name:"意向货品", logo:require('../../images/icon_orange.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "goods")},
         ];
         if (shipIsShowType(null, null, ship_type)) {
             this.state.gasoline = '';
@@ -335,9 +335,9 @@ export default class AddShip extends Component {
             }
         }
         this.config = this.config.concat([
-            {idKey:"area", name:"航行区域", logo:require('../../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "area")},
-            {idKey:"ship_lience", name:"上传船舶国籍证书", logo:require('../../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "ship_lience")},
-            {idKey:"projects", name:"上传船舶主要项目证书", logo:require('../../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "projects")},
+            {idKey:"area", name:"航行区域", logo:require('../../images/icon_green.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "area")},
+            {idKey:"ship_lience", name:"上传船舶国籍证书", logo:require('../../images/icon_blue.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "ship_lience")},
+            {idKey:"projects", name:"上传船舶主要项目证书", logo:require('../../images/icon_blue.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "projects")},
         ]);
     }
 
@@ -387,7 +387,7 @@ export default class AddShip extends Component {
         return (
             <SelectImageCell
                 info={info}
-                onPress={this.onLicenceCellSelected.bind(this)}
+                onCellSelected={this.onLicenceCellSelected.bind(this)}
                 onDelPress={this.onLicenceCellDelBtnAction.bind(this)}
                 last={info.index >= this.state.ship_lience.length}
             />
@@ -398,7 +398,7 @@ export default class AddShip extends Component {
         return (
             <SelectImageCell
                 info={info}
-                onPress={this.onProjectCellSelected.bind(this)}
+                onCellSelected={this.onProjectCellSelected.bind(this)}
                 onDelPress={this.onProjectCellDelBtnAction.bind(this)}
                 last={info.index >= this.state.projects.length}
             />

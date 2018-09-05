@@ -15,12 +15,12 @@ export default class MoreSettingsVC extends Component {
     constructor(props){
         super(props);
         this.config = [
-            {name:"帮助中心", onPress:this.cellSelected.bind(this, "Help")},
-            {name:"关于我们", onPress:this.cellSelected.bind(this, "AboutUs")},
-            {name:"退出登录", onPress:this.cellSelected.bind(this, "Logout")},
-            {name:"修改密码", onPress:this.cellSelected.bind(this, "ChangePwd")},
-            {name:"变更联系人", onPress:this.cellSelected.bind(this, "ChangeContact")},
-            {name:"建议与反馈", onPress:this.cellSelected.bind(this, "Suggestion")},
+            {name:"帮助中心", onCellSelected:this.cellSelected.bind(this, "Help")},
+            {name:"关于我们", onCellSelected:this.cellSelected.bind(this, "AboutUs")},
+            {name:"退出登录", onCellSelected:this.cellSelected.bind(this, "Logout")},
+            {name:"修改密码", onCellSelected:this.cellSelected.bind(this, "ChangePwd")},
+            {name:"变更联系人", onCellSelected:this.cellSelected.bind(this, "ChangeContact")},
+            {name:"建议与反馈", onCellSelected:this.cellSelected.bind(this, "Suggestion")},
         ];
     }
 

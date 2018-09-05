@@ -101,7 +101,7 @@ export default class HomeOrderShipListVC extends Component {
         return (
             <ShipCell
                 info={info}
-                onPress={this.onCellSelected}
+                onCellSelected={this.onCellSelected}
             />
         )
     };

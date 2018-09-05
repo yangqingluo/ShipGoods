@@ -11,7 +11,7 @@ import {
 
 type Props = {
     info: Object,
-    onPress: Function,
+    onCellSelected: Function,
 }
 
 export default class HomeReplyCell extends PureComponent {

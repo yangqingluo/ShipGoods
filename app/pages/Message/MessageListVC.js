@@ -117,7 +117,7 @@ export default class OrderListVC extends Component {
         return (
             <MessageCell
                 info={info}
-                onPress={this.onCellSelected}
+                onCellSelected={this.onCellSelected}
             />
         )
     };

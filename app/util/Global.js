@@ -226,6 +226,7 @@ let appData = {
     appMaxLengthPassword: 20,
 
     appOnEndReachedThreshold: 0.1,
+    DefaultOpenValue: 75,
 };
 
 let appStyles = StyleSheet.create({
@@ -249,6 +250,36 @@ let appStyles = StyleSheet.create({
         alignItems: "center",
         borderRadius: 100,
         borderWidth: 1,
+    },
+    rowBack: {
+        alignItems: 'center',
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingLeft: 15,
+    },
+    backTextWhite: {
+        color: '#FFF'
+    },
+    backRightBtn: {
+        alignItems: 'center',
+        bottom: 0,
+        justifyContent: 'center',
+        position: 'absolute',
+        top: 0,
+        width: 75
+    },
+    backRightBtnLeft: {
+        backgroundColor: 'blue',
+        right: 150
+    },
+    backRightBtnMiddle: {
+        backgroundColor: 'green',
+        right: 75
+    },
+    backRightBtnRight: {
+        backgroundColor: 'red',
+        right: 0
     },
 });
 

@@ -8,9 +8,8 @@ import {
     TouchableHighlight,
     TextInput,
 } from 'react-native'
-import px2dp from "../util";
 import Button from './Button';
-const itemHeight = px2dp(50);
+const itemHeight = 50;
 
 export default class CellTitleItem extends Component {
     constructor(props){
@@ -22,7 +21,7 @@ export default class CellTitleItem extends Component {
         color: PropTypes.string,
         first: PropTypes.bool,
         disable: PropTypes.bool,
-        onPress: PropTypes.func
+        onCellSelected: PropTypes.func
     };
     _render(){
         let {name, subName} = this.props;
@@ -38,11 +37,11 @@ export default class CellTitleItem extends Component {
         )
     }
     render(){
-        let {first, onPress, disable } = this.props;
-        onPress = onPress || (() => {});
+        let {first, onCellSelected, disable } = this.props;
+        onCellSelected = onCellSelected || (() => {});
         return disable?
             this._render():
-            <Button style={{marginTop: first?10:0}} onPress={onPress}>{this._render()}</Button>
+            <Button style={{marginTop: first?10:0}} onPress={onCellSelected}>{this._render()}</Button>
     }
 }
 

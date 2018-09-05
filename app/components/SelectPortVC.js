@@ -212,7 +212,7 @@ export default class SelectPortVC extends Component {
         return (
             <PortFirstCell
                 info={info}
-                onPress={this.onCellSelected}
+                onCellSelected={this.onCellSelected}
                 isSecond={false}
                 selected={this.state.selectedList.indexOf(info.item) !== -1}
             />
@@ -228,7 +228,7 @@ export default class SelectPortVC extends Component {
         return (
             <HotCell
                 info={info}
-                onPress={this.onHotCellSelected}
+                onCellSelected={this.onHotCellSelected}
                 lines={3}
             />
         )

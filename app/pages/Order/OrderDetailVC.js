@@ -50,7 +50,7 @@ export default class OrderJudgementVC extends Component {
         ];
 
         this.config3 = [
-            {idKey:"contact",name: isShipOwner() ? "货主联系方式" : "船东联系方式", onPress:this.cellSelected.bind(this, "SelectContact")},
+            {idKey:"contact",name: isShipOwner() ? "货主联系方式" : "船东联系方式", onCellSelected:this.cellSelected.bind(this, "SelectContact")},
             {idKey:"invoice_type", name:"发票"},
         ];
     };

@@ -35,14 +35,14 @@ export default class Menu extends Component {
         };
         this.config = isShipOwner() ?
             [
-                {idKey:"loading_port", name:"装货港", disable:false, onPress:this.cellSelected.bind(this, "SelectLoadingPort")},
-                {idKey:"loading_time",name:"发货时间", disable:false, onPress:this.cellSelected.bind(this, "SelectLoadingTime")},
-                {idKey:"unloading_port", name:"卸货港", disable:false, onPress:this.cellSelected.bind(this, "SelectUnloadingPort")},
+                {idKey:"loading_port", name:"装货港", disable:false, onCellSelected:this.cellSelected.bind(this, "SelectLoadingPort")},
+                {idKey:"loading_time",name:"发货时间", disable:false, onCellSelected:this.cellSelected.bind(this, "SelectLoadingTime")},
+                {idKey:"unloading_port", name:"卸货港", disable:false, onCellSelected:this.cellSelected.bind(this, "SelectUnloadingPort")},
             ]
             :
             [
-                {idKey:"empty_port", name:"空船港", disable:false, onPress:this.cellSelected.bind(this, "SelectEmptyPort")},
-                {idKey:"empty_time",name:"承运时间", disable:false, onPress:this.cellSelected.bind(this, "SelectEmptyTime")},
+                {idKey:"empty_port", name:"空船港", disable:false, onCellSelected:this.cellSelected.bind(this, "SelectEmptyPort")},
+                {idKey:"empty_time",name:"承运时间", disable:false, onCellSelected:this.cellSelected.bind(this, "SelectEmptyTime")},
             ];
     }
 
@@ -244,7 +244,7 @@ export default class Menu extends Component {
             <TextCell
                 info={info}
                 showText={info.item.goods_name}
-                onPress={this.onGoodsCellSelected}
+                onCellSelected={this.onGoodsCellSelected}
                 selected={info.item === this.state.goods}
                 lines={3}
             />
@@ -262,7 +262,7 @@ export default class Menu extends Component {
             <TextCell
                 info={info}
                 showText={info.item}
-                onPress={this.onShipTypeCellSelected}
+                onCellSelected={this.onShipTypeCellSelected}
                 selected={info.index === this.state.ship_type - 1}
                 lines={3}
             />
@@ -285,7 +285,7 @@ export default class Menu extends Component {
             <TextCell
                 info={info}
                 showText={info.item}
-                onPress={this.onAreaCellSelected}
+                onCellSelected={this.onAreaCellSelected}
                 selected={this.state.area.indexOf(info.index) !== -1}
                 lines={2}
             />

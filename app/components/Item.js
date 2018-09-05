@@ -26,7 +26,7 @@ class ItemButton extends Component {
   }
   render(){
     return (
-      <Button style={{marginTop: this.props.first?10:0}} onPress={this.props.onPress}>
+      <Button style={{marginTop: this.props.first?10:0}} onPress={this.props.onCellSelected}>
         <View style={styles.button}>
           <Text style={{color: this.props.color || "#f00"}}>{this.props.name}</Text>
         </View>
@@ -49,10 +49,10 @@ export default class Item extends Component {
     disable: PropTypes.bool,
     iconSize: PropTypes.number,
     font: PropTypes.string,
-    onPress: PropTypes.func
+      onCellSelected: PropTypes.func
   };
   _render(){
-    let {logo, iconSize, name, subName, color, first, avatar, disable, font} = this.props
+    let {logo, iconSize, name, subName, color, first, avatar, disable, font} = this.props;
     font = font||"Ionicons";
     const Icon = appFont["Ionicons"];
     return (
@@ -71,14 +71,14 @@ export default class Item extends Component {
     )
   }
   render(){
-    let { onPress, first, disable } = this.props
-    onPress = onPress || (() => {})
+    let { onCellSelected, first, disable } = this.props;
+      onCellSelected = onCellSelected || (() => {});
     return disable?
       this._render():
-      <Button style={{marginTop: first?10:0}} onPress={onPress}>{this._render()}</Button>
+      <Button style={{marginTop: first?10:0}} onPress={onCellSelected}>{this._render()}</Button>
   }
 }
-Item.Button = ItemButton
+Item.Button = ItemButton;
 const styles = StyleSheet.create({
   listItem: {
     height: itemHeight,

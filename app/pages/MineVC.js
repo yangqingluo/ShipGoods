@@ -34,20 +34,20 @@ export default class MineVC extends Component {
         };
         this.config = (global.userData.usertype === '1') ?
             [
-                {logo:require('../images/icon_yuyue.png'), name:"我的预约", onPress:this.goPage.bind(this, "MyBook")},
-                {logo:require('../images/icon_colle.png'), name:"我的收藏", onPress:this.goPage.bind(this, "MyFavors")},
-                {logo:require('../images/icon_share.png'), name:"分享到好友", subName:"", onPress:this.goPage.bind(this, "Share")},
-                {logo:require('../images/icon_share.png'), name:"一键客服", subName:"", onPress:this.goPage.bind(this, "Call")},
-                {logo:require('../images/icon_s.png'), name:"更多设置", subName:"", onPress:this.goPage.bind(this, "MoreSettings")},
+                {logo:require('../images/icon_yuyue.png'), name:"我的预约", onCellSelected:this.goPage.bind(this, "MyBook")},
+                {logo:require('../images/icon_colle.png'), name:"我的收藏", onCellSelected:this.goPage.bind(this, "MyFavors")},
+                {logo:require('../images/icon_share.png'), name:"分享到好友", subName:"", onCellSelected:this.goPage.bind(this, "Share")},
+                {logo:require('../images/icon_share.png'), name:"一键客服", subName:"", onCellSelected:this.goPage.bind(this, "Call")},
+                {logo:require('../images/icon_s.png'), name:"更多设置", subName:"", onCellSelected:this.goPage.bind(this, "MoreSettings")},
             ]
                 :
             [
-                {logo:require('../images/icon_post.png'), name:"我的发布", onPress:this.goPage.bind(this, "MyPost")},
-                {logo:require('../images/icon_chuand.png'), name:"我的船队", onPress:this.goPage.bind(this, "MyShip")},
-                {logo:require('../images/icon_colle.png'), name:"我的收藏", onPress:this.goPage.bind(this, "MyFavors")},
-                {logo:require('../images/icon_share.png'), name:"分享到好友", subName:"", onPress:this.goPage.bind(this, "Share")},
-                {logo:require('../images/icon_share.png'), name:"一键客服", subName:"", onPress:this.goPage.bind(this, "Call")},
-                {logo:require('../images/icon_s.png'), name:"更多设置", subName:"", onPress:this.goPage.bind(this, "MoreSettings")},
+                {logo:require('../images/icon_post.png'), name:"我的发布", onCellSelected:this.goPage.bind(this, "MyPost")},
+                {logo:require('../images/icon_chuand.png'), name:"我的船队", onCellSelected:this.goPage.bind(this, "MyShip")},
+                {logo:require('../images/icon_colle.png'), name:"我的收藏", onCellSelected:this.goPage.bind(this, "MyFavors")},
+                {logo:require('../images/icon_share.png'), name:"分享到好友", subName:"", onCellSelected:this.goPage.bind(this, "Share")},
+                {logo:require('../images/icon_share.png'), name:"一键客服", subName:"", onCellSelected:this.goPage.bind(this, "Call")},
+                {logo:require('../images/icon_s.png'), name:"更多设置", subName:"", onCellSelected:this.goPage.bind(this, "MoreSettings")},
             ];
     }
 

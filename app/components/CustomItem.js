@@ -42,7 +42,7 @@ export default class CustomItem extends Component {
         font: PropTypes.string,
         showArrowForward: PropTypes.bool,
         hideArrowForward: PropTypes.bool,
-        onPress: PropTypes.func
+        onCellSelected: PropTypes.func
     };
 
     static defaultProps = {
@@ -121,11 +121,11 @@ export default class CustomItem extends Component {
         )
     }
     render(){
-        let { onPress, first, disable } = this.props;
-        onPress = onPress || (() => {});
+        let { onCellSelected, first, disable } = this.props;
+        onCellSelected = onCellSelected || (() => {});
         return disable?
             this._render():
-            <Button style={{marginTop: first?10:0}} onPress={onPress}>{this._render()}</Button>
+            <Button style={{marginTop: first?10:0}} onPress={onCellSelected}>{this._render()}</Button>
     }
 }
 const styles = StyleSheet.create({

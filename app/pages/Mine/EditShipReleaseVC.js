@@ -17,7 +17,7 @@ export default class EditShipReleaseVC extends Release {
     //         title: "编辑发布",
     //         headerRight: <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
     //             <TouchableOpacity
-    //                 onPress={navigation.state.params.clickSureBtn}
+    //                 onCellSelected={navigation.state.params.clickSureBtn}
     //             >
     //                 <Text style={{marginRight: 10, color: appData.appBlueColor}}>{'  提交  '}</Text>
     //             </TouchableOpacity>

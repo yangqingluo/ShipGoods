@@ -115,7 +115,7 @@ export default class DetailVC extends Component {
                     (result)=>{
                         if (result.code === 0) {
                             // PublicAlert('修改密码完成','',
-                            //     [{text:"确定", onPress:this.goBack.bind(this)}]
+                            //     [{text:"确定", onCellSelected:this.goBack.bind(this)}]
                             // );
                             this.refToast.show(result.message);
                         }

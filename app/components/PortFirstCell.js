@@ -17,7 +17,7 @@ const Font = {
 
 type Props = {
     info: Object,
-    onPress: Function,
+    onCellSelected: Function,
     selected: boolean,
     isSecond: boolean,
 }
@@ -28,7 +28,7 @@ export default class PortFirstCell extends PureComponent<Props> {
         let {info, selected, isSecond} = this.props;
         const Icon = Font["Ionicons"]
         return (
-            <TouchableOpacity style={[styles.container, {backgroundColor: this.props.isSecond ? appData.appGrayColor : 'white',}]} onPress={() => this.props.onPress(info)}>
+            <TouchableOpacity style={[styles.container, {backgroundColor: this.props.isSecond ? appData.appGrayColor : 'white',}]} onPress={() => this.props.onCellSelected(info)}>
                 <View style={styles.rightContainer}>
                     <Text style={{color:appData.appTextColor}}>{info.item.port_name}</Text>
                 </View>

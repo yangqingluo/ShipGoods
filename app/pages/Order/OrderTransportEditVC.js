@@ -136,7 +136,7 @@ export default class OrderTransportEditVC extends Component {
         return (
             <OrderTransportCell
                 info={info}
-                onPress={this.onCellSelected}
+                onCellSelected={this.onCellSelected}
                 onSubmitPress={this.onCellSubmitSelected}
                 trans_state={this.state.detailInfo.trans_state}
                 showLast={translist.indexOf(info.item) === (translist.length - 1)}

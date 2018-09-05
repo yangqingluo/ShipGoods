@@ -46,10 +46,10 @@ export default class DetailVC extends Component {
                 {idKey:"corporation", name:"公司名称", logo:require('../../images/icon_blue.png'), disable:true},
                 {idKey:"name", name:"联系人姓名", logo:require('../../images/icon_red.png'), disable:true},
                 {idKey:"contact", name:"联系人手机号", logo:require('../../images/icon_orange.png'), disable:true, numeric:true},
-                {idKey:"bz_licence", name:"上传公司营业执照", logo:require('../../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "bz_licence")},
+                {idKey:"bz_licence", name:"上传公司营业执照", logo:require('../../images/icon_green.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "bz_licence")},
                 {idKey:"idcard", name:"上传法人身份证", disable:false, logo:require('../../images/icon_red.png'),},
-                {idKey:"add_ship",name:"添加船舶", disable:false, logo:require('../../images/icon_orange.png'), onPress:this.cellSelected.bind(this, "add_ship")},
-                {idKey:"invoice", name:"可开发票类型", disable:false, logo:require('../../images/icon_green.png'), onPress:this.cellSelected.bind(this, "invoice_type")},
+                {idKey:"add_ship",name:"添加船舶", disable:false, logo:require('../../images/icon_orange.png'), onCellSelected:this.cellSelected.bind(this, "add_ship")},
+                {idKey:"invoice", name:"可开发票类型", disable:false, logo:require('../../images/icon_green.png'), onCellSelected:this.cellSelected.bind(this, "invoice_type")},
             ]
                 :
             [
@@ -57,9 +57,9 @@ export default class DetailVC extends Component {
                 {idKey:"phone", name:"公司电话", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
                 {idKey:"name", name:"联系人姓名", logo:require('../../images/icon_orange.png'), disable:true},
                 {idKey:"contact", name:"联系人手机号", logo:require('../../images/icon_green.png'), disable:true, numeric:true},
-                {idKey:"bz_licence", name:"上传公司营业执照", logo:require('../../images/icon_red.png'), disable:false, onPress:this.cellSelected.bind(this, "bz_licence")},
+                {idKey:"bz_licence", name:"上传公司营业执照", logo:require('../../images/icon_red.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "bz_licence")},
                 {idKey:"idcard", name:"上传联系人身份证", disable:false, logo:require('../../images/icon_orange.png')},
-                {idKey:"invoice", name:"可开发票类型", disable:false, logo:require('../../images/icon_green.png'), onPress:this.cellSelected.bind(this, "invoice_type")},
+                {idKey:"invoice", name:"可开发票类型", disable:false, logo:require('../../images/icon_green.png'), onCellSelected:this.cellSelected.bind(this, "invoice_type")},
             ];
 
         this.invoiceTypes = ['取消', '增值税专用发票(10%)', '增值税普通发票', '其他发票'];
@@ -147,7 +147,7 @@ export default class DetailVC extends Component {
                     this.refIndicator.hide();
                     if (result.code === 0) {
                         // PublicAlert('提交认证完成','请等待审核结果',
-                        //     [{text:"确定", onPress:this.goBack.bind(this)}]
+                        //     [{text:"确定", onCellSelected:this.goBack.bind(this)}]
                         // );
                         this.goBack();
                     }

@@ -109,7 +109,7 @@ export default class MyPostVC extends Component {
         return (
             <PostCell
                 info={info}
-                onPress={this.onCellSelected}
+                onCellSelected={this.onCellSelected}
             />
         )
     };

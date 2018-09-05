@@ -121,7 +121,7 @@ export default class HomeOrderVC extends Component {
             <OrderCell
                 info={info}
                 showCreateTime={true}
-                onPress={this.onCellSelected}
+                onCellSelected={this.onCellSelected}
             />
         )
     };

@@ -21,7 +21,7 @@ export default class ReleaseVC extends Component {
         tabBarLabel: '发布',
         // headerRight: <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
         //     <TouchableOpacity
-        //         onPress={()=> {appReleaseVC.sureBtnClick()}}
+        //         onCellSelected={()=> {appReleaseVC.sureBtnClick()}}
         //     >
         //         <Text style={{marginRight: 10, color: appData.appBlueColor}}>{'  提交  '}</Text>
         //     </TouchableOpacity>
@@ -62,24 +62,24 @@ export default class ReleaseVC extends Component {
 
         this.config = isShipOwner() ?
             [
-                {idKey:"ship_name", name:"船名", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectShip")},
-                {idKey:"download_oil_list", name:"意向货品", logo:require('../images/icon_red.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectDownload")},
-                {idKey:"empty_port", name:"空船港", logo:require('../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectPort")},
-                {idKey:"empty_time",name:"空船期", logo:require('../images/icon_green.png'), disable:false, subName:"324", onPress:this.cellSelected.bind(this, "SelectEmptyTime")},
-                {idKey:"course", name:"可运航向", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectCourse")},
-                {idKey:"upload_oil_list", name:"上载货品", logo:require('../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectUpload")},
+                {idKey:"ship_name", name:"船名", logo:require('../images/icon_blue.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectShip")},
+                {idKey:"download_oil_list", name:"意向货品", logo:require('../images/icon_red.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectDownload")},
+                {idKey:"empty_port", name:"空船港", logo:require('../images/icon_orange.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectPort")},
+                {idKey:"empty_time",name:"空船期", logo:require('../images/icon_green.png'), disable:false, subName:"324", onCellSelected:this.cellSelected.bind(this, "SelectEmptyTime")},
+                {idKey:"course", name:"可运航向", logo:require('../images/icon_blue.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectCourse")},
+                {idKey:"upload_oil_list", name:"上载货品", logo:require('../images/icon_orange.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectUpload")},
             ]
                 :
             [
-                {idKey:"goods", name:"货品名称", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectGoods")},
-                {idKey:"tonnage", name:"货量", logo:require('../images/icon_red.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectTonnage")},
-                {idKey:"price", name:"运价", logo:require('../images/icon_orange.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectPrice")},
-                {idKey:"loading_port", name:"装货港", logo:require('../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectLoadingPort")},
-                {idKey:"unloading_port",name:"卸货港", logo:require('../images/icon_orange.png'), disable:false, subName:"324", onPress:this.cellSelected.bind(this, "SelectUnloadingPort")},
-                {idKey:"loading_time", name:"发货时间", logo:require('../images/icon_red.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectLoadingTime")},
-                {idKey:"wastage", name:"损耗", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectWastage")},
-                {idKey:"demurrage", name:"滞期费", logo:require('../images/icon_green.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectDemurrage")},
-                {idKey:"clean_deley", name:"结算时间", logo:require('../images/icon_blue.png'), disable:false, onPress:this.cellSelected.bind(this, "SelectCleanDeley")},
+                {idKey:"goods", name:"货品名称", logo:require('../images/icon_blue.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectGoods")},
+                {idKey:"tonnage", name:"货量", logo:require('../images/icon_red.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectTonnage")},
+                {idKey:"price", name:"运价", logo:require('../images/icon_orange.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectPrice")},
+                {idKey:"loading_port", name:"装货港", logo:require('../images/icon_green.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectLoadingPort")},
+                {idKey:"unloading_port",name:"卸货港", logo:require('../images/icon_orange.png'), disable:false, subName:"324", onCellSelected:this.cellSelected.bind(this, "SelectUnloadingPort")},
+                {idKey:"loading_time", name:"发货时间", logo:require('../images/icon_red.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectLoadingTime")},
+                {idKey:"wastage", name:"损耗", logo:require('../images/icon_blue.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectWastage")},
+                {idKey:"demurrage", name:"滞期费", logo:require('../images/icon_green.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectDemurrage")},
+                {idKey:"clean_deley", name:"结算时间", logo:require('../images/icon_blue.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectCleanDeley")},
             ];
     }
 

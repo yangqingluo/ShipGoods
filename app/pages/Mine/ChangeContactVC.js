@@ -78,7 +78,7 @@ export default class ChangeContactVC extends Component {
                         if (result.code === 0) {
                             this.refToast.show(result.message);
                             // PublicAlert('变更完成','',
-                            //     [{text:"确定", onPress:this.goBack.bind(this)}]
+                            //     [{text:"确定", onCellSelected:this.goBack.bind(this)}]
                             // );
                         }
                         else {

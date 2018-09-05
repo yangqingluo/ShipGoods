@@ -9,7 +9,7 @@ import {
 
 // type Props = {
 //     info: Object,
-//     onPress: Function,
+//     onCellSelected: Function,
 //     onDelPress: Function,
 //     last: Boolean,
 // };

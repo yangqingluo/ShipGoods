@@ -12,7 +12,7 @@ import VDashLine from '../../components/VDashLine'
 
 type Props = {
     info: Object,
-    onPress: Function,
+    onCellSelected: Function,
 }
 
 export default class OrderTransportCell extends Component {

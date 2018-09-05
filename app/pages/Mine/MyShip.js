@@ -197,7 +197,7 @@ export default class DetailVC extends Component {
         return (
             <ShipCell
                 info={info}
-                onPress={this.onCellSelected}
+                onCellSelected={this.onCellSelected}
                 onEditPress={this.onCellEditBtnAction}
                 onLicencePress={this.onCellLicenceBtnAction}
                 onPricePress={this.onCellPriceBtnAction}

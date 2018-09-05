@@ -7,6 +7,7 @@ import {
     RefreshControl,
     FlatList,
 } from 'react-native';
+import { SwipeListView, SwipeRow } from '../../components/SwipeList';
 import GoodsCell from './HomeGoodsCell';
 import ListLoadFooter, {canLoad, FooterTypeEnum} from '../../components/ListLoadFooter';
 import Toast from "react-native-easy-toast";
@@ -129,12 +130,11 @@ export default class HomeGoodsVC extends Component {
             });
     };
 
-
     renderCell = (info: Object) => {
         return (
             <GoodsCell
                 info={info}
-                onPress={this.onCellSelected}
+                onCellSelected={this.onCellSelected}
             />
         )
     };
@@ -167,9 +167,12 @@ export default class HomeGoodsVC extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <FlatList
+                <SwipeListView
+                    useFlatList
+                    disableRightSwipe={true}
+                    disableLeftSwipe={true}
                     ref={o => this.refList = o}
-                    style={{flex:1}}
+                    style={styles.container}
                     data={this.state.dataList}
                     renderItem={this.renderCell}
                     alwaysBounceVertical={true}

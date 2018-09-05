@@ -10,7 +10,7 @@ import {
 type Props = {
     info: Object,
     logo: Number,
-    onPress: Function,
+    onCellSelected: Function,
     onEditPress: Function,
     onLicencePress: Function,
     onPricePress: Function,
@@ -26,7 +26,7 @@ export default class ShipCell extends PureComponent<Props> {
         const Icon = appFont["Ionicons"];
         return (
             <View>
-                <TouchableOpacity style={styles.container} onPress={() => this.props.onPress(info)}>
+                <TouchableOpacity style={styles.container} onPress={() => this.props.onCellSelected(info)}>
                     <View style={styles.viewContainer}>
                         {logo? (<Image source={logo} style={{width: 10, height: 12, resizeMode: "cover", overflow:"hidden"}}/>) : null}
                         <Text style={{color:appData.appTextColor, marginLeft:6, fontSize:16}}>{info.item.ship_name}</Text>

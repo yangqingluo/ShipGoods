@@ -17,7 +17,7 @@ const Font = {
 
 type Props = {
     info: Object,
-    onPress: Function,
+    onCellSelected: Function,
     selected: boolean,
 }
 
@@ -27,7 +27,7 @@ export default class SectionCell extends PureComponent<Props> {
         let {info, selected} = this.props;
         const Icon = Font["Ionicons"];
         return (
-            <TouchableOpacity style={styles.container} onPress={() => this.props.onPress(info)}>
+            <TouchableOpacity style={styles.container} onPress={() => this.props.onCellSelected(info)}>
                 <View style={{marginTop:0, height:px2dp(0.5),backgroundColor:appData.appSeparatorColor}}/>
                 <View style={{flex:1, flexDirection: 'row', alignItems: "center"}}>
                     <View style={styles.rightContainer}>

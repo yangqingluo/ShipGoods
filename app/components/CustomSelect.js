@@ -98,7 +98,7 @@ export default class CustomSelect extends Component {
         return (
             <SelectCell
                 info={info}
-                onPress={this.onCellSelected}
+                onCellSelected={this.onCellSelected}
                 selected={this.state.selectedList.indexOf(info.item) !== -1}
             />
         )
