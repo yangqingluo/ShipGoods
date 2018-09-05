@@ -74,10 +74,10 @@ export default class OrderTransportEditCell extends Component {
             <View style={[styles.cellContainer, {opacity: (passed || editable) ? 1.0 : 0.5}]}>
                 <View style={styles.leftTime}>
                     <TouchableOpacity style={{alignItems: "center"}} onPress={editable ? this.onTimeBtnAction.bind(this) : null}>
-                        <Text style={{minHeight:22, fontSize:16, fontWeight:appData.appFontWeightMedium, color:textColor}}>
+                        <Text style={{minHeight:22, fontSize:16, fontWeight:appData.fontWeightMedium, color:textColor}}>
                             {createTimeFormat(time, "HH:mm")}
                         </Text>
-                        <Text style={{marginTop:2, minHeight:17, fontSize:12, fontWeight:appData.appFontWeightMedium, color:textColor}}>
+                        <Text style={{marginTop:2, minHeight:17, fontSize:12, fontWeight:appData.fontWeightMedium, color:textColor}}>
                             {createTimeFormat(time, "yyyy-MM-dd")}
                         </Text>
                     </TouchableOpacity>
@@ -90,7 +90,7 @@ export default class OrderTransportEditCell extends Component {
                 </View>
                 <View style={styles.rightContainer}>
                     <View style={{top: 5, left: 0, position: 'absolute', minWidth: 90, height: 32, borderRadius: 16, justifyContent: "center", alignItems: "center", backgroundColor: appData.appBlueColor}}>
-                        <Text style={{fontSize: 16, fontWeight: appData.appFontWeightMedium, color: "#fff" }}>
+                        <Text style={{fontSize: 16, fontWeight: appData.fontWeightMedium, color: "#fff" }}>
                             {stateText}
                         </Text>
                     </View>
@@ -111,7 +111,7 @@ export default class OrderTransportEditCell extends Component {
                 </View>
                 {editable ?
                     <TouchableOpacity style={styles.rightBtn} onPress={this.onSubmitBtnAction.bind(this)}>
-                        <Text style={{fontSize:14, fontWeight:appData.appFontWeightMedium, color:appData.appBlueColor}}>
+                        <Text style={{fontSize:14, fontWeight:appData.fontWeightMedium, color:appData.appBlueColor}}>
                             {passed ? "修改" : "提交"}
                         </Text>
                     </TouchableOpacity>
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
         // minHeight:22,
         minWidth: 80,
         fontSize:16,
-        fontWeight:appData.appFontWeightMedium,
+        fontWeight:appData.fontWeightMedium,
         color:appData.appLightTextColor,
         justifyContent: "center",
         alignItems: "center",

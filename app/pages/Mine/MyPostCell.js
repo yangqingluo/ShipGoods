@@ -66,9 +66,9 @@ export default class MyPostCell extends PureComponent<Props> {
                     <View style={styles.viewContainer}>
                         <View style={{flexDirection: 'row'}}>
                             {logo? (<Image source={logo} style={{width: 10, height: 12, resizeMode: "stretch", overflow:"hidden"}}/>) : null}
-                            <Text style={{color:"#9a9a9a", marginLeft:5, fontSize:10, fontWeight:appData.appFontWeightMedium}}>{"发单编号" + item.billing_sn}</Text>
+                            <Text style={{color:"#9a9a9a", marginLeft:5, fontSize:10, fontWeight:appData.fontWeightMedium}}>{"发单编号" + item.billing_sn}</Text>
                         </View>
-                        <Text style={{color:appData.appTextColor, right:13, fontSize:14, fontWeight:appData.appFontWeightMedium, textAlign: 'right',}}>{item.ship_name + " / " + item.tonnage + "吨"}</Text>
+                        <Text style={{color:appData.appTextColor, right:13, fontSize:14, fontWeight:appData.fontWeightMedium, textAlign: 'right',}}>{item.ship_name + " / " + item.tonnage + "吨"}</Text>
                     </View>
                     <View style={styles.centerViewContainer}>
                         <View style={{backgroundColor: appData.appBlueColor, width:9}}/>

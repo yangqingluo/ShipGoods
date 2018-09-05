@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
         alignItems:'center',
     },
     leftBnText:{
-        fontWeight:appData.appFontWeightMedium,
+        fontWeight:appData.fontWeightMedium,
         fontSize: 17,
         color:'#d1d1d1',
     },
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
         alignItems:'center',
     },
     rightBnText:{
-        fontWeight:appData.appFontWeightMedium,
+        fontWeight:appData.fontWeightMedium,
         fontSize:17,
         color:appData.appBlueColor,
     },

@@ -268,8 +268,8 @@ export default class HomeShipDetailVC extends Component {
                     </View>
                     {ordered ?
                         <View style={{alignItems: "center", justifyContent: "space-between"}}>
-                            <Text style={{marginTop: 10, fontSize:20, color:appData.appBlueColor, fontWeight: appData.appFontWeightMedium}}>{"预约中"}</Text>
-                            <Text style={{marginTop: 10, fontSize:12, color:appData.appSecondaryTextColor, fontWeight: appData.appFontWeightLight}}>{"货盘已推送至船东，请等待船东报价或者直接联系船东！"}</Text>
+                            <Text style={{marginTop: 10, fontSize:20, color:appData.appBlueColor, fontWeight: appData.fontWeightMedium}}>{"预约中"}</Text>
+                            <Text style={{marginTop: 10, fontSize:12, color:appData.appSecondaryTextColor, fontWeight: appData.fontWeightLight}}>{"货盘已推送至船东，请等待船东报价或者直接联系船东！"}</Text>
                         </View>
                         : null}
                     <View style={{height: 60}} />

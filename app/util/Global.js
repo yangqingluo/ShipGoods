@@ -186,9 +186,10 @@ global.saveUserData = (data) => {
 let appData = {
     appCustomerServicePhone: "18267811011",
 
-    appFontWeightLight:'100',
-    appFontWeightSemibold: '400',
-    appFontWeightMedium:'800',
+    fontWeightBold: 'bold',
+    fontWeightLight:'100',
+    fontWeightSemiBold: '400',
+    fontWeightMedium:'800',
 
     appClearColor: '#fff0',
     appBlueColor: '#2c9bfd',

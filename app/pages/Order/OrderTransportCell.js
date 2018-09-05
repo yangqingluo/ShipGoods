@@ -34,10 +34,10 @@ export default class OrderTransportCell extends Component {
         return (
             <View style={styles.cellContainer}>
                 <View style={styles.leftTime}>
-                    <Text style={{minHeight:22, fontSize:16, fontWeight:appData.appFontWeightMedium, color:'#8b8b8b'}}>
+                    <Text style={{minHeight:22, fontSize:16, fontWeight:appData.fontWeightMedium, color:'#8b8b8b'}}>
                         {create_time[1]}
                     </Text>
-                    <Text style={{marginTop:2, minHeight:17, fontSize:12, fontWeight:appData.appFontWeightMedium, color:'#8b8b8b'}}>
+                    <Text style={{marginTop:2, minHeight:17, fontSize:12, fontWeight:appData.fontWeightMedium, color:'#8b8b8b'}}>
                         {create_time[0]}
                     </Text>
                 </View>
@@ -51,7 +51,7 @@ export default class OrderTransportCell extends Component {
                     <Text style={{top: 5, left: 0, position: 'absolute', fontSize: 16, color: appData.appBlueColor, opacity: passed ? 1.0 : 0.5}}>
                         {getArrayTypesText(transportStateTypes, parseInt(info.state) - 1)}
                     </Text>
-                    <Text style={{minHeight:22, fontSize:16, fontWeight:appData.appFontWeightMedium, color:passed ? appData.appLightTextColor : appData.appThirdTextColor}}>
+                    <Text style={{minHeight:22, fontSize:16, fontWeight:appData.fontWeightMedium, color:passed ? appData.appLightTextColor : appData.appThirdTextColor}}>
                         {info.remark}
                     </Text>
                 </View>

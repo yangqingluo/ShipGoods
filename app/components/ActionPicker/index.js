@@ -152,7 +152,7 @@ const _styles = StyleSheet.create({
     },
     itemPicker:{
         fontSize: 24,
-        fontWeight: appData.appFontWeightLight,
+        fontWeight: appData.fontWeightLight,
         color: appData.appTextColor,
     }
 });

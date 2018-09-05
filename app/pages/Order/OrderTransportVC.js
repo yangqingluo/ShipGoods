@@ -141,14 +141,14 @@ const styles = StyleSheet.create({
         flex:1,
         fontSize:16,
         color:appData.appTextColor,
-        fontWeight:appData.appFontWeightSemibold,
+        fontWeight:appData.fontWeightSemiBold,
         textAlign:'center',
     },
     headerTimeText: {
         marginTop:5,
         fontSize:12,
         color:appData.appTextColor,
-        fontWeight:appData.appFontWeightSemibold,
+        fontWeight:appData.fontWeightSemiBold,
         textAlign:'center',
     }
 });

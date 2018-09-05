@@ -44,7 +44,7 @@ export default class HomeOfferTwicePriceVC extends Component {
 
         this.goodsConfig = [
             {idKey:"ship_name",name:"报价船"},
-            {idKey:"offer", name:"报价"},
+            {idKey:"offer", name:"我的报价"},
             {idKey:"arrive_time", name:"到港时间"},
             {idKey:"phone", name:"联系方式", onCellSelected:this.cellSelected.bind(this, "SelectPhone")},
             {idKey:"last_goods", name:"上载货品"},
@@ -177,11 +177,11 @@ export default class HomeOfferTwicePriceVC extends Component {
                 return info.ship.ship_name;
             }
         }
-        else if (item.idKey === "offer") {
-            if (objectNotNull(info.book)) {
-                return info.book.offer;
-            }
-        }
+        // else if (item.idKey === "offer") {
+        //     if (objectNotNull(info.book)) {
+        //         return info.book.offer;
+        //     }
+        // }
         else if (item.idKey === 'arrive_time') {
             if (objectNotNull(info.book)) {
                 return info.book.arrive_time + " ± " + info.book.arrive_delay + "天";
@@ -210,6 +210,13 @@ export default class HomeOfferTwicePriceVC extends Component {
             if (objectNotNull(info.goods_owner)) {
                 return <Text style={{color: appData.appBlueColor, fontSize: 14}}>
                     {info.goods_owner.contact}
+                </Text>
+            }
+        }
+        else if (item.idKey === "offer") {
+            if (objectNotNull(info.book)) {
+                return <Text style={{color: appData.appRedColor, fontSize: 14, fontWeight: appData.fontWeightBold}}>
+                    {info.book.offer}
                 </Text>
             }
         }
@@ -335,7 +342,7 @@ export default class HomeOfferTwicePriceVC extends Component {
                     </View>
                     {canChange ? null :
                         <View style={{alignItems: "center", justifyContent: "space-between"}}>
-                            <Text style={{marginTop: 40, fontSize:20, color:appData.appBlueColor, fontWeight: appData.appFontWeightMedium}}>{isShipOwner() ? "报价已推送至货主" : "货盘已推送至船东"}</Text>
+                            <Text style={{marginTop: 40, fontSize:20, color:appData.appBlueColor, fontWeight: appData.fontWeightMedium}}>{isShipOwner() ? "报价已推送至货主" : "货盘已推送至船东"}</Text>
                         </View>
                     }
                     <View style={{height: 80}}/>
