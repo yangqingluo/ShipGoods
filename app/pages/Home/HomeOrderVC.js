@@ -11,6 +11,7 @@ import OrderCell from './HomeOrderCell';
 import ListLoadFooter, {FooterTypeEnum, canLoad} from '../../components/ListLoadFooter';
 import CustomAlert from '../../components/CustomAlert';
 import Toast from "react-native-easy-toast";
+import IndicatorModal from '../../components/IndicatorModal';
 
 export default class HomeOrderVC extends Component {
     constructor(props){
@@ -20,12 +21,17 @@ export default class HomeOrderVC extends Component {
             refreshing: false,
             showFooter:0,
             page: 1,
+            toastPosition: "top",
         };
+        this.showNoDataNote = false;
     };
 
     componentDidMount() {
-        this.requestRecommend(true);
-        // this.requestData();
+        //TODO 延时执行解决下拉转圈动画不显示bug
+        let that = this;
+        setTimeout(function () {
+            that.requestData();
+        }, 100);
     };
 
     scrollAndRequestData = () => {
@@ -80,19 +86,26 @@ export default class HomeOrderVC extends Component {
                             dataList: list,
                             refreshing: isReset ? false : this.state.refreshing,
                             showFooter: footer,
-                        })
+                        });
+
+                        if (this.showNoDataNote && this.state.dataList.length === 0) {
+                            this.refToast.show("您目前没有可用的货品，请添加货品");
+                            this.showNoDataNote = false;
+                        }
                     }
                     else {
                         this.setState({
                             refreshing: isReset ? false : this.state.refreshing,
                             showFooter: FooterTypeEnum.default,
-                        })
+                        });
+                        this.refToast.show(result.message);
                     }
                 },(error)=>{
                     this.setState({
                         refreshing: isReset ? false : this.state.refreshing,
                         showFooter: FooterTypeEnum.default,
-                    })
+                    });
+                    this.refToast.show(error);
                 });
     };
 
@@ -161,7 +174,8 @@ export default class HomeOrderVC extends Component {
                     onEndReached={this.loadMoreData.bind(this)}
                     onEndReachedThreshold={appData.appOnEndReachedThreshold}
                 />
-                <Toast ref={o => this.refToast = o} position={'center'}/>
+                <Toast ref={o => this.refToast = o} position={this.state.toastPosition}/>
+                <IndicatorModal ref={o => this.refIndicator = o}/>
                 <CustomAlert ref={o => this.refSelectAlert = o} message={"您确定选择该货品？"} />
             </View>
         );

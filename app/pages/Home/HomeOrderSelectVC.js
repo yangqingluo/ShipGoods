@@ -15,8 +15,13 @@ export default class HomeOrderSelectVC extends HomeOrder {
     });
 
     componentDidMount() {
-        super.componentDidMount();
         this.props.navigation.setParams({clickParams:this.addBtnAction});
+        this.showNoDataNote = true;
+        this.setState({
+            toastPosition: "center",
+            refreshing: true,
+        });
+        this.requestRecommend(true);
     }
 
     addBtnAction =()=> {

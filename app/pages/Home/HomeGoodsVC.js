@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import GoodsCell from './HomeGoodsCell';
 import ListLoadFooter, {canLoad, FooterTypeEnum} from '../../components/ListLoadFooter';
+import Toast from "react-native-easy-toast";
+import IndicatorModal from '../../components/IndicatorModal';
 
 export default class HomeGoodsVC extends Component {
     constructor(props){
@@ -22,8 +24,13 @@ export default class HomeGoodsVC extends Component {
     };
 
     componentDidMount() {
-        this.requestRecommend(true);
-        // this.requestData();
+        // this.requestRecommend(true);
+
+        //TODO 延时执行解决下拉转圈动画不显示bug
+        let that = this;
+        setTimeout(function () {
+            that.requestData();
+        }, 100);
     };
 
     scrollAndRequestData = () => {
@@ -97,19 +104,21 @@ export default class HomeGoodsVC extends Component {
                             dataList: list,
                             refreshing: isReset ? false : this.state.refreshing,
                             showFooter: footer,
-                        })
+                        });
                     }
                     else {
                         this.setState({
                             refreshing: isReset ? false : this.state.refreshing,
                             showFooter: FooterTypeEnum.default,
-                        })
+                        });
+                        this.refToast.show(result.message);
                     }
                 },(error)=>{
                     this.setState({
                         refreshing: isReset ? false : this.state.refreshing,
                         showFooter: FooterTypeEnum.default,
-                    })
+                    });
+                    this.refToast.show(error);
                 });
     };
 
@@ -182,6 +191,8 @@ export default class HomeGoodsVC extends Component {
                     onEndReached={this.loadMoreData.bind(this)}
                     onEndReachedThreshold={appData.appOnEndReachedThreshold}
                 />
+                <Toast ref={o => this.refToast = o} position={'top'}/>
+                <IndicatorModal ref={o => this.refIndicator = o}/>
             </View>
         );
     }

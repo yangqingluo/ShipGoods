@@ -152,7 +152,7 @@ export default class Register extends Component {
     }
 
     chkCodeCount = () => {
-        that = this;
+        let that = this;
         this._timer = setInterval(function () {
             let sendChkSelf = that.state.sendChk;
 
@@ -171,7 +171,7 @@ export default class Register extends Component {
 
                 that.setState({
                     sendChk: sendChkSelf
-                })
+                });
 
                 clearInterval(that._timer);
 
