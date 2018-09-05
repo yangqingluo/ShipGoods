@@ -34,14 +34,7 @@ export default class TabBottom extends Component {
 
 
     onPressTabItemForIndex(i) {
-        if (i === 2 && !isAuthed()) {
-            PublicAlert('未认证不可发布，去认证？','',
-                [{text:"取消"},
-                    {text:"确定", onPress:backAndGoToAuth}]
-            );
-            return;
-        }
-        this.props.goToPage(i);
+        appMainTab.onPressTabItemForIndex(i);
     }
 
     renderTabItemForIndex(tab, i) {

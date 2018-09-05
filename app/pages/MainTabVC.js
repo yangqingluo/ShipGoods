@@ -94,6 +94,24 @@ export default class CustomTabVC extends Component {
         global.appMainTab = this;
     }
 
+    onPressTabItemForIndex(i) {
+        if (i === 2) {
+            if (isAuthed()) {
+                this.props.navigation.navigate("Release",
+                    {headerTitle: "发布"});
+            }
+            else {
+                PublicAlert('未认证不可发布，去认证？','',
+                    [{text:"取消"},
+                        {text:"确定", onPress:backAndGoToAuth}]
+                );
+            }
+        }
+        else {
+            this.refTab.goToPage(i);
+        }
+    }
+
     render() {
         const tabTitles = [isShipOwner() ? '物流圈' : '空船', '订单', '发布', '消息', '我的'];
         const tabIcon = [

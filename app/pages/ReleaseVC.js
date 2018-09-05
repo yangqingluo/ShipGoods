@@ -19,13 +19,13 @@ export default class ReleaseVC extends Component {
     static navigationOptions = ({ navigation }) => ({
         headerTitle: navigation.state.params.headerTitle || '发布',
         tabBarLabel: '发布',
-        headerRight: <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
-            <TouchableOpacity
-                onPress={()=> {appReleaseVC.sureBtnClick()}}
-            >
-                <Text style={{marginRight: 10, color: appData.appBlueColor}}>{'  提交  '}</Text>
-            </TouchableOpacity>
-        </View>,
+        // headerRight: <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
+        //     <TouchableOpacity
+        //         onPress={()=> {appReleaseVC.sureBtnClick()}}
+        //     >
+        //         <Text style={{marginRight: 10, color: appData.appBlueColor}}>{'  提交  '}</Text>
+        //     </TouchableOpacity>
+        // </View>,
     });
 
     constructor(props){
@@ -212,7 +212,7 @@ export default class ReleaseVC extends Component {
                         this.refreshDefaultState();
                         PublicAlert(result.message, "发布完成，请到\"我的发布\"中查看",
                             [{text:"取消"},
-                                {text:"去查看", onPress:backAndGoToMyRelease}]
+                                {text:"去查看", onPress:backAndGoToMyReleaseForShipOwner}]
                         );
                     }
                     else {
@@ -298,10 +298,7 @@ export default class ReleaseVC extends Component {
                         this.refreshDefaultState();
                         PublicAlert(stringIsEmpty(result.message) ? "已发布" : result.message, "发布完成，请到\"我的货\"中查看",
                             [{text:"取消"},
-                                {text:"去查看", onPress:(() => {
-                                        appMainTab.refTab.goToPage(0);
-                                        appHomeVC.reloadSubListOrderVC(true);
-                                    })}]
+                                {text:"去查看", onPress:backAndGoToMyReleaseForGoodsOwner}]
                         );
                     }
                     else {

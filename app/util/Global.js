@@ -309,7 +309,7 @@ global.dismissKeyboard = require('dismissKeyboard');
 global.backAndGoToAuth = function() : void {
     appMainTab.props.navigation.goBack('Main');
     if (objectNotNull(appMainTab.refTab)) {
-        appMainTab.refTab.goToPage(4);
+        appMainTab.onPressTabItemForIndex(4);
     }
     else {
         appMainTab.props.navigation.navigate('MineVC');
@@ -320,22 +320,33 @@ global.backAndGoToAuth = function() : void {
 global.backAndGoToOrder = function() : void {
     appMainTab.props.navigation.goBack('Main');
     if (objectNotNull(appMainTab.refTab)) {
-        appMainTab.refTab.goToPage(1);
+        appMainTab.onPressTabItemForIndex(1);
     }
     else {
         appMainTab.props.navigation.navigate('OrderVC');
     }
 };
 
-global.backAndGoToMyRelease = function() : void {
+global.backAndGoToMyReleaseForShipOwner = function() : void {
     appMainTab.props.navigation.goBack('Main');
     if (objectNotNull(appMainTab.refTab)) {
-        appMainTab.refTab.goToPage(4);
+        appMainTab.onPressTabItemForIndex(4);
     }
     else {
         appMainTab.props.navigation.navigate('MineVC');
     }
     appMainTab.props.navigation.navigate('MyPost');
+};
+
+global.backAndGoToMyReleaseForGoodsOwner = function() : void {
+    appMainTab.props.navigation.goBack('Main');
+    if (objectNotNull(appMainTab.refTab)) {
+        appMainTab.onPressTabItemForIndex(0);
+    }
+    else {
+        appMainTab.props.navigation.navigate('HomeVC');
+    }
+    appHomeVC.reloadSubListOrderVC(true);
 };
 
 global.renderSeparator = () => {
