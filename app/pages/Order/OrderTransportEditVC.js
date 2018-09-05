@@ -75,24 +75,33 @@ export default class OrderTransportEditVC extends Component {
 
     submitInfoFunction = (info) => {
         this.refEditLastAlert.hide();
-        let {item ,index} = info;
-        if (!objectNotNull(item.update_time)) {
+        let {or_id, t_id, state, update_time, create_time, remark} = info.item;
+        if (!objectNotNull(update_time)) {
             this.refToast.show("请设置状态对应的时间");
         }
-        else if (stringIsEmpty(item.remark)) {
-            this.refToast.show("请输入货品状态描述");
-        }
+        // else if (stringIsEmpty(remark)) {
+        //     this.refToast.show("请输入货品状态描述");
+        // }
         else {
             let translist = this.state.detailInfo.translist;
             let last = translist.indexOf(info.item) === (translist.length - 1);
 
+            let lastTime = info.index === 0 ? create_time : translist[info.index - 1].update_time;
+            if (update_time <= lastTime) {
+                this.refToast.show(info.index === 0 ? "时间设置不能早于订单创建时间" : "时间设置不能早于上一个节点");
+                return;
+            }
+
             let data = {
-                or_id: item.or_id,
-                t_id: item.t_id,
-                state: item.state,
-                remark: item.remark,
-                update_time: item.update_time,
+                or_id: or_id,
+                t_id: t_id,
+                state: state,
+                update_time: update_time,
             };
+
+            if (!stringIsEmpty(remark)) {
+                data.remark = remark;
+            }
 
             this.refIndicator.show();
             NetUtil.post(appUrl + 'index.php/Mobile/Order/change_transport_state/', data)
@@ -173,7 +182,6 @@ export default class OrderTransportEditVC extends Component {
 
     render() {
         let {detailInfo} = this.state;
-        let shipOwner = isShipOwner();
         return (
             <View style={styles.container}>
                 <FlatList

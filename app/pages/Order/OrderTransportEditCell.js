@@ -38,8 +38,9 @@ export default class OrderTransportEditCell extends Component {
     }
 
     onTimeBtnAction() {
-        // let date = new Date(parseInt(this.props.info.item.update_time) * 1000);
-        this.refTimePicker.showDateTimePicker(null, (d)=>{
+        let {update_time} = this.props.info.item;
+        let date = objectNotNull(update_time) ? new Date(parseInt(update_time) * 1000) : new Date();
+        this.refTimePicker.showDateTimePicker(date, (d)=>{
             this.props.info.item.update_time = Date.parse(d) * 0.001;
             this.forceUpdate();
         });
