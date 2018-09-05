@@ -204,7 +204,7 @@ export default class HomeShipDetailVC extends Component {
 
     renderSubViewForIndex(item, index) {
         let info = this.state.detailInfo;
-        if (item.idKey === 'credit') {
+        if (item.idKey === 'credit' && objectNotNull(info.credit)) {
             return <StarScore style={{marginLeft:5}} itemEdge={5} currentScore={info.credit}/>;
         }
         else if (item.idKey === 'phone' && this.isOrdered()) {
@@ -214,7 +214,6 @@ export default class HomeShipDetailVC extends Component {
                 </Text>
             }
         }
-
         return null;
     }
 

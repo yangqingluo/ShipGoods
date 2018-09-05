@@ -7,6 +7,7 @@ import {
     Image,
 } from 'react-native';
 
+//TODO 在某个组件内显示时currentScore只能初始化一次，多次的话无效
 export default class StarScore extends Component {
     // 构造
     constructor(props) {
@@ -15,7 +16,7 @@ export default class StarScore extends Component {
         this.state = {
             radius : this.props.radius || 20,
             totalScore: 5, // 总分值
-            currentScore: this.props.currentScore > 5 ? 5 : this.props.currentScore, // 分值
+            currentScore: objectNotNull(this.props.currentScore) ? Math.min(5, Math.max(0, this.props.currentScore)) : 5, // 分值
             itemEdge: this.props.itemEdge
         };
     }
