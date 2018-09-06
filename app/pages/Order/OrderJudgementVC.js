@@ -100,7 +100,9 @@ export default class OrderJudgementVC extends Component {
                 clean_star: clean_star,
                 togeth_start: togeth_start,
             };
-            if (content.length > 0) data.content = content;
+            if (!stringIsEmpty(content)) {
+                data.content = content;
+            }
 
             NetUtil.post(appUrl + 'index.php/Mobile/Order/comment_order/', data)
                 .then(
