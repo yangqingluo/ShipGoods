@@ -264,11 +264,17 @@ export default class OrderJudgementVC extends Component {
             let color6 = shipTransportStateJudge(state, 6) ? appData.appBlueColor : appData.appDeepGrayColor;
             let color10 = shipTransportStateJudge(state, 10) ? appData.appBlueColor : appData.appDeepGrayColor;
             let remark = transportInfo.trans_remark;
+            let statetext = transportInfo.statetext || "";
             if (objectNotNull(transportInfo.translist)) {
                 if (state > 0 && state <= transportInfo.translist.length) {
                     let trans = transportInfo.translist[state];
                     if (objectNotNull(trans)) {
-                        remark = trans.remark;
+                        if (objectNotNull(trans.remark)) {
+                            remark = trans.remark;
+                        }
+                        if (objectNotNull(trans.statetext)) {
+                            statetext = trans.statetext;
+                        }
                     }
                 }
             }
@@ -291,13 +297,13 @@ export default class OrderJudgementVC extends Component {
                             <DashLine backgroundColor={color10} len={len}/>
                             <Icon name={'ios-checkmark-circle'} size={radius} color={color10} />
                         </View>
-                        <View style={{flex:1, alignItems: "center", justifyContent: "center",}}>
-                            <Text style={{fontSize:10, textAlign:'center', color:'#838383'}}>{transportInfo.trans_remark}</Text>
-                        </View>
+                        {/*<View style={{flex:1, alignItems: "center", justifyContent: "center",}}>*/}
+                            {/*<Text style={{fontSize:10, textAlign:'center', color:'#838383'}}>{remark}</Text>*/}
+                        {/*</View>*/}
                     </View>
                     <View style={styles.transportBottom}>
                         <Image source={require('../../images/icon_word_hang.png')} style={{width: 19, height: 29, resizeMode: "stretch"}} />
-                        <Text style={{margin:15, fontSize:13, color:'#3f3f3f'}}>{transportInfo.trans_remark}</Text>
+                        <Text style={{margin:15, fontSize:13, color:'#3f3f3f'}}>{statetext + " " + remark}</Text>
                     </View>
                 </View>
             );

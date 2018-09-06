@@ -30,7 +30,7 @@ export default class CellTitleItem extends Component {
                 <View style={styles.listItem} {...this.props}>
                     <Text style={styles.textLabel}>{name}</Text>
                     <View style={{flex: 1}}/>
-                    {subName?(<Text style={{flex: 1, minWidth:120, textAlign: 'right', color: "#000", fontSize:12}}>{subName}</Text>):null}
+                    {subName?(<Text style={{flex: 1, minWidth:120, textAlign: 'right', color: appData.appTextColor, fontSize:12}}>{subName}</Text>):null}
                 </View>
                 {this.props.children}
             </View>

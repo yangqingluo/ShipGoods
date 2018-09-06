@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
         alignItems:'center',
     },
     modalTitle: {
-        color: '#000000',
+        color: appData.appTextColor,
         fontSize: 16,
         marginTop: 10,
     },

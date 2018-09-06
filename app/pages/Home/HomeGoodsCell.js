@@ -63,24 +63,24 @@ export default class HomeGoodsCell extends Component {
                             <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{"空船期"}</Text>
                             <Text style={{fontSize:14, color:appData.appLightTextColor}}>{info.item.empty_timetext + "±" + info.item.empty_delay}</Text>
                         </View>
-                        {downloadOilList.length > 0 ?
-                            <View>
-                                <View style={styles.cellSeparator}/>
-                                <View style={styles.cellItemContainer}>
-                                    <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{"意向货品"}</Text>
-                                    <Text style={styles.cellItemRightText}>{downloadOilList.join(' ')}</Text>
-                                </View>
-                            </View>
-                            :null}
-                        {uploadOilList.length > 0 ?
-                            <View>
-                                <View style={styles.cellSeparator}/>
-                                <View style={styles.cellItemContainer}>
-                                    <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{"上载货品"}</Text>
-                                    <Text style={styles.cellItemRightText}>{uploadOilList.join(' ')}</Text>
-                                </View>
-                            </View>
-                            :null}
+                        {/*{downloadOilList.length > 0 ?*/}
+                            {/*<View>*/}
+                                {/*<View style={styles.cellSeparator}/>*/}
+                                {/*<View style={styles.cellItemContainer}>*/}
+                                    {/*<Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{"意向货品"}</Text>*/}
+                                    {/*<Text style={styles.cellItemRightText}>{downloadOilList.join(' ')}</Text>*/}
+                                {/*</View>*/}
+                            {/*</View>*/}
+                            {/*:null}*/}
+                        {/*{uploadOilList.length > 0 ?*/}
+                            {/*<View>*/}
+                                {/*<View style={styles.cellSeparator}/>*/}
+                                {/*<View style={styles.cellItemContainer}>*/}
+                                    {/*<Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{"上载货品"}</Text>*/}
+                                    {/*<Text style={styles.cellItemRightText}>{uploadOilList.join(' ')}</Text>*/}
+                                {/*</View>*/}
+                            {/*</View>*/}
+                            {/*:null}*/}
                         <View>
                             <View style={styles.cellSeparator}/>
                             {shipIsShowType(dieseloil, gasoline, ship_type) ?

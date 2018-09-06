@@ -69,8 +69,8 @@ const styles = StyleSheet.create({
         marginRight:16,
         overflow:"hidden",
         borderRadius: 4,
-        borderColor: appData.appBorderColor,
-        borderWidth: 0.5,
+        // borderColor: appData.appBorderColor,
+        // borderWidth: 0.5,
     },
 
     textContainer: {

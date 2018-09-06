@@ -176,7 +176,7 @@ export default class MineVC extends Component {
                         </ImageBackground>
                         <View style={{flex: 1, marginLeft: 10, paddingVertical: 5}}>
                             <View style={{flexDirection: "row", alignItems: "center"}}>
-                                <Text style={{color: "#000", fontSize: 18}}>{global.userData.username}</Text>
+                                <Text style={{color: appData.appTextColor, fontSize: 18}}>{global.userData.username}</Text>
                                 <Image source={authed ? require('../images/vip_selected.png') : require('../images/vip.png')} style={{marginLeft: 5, width: 13, height: 13,  resizeMode:'contain'}} />
                                 <Text style={{color: (authed ? appData.appLightBlueColor : appData.appSecondaryTextColor), marginLeft: 5, fontSize: 12}}>{getAuthStateText(userData.authstate)}</Text>
                             </View>
@@ -185,7 +185,7 @@ export default class MineVC extends Component {
                                     <Text style={{ color: "#fff", fontSize: 10, textAlign:'center'}}>{'账'}</Text>
                                 </ImageBackground>
                                 <Image source={require('../images/icon_account.png')} style={{marginLeft: 5, width: 22, height: 16,  resizeMode:'contain'}} />
-                                <Text style={{color: "#000", fontSize: 13, paddingLeft: 5}}>{global.userData.mobile}</Text>
+                                <Text style={{color: appData.appTextColor, fontSize: 13, paddingLeft: 5}}>{global.userData.mobile}</Text>
                             </View>
                             <View style={{marginTop: 10, flexDirection: "row"}}>
                                 <Image source={require('../images/icon_xinyong.png')} style={{width: 35, height: 18}} />

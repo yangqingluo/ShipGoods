@@ -76,6 +76,7 @@ export default class HomeOfferTwicePriceVC extends Component {
                             detailInfo: result.data,
                             refreshing: false,
                         });
+                        PublicAlert(JSON.stringify(this.state.detailInfo));
                     }
                     else {
                         this.setState({
