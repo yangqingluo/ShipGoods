@@ -76,7 +76,6 @@ export default class HomeOfferTwicePriceVC extends Component {
                             detailInfo: result.data,
                             refreshing: false,
                         });
-                        PublicAlert(JSON.stringify(this.state.detailInfo));
                     }
                     else {
                         this.setState({
@@ -174,8 +173,8 @@ export default class HomeOfferTwicePriceVC extends Component {
             return stringIsEmpty(info.remark) ? "暂无" : info.remark;
         }
         else if (item.idKey === 'ship_name') {
-            if (objectNotNull(info.ship)) {
-                return info.ship.ship_name;
+            if (objectNotNull(info.book)) {
+                return info.book.ship_name;
             }
         }
         // else if (item.idKey === "offer") {
