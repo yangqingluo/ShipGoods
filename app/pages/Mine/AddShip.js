@@ -312,7 +312,7 @@ export default class AddShip extends Component {
         this.config = [
             {idKey:"ship_name", name:"船名", logo:require('../../images/icon_blue.png'), disable:true},
             {idKey:"tonnage", name:"参考载重量(吨)", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
-            {idKey:"storage", name:"仓容", logo:require('../../images/icon_orange.png'), disable:true, numeric:true},
+            {idKey:"storage", name:"仓容(m³)", logo:require('../../images/icon_orange.png'), disable:true, numeric:true},
             {idKey:"ship_type", name:"船舶类型", logo:require('../../images/icon_green.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "ship_type")},
             // {idKey:"goods", name:"意向货品", logo:require('../../images/icon_orange.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "goods")},
         ];
@@ -323,14 +323,14 @@ export default class AddShip extends Component {
         else {
             if (shipIsOilThreeLevel(ship_type)) {
                 this.config = this.config.concat([
-                    {idKey:"dieseloil", name:"可载柴油吨位（选填）", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
+                    {idKey:"dieseloil", name:"可载柴油货量(吨 选填)", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
                 ]);
                 this.state.gasoline = '';
             }
             else {
                 this.config = this.config.concat([
-                    {idKey:"gasoline", name:"可载汽油吨位（选填）", logo:require('../../images/icon_orange.png'), disable:true, numeric:true},
-                    {idKey:"dieseloil", name:"可载柴油吨位（选填）", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
+                    {idKey:"gasoline", name:"可载汽油货量(吨 选填)", logo:require('../../images/icon_orange.png'), disable:true, numeric:true},
+                    {idKey:"dieseloil", name:"可载柴油货量(吨 选填)", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
                 ]);
             }
         }

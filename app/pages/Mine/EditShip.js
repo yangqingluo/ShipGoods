@@ -10,9 +10,13 @@ export default class EditShip extends AddShip {
 
     constructor(props){
         super(props);
+    }
+
+    componentDidMount() {
+        // this.requestData();
 
         let ship = this.props.navigation.state.params.ship;
-        this.state = {
+        this.setState({
             detailInfo: null,
 
             ship_name: ship.ship_name,//船名
@@ -27,11 +31,7 @@ export default class EditShip extends AddShip {
             projects: stringIsEmpty(ship.projects) ? [] : ship.projects.split(","),//主要项目证书
 
             ship_lience_source: null,
-        };
-    }
-
-    componentDidMount() {
-        // this.requestData();
+        });
     }
 
     requestData = () => {
