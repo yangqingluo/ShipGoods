@@ -123,7 +123,11 @@ export default class HomeGoodsVC extends Component {
                 });
     };
 
-    onCellSelected = (info: Object) => {
+    onCellSelected = (info: Object, isOrdered) => {
+        if (isOrdered) {
+            return;
+        }
+
         appMainTab.props.navigation.navigate('HomeShipDetail',
             {
                 info: info.item,

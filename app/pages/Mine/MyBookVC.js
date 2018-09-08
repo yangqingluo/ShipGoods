@@ -91,33 +91,48 @@ export default class MyBookVC extends Component {
                 });
     };
 
-    closeRow(rowMap, index) {
-        if (rowMap[index]) {
-            rowMap[index].closeRow();
-        }
-    }
+    doDeleteBookFunction = async (info) => {
+        let data = {uid: userData.uid, book_id: info.item.book_id};
 
-    deleteRow(rowMap, index) {
-        this.closeRow(rowMap, index);
-        PublicAlert("删除预约", "确定删除预约？", [
-            {
-                text:'取消',
-            },
-            {
-                text:'确定',
-                onPress:()=>{
+        this.refIndicator.show();
+        NetUtil.post(appUrl + '/index.php/Mobile/Task/del_book/', data)
+            .then(
+                (result)=>{
+                    this.refIndicator.hide();
+                    if (result.code === 0) {
+                        this.state.dataList.splice(info.index, 1);
+                        this.forceUpdate();
+                    }
+                    else {
+                        this.refToast.show(result.message);
+                    }
+                },(error)=>{
+                    this.refIndicator.hide();
+                    this.refToast.show(error);
+                });
+    };
 
+    onCellSelected = (info, isOrdered) => {
+        if (isOrdered) {
+            PublicAlert("删除预约", "该预约已经订掉了，是否删除？", [
+                {
+                    text:'取消',
+                },
+                {
+                    text:'删除',
+                    onPress:()=>{
+                        this.doDeleteBookFunction(info);
+                    }
                 }
-            }
-        ]);
-    }
-
-    onCellSelected = (info: Object) => {
-        this.props.navigation.navigate('HomeShipDetail',
-            {
-                notBook: true,
-                info: info.item,
-            });
+            ]);
+        }
+        else {
+            this.props.navigation.navigate('HomeShipDetail',
+                {
+                    notBook: true,
+                    info: info.item,
+                });
+        }
     };
 
     renderCell = (info: Object) => {
@@ -140,18 +155,7 @@ export default class MyBookVC extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <SwipeListView
-                    useFlatList
-                    renderHiddenItem={(data, rowMap) => (
-                        <View style={appStyles.rowBack}>
-                            <TouchableOpacity style={[appStyles.backRightBtn, appStyles.backRightBtnRight]} onPress={ _ => this.deleteRow(rowMap, data.index) }>
-                                <Text style={appStyles.backTextWhite}>删除</Text>
-                            </TouchableOpacity>
-                        </View>
-                    )}
-                    disableRightSwipe={true}
-                    disableLeftSwipe={true}
-                    rightOpenValue={-1 * appData.DefaultOpenValue}
+                <FlatList
                     style={{flex:1}}
                     data={this.state.dataList}
                     renderItem={this.renderCell}
