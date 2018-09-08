@@ -18,7 +18,12 @@ export default class OrderCenterView extends PureComponent<Props> {
             if (type === OrderCenterEnum.Order) {
                 priceText = info.offer;
             }
-        } 
+        }
+
+        if (priceText !== "船东开价" && !priceText.startsWith("¥")) {
+            priceText = "¥" + priceText + " 元/吨";
+        }
+
         return (
             <View style={style} >
                 <View style={{backgroundColor: '#f2f9ff', paddingLeft:34, paddingRight:10, paddingVertical: 10, minHeight:73}}>

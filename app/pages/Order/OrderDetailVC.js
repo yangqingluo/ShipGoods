@@ -315,7 +315,7 @@ export default class OrderJudgementVC extends Component {
                     <Image source={require('../../images/icon_zanwu.png')} style={{width: 44, height: 44, resizeMode: "stretch"}} />
                     <Text style={{fontSize:13, marginLeft:15}}>
                         <Text style={{color:"#3f3f3f"}}>{"暂无货运详情，"}</Text>
-                        <Text style={{color:appData.appRedColor}} onPress={this.onTransportTextAction.bind(this)}>{"请选择"}</Text>
+                        <Text style={{color:appData.appRedColor}} onPress={this.onTransportTextAction.bind(this)}>{"点击重新加载"}</Text>
                     </Text>
                 </View>
             </View>
@@ -421,7 +421,11 @@ export default class OrderJudgementVC extends Component {
             return info.ship_name;
         }
         else if (item.idKey === 'price') {
-            return offerIsShipPrice(info.is_shipprice) ? "船东开价" : info.price;
+            let priceText = info.offer;
+            if (!priceText.startsWith("¥")) {
+                priceText = "¥" + priceText + " 元/吨";
+            }
+            return priceText;
         }
         else if (item.idKey === 'loading_time') {
             return info.loading_timetext;

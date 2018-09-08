@@ -81,11 +81,13 @@ export default class HomeOfferTwicePriceVC extends Component {
                         this.setState({
                             refreshing: false,
                         });
+                        this.refToast.show(result.message);
                     }
                 },(error)=>{
                     this.setState({
                         refreshing: false,
                     });
+                    this.refToast.show(error);
                 });
     };
 
