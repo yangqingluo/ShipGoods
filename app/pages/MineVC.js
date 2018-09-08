@@ -53,6 +53,7 @@ export default class MineVC extends Component {
 
     componentDidMount() {
         global.appMineVC = this;
+        this._onRefresh();
     }
 
     goPage(key, data = {}){

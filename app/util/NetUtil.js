@@ -68,15 +68,12 @@ export default class NetUtil extends Component {
             body: body
         };
 
-        PublicLog(body);
         return new Promise((resolve, reject)=> {
             fetch(url, opts)
                 .then((response)=> {
                     if(response.ok){
                         return response.text();
                     }else{
-                        // PublicAlert(JSON.stringify(response));
-                        // PublicLog(JSON.stringify(response));
                         reject("服务器错误!");
                     }
                 })

@@ -175,11 +175,19 @@ global.PublicAlert = GlobalAlert;
 global.PublicResetAction = resetAction;
 
 global.saveUserData = (data) => {
+    // let oldStatus = true;
+    // if (objectNotNull(global.userData)) {
+    //     oldStatus = global.isAuthed();
+    // }
     global.storage.save({
         key: 'userData', // 注意:请不要在key中使用_下划线符号!
         data: data,
     });
     global.userData = data;
+    // let nowStatus = global.isAuthed();
+    // if (!oldStatus && nowStatus) {
+    //     PublicAlert("您已经认证通过");
+    // }
 };
 
 
@@ -671,6 +679,7 @@ global.isIOS = function() : boolean {
     return Platform.OS === 'ios';
 };
 
+global.appIsFirst = true;
 global.appHomeVC = null;
 global.appOrderVC = null;
 global.appReleaseVC = null;

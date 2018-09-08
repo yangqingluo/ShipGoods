@@ -16,6 +16,7 @@ import ReleaseVC from './ReleaseVC';
 import MessageVC from './MessageVC';
 import MineVC from './MineVC';
 import {StackNavigator} from "react-navigation";
+import NetUtil from "../util/NetUtil";
 
 const HomeNavigator = StackNavigator({
         HomeVC: {screen: HomeVC},
@@ -92,7 +93,23 @@ export default class CustomTabVC extends Component {
 
     componentDidMount() {
         global.appMainTab = this;
+        if (global.appIsFirst) {
+            this.appRefreshUserInfo();
+            global.appIsFirst = false;
+        }
     }
+
+    async appRefreshUserInfo() {
+        let data = {suid: userData.uid};
+        NetUtil.post(appUrl + 'index.php/Mobile/User/get_user_info/', data)
+            .then(
+                (result)=>{
+                    if (result.code === 0) {
+                        saveUserData(result.data);
+                    }
+                },(error)=>{
+                });
+    };
 
     onPressTabItemForIndex(i) {
         if (i === 2) {
