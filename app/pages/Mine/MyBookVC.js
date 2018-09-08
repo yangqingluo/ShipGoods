@@ -112,27 +112,27 @@ export default class MyBookVC extends Component {
                 });
     };
 
-    onCellSelected = (info, isOrdered) => {
-        if (isOrdered) {
-            PublicAlert("删除预约", "该预约已经订掉了，是否删除？", [
-                {
-                    text:'取消',
-                },
-                {
-                    text:'删除',
-                    onPress:()=>{
-                        this.doDeleteBookFunction(info);
-                    }
+    onOrderedCellSelected = (info: Object) => {
+        PublicAlert("删除预约", "该预约已经订掉了，是否删除？", [
+            {
+                text:'取消',
+            },
+            {
+                text:'删除',
+                onPress:()=>{
+                    this.doDeleteBookFunction(info);
                 }
-            ]);
-        }
-        else {
-            this.props.navigation.navigate('HomeShipDetail',
-                {
-                    notBook: true,
-                    info: info.item,
-                });
-        }
+            }
+        ]);
+    };
+
+
+    onCellSelected = (info) => {
+        this.props.navigation.navigate('HomeShipDetail',
+            {
+                notBook: true,
+                info: info.item,
+            });
     };
 
     renderCell = (info: Object) => {
@@ -140,6 +140,7 @@ export default class MyBookVC extends Component {
             <GoodsCell
                 info={info}
                 onCellSelected={this.onCellSelected}
+                onOrderedCellSelected={this.onOrderedCellSelected}
             />
         )
     };

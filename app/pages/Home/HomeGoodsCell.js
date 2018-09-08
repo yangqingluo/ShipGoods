@@ -49,7 +49,11 @@ export default class HomeGoodsCell extends Component {
         let isOrdered = offerIsOrdered(status);
         return (
             <View style={{opacity: isOrdered ? 0.5 : 1.0, padding: 10, backgroundColor: "#fff"}}>
-                <TouchableHighlight style={styles.cellContainer} onPress={() => this.props.onCellSelected(info, isOrdered)}>
+                <TouchableHighlight style={styles.cellContainer} onPress={isOrdered ?
+                    (objectNotNull(this.props.onOrderedCellSelected) ?
+                        () => this.props.onOrderedCellSelected(info)
+                        : null)
+                    : () => this.props.onCellSelected(info)}>
                     <View style={{flex: 1, backgroundColor:'white'}}>
                         <View style={{backgroundColor:'#81c6ff', flexDirection: 'row', justifyContent: "space-between", height:26}}>
                             <Text style={{fontSize:10, color:'white', marginLeft:3, marginTop:8}}>{'发票编号：' + info.item.billing_sn}</Text>

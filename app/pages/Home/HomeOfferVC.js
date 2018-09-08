@@ -90,24 +90,23 @@ export default class HomeOfferVC extends HomeOrderVC {
                 });
     };
 
-    onCellSelected = (info: Object, isOrdered) => {
-        if (isOrdered) {
-            if (offerIsOffer(this.props.is_offer)) {
-                PublicAlert("删除预约", "该预约已经订掉了，是否删除？", [
-                    {
-                        text:'取消',
-                    },
-                    {
-                        text:'删除',
-                        onPress:()=>{
-                            this.doDeleteBookFunction(info);
-                        }
+    onOrderedCellSelected = (info: Object) => {
+        if (offerIsOffer(this.props.is_offer)) {
+            PublicAlert("删除预约", "该预约已经订掉了，是否删除？", [
+                {
+                    text:'取消',
+                },
+                {
+                    text:'删除',
+                    onPress:()=>{
+                        this.doDeleteBookFunction(info);
                     }
-                ]);
-            }
-            return;
+                }
+            ]);
         }
+    };
 
+    onCellSelected = (info: Object) => {
         if (offerIsOffer(this.props.is_offer)) {
             appSecondPriceParams = {info : info.item};
             appMainTab.props.navigation.navigate('HomeOfferTwicePrice',
@@ -130,6 +129,7 @@ export default class HomeOfferVC extends HomeOrderVC {
             <OrderCell
                 info={info}
                 onCellSelected={this.onCellSelected}
+                onOrderedCellSelected={this.onOrderedCellSelected}
                 showCreateTime={true}
                 is_offer={this.props.is_offer}
             />

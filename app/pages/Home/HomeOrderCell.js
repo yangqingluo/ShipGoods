@@ -26,13 +26,19 @@ export default class HomeOrderCell extends Component {
     render() {
         let {info, is_offer} = this.props;
         let {status} = info.item;
-        let isOrdered = false;
-        if (objectNotNull(is_offer)) {
-            isOrdered = offerIsOrdered(status);
-        }
+        // let isOrdered = false;
+        // if (objectNotNull(is_offer)) {
+        //     isOrdered = offerIsOrdered(status);
+        // }
+        let isOrdered = true;
         return (
             <View style={{opacity: isOrdered ? 0.5 : 1.0}}>
-                <TouchableHighlight style={styles.cellContainer} onPress={isOrdered ? null : () => this.props.onCellSelected(info)}>
+                <TouchableHighlight style={styles.cellContainer}
+                                    onPress={isOrdered ?
+                                        (objectNotNull(this.props.onOrderedCellSelected) ?
+                                            () => this.props.onOrderedCellSelected(info)
+                                            : null)
+                                        : () => this.props.onCellSelected(info)}>
                     <View style={{flex: 1, backgroundColor:'white'}}>
                         <View style={{height:47, flexDirection: 'row', alignItems: "center", justifyContent: "space-between",}}>
                             <View style={{flexDirection: 'row'}}>

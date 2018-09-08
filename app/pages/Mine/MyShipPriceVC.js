@@ -49,10 +49,7 @@ export default class MyShipPriceVC extends HomeOrderVC {
                 });
     };
 
-    onCellSelected = (info: Object, isOrdered) => {
-        if (isOrdered) {
-            return;
-        }
+    onCellSelected = (info: Object) => {
 
     };
 

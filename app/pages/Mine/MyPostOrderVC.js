@@ -52,10 +52,7 @@ export default class MyPostOrderVC extends HomeOrderVC {
                 });
     };
 
-    onCellSelected = (info: Object, isOrdered) => {
-        if (isOrdered) {
-            return;
-        }
+    onCellSelected = (info: Object) => {
         let {is_offer} = this.props.navigation.state.params;
         if (offerIsOffer(is_offer)) {
             appSecondPriceParams = {info : info.item};

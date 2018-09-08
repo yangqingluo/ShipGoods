@@ -36,10 +36,7 @@ export default class HomeOrderSelectVC extends HomeOrder {
         this.requestData();
     }
 
-    onCellSelected = (info: Object, isOrdered) => {
-        if (isOrdered) {
-            return;
-        }
+    onCellSelected = (info: Object) => {
         this.refSelectAlert.show({onSureBtnAction:this.toAddBookShip.bind(this, info.item)});
     };
 

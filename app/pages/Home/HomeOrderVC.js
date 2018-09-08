@@ -109,11 +109,7 @@ export default class HomeOrderVC extends Component {
                 });
     };
 
-    onCellSelected = (info: Object, isOrdered) => {
-        if (isOrdered) {
-            return;
-        }
-
+    onCellSelected = (info: Object) => {
         appMainTab.props.navigation.navigate('HomeOrderDetail',
             {
                 info: info.item,
