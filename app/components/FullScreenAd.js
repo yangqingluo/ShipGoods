@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import Modal from 'react-native-root-modal';
 
-export default class IndicatorModal extends PureComponent{
+export default class FullScreenAd extends PureComponent{
     constructor(props){
         super(props);
         this.state = {
@@ -19,6 +19,7 @@ export default class IndicatorModal extends PureComponent{
             transparent: true,
             title:'提示',
             message: '',
+            source: null,
         }
     }
 
@@ -27,11 +28,13 @@ export default class IndicatorModal extends PureComponent{
             let animationType=options.animationType===undefined?'fade':options.animationType;
             let title=options.title===undefined?'提示':options.title;
             let message=options.message===undefined?'':options.message;
+            let source = options.source===undefined ? null : options.source;
             if(!this.state.modalVisible){
                 this.setState({
                     title:title,
                     message:message,
                     animationType:animationType,
+                    source: source,
                     modalVisible: true,
                 });
             }
@@ -54,7 +57,7 @@ export default class IndicatorModal extends PureComponent{
     }
 
     render() {
-        let {message} = this.state;
+        let {message, source} = this.state;
         return(
             <Modal
                 animationType={this.state.animationType}
@@ -63,24 +66,20 @@ export default class IndicatorModal extends PureComponent{
                 style={styles.modal}
                 // onRequestClose={this.onRequestClose.bind(this)}
             >
-                {/*<View style={styles.container}>*/}
-                    <View style={styles.centerContainer}>
-                        <ActivityIndicator size="large" color={"#fff"} style={styles.indicator}/>
-                        {message.length > 0 ? <Text style={{marginTop:10, color:'#fff', textAlign:'center'}}>{message}</Text> : null}
-                    </View>
-                {/*</View>*/}
+                <View style={styles.centerContainer}>
+                    <Image source={source} style={styles.image} />
+                </View>
+                <appFont.Ionicons style={{marginTop: 40}} name="ios-close-circle" size={36}
+                                  color= {appData.appGrayColor}
+                onPress={() =>{
+                    this.hide();
+                }}/>
             </Modal>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        backgroundColor:'rgba(0, 0, 0, 0.1)',
-        justifyContent:'center',
-        alignItems:'center',
-    },
     modal: {
         top: 0,
         right: 0,
@@ -88,20 +87,17 @@ const styles = StyleSheet.create({
         left: 0,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+        backgroundColor: 'rgba(20, 20, 20, 0.4)',
     },
     centerContainer: {
-        marginTop: -80,
-        marginHorizontal:20,
-        minWidth:120,
-        minHeight:80,
+        marginTop: -40,
         borderRadius:10,
-        backgroundColor:"rgba(0, 0, 0, 0.8)",
         alignItems:'center',
-        paddingVertical:10,
-        paddingHorizontal:10,
+        overflow: "hidden",
     },
-    indicator: {
-        marginTop: 10,
-    }
+    image: {
+        width: 0.7 * screenWidth,
+        height: 0.7 * screenWidth * (636.0 / 479.0),
+        resizeMode: "cover",
+    },
 });

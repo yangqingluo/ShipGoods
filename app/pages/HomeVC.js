@@ -21,6 +21,8 @@ import HomeListOrderVC from './Home/HomeOrderVC';
 import HomeListOfferVC from './Home/HomeOfferVC';
 import SideMenu from '../components/SideMenu';
 import Menu from './Home/HomeMenu';
+import FullScreenAd from '../components/FullScreenAd';
+import IndicatorModal from "../components/IndicatorModal";
 
 class RightHeader extends Component {
     constructor(props) {
@@ -79,6 +81,9 @@ export default class HomeVC extends Component {
 
     componentDidMount() {
         global.appHomeVC = this;
+        this.refAd.show({
+            source: require("../images/ad.png"),
+        });
     }
 
     onSelectOrderType(index) {
@@ -336,6 +341,7 @@ export default class HomeVC extends Component {
                     // destructiveButtonIndex={1}
                     onPress={this.onSelectOrderType.bind(this)}
                 />
+                <FullScreenAd ref={o => this.refAd = o}/>
             </SideMenu>
         )
     }
