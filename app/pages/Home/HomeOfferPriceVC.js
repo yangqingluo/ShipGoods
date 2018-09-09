@@ -31,6 +31,7 @@ export default class HomeOfferPriceVC extends Component {
             arrive_time: new Date(),//预计到港时间
             arrive_delay: 0,//到港延迟
             last_goods: '',//上载货品
+            book_tonnage: '',//本载可装货量
 
             lastGoodsSelectedList: [],
         };
@@ -42,6 +43,7 @@ export default class HomeOfferPriceVC extends Component {
                     {idKey:"offer", name:"运价", logo:require('../../images/icon_red.png'), disable:false, hideArrowForward:true},
                     {idKey:"arrive_time", name:"到港时间", logo:require('../../images/icon_orange.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectArriveTime")},
                     {idKey:"last_goods",name:"上载货品", logo:require('../../images/icon_green.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectLastGoods")},
+                    {idKey:"book_tonnage",name:"本载可装货量", logo:require('../../images/icon_red.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectBookTonnage")},
                 ];
             }
             else {
@@ -50,6 +52,7 @@ export default class HomeOfferPriceVC extends Component {
                     {idKey:"offer", name:"运价", logo:require('../../images/icon_red.png'), disable:false, hideArrowForward:true},
                     {idKey:"arrive_time", name:"到港时间", logo:require('../../images/icon_orange.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectArriveTime")},
                     {idKey:"last_goods",name:"上载货品", logo:require('../../images/icon_green.png'), disable:false, hideArrowForward:true},
+                    {idKey:"book_tonnage",name:"本载可装货量", logo:require('../../images/icon_red.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectBookTonnage")},
                 ];
             }
         }
@@ -60,7 +63,7 @@ export default class HomeOfferPriceVC extends Component {
                     {idKey:"offer", name:"运价", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
                     {idKey:"arrive_time", name:"到港时间", logo:require('../../images/icon_orange.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectArriveTime")},
                     {idKey:"last_goods",name:"上载货品", logo:require('../../images/icon_green.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectLastGoods")},
-
+                    {idKey:"book_tonnage",name:"本载可装货量", logo:require('../../images/icon_red.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectBookTonnage")},
                 ]
                 :
                 [
@@ -68,7 +71,7 @@ export default class HomeOfferPriceVC extends Component {
                     {idKey:"offer", name:"运价", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
                     {idKey:"arrive_time", name:"到港时间", logo:require('../../images/icon_orange.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectArriveTime")},
                     {idKey:"last_goods",name:"上载货品", logo:require('../../images/icon_green.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectLastGoods")},
-
+                    {idKey:"book_tonnage",name:"本载可装货量", logo:require('../../images/icon_red.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectBookTonnage")},
                 ];
         }
     }
@@ -181,18 +184,22 @@ export default class HomeOfferPriceVC extends Component {
     };
 
     onSubmitBtnAction = () => {
-        if (this.state.ship === null) {
+        let {info, offer, type, ship, lastGoodsSelectedList, arrive_time, arrive_delay, book_tonnage} = this.state;
+        if (ship === null) {
             this.refToast.show("请选择船舶");
         }
-        else if (this.state.lastGoodsSelectedList.length === 0) {
+        else if (lastGoodsSelectedList.length === 0) {
             this.refToast.show("请选择上载货品");
         }
-        else if (this.state.arrive_time === null) {
+        else if (arrive_time === null) {
             this.refToast.show("请选择到港时间");
         }
+        else if (book_tonnage.length === 0) {
+            this.refToast.show("请设置本载可运货量");
+        }
         else {
-            let price = parseFloat(this.state.offer).Format(1);
-            if (offerIsBargain(this.state.info.is_bargain)) {
+            let price = parseFloat(offer).Format(1);
+            if (offerIsBargain(info.is_bargain)) {
                 if (price - 0 < 0.000001) {
                     this.refToast.show("请输入运价");
                     return;
@@ -200,24 +207,27 @@ export default class HomeOfferPriceVC extends Component {
             }
 
             let data = {
-                ship_id: this.state.ship.ship_id,
-                last_goods_id: this.state.lastGoodsSelectedList[0].goods_id,
-                arrive_time: this.state.arrive_time.Format("yyyy-MM-dd"),
-                arrive_delay: this.state.arrive_delay,
-                type: this.state.type,
+                ship_id: ship.ship_id,
+                last_goods_id: lastGoodsSelectedList[0].goods_id,
+                arrive_time: arrive_time.Format("yyyy-MM-dd"),
+                arrive_delay: arrive_delay,
+                book_tonnage: book_tonnage,
+                type: type,
                 offer: price,
-                task_id: this.state.info.task_id,
+                task_id: info.task_id,
             };
 
-            if (this.state.type === OfferOrderEnum.GoodsOrder) {
-                if (objectNotNull(this.state.info.book_id)) {
-                    data.book_id = this.state.info.book_id;
+            if (type === OfferOrderEnum.GoodsOrder) {
+                if (objectNotNull(info.book_id)) {
+                    data.book_id = info.book_id;
                 }
             }
 
+            this.refIndicator.show();
             NetUtil.post(appUrl + 'index.php/Mobile/Task/add_book_good/', data)
                 .then(
                     (result)=>{
+                        this.refIndicator.hide();
                         if (result.code === 0) {
                             PublicAlert(result.message, "",
                                 [{text:"确定", onPress:this.toGotoTwicePriceVC.bind(this, result.data)}]
@@ -227,6 +237,7 @@ export default class HomeOfferPriceVC extends Component {
                             this.refToast.show(result.message);
                         }
                     },(error)=>{
+                        this.refIndicator.hide();
                         this.refToast.show(error);
                     });
         }
@@ -241,15 +252,16 @@ export default class HomeOfferPriceVC extends Component {
     }
 
     cellSelected = (key, data = {}) =>{
+        const { navigate } = this.props.navigation;
         if (key === "SelectShip") {
-            this.props.navigation.navigate(
+            navigate(
                 "MyShip",
                 {
                     callBack:this.callBackFromShipVC.bind(this)
                 });
         }
         else if (key === "SelectArriveTime") {
-            this.props.navigation.navigate(
+            navigate(
                 "SelectEmptyTimeVC",
                 {
                     title: '到港时间',
@@ -261,6 +273,14 @@ export default class HomeOfferPriceVC extends Component {
         }
         else if (key === "SelectLastGoods") {
             this.toGoToGoodsVC();
+        }
+        else if (key === "SelectBookTonnage") {
+            navigate(
+                "SelectBookTonnage",
+                {
+                    book_tonnage: this.state.book_tonnage,
+                    callBack:this.callBackFromBookTonnageVC.bind(this)
+                });
         }
         else {
 
@@ -280,6 +300,12 @@ export default class HomeOfferPriceVC extends Component {
                 arrive_delay: backDelay,
             })
         }
+    }
+
+    callBackFromBookTonnageVC(book_tonnage) {
+        this.setState({
+            book_tonnage: book_tonnage,
+        })
     }
 
     toGoToGoodsVC() {
@@ -343,6 +369,9 @@ export default class HomeOfferPriceVC extends Component {
         }
         else if (item.idKey === 'arrive_time' && this.state.arrive_time !== null) {
             return this.state.arrive_time.Format("yyyy.MM.dd") + '±' + this.state.arrive_delay + '天';
+        }
+        else if (item.idKey === 'book_tonnage' && this.state.book_tonnage.length > 0) {
+            return this.state.book_tonnage + " 吨";
         }
         return '';
     }
