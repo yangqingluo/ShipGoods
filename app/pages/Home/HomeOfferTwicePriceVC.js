@@ -44,6 +44,7 @@ export default class HomeOfferTwicePriceVC extends Component {
 
         this.goodsConfig = [
             {idKey:"ship_name",name:"报价船"},
+            {idKey:"book_tonnage",name:"本载可装货量"},
             {idKey:"offer", name:"我的报价"},
             {idKey:"arrive_time", name:"到港时间"},
             {idKey:"phone", name:"联系方式", onCellSelected:this.cellSelected.bind(this, "SelectPhone")},
@@ -98,7 +99,7 @@ export default class HomeOfferTwicePriceVC extends Component {
             let price = parseFloat(message);
             let data = {
                 book_id: this.state.info.book_id,
-                offer: price,
+                offer: price.Format(2),
             };
 
             NetUtil.post(appUrl + 'index.php/Mobile/Task/update_book_good/', data)
@@ -194,6 +195,11 @@ export default class HomeOfferTwicePriceVC extends Component {
                 if (objectNotNull(info.book.last_goods_name)) {
                     return info.book.last_goods_name.goods_name;
                 }
+            }
+        }
+        else if (item.idKey === "book_tonnage") {
+            if (!stringIsEmpty(info.book_tonnage)) {
+                return info.book_tonnage + "吨";
             }
         }
 

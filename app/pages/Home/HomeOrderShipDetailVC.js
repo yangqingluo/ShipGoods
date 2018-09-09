@@ -34,6 +34,7 @@ export default class HomeShipDetailVC extends Component {
         };
 
         this.config = [
+            {idKey:"book_tonnage",name:"本载可装货量"},
             {idKey:"arrive_time",name:"预计到港时间"},
             // {idKey:"goods", name:"意向货品"},
             {idKey:"storage", name:"仓容"},
@@ -196,6 +197,11 @@ export default class HomeShipDetailVC extends Component {
         }
         else if (item.idKey === "area") {
             return getArrayTypesText(shipAreaTypes, parseInt(info.area) - 1);
+        }
+        else if (item.idKey === "book_tonnage") {
+            if (!stringIsEmpty(info.book_tonnage)) {
+                return info.book_tonnage + "吨";
+            }
         }
 
         return '';

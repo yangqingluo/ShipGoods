@@ -198,9 +198,9 @@ export default class HomeOfferPriceVC extends Component {
             this.refToast.show("请设置本载可运货量");
         }
         else {
-            let price = parseFloat(offer).Format(1);
+            let price = parseFloat(offer);
             if (offerIsBargain(info.is_bargain)) {
-                if (price - 0 < 0.000001) {
+                if (price < 0.000001) {
                     this.refToast.show("请输入运价");
                     return;
                 }
@@ -213,7 +213,7 @@ export default class HomeOfferPriceVC extends Component {
                 arrive_delay: arrive_delay,
                 book_tonnage: book_tonnage,
                 type: type,
-                offer: price,
+                offer: price.Format(2),
                 task_id: info.task_id,
             };
 
@@ -371,7 +371,7 @@ export default class HomeOfferPriceVC extends Component {
             return this.state.arrive_time.Format("yyyy.MM.dd") + '±' + this.state.arrive_delay + '天';
         }
         else if (item.idKey === 'book_tonnage' && this.state.book_tonnage.length > 0) {
-            return this.state.book_tonnage + " 吨";
+            return this.state.book_tonnage + "吨";
         }
         return '';
     }
