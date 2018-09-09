@@ -12,8 +12,32 @@ import android.widget.Toast;
 import com.facebook.react.ReactActivity;
 import com.umeng.socialize.UMShareAPI;
 import com.xinfu.shipowner.invokenative.ShareModule;
+import com.xinfu.shipowner.version.UpdateManager;
+
+import java.io.File;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 public class MainActivity extends ReactActivity {
+    public static int version,serverVersion;
+    public static String versionName,serverVersionName,downloadResult;
+    public static receiveVersionHandler handler;
+    private UpdateManager manager = UpdateManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +58,26 @@ public class MainActivity extends ReactActivity {
             ActivityCompat.requestPermissions(this, mPermissionList, 123);
         }
         ShareModule.initSocialSDK(this);
+
+        handler = new receiveVersionHandler();
+
+        Context c = this;
+        version = manager.getVersion(c);
+        versionName = manager.getVersionName(c);
+        manager.compareVersion(MainActivity.this);
+    }
+
+    public class receiveVersionHandler extends Handler{
+        @Override
+        public void handleMessage(Message msg) {
+            if(msg.arg1 == 100){
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                String path = Environment.getExternalStorageDirectory()+"/ShipGoods.apk";
+                intent.setDataAndType(Uri.fromFile(new File(path)),
+                        "application/vnd.android.package-archive");
+                startActivity(intent);
+            }
+        }
     }
 
     /**
