@@ -256,7 +256,7 @@ export default class HomeVC extends Component {
     render() {
         let t_y = this.state.scrollHeight.interpolate({
             inputRange: [-1, 0, AnimatedHeight, AnimatedHeight + 1],
-            outputRange: [TopHeight, TopHeight, 0.6 * TopHeight, 0]
+            outputRange: [TopHeight, TopHeight, 0.8 * TopHeight, 0]
         });
         let tabTitles = isShipOwner() ? ['等待报价', '已报价'] : ['空船', '我的货'];
         let sorts = isShipOwner() ?
@@ -325,7 +325,7 @@ export default class HomeVC extends Component {
 }
 
 const TopHeight = 140;
-const AnimatedHeight = isIOS ? 1 : Math.max(4 * TopHeight, screenHeight);
+const AnimatedHeight = isIOS() ? 1 : Math.max(4 * TopHeight, screenHeight);
 
 const styles = StyleSheet.create({
     container: {

@@ -67,9 +67,11 @@ export default class HomeOrderVC extends Component {
         }
         let data = {page: this.state.page};
 
+        this.refIndicator.show();
         NetUtil.post(appUrl + 'index.php/Mobile/Goods/get_my_goods/', data)
             .then(
                 (result)=>{
+                    this.refIndicator.hide();
                     if (result.code === 0) {
                         let list = [];
                         if (!isReset) {
@@ -101,6 +103,7 @@ export default class HomeOrderVC extends Component {
                         this.refToast.show(result.message);
                     }
                 },(error)=>{
+                    this.refIndicator.hide();
                     this.setState({
                         refreshing: isReset ? false : this.state.refreshing,
                         showFooter: FooterTypeEnum.default,
