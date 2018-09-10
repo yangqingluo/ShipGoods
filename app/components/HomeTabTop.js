@@ -60,20 +60,20 @@ export default class HomeTabTop extends Component {
                         )
                     })}
                 </View>
-                {/*{this.props.isSort ?*/}
-                    {/*<View style={styles.sorts}>*/}
-                        {/*{this.props.sorts.map((sort, i) => {*/}
-                            {/*return (*/}
-                                {/*<SortButton*/}
-                                    {/*key={i}*/}
-                                    {/*sort={sort}*/}
-                                    {/*index={i}*/}
-                                    {/*>*/}
-                                {/*</SortButton>*/}
-                            {/*)*/}
-                        {/*})}*/}
-                    {/*</View>*/}
-                    {/*: null}*/}
+                {this.props.isSort ?
+                    <View style={styles.sorts}>
+                        {this.props.sorts.map((sort, i) => {
+                            return (
+                                <SortButton
+                                    key={i}
+                                    sort={sort}
+                                    index={i}
+                                    >
+                                </SortButton>
+                            )
+                        })}
+                    </View>
+                    : null}
             </View>
         );
     }
