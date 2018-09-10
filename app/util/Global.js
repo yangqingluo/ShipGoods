@@ -342,6 +342,12 @@ let AuthStateEnum = {
     Reject: 2,//认证不通过
 };
 
+let SortTypeEnum = {
+    Default: 0,//默认
+    ASC: 0,//升序
+    DESC: 1,//降序
+};
+
 global.appStyles = appStyles;
 global.appData = appData;
 global.OrderCenterEnum = OrderCenterEnum;
@@ -349,6 +355,7 @@ global.OrderBtnEnum = OrderBtnEnum;
 global.OfferPriceEnum = OfferPriceEnum;
 global.OfferOrderEnum = OfferOrderEnum;
 global.AuthStateEnum = AuthStateEnum;
+global.SortTypeEnum = SortTypeEnum;
 global.appFont = Font;
 global.appUrl = 'http://shiphire.com.cn/';//服务器url
 global.appShareUrl = 'http://shiphire.com.cn/shared/mobile/';

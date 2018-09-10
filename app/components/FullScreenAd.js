@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import Modal from 'react-native-root-modal';
 
-export default class FullScreenAd extends PureComponent{
+export default class FullScreenAd extends PureComponent {
     constructor(props){
         super(props);
         this.state = {

@@ -15,7 +15,7 @@ import {
 import ActionSheet from 'react-native-actionsheet';
 import Swiper from 'react-native-swiper';
 import ScrollableTabView,{DefaultTabBar, ScrollableTabBar} from 'react-native-scrollable-tab-view';
-import TabTop from '../components/TabTop';
+import TabTop from '../components/HomeTabTop';
 import HomeListGoodsVC from './Home/HomeGoodsVC';
 import HomeListOrderVC from './Home/HomeOrderVC';
 import HomeListOfferVC from './Home/HomeOfferVC';
@@ -71,6 +71,7 @@ export default class HomeVC extends Component {
             isOpen: false,
             selectedItem: '',
             scrollHeight: new Animated.Value(0),
+            isSort: false,
         };
 
         this.orderTypes = isShipOwner() ?
@@ -182,13 +183,18 @@ export default class HomeVC extends Component {
 
     onSortBtnAction() {
         // this.refOrderTypeSheet.show();
-        if (stringIsEmpty(appHomeCondition.timeorder)) {
-            appHomeCondition.timeorder = "ASC";
-        }
-        else {
-            appHomeCondition.timeorder = null;
-        }
-        this.refreshList();
+
+        // if (stringIsEmpty(appHomeCondition.timeorder)) {
+        //     appHomeCondition.timeorder = "ASC";
+        // }
+        // else {
+        //     appHomeCondition.timeorder = null;
+        // }
+        // this.refreshList();
+
+        this.setState({
+            isSort: !this.state.isSort,
+        });
     }
 
     onFilterBtnAction() {
@@ -288,6 +294,7 @@ export default class HomeVC extends Component {
             outputRange: [TopHeight, TopHeight, 0.6 * TopHeight, 0]
         });
         let tabTitles = isShipOwner() ? ['等待报价', '已报价'] : ['空船', '我的货'];
+        let sortTitles = isShipOwner() ? ['装货时间', '货量', '结算时间', '货主信用'] : ['空船时间', '吨位', '船东信用'];
         const menu = <Menu ref={o => this.rightMenu = o} onItemSelected={this.onMenuItemSelected}/>;
         return (
             <SideMenu menu={menu}
@@ -318,8 +325,8 @@ export default class HomeVC extends Component {
                     <ScrollableTabView
                         ref={o => this.refTab = o}
                         renderTabBar={() =>
-                            <TabTop tabNames={tabTitles} />}
-                        style={styles.tabView}
+                            <TabTop tabNames={tabTitles} sortNames={sortTitles} isSort={this.state.isSort}/>}
+                        // style={styles.tabView}
                         tabBarPosition='top'
                         tabBarActiveTextColor={appData.appBlueColor}
                     >
