@@ -11,6 +11,7 @@ import {
     from
         'react-native';
 import PropTypes from 'prop-types';
+import SortButton from "./SortButton";
 
 export default class HomeTabTop extends Component {
 
@@ -24,7 +25,7 @@ export default class HomeTabTop extends Component {
         selectedTabIconNames: PropTypes.array,
         tabItemFlex: Number,
 
-        sortNames        : PropTypes.array,
+        sorts        : PropTypes.array,
         isSort: PropTypes.boolean,
     };
 
@@ -37,7 +38,6 @@ export default class HomeTabTop extends Component {
     }
 
     render() {
-        let arrowSize = 16;
         return (
             <View >
                 <View style={styles.tabs}>
@@ -61,33 +61,15 @@ export default class HomeTabTop extends Component {
                     })}
                 </View>
                 {this.props.isSort ?
-                    <View style={styles.tabs}>
-                        {this.props.sortNames.map((sort, i) => {
-                            let color = '#5d5d5d';
+                    <View style={styles.sorts}>
+                        {this.props.sorts.map((sort, i) => {
                             return (
-                                <TouchableOpacity
+                                <SortButton
                                     key={i}
-                                    activeOpacity={0.8}
-                                    style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center',}}
-                                    onPress={()=> {}}>
-                                    <View style={styles.sortItem}>
-                                        <Text style={{color: color, fontSize: 14}}>
-                                            {this.props.sortNames[i]}
-                                        </Text>
-                                    </View>
-                                    <View style={{backgroundColor: "red", height: 45, justifyContent: 'center', alignItems: 'center', marginLeft: 6}}>
-                                        <appFont.Ionicons style={{backgroundColor: "green", width: arrowSize, height: 0.8 * arrowSize}} name="md-arrow-dropup" size={arrowSize}
-                                                          color= {"#dddcdc"}
-                                                          onPress={() =>{
-
-                                                          }}/>
-                                        <appFont.Ionicons style={{backgroundColor: "blue", width: arrowSize, height: 0.8 * arrowSize}} name="md-arrow-dropdown" size={arrowSize}
-                                                          color= {"#dddcdc"}
-                                                          onPress={() =>{
-
-                                                          }}/>
-                                    </View>
-                                </TouchableOpacity>
+                                    sort={sort}
+                                    index={i}
+                                    >
+                                </SortButton>
                             )
                         })}
                     </View>
@@ -115,13 +97,11 @@ const styles = StyleSheet.create({
         bottom: 0,
         position: 'absolute',
     },
-    sortItem: {
-        height: 45,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    sort: {
-        height: 45,
-        backgroundColor: appData.appRedColor,
+    sorts: {
+        marginTop: 2,
+        flexDirection: 'row',
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+        borderColor: "#00000006",
     },
 });

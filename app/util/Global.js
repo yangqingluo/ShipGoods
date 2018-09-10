@@ -344,8 +344,8 @@ let AuthStateEnum = {
 
 let SortTypeEnum = {
     Default: 0,//默认
-    ASC: 0,//升序
-    DESC: 1,//降序
+    ASC: 1,//升序
+    DESC: 2,//降序
 };
 
 global.appStyles = appStyles;
@@ -685,6 +685,32 @@ global.createGoodsName = function(info) : String {
     return "";
 };
 
+global.sortNotNull = function(sort) : boolean {
+    return objectNotNull(sort) && sort !== SortTypeEnum.Default;
+};
+
+global.createSortString = function(sort) : String {
+    let sortString = null;
+    if (sort === SortTypeEnum.ASC) {
+        sortString = "ASC";
+    }
+    else if (sort === SortTypeEnum.DESC) {
+        sortString = "DESC";
+    }
+    return sortString;
+};
+
+global.createNextSort = function(sort, ASCFirst = false) : SortTypeEnum {
+    let mArray = ASCFirst ?
+        [SortTypeEnum.ASC, SortTypeEnum.DESC]
+        :
+        [SortTypeEnum.DESC, SortTypeEnum.ASC];
+
+    let index = mArray.indexOf(sort);
+    let nextIndex = (index === -1 ? 0 : (index + 1)) % mArray.length;
+    return mArray[nextIndex];
+};
+
 global.deepCopy = function(obj : Object) : Object {
     let newobj = {};
     for (let attr in obj) {
@@ -724,6 +750,22 @@ global.appHomeCondition = {
     loading_time: null,//发货时间
     loading_delay: 0,//发货延迟
     unloading_port: null,//卸货港
+
+    loadorder: null,
+    tonnageorder: null,
+    cleanorder: null,
+    creditorder: null,
+    timeorder: null,
+    emptyorder: null,
+};
+
+global.appResetSort = function () {
+    appHomeCondition.loadorder = null;
+    appHomeCondition.tonnageorder = null;
+    appHomeCondition.cleanorder = null;
+    appHomeCondition.creditorder = null;
+    appHomeCondition.timeorder = null;
+    appHomeCondition.emptyorder = null;
 };
 
 global.appResetState = function () {
@@ -749,6 +791,13 @@ global.appResetState = function () {
         loading_time: null,//发货时间
         loading_delay: 0,//发货延迟
         unloading_port: null,//卸货港
+
+        loadorder: null,
+        tonnageorder: null,
+        cleanorder: null,
+        creditorder: null,
+        timeorder: null,
+        emptyorder: null,
     };
     storage.remove({
         key: 'userData'

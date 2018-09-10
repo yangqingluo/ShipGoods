@@ -73,11 +73,6 @@ export default class HomeVC extends Component {
             scrollHeight: new Animated.Value(0),
             isSort: false,
         };
-
-        this.orderTypes = isShipOwner() ?
-            ["取消", "默认排序" , "装货时间正序", "装货时间倒序", "吨位正序", "吨位倒序", "结算时间正序", "结算时间倒序", "货主信用正序", "货主信用倒序"]
-                :
-            ["取消", "默认排序" , "空船时间正序", "空船时间倒序", "吨位正序", "吨位倒序", "船主信用正序", "船主信用倒序"];
     }
 
     componentDidMount() {
@@ -85,84 +80,6 @@ export default class HomeVC extends Component {
         this.refAd.show({
             source: require("../images/ad.png"),
         });
-    }
-
-    onSelectOrderType(index) {
-        if (index > 0) {
-            if (index === 1) {
-                appHomeCondition.emptyorder = null;
-                appHomeCondition.tonnageorder = null;
-                appHomeCondition.creditorder = null;
-
-                appHomeCondition.loadorder = null;
-                appHomeCondition.cleanorder = null;
-            }
-            else {
-                if (isShipOwner()) {
-                    switch (index){
-                        case 2:
-                            appHomeCondition.loadorder = "ASC";
-                            break;
-
-                        case 3:
-                            appHomeCondition.loadorder = "DESC";
-                            break;
-
-                        case 4:
-                            appHomeCondition.tonnageorder = "ASC";
-                            break;
-
-                        case 5:
-                            appHomeCondition.tonnageorder = "DESC";
-                            break;
-
-                        case 6:
-                            appHomeCondition.cleanorder = "ASC";
-                            break;
-
-                        case 7:
-                            appHomeCondition.cleanorder = "DESC";
-                            break;
-
-                        case 8:
-                            appHomeCondition.creditorder = "ASC";
-                            break;
-
-                        case 9:
-                            appHomeCondition.creditorder = "DESC";
-                            break;
-                    }
-                }
-                else {
-                    switch (index){
-                        case 2:
-                            appHomeCondition.emptyorder = "ASC";
-                            break;
-
-                        case 3:
-                            appHomeCondition.emptyorder = "DESC";
-                            break;
-
-                        case 4:
-                            appHomeCondition.tonnageorder = "ASC";
-                            break;
-
-                        case 5:
-                            appHomeCondition.tonnageorder = "DESC";
-                            break;
-
-                        case 6:
-                            appHomeCondition.creditorder = "ASC";
-                            break;
-
-                        case 7:
-                            appHomeCondition.creditorder = "DESC";
-                            break;
-                    }
-                }
-            }
-            this.refreshList();
-        }
     }
 
     refreshList() {
@@ -181,20 +98,61 @@ export default class HomeVC extends Component {
         }
     }
 
-    onSortBtnAction() {
-        // this.refOrderTypeSheet.show();
-
-        // if (stringIsEmpty(appHomeCondition.timeorder)) {
-        //     appHomeCondition.timeorder = "ASC";
-        // }
-        // else {
-        //     appHomeCondition.timeorder = null;
-        // }
-        // this.refreshList();
-
+    hideSort() {
         this.setState({
-            isSort: !this.state.isSort,
+            isSort: false,
         });
+    }
+
+    onSortBtnAction() {
+        let {isSort} = this.state;
+        this.setState({
+            isSort: !isSort,
+        });
+
+        // if (isSort)  {
+        //     appResetSort();
+        //     this.refreshList();
+        // }
+    }
+
+    onSortItemAction(index) {
+        if (isShipOwner()) {
+            switch (index){
+                case 0:
+                    appHomeCondition.loadorder = createNextSort(appHomeCondition.loadorder, true);
+                    break;
+
+                case 1:
+                    appHomeCondition.tonnageorder = createNextSort(appHomeCondition.tonnageorder);
+                    break;
+
+                case 2:
+                    appHomeCondition.cleanorder = createNextSort(appHomeCondition.cleanorder, true);
+                    break;
+
+                case 3:
+                    appHomeCondition.creditorder = createNextSort(appHomeCondition.creditorder);
+                    break;
+            }
+        }
+        else {
+            switch (index){
+                case 0:
+                    appHomeCondition.emptyorder = createNextSort(appHomeCondition.emptyorder, true);
+                    break;
+
+                case 1:
+                    appHomeCondition.tonnageorder = createNextSort(appHomeCondition.tonnageorder);
+                    break;
+
+                case 2:
+                    appHomeCondition.creditorder = createNextSort(appHomeCondition.creditorder);
+                    break;
+            }
+        }
+        this.forceUpdate();
+        this.refreshList();
     }
 
     onFilterBtnAction() {
@@ -288,13 +246,32 @@ export default class HomeVC extends Component {
         }
     }
 
+    onChangeTab(object) {
+        let index = object.i;
+        if (index !== 0 && this.state.isSort) {
+            this.onSortBtnAction();
+        }
+    }
+
     render() {
         let t_y = this.state.scrollHeight.interpolate({
             inputRange: [-1, 0, AnimatedHeight, AnimatedHeight + 1],
             outputRange: [TopHeight, TopHeight, 0.6 * TopHeight, 0]
         });
         let tabTitles = isShipOwner() ? ['等待报价', '已报价'] : ['空船', '我的货'];
-        let sortTitles = isShipOwner() ? ['装货时间', '货量', '结算时间', '货主信用'] : ['空船时间', '吨位', '船东信用'];
+        let sorts = isShipOwner() ?
+            [
+                {title:'装货时间', order: appHomeCondition.loadorder},
+                {title:'货量', order: appHomeCondition.tonnageorder},
+                {title:'结算时间', order: appHomeCondition.cleanorder},
+                {title:'货主信用', order: appHomeCondition.creditorder},
+            ]
+            :
+            [
+                {title:'空船时间', order: appHomeCondition.emptyorder},
+                {title:'吨位', order: appHomeCondition.tonnageorder},
+                {title:'船东信用', order: appHomeCondition.creditorder},
+            ];
         const menu = <Menu ref={o => this.rightMenu = o} onItemSelected={this.onMenuItemSelected}/>;
         return (
             <SideMenu menu={menu}
@@ -325,10 +302,11 @@ export default class HomeVC extends Component {
                     <ScrollableTabView
                         ref={o => this.refTab = o}
                         renderTabBar={() =>
-                            <TabTop tabNames={tabTitles} sortNames={sortTitles} isSort={this.state.isSort}/>}
+                            <TabTop tabNames={tabTitles} sorts={sorts} isSort={this.state.isSort}/>}
                         // style={styles.tabView}
                         tabBarPosition='top'
                         tabBarActiveTextColor={appData.appBlueColor}
+                        onChangeTab = {this.onChangeTab.bind(this)}
                     >
                         {isShipOwner() ?
                             <HomeListOfferVC ref={o => this.subListToOfferVC = o} is_offer={"0"}/>
@@ -340,14 +318,6 @@ export default class HomeVC extends Component {
                             <HomeListOrderVC ref={o => this.subListOrderVC = o} />}
                     </ScrollableTabView>
                 </View>
-                <ActionSheet
-                    ref={o => this.refOrderTypeSheet = o}
-                    title={'请选择排序方式'}
-                    options={this.orderTypes}
-                    cancelButtonIndex={0}
-                    // destructiveButtonIndex={1}
-                    onPress={this.onSelectOrderType.bind(this)}
-                />
                 <FullScreenAd ref={o => this.refAd = o}/>
             </SideMenu>
         )

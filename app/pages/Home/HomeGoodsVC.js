@@ -81,14 +81,16 @@ export default class HomeGoodsVC extends Component {
             );
         }
 
-        if (objectNotNull(appHomeCondition.emptyorder)) data.emptyorder = appHomeCondition.emptyorder;
-        if (objectNotNull(appHomeCondition.tonnageorder)) data.tonnageorder = appHomeCondition.tonnageorder;
-        if (objectNotNull(appHomeCondition.creditorder)) data.creditorder = appHomeCondition.creditorder;
-        if (objectNotNull(appHomeCondition.timeorder)) data.timeorder = appHomeCondition.timeorder;
+        if (sortNotNull(appHomeCondition.emptyorder)) data.emptyorder = createSortString(appHomeCondition.emptyorder);
+        if (sortNotNull(appHomeCondition.tonnageorder)) data.tonnageorder = createSortString(appHomeCondition.tonnageorder);
+        if (sortNotNull(appHomeCondition.creditorder)) data.creditorder = createSortString(appHomeCondition.creditorder);
+        if (sortNotNull(appHomeCondition.timeorder)) data.timeorder = createSortString(appHomeCondition.timeorder);
 
+        this.refIndicator.show();
         NetUtil.post(appUrl + 'index.php/Mobile/Goods/goods_index/', data)
             .then(
                 (result)=>{
+                    this.refIndicator.hide();
                     if (result.code === 0) {
                         let list = [];
                         if (!isReset) {
@@ -115,6 +117,7 @@ export default class HomeGoodsVC extends Component {
                         this.refToast.show(result.message);
                     }
                 },(error)=>{
+                    this.refIndicator.hide();
                     this.setState({
                         refreshing: isReset ? false : this.state.refreshing,
                         showFooter: FooterTypeEnum.default,
@@ -167,10 +170,7 @@ export default class HomeGoodsVC extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <SwipeListView
-                    useFlatList
-                    disableRightSwipe={true}
-                    disableLeftSwipe={true}
+                <FlatList
                     ref={o => this.refList = o}
                     style={styles.container}
                     data={this.state.dataList}

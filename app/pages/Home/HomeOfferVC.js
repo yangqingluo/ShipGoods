@@ -28,15 +28,17 @@ export default class HomeOfferVC extends HomeOrderVC {
             );
         }
 
-        if (objectNotNull(appHomeCondition.loadorder)) data.loadorder = appHomeCondition.loadorder;
-        if (objectNotNull(appHomeCondition.tonnageorder)) data.tonnageorder = appHomeCondition.tonnageorder;
-        if (objectNotNull(appHomeCondition.cleanorder)) data.loadorder = appHomeCondition.cleanorder;
-        if (objectNotNull(appHomeCondition.creditorder)) data.creditorder = appHomeCondition.creditorder;
-        if (objectNotNull(appHomeCondition.timeorder)) data.timeorder = appHomeCondition.timeorder;
+        if (sortNotNull(appHomeCondition.loadorder)) data.loadorder = createSortString(appHomeCondition.loadorder);
+        if (sortNotNull(appHomeCondition.tonnageorder)) data.tonnageorder = createSortString(appHomeCondition.tonnageorder);
+        if (sortNotNull(appHomeCondition.cleanorder)) data.cleanorder = createSortString(appHomeCondition.cleanorder);
+        if (sortNotNull(appHomeCondition.creditorder)) data.creditorder = createSortString(appHomeCondition.creditorder);
+        if (sortNotNull(appHomeCondition.timeorder)) data.timeorder = createSortString(appHomeCondition.timeorder);
 
+        this.refIndicator.show();
         NetUtil.post(appUrl + 'index.php/Mobile/Ship/ship_index/', data)
             .then(
                 (result)=>{
+                    this.refIndicator.hide();
                     if (result.code === 0) {
                         let list = [];
                         if (!isReset) {
@@ -62,6 +64,7 @@ export default class HomeOfferVC extends HomeOrderVC {
                         })
                     }
                 },(error)=>{
+                    this.refIndicator.hide();
                     this.setState({
                         refreshing: isReset ? false : this.state.refreshing,
                         showFooter: FooterTypeEnum.default,
