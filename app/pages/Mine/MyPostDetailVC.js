@@ -36,6 +36,7 @@ export default class MyPostDetailVC extends Component {
             {idKey:"storage", name:"仓容"},
             {idKey:"area", name:"航行区域"},
             {idKey:"course", name:"可运航向"},
+            {idKey:"download_oil_list", name:"意向货品"},
             {idKey:"upload_oil_list", name:"上载货品"},
             {idKey:"remark", name:"备注"},
         ];
@@ -60,7 +61,7 @@ export default class MyPostDetailVC extends Component {
                         this.setState({
                             detailInfo: result.data,
                             refreshing: false,
-                        })
+                        });
                     }
                     else {
                         this.setState({
@@ -222,22 +223,22 @@ export default class MyPostDetailVC extends Component {
         let info = this.state.detailInfo;
         let {dieseloil, gasoline, ship_type} = info;
         let logo = require('../../images/icon_blue.png');
-        let downloadOilList = [];
-        if (objectNotNull(info.download_oil_list)) {
-            downloadOilList = info.download_oil_list.map(
-                (info) => {
-                    return info.goods_name;
-                }
-            );
-        }
-        let uploadOilList = [];
-        if (objectNotNull(info.upload_oil_list)) {
-            uploadOilList = info.upload_oil_list.map(
-                (info) => {
-                    return info.goods_name;
-                }
-            );
-        }
+        // let downloadOilList = [];
+        // if (objectNotNull(info.download_oil_list)) {
+        //     downloadOilList = info.download_oil_list.map(
+        //         (info) => {
+        //             return info.goods_name;
+        //         }
+        //     );
+        // }
+        // let uploadOilList = [];
+        // if (objectNotNull(info.upload_oil_list)) {
+        //     uploadOilList = info.upload_oil_list.map(
+        //         (info) => {
+        //             return info.goods_name;
+        //         }
+        //     );
+        // }
 
         return (
             <View style={appStyles.container}>
@@ -271,24 +272,24 @@ export default class MyPostDetailVC extends Component {
                                     </Text>
                                 </View>
                             </View>
-                            {downloadOilList.length > 0 ?
-                                <View style={[styles.cellContainer, {alignItems: "center"}]}>
-                                    <Image source={require('../../images/icon_clip.png')} style={{width: 16, height: 16, marginLeft:12, resizeMode: "stretch"}}/>
-                                    <Text style={{marginLeft:6, fontSize:14}}>
-                                        <Text style={{color:appData.appSecondaryTextColor}}>{'意向货品 '}</Text>
-                                        <Text style={{color:appData.appTextColor}}>{downloadOilList.join(' ')}</Text>
-                                    </Text>
-                                </View>
-                                :null}
-                            {uploadOilList.length > 0 ?
-                                <View style={[styles.cellContainer, {alignItems: "center"}]}>
-                                    <Image source={require('../../images/icon_clip.png')} style={{width: 16, height: 16, marginLeft:12, resizeMode: "stretch"}}/>
-                                    <Text style={{marginLeft:6, fontSize:14}}>
-                                        <Text style={{color:appData.appSecondaryTextColor}}>{'上载货品 '}</Text>
-                                        <Text style={{color:appData.appTextColor}}>{uploadOilList.join(' ')}</Text>
-                                    </Text>
-                                </View>
-                                :null}
+                            {/*{downloadOilList.length > 0 ?*/}
+                                {/*<View style={[styles.cellContainer, {alignItems: "center"}]}>*/}
+                                    {/*<Image source={require('../../images/icon_clip.png')} style={{width: 16, height: 16, marginLeft:12, resizeMode: "stretch"}}/>*/}
+                                    {/*<Text style={{marginLeft:6, fontSize:14}}>*/}
+                                        {/*<Text style={{color:appData.appSecondaryTextColor}}>{'意向货品 '}</Text>*/}
+                                        {/*<Text style={{color:appData.appTextColor}}>{downloadOilList.join(' ')}</Text>*/}
+                                    {/*</Text>*/}
+                                {/*</View>*/}
+                                {/*:null}*/}
+                            {/*{uploadOilList.length > 0 ?*/}
+                                {/*<View style={[styles.cellContainer, {alignItems: "center"}]}>*/}
+                                    {/*<Image source={require('../../images/icon_clip.png')} style={{width: 16, height: 16, marginLeft:12, resizeMode: "stretch"}}/>*/}
+                                    {/*<Text style={{marginLeft:6, fontSize:14}}>*/}
+                                        {/*<Text style={{color:appData.appSecondaryTextColor}}>{'上载货品 '}</Text>*/}
+                                        {/*<Text style={{color:appData.appTextColor}}>{uploadOilList.join(' ')}</Text>*/}
+                                    {/*</Text>*/}
+                                {/*</View>*/}
+                                {/*:null}*/}
                             <View style={[styles.cellContainer, {alignItems: "center"}]}>
                                 <Image source={require('../../images/icon_clip.png')} style={{width: 16, height: 16, marginLeft:12, resizeMode: "stretch"}}/>
                                 {shipIsShowType(dieseloil, gasoline, ship_type) ?
