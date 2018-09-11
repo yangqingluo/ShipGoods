@@ -323,14 +323,14 @@ export default class AddShip extends Component {
         else {
             if (shipIsOilThreeLevel(ship_type)) {
                 this.config = this.config.concat([
-                    {idKey:"dieseloil", name:"可载柴油货量(吨 选填)", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
+                    {idKey:"dieseloil", name:"可载柴油货量(吨)", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
                 ]);
                 this.state.gasoline = '';
             }
             else {
                 this.config = this.config.concat([
-                    {idKey:"gasoline", name:"可载汽油货量(吨 选填)", logo:require('../../images/icon_orange.png'), disable:true, numeric:true},
-                    {idKey:"dieseloil", name:"可载柴油货量(吨 选填)", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
+                    {idKey:"gasoline", name:"可载汽油货量(吨)", logo:require('../../images/icon_orange.png'), disable:true, numeric:true},
+                    {idKey:"dieseloil", name:"可载柴油货量(吨)", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
                 ]);
             }
         }
