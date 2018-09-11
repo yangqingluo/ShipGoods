@@ -206,6 +206,10 @@ export default class HomeVC extends Component {
 
             this.refreshList();
         }
+        else {
+            appResetMenu();
+            this.refreshList();
+        }
     };
 
     onScroll(event) {

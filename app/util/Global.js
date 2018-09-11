@@ -720,6 +720,22 @@ global.appResetSort = function () {
     appHomeCondition.emptyorder = null;
 };
 
+global.appResetMenu = function () {
+    appHomeCondition.empty_port = null;
+    appHomeCondition.empty_time = null;
+    appHomeCondition.empty_delay = 0;
+    appHomeCondition.goods = null;
+    appHomeCondition.ship_type = null;
+    appHomeCondition.area = [];
+    appHomeCondition.min_ton = 0;
+    appHomeCondition.max_ton = 0;
+
+    appHomeCondition.loading_port = null;
+    appHomeCondition.unloading_port = null;
+    appHomeCondition.loading_time = 0;
+    appHomeCondition.loading_delay = null;
+};
+
 global.appResetState = function () {
     global.appHomeVC = null;
     global.appOrderVC = null;
@@ -730,27 +746,8 @@ global.appResetState = function () {
     global.appHotPorts = [];
     global.appAllPortsFirst = [];
     global.appAllPortsSecond = [];
-    global.appHomeCondition = {
-        empty_port: null,//空船港
-        empty_time: null,//空船期
-        empty_delay: 0,//空船延迟
-        goods: null,//可运货品
-        ship_type: null,//船舶类型
-        area: [],//航行区域
-        min_ton: 0,//货量区间 最小吨位
-        max_ton: 0,//货量区间 最大吨位
-        loading_port: null,//装货港
-        loading_time: null,//发货时间
-        loading_delay: 0,//发货延迟
-        unloading_port: null,//卸货港
-
-        loadorder: null,
-        tonnageorder: null,
-        cleanorder: null,
-        creditorder: null,
-        timeorder: null,
-        emptyorder: null,
-    };
+    appResetSort();
+    appResetMenu();
     storage.remove({
         key: 'userData'
     });
