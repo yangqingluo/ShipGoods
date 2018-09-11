@@ -183,7 +183,7 @@ export default class OrderTransportEditVC extends Component {
     render() {
         let {detailInfo} = this.state;
         return (
-            <View style={styles.container}>
+            <View style={appStyles.container}>
                 <FlatList
                     style={{flex:1}}
                     data={detailInfo.translist}

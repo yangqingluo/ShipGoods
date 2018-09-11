@@ -13,6 +13,9 @@ import {NavigationActions} from "react-navigation";
 import DeviceInfo from 'react-native-device-info';
 import px2dp from "./index";
 const {width,height}=Dimensions.get('window');
+// iPhoneX
+const X_WIDTH = 375;
+const X_HEIGHT = 812;
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 const Font = {
@@ -228,7 +231,7 @@ let appData = {
     appLightTextColor: '#464646',
     appSecondaryTextColor: '#ababab',
     appThirdTextColor: '#c3c4c4',
-    appViewColor: '#eee',
+    appViewColor: '#fff',
     appBorderColor: '#e0e0e0',
     appSeparatorColor: '#c0c0c099',
     appSeparatorLightColor: '#c0c0c020',
@@ -253,60 +256,6 @@ let appData = {
     appOnEndReachedThreshold: 0.1,
     DefaultOpenValue: 75,
 };
-
-let appStyles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: appData.appViewColor,
-    },
-    sureBtnContainer: {
-        width:appData.appSureButtonWidth,
-        height:appData.appSureButtonHeight,
-        borderRadius:appData.appSureButtonRadius,
-        backgroundColor: appData.appBlueColor,
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    orderBtnContainer:{
-        minWidth: 91,
-        height: 33,
-        paddingHorizontal: 5,
-        justifyContent: "center",
-        alignItems: "center",
-        borderRadius: 100,
-        borderWidth: 1,
-    },
-    rowBack: {
-        alignItems: 'center',
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingLeft: 15,
-    },
-    backTextWhite: {
-        color: '#FFF'
-    },
-    backRightBtn: {
-        alignItems: 'center',
-        bottom: 0,
-        justifyContent: 'center',
-        position: 'absolute',
-        top: 0,
-        width: 75
-    },
-    backRightBtnLeft: {
-        backgroundColor: 'blue',
-        right: 150
-    },
-    backRightBtnMiddle: {
-        backgroundColor: 'green',
-        right: 75
-    },
-    backRightBtnRight: {
-        backgroundColor: 'red',
-        right: 0
-    },
-});
 
 let OrderCenterEnum = {
     Default: 0,
@@ -348,7 +297,6 @@ let SortTypeEnum = {
     DESC: 2,//降序
 };
 
-global.appStyles = appStyles;
 global.appData = appData;
 global.OrderCenterEnum = OrderCenterEnum;
 global.OrderBtnEnum = OrderBtnEnum;
@@ -727,6 +675,10 @@ global.isIOS = function() : boolean {
     return Platform.OS === 'ios';
 };
 
+global.isIPhoneX = function() : boolean {
+    return global.isIOS() && DeviceInfo.getModel().startsWith("iPhone X");
+};
+
 global.appIsFirst = true;
 global.appHomeVC = null;
 global.appOrderVC = null;
@@ -809,6 +761,69 @@ global.appLogout = function () {
     appMainTab.props.navigation.dispatch(PublicResetAction('Login'));
     global.appResetState();
 };
+
+global.iPhoneBottom = isIPhoneX() ? 34 : 0;
+
+let appStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: appData.appViewColor,
+        paddingBottom: iPhoneBottom,
+    },
+    modalContainer: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.0)',
+        paddingBottom: iPhoneBottom,
+    },
+    sureBtnContainer: {
+        width:appData.appSureButtonWidth,
+        height:appData.appSureButtonHeight,
+        borderRadius:appData.appSureButtonRadius,
+        backgroundColor: appData.appBlueColor,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    orderBtnContainer:{
+        minWidth: 91,
+        height: 33,
+        paddingHorizontal: 5,
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 100,
+        borderWidth: 1,
+    },
+    rowBack: {
+        alignItems: 'center',
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingLeft: 15,
+    },
+    backTextWhite: {
+        color: '#FFF'
+    },
+    backRightBtn: {
+        alignItems: 'center',
+        bottom: 0,
+        justifyContent: 'center',
+        position: 'absolute',
+        top: 0,
+        width: 75
+    },
+    backRightBtnLeft: {
+        backgroundColor: 'blue',
+        right: 150
+    },
+    backRightBtnMiddle: {
+        backgroundColor: 'green',
+        right: 75
+    },
+    backRightBtnRight: {
+        backgroundColor: 'red',
+        right: 0
+    },
+});
+global.appStyles = appStyles;
 
 export const imagePickerOptions = {
     quality: 1.0,

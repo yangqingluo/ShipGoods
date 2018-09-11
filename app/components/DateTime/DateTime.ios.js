@@ -98,7 +98,7 @@ export default class DateTimePicker extends Component {
                     animationType={"slide"}
                     transparent={true}
                     onRequestClose={() =>{}}>
-                    <View style={styles.modalContainer}>
+                    <View style={appStyles.modalContainer}>
                         {/*<TouchableOpacity*/}
                             {/*style={{flex: 1}}*/}
                             {/*activeOpacity={1}*/}
@@ -130,11 +130,6 @@ export default class DateTimePicker extends Component {
 }
 
 const _styles = StyleSheet.create({
-    container:{
-        width:screenWidth,
-        height:screenHeight,
-        backgroundColor:'rgba(0, 0, 0, 0.1)',
-    },
     modalContainer: {
         flex: 1,
         backgroundColor: 'rgba(0, 0, 0, 0.0)',

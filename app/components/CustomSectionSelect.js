@@ -132,7 +132,7 @@ export default class CustomSectionSelect extends Component {
         );
 
         return (
-            <View style={{flex: 1}}>
+            <View style={appStyles.container}>
                 <SectionList
                     renderSectionHeader={this.renderSectionHeader}
                     renderItem={this.renderCell}

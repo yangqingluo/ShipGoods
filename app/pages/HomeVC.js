@@ -12,6 +12,7 @@ import {
     RefreshControl,
     FlatList,
 } from 'react-native'
+import DeviceInfo from 'react-native-device-info';
 import ActionSheet from 'react-native-actionsheet';
 import Swiper from 'react-native-swiper';
 import ScrollableTabView,{DefaultTabBar, ScrollableTabBar} from 'react-native-scrollable-tab-view';

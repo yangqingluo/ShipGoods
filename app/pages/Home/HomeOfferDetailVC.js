@@ -304,7 +304,7 @@ export default class HomeOfferDetailVC extends Component {
                         </TouchableOpacity>
                     </View>
                     :
-                    <View style={{position: "absolute", bottom: 0, width: screenWidth, height: 45, flexDirection: 'row'}}>
+                    <View style={{width: screenWidth, height: 45, flexDirection: 'row'}}>
                         <TouchableOpacity onPress={this.onAcceptBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(221), backgroundColor: appData.appBlueColor, justifyContent: "center", alignItems: "center"}}>
                             <Text style={styles.btnText}>{"认同报价"}</Text>
                         </TouchableOpacity>

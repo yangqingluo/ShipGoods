@@ -157,7 +157,7 @@ export default class MyFavorsVC extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <View style={appStyles.container}>
                 <SwipeListView
                     useFlatList
                     renderHiddenItem={(data, rowMap) => (

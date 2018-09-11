@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     },
     tabShadow: {
         width: screenWidth,
-        height: 50,
+        height: 50 + iPhoneBottom,
         position: 'absolute',
         borderTopWidth: 0.5,
         borderTopColor: "#00000006",

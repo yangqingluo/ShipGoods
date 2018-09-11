@@ -155,7 +155,7 @@ export default class MyBookVC extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <View style={appStyles.container}>
                 <FlatList
                     style={{flex:1}}
                     data={this.state.dataList}

@@ -86,7 +86,7 @@ const MineNavigator = StackNavigator({
     }
 );
 
-export default class CustomTabVC extends Component {
+export default class MainTabVC extends Component {
     static navigationOptions = ({ navigation }) => ({
         header: null,
     });
@@ -149,7 +149,7 @@ export default class CustomTabVC extends Component {
                                tabItemFlex={1}
                                tabIconNames={tabIcon}
                     />}
-                style={{flex: 1, backgroundColor: "#fff"}}
+                style={appStyles.container}
                 tabBarPosition='bottom'
                 tabBarActiveTextColor={appData.appBlueColor}
                 //onChangeTab={this.onChangeTabs}>

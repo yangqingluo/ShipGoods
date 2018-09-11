@@ -124,7 +124,7 @@ export default class MyPostVC extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <View style={appStyles.container}>
                 <FlatList
                     style={{flex:1, backgroundColor:"#fff"}}
                     data={this.state.dataList}
@@ -145,8 +145,3 @@ export default class MyPostVC extends Component {
         );
     }
 }
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-});
