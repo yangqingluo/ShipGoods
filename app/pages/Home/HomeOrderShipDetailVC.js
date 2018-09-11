@@ -90,7 +90,7 @@ export default class HomeShipDetailVC extends Component {
     };
 
     onReplyBtnAction = () => {
-        this.refReplyAlert.show({text:'', onSureBtnAction:this.toReplyShip.bind(this)});
+        this.refReplyAlert.show({text:'', onSureBtnAction:this.doReplyFunction.bind(this)});
     };
 
     toAgreeBookShip() {
@@ -115,7 +115,7 @@ export default class HomeShipDetailVC extends Component {
                 });
     }
 
-    toReplyShip() {
+    doReplyFunction() {
         let message = this.refReplyAlert.state.text;
         this.refReplyAlert.hide();
 
@@ -314,7 +314,7 @@ export default class HomeShipDetailVC extends Component {
                     </View>
                     <View style={{height: 60}} />
                 </ScrollView>
-                <View style={{position: "absolute", bottom: 0, width: screenWidth, height: 45, flexDirection: 'row'}}>
+                <View style={{width: screenWidth, height: 45, flexDirection: 'row'}}>
                     <TouchableOpacity onPress={this.onAgreeBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(221), backgroundColor: appData.appBlueColor, justifyContent: "center", alignItems: "center"}}>
                         <Text style={styles.btnText}>{"同意报价"}</Text>
                     </TouchableOpacity>

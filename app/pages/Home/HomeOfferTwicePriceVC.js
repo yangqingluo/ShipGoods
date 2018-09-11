@@ -17,6 +17,7 @@ import ReplyCell from './HomeReplyCell';
 import Communications from '../../util/AKCommunications';
 import CustomAlert from '../../components/CustomAlert';
 import Toast from "react-native-easy-toast";
+import px2dp from "../../util";
 
 
 export default class HomeOfferTwicePriceVC extends Component {
@@ -121,6 +122,35 @@ export default class HomeOfferTwicePriceVC extends Component {
         }
     }
 
+    doReplyFunction() {
+        let message = this.refReplyAlert.state.text;
+        this.refReplyAlert.hide();
+
+        if (message.length > 0) {
+            let data = {
+                reply_content: message,
+                book_id: this.state.info.book_id,
+            };
+
+            NetUtil.post(appUrl + 'index.php/Mobile/Goods/goods_reply/', data)
+                .then(
+                    (result)=>{
+                        if (result.code === 0) {
+                            this.refToast.show("回复成功");
+                            this.requestData();
+                        }
+                        else {
+                            this.refToast.show(result.message);
+                        }
+                    },(error)=>{
+                        this.refToast.show(error);
+                    });
+        }
+        else {
+            this.refToast.show("回复内容不能为空.");
+        }
+    }
+
     // onFavorBtnAction = () => {
     //     this.props.navigation.setParams({
     //         favor: true,
@@ -137,6 +167,10 @@ export default class HomeOfferTwicePriceVC extends Component {
             }
         }
         this.refToast.show('修改次数受限，不能修改');
+    };
+
+    onReplyBtnAction = () => {
+        this.refReplyAlert.show({text:'', onSureBtnAction:this.doReplyFunction.bind(this)});
     };
 
     cellSelected = (key, data = {}) =>{
@@ -355,20 +389,34 @@ export default class HomeOfferTwicePriceVC extends Component {
                     }
                     <View style={{height: 80}}/>
                 </ScrollView>
-                {canChange ? <View style={{position: "absolute", bottom: 5, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
-                    <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)}>
-                        <View style={appStyles.sureBtnContainer}>
-                            <Text style={{color: "#fff"}}>{"修改报价"}</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <Text style={{marginTop:12, color: "#4a4a4aad", fontSize: 13}}>{"报价最多可修改2次"}</Text>
-                </View>
+                {canChange ?
+                    /*
+                    * <View style={{position: "absolute", bottom: 5, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
+                        <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)}>
+                            <View style={appStyles.sureBtnContainer}>
+                                <Text style={{color: "#fff"}}>{"修改报价"}</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <Text style={{marginTop:12, color: "#4a4a4aad", fontSize: 13}}>{"报价最多可修改2次"}</Text>
+                    </View>
+                    *
+                    * */
+                    <View style={{width: screenWidth, height: 45, flexDirection: 'row'}}>
+                        <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(221), backgroundColor: appData.appBlueColor, justifyContent: "center", alignItems: "center"}}>
+                            <Text style={styles.btnText}>{"修改报价"}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={this.onReplyBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(154), backgroundColor: appData.appLightBlueColor, justifyContent: "center", alignItems: "center"}}>
+                            <Text style={styles.btnText}>{"回复货主"}</Text>
+                        </TouchableOpacity>
+                    </View>
                 : null}
                 <Toast ref={o => this.refToast = o} position={'center'}/>
                 <CustomAlert ref={o => this.refChangePriceAlert = o} showTextInput={true} numeric={true} placeholder={"修改报价："}/>
+                <CustomAlert ref={o => this.refReplyAlert = o} showTextInput={true} placeholder={"回复货主："}/>
             </View> );
     }
 }
+
 const styles = StyleSheet.create({
     textContainer: {
         flex: 1,

@@ -540,8 +540,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     footerContainer: {
-        position: "absolute",
-        bottom: 0,
+        // position: "absolute",
+        // bottom: 0,
         width: screenWidth,
         height: 45,
         flexDirection: 'row',
