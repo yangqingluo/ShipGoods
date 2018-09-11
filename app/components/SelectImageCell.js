@@ -22,7 +22,7 @@ export default class SelectImageCell extends PureComponent<Props> {
     render() {
         let {info, last} = this.props;
         return (
-            <TouchableOpacity onPress={() => this.props.onPress(info)}>
+            <TouchableOpacity onPress={() => this.props.onCellSelected(info)}>
                 <View style={styles.container}>
                     <Image source={last ? require("../images/add_picture.png") : ({uri:appUrl + info.item})} style={styles.image}/>
                     {last ? null : <TouchableOpacity style={styles.delContainer} onPress={() => this.props.onDelPress(info)}>

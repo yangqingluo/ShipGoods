@@ -11,7 +11,7 @@ export default class HotPortTextCell extends PureComponent<Props> {
         let {info, lines} = this.props;
         let item = info.item;
         return (
-            <TouchableOpacity style={[styles.container, {width: (-20 + screenWidth) / lines}]} onPress={() => this.props.onPress(info)}>
+            <TouchableOpacity style={[styles.container, {width: (-20 + screenWidth) / lines}]} onPress={() => this.props.onCellSelected(info)}>
                 <View style={styles.viewContainer}>
                     <Text style={{fontSize:14, fontWeight: appData.fontWeightMedium, textAlign: 'center', color: appData.appTextColor}}>{item.port_name}</Text>
                 </View>

@@ -80,13 +80,15 @@ export default class OrderListVC extends Component {
                         this.setState({
                             refreshing: isReset ? false : this.state.refreshing,
                             showFooter: FooterTypeEnum.default,
-                        })
+                        });
+                        this.refToast.show(result.message);
                     }
                 },(error)=>{
                     this.setState({
                         refreshing: isReset ? false : this.state.refreshing,
                         showFooter: FooterTypeEnum.default,
-                    })
+                    });
+                    this.refToast.show(result.message);
                 });
     };
 

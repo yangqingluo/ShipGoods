@@ -10,8 +10,10 @@ import {
     SectionList,
     Dimensions,
 } from 'react-native';
-import SectionCell from './SectionCell'
-import SelectCell from './SelectCell'
+import SectionCell from './SectionCell';
+import SelectCell from './SelectCell';
+import Toast from "react-native-easy-toast";
+import IndicatorModal from '../components/IndicatorModal';
 
 
 export default class CustomSectionSelect extends Component {
@@ -28,7 +30,7 @@ export default class CustomSectionSelect extends Component {
         });
 
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
             selectedList: this.props.navigation.state.params.selectedList,
             dataList: this.props.navigation.state.params.dataList,
@@ -71,7 +73,7 @@ export default class CustomSectionSelect extends Component {
             }
         }
         this.forceUpdate();
-    }
+    };
 
     onSectionSelected = (info: Object) => {
         if (this.state.selectedSection === info.section.sectionIndex) {
@@ -84,11 +86,11 @@ export default class CustomSectionSelect extends Component {
                 selectedSection : info.section.sectionIndex,
             })
         }
-    }
+    };
 
     keyExtractor = (item: Object, index: number) => {
         return '' + index;
-    }
+    };
 
     renderCell = (info) => {
         return (
@@ -98,7 +100,7 @@ export default class CustomSectionSelect extends Component {
                 selected={(this.state.selectedList.indexOf(info.item) !== -1)}
             />
         )
-    }
+    };
 
     renderSectionHeader = (info) => {
         return (
@@ -108,7 +110,7 @@ export default class CustomSectionSelect extends Component {
                 selected={info.section.sectionIndex === this.state.selectedSection}
             />
         )
-    }
+    };
     // _sectionComp = (info) => {
     //     let txt = info.section.goods_name;
     //     return <Text
@@ -140,6 +142,8 @@ export default class CustomSectionSelect extends Component {
                     // ListHeaderComponent={() => <View style={{ backgroundColor: '#25B960', alignItems: 'center', height: 30 }}><Text style={{ fontSize: 18, color: '#ffffff' }}>通讯录</Text></View>}
                     // ListFooterComponent={() => <View style={{ backgroundColor: '#25B960', alignItems: 'center', height: 30 }}><Text style={{ fontSize: 18, color: '#ffffff' }}>通讯录尾部</Text></View>}
                 />
+                <Toast ref={o => this.refToast = o} position={'center'}/>
+                <IndicatorModal ref={o => this.refIndicator = o}/>
             </View>
         );
     }

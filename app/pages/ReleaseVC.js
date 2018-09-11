@@ -535,6 +535,27 @@ export default class ReleaseVC extends Component {
         })
     }
 
+    doGetAllGoodsFunction(callback) {
+        let data = {pid:'0', deep:1};
+
+        this.refIndicator.show();
+        NetUtil.post(appUrl + 'index.php/Mobile/Goods/get_all_goods/', data)
+            .then(
+                (result)=>{
+                    this.refIndicator.hide();
+                    if (result.code === 0) {
+                        appAllGoods = result.data;
+                        callback();
+                    }
+                    else {
+                        this.refToast.show(result.message);
+                    }
+                },(error)=>{
+                    this.refIndicator.hide();
+                    this.refToast.show(error);
+                });
+    }
+
     toGoToGoodsVC() {
         if (appAllGoods.length > 0) {
             appMainTab.props.navigation.navigate(
@@ -549,24 +570,7 @@ export default class ReleaseVC extends Component {
             );
         }
         else {
-            let data = {pid:'0', deep:1};
-            NetUtil.post(appUrl + 'index.php/Mobile/Goods/get_all_goods/', data)
-                .then(
-                    (result)=>{
-                        if (result.code === 0) {
-                            appAllGoods = result.data;
-                            this.toGoToGoodsVC();
-                        }
-                        else {
-                            this.setState({
-                                refreshing: false,
-                            })
-                        }
-                    },(error)=>{
-                        this.setState({
-                            refreshing: false,
-                        })
-                    });
+            this.doGetAllGoodsFunction(this.toGoToGoodsVC.bind(this));
         }
     }
 
@@ -590,24 +594,7 @@ export default class ReleaseVC extends Component {
             );
         }
         else {
-            let data = {pid:'0', deep:1};
-            NetUtil.post(appUrl + 'index.php/Mobile/Goods/get_all_goods/', data)
-                .then(
-                    (result)=>{
-                        if (result.code === 0) {
-                            appAllGoods = result.data;
-                            this.toGoToDownGoodsVC();
-                        }
-                        else {
-                            this.setState({
-                                refreshing: false,
-                            })
-                        }
-                    },(error)=>{
-                        this.setState({
-                            refreshing: false,
-                        })
-                    });
+            this.doGetAllGoodsFunction(this.toGoToDownGoodsVC.bind(this));
         }
     }
 
@@ -631,24 +618,7 @@ export default class ReleaseVC extends Component {
             );
         }
         else {
-            let data = {pid:'0', deep:1};
-            NetUtil.post(appUrl + 'index.php/Mobile/Goods/get_all_goods/', data)
-                .then(
-                    (result)=>{
-                        if (result.code === 0) {
-                            appAllGoods = result.data;
-                            this.toGoToUpGoodsVC();
-                        }
-                        else {
-                            this.setState({
-                                refreshing: false,
-                            })
-                        }
-                    },(error)=>{
-                        this.setState({
-                            refreshing: false,
-                        })
-                    });
+            this.doGetAllGoodsFunction(this.toGoToUpGoodsVC.bind(this));
         }
     }
 
