@@ -398,10 +398,11 @@ const styles = StyleSheet.create({
         fontWeight: '900',
     },
     textInput: {
-        height: 27,
+        height: 32,
         flex: 1,
         textAlign: "center",
         backgroundColor: '#f3f6f9',
         borderRadius: 4,
+        fontSize: 14,
     },
 });
