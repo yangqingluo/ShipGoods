@@ -232,8 +232,10 @@ export default class HomeOfferTwicePriceVC extends Component {
             }
         }
         else if (item.idKey === "book_tonnage") {
-            if (!stringIsEmpty(info.book_tonnage)) {
-                return info.book_tonnage + "吨";
+            if (objectNotNull(info.book)) {
+                if (!stringIsEmpty(info.book.book_tonnage)) {
+                    return info.book.book_tonnage + "吨";
+                }
             }
         }
 
