@@ -118,6 +118,7 @@ export default class Menu extends Component {
     }
 
     toGoToPortsVC(key) {
+        // appHomeVC.refMenu.hide();
         if (appAllPortsFirst.length > 0) {
             appMainTab.props.navigation.navigate(
                 "SelectPort",
@@ -152,6 +153,7 @@ export default class Menu extends Component {
     }
 
     callBackFromPortVC(key, backData) {
+        // appHomeVC.refMenu.show();
         if (key === "SelectEmptyPort") {
             this.setState({
                 empty_port: backData,
@@ -299,7 +301,7 @@ export default class Menu extends Component {
     render() {
         const {onItemSelected} = this.props;
         return (
-            <View style={{flex: 1, borderLeftWidth: 0.5, borderLeftColor: appData.appBorderColor}}>
+            <View style={[appStyles.container, {borderLeftWidth: 0.5, borderLeftColor: appData.appBorderColor}]}>
                 <ScrollView scrollsToTop={false} style={styles.menu}>
                     {this._renderListItem()}
                     {isShipOwner() ?
@@ -362,7 +364,7 @@ export default class Menu extends Component {
                     </CellTitleItem>
                     <View style={{height: 120}}/>
                 </ScrollView>
-                <View style={{height:46, flexDirection: 'row', alignItems: "center"}}>
+                <View style={{height: appData.tabBarHeight, flexDirection: 'row', alignItems: "center"}}>
                     <TouchableOpacity style={{flex: 1}} onPress={() => onItemSelected('Cancel')}>
                         <View style={[styles.bottomButton, {backgroundColor: '#d8d8d8'}]}>
                             <Text style={[styles.bottomButtonText, {color: "#a9a9a9"}]}>{"取消"}</Text>

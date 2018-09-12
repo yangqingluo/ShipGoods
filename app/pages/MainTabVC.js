@@ -9,7 +9,7 @@ import {
 
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import TabBottom from '../components/CustomTapBottom';
-
+import CustomMenu from "../components/CustomMenu";
 import HomeVC from './HomeVC'
 import OrderVC from './OrderVC';
 import ReleaseVC from './ReleaseVC';
@@ -140,26 +140,29 @@ export default class MainTabVC extends Component {
         ];
         const { navigate } = this.props.navigation;
         return (
-            <ScrollableTabView
-                ref={o => this.refTab = o}
-                locked={true}
-                scrollWithoutAnimation={true}
-                renderTabBar={() =>
-                    <TabBottom tabNames={tabTitles}
-                               tabItemFlex={1}
-                               tabIconNames={tabIcon}
-                    />}
-                style={appStyles.container}
-                tabBarPosition='bottom'
-                tabBarActiveTextColor={appData.appBlueColor}
-                //onChangeTab={this.onChangeTabs}>
-            >
-                <HomeNavigator />
-                <OrderNavigator/>
-                <ReleaseNavigator/>
-                <MessageNavigator/>
-                <MineNavigator />
-            </ScrollableTabView>
+            <View style={{flex: 1}}>
+                <ScrollableTabView
+                    ref={o => this.refTab = o}
+                    locked={true}
+                    scrollWithoutAnimation={true}
+                    renderTabBar={() =>
+                        <TabBottom tabNames={tabTitles}
+                                   tabItemFlex={1}
+                                   tabIconNames={tabIcon}
+                        />}
+                    style={appStyles.container}
+                    tabBarPosition='bottom'
+                    tabBarActiveTextColor={appData.appBlueColor}
+                    //onChangeTab={this.onChangeTabs}>
+                >
+                    <HomeNavigator />
+                    <OrderNavigator/>
+                    <ReleaseNavigator/>
+                    <MessageNavigator/>
+                    <MineNavigator />
+                </ScrollableTabView>
+                <CustomMenu ref={o => this.refMenu = o} />
+            </View>
         );
     }
 }

@@ -67,7 +67,6 @@ export default class HomeVC extends Component {
 
     constructor(props) {
         super(props);
-        this.toggle = this.toggle.bind(this);
         this.state = {
             isOpen: false,
             selectedItem: '',
@@ -157,16 +156,13 @@ export default class HomeVC extends Component {
     }
 
     onFilterBtnAction() {
-        this.toggle();
-    }
-
-    toggle() {
-        if (!this.state.isOpen) {
-            this.rightMenu.refreshDatasource();
+        let refMenu = appMainTab.refMenu;
+        if (refMenu.state.visible) {
+            appMainTab.refMenu.hide();
         }
-        this.setState({
-            isOpen: !this.state.isOpen,
-        });
+        else {
+            appMainTab.refMenu.show();
+        }
     }
 
     reloadSubListOrderVC = (switchPage = false) => {
@@ -183,26 +179,27 @@ export default class HomeVC extends Component {
         this.setState({ isOpen });
     }
 
-    onMenuItemSelected = item => {
+    onMenuItemSelected(item) {
+        appMainTab.refMenu.hide();
         this.setState({
-            isOpen: false,
             selectedItem: item,
         });
 
+        let rightMenu = appMainTab.refMenu.rightMenu;
         if (item === 'OK') {
-            appHomeCondition.empty_port = this.rightMenu.state.empty_port;
-            appHomeCondition.empty_time = this.rightMenu.state.empty_time;
-            appHomeCondition.empty_delay = this.rightMenu.state.empty_delay;
-            appHomeCondition.goods = this.rightMenu.state.goods;
-            appHomeCondition.ship_type = this.rightMenu.state.ship_type;
-            appHomeCondition.area = this.rightMenu.state.area;
-            appHomeCondition.min_ton = this.rightMenu.state.min_ton;
-            appHomeCondition.max_ton = this.rightMenu.state.max_ton;
+            appHomeCondition.empty_port = rightMenu.state.empty_port;
+            appHomeCondition.empty_time = rightMenu.state.empty_time;
+            appHomeCondition.empty_delay = rightMenu.state.empty_delay;
+            appHomeCondition.goods = rightMenu.state.goods;
+            appHomeCondition.ship_type = rightMenu.state.ship_type;
+            appHomeCondition.area = rightMenu.state.area;
+            appHomeCondition.min_ton = rightMenu.state.min_ton;
+            appHomeCondition.max_ton = rightMenu.state.max_ton;
 
-            appHomeCondition.loading_port = this.rightMenu.state.loading_port;
-            appHomeCondition.unloading_port = this.rightMenu.state.unloading_port;
-            appHomeCondition.loading_time = this.rightMenu.state.loading_time;
-            appHomeCondition.loading_delay = this.rightMenu.state.loading_delay;
+            appHomeCondition.loading_port = rightMenu.state.loading_port;
+            appHomeCondition.unloading_port = rightMenu.state.unloading_port;
+            appHomeCondition.loading_time = rightMenu.state.loading_time;
+            appHomeCondition.loading_delay = rightMenu.state.loading_delay;
 
             this.refreshList();
         }
@@ -277,54 +274,47 @@ export default class HomeVC extends Component {
                 {title:'吨位', order: appHomeCondition.tonnageorder},
                 {title:'船东信用', order: appHomeCondition.creditorder},
             ];
-        const menu = <Menu ref={o => this.rightMenu = o} onItemSelected={this.onMenuItemSelected}/>;
         return (
-            <SideMenu menu={menu}
-                      disableGestures={true}
-                      isOpen={this.state.isOpen}
-                      onChange={isOpen => this.updateMenuState(isOpen)}
-                      menuPosition={'right'}>
-                <View style={styles.container}>
-                    <Animated.View style={{height: t_y}}>
-                        <Swiper
-                            style={styles.swiperWrap}
-                            showsButtons={false}
-                            autoplay={true}
-                            showsPagination={false}
-                            horizontal={true}
-                        >
-                            <View style={styles.swiperView}>
-                                <Image source={require('../images/swiper.png')} style={styles.swiperImg}/>
-                            </View>
-                            <View style={styles.swiperView}>
-                                <Image source={require('../images/swiper.png')} style={styles.swiperImg}/>
-                            </View>
-                            <View style={styles.swiperView}>
-                                <Image source={require('../images/swiper.png')} style={styles.swiperImg}/>
-                            </View>
-                        </Swiper>
-                    </Animated.View>
-                    <ScrollableTabView
-                        ref={o => this.refTab = o}
-                        renderTabBar={() =>
-                            <TabTop tabNames={tabTitles} sorts={sorts} isSort={this.state.isSort}/>}
-                        // style={styles.tabView}
-                        tabBarPosition='top'
-                        tabBarActiveTextColor={appData.appBlueColor}
-                        onChangeTab = {this.onChangeTab.bind(this)}
+            <View style={styles.container}>
+                <Animated.View style={{height: t_y}}>
+                    <Swiper
+                        style={styles.swiperWrap}
+                        showsButtons={false}
+                        autoplay={true}
+                        showsPagination={false}
+                        horizontal={true}
                     >
-                        {isShipOwner() ?
-                            <HomeListOfferVC ref={o => this.subListToOfferVC = o} is_offer={"0"}/>
-                            :
-                            <HomeListGoodsVC ref={o => this.subListGoodsVC = o}/>}
-                        {isShipOwner() ?
-                            <HomeListOfferVC ref={o => this.subListOfferedVC = o} is_offer={"1"}/>
-                            :
-                            <HomeListOrderVC ref={o => this.subListOrderVC = o} />}
-                    </ScrollableTabView>
-                </View>
+                        <View style={styles.swiperView}>
+                            <Image source={require('../images/swiper.png')} style={styles.swiperImg}/>
+                        </View>
+                        <View style={styles.swiperView}>
+                            <Image source={require('../images/swiper.png')} style={styles.swiperImg}/>
+                        </View>
+                        <View style={styles.swiperView}>
+                            <Image source={require('../images/swiper.png')} style={styles.swiperImg}/>
+                        </View>
+                    </Swiper>
+                </Animated.View>
+                <ScrollableTabView
+                    ref={o => this.refTab = o}
+                    renderTabBar={() =>
+                        <TabTop tabNames={tabTitles} sorts={sorts} isSort={this.state.isSort}/>}
+                    // style={styles.tabView}
+                    tabBarPosition='top'
+                    tabBarActiveTextColor={appData.appBlueColor}
+                    onChangeTab = {this.onChangeTab.bind(this)}
+                >
+                    {isShipOwner() ?
+                        <HomeListOfferVC ref={o => this.subListToOfferVC = o} is_offer={"0"}/>
+                        :
+                        <HomeListGoodsVC ref={o => this.subListGoodsVC = o}/>}
+                    {isShipOwner() ?
+                        <HomeListOfferVC ref={o => this.subListOfferedVC = o} is_offer={"1"}/>
+                        :
+                        <HomeListOrderVC ref={o => this.subListOrderVC = o} />}
+                </ScrollableTabView>
                 <FullScreenAd ref={o => this.refAd = o}/>
-            </SideMenu>
+            </View>
         )
     }
 }

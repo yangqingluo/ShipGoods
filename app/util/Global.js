@@ -255,6 +255,7 @@ let appData = {
 
     appOnEndReachedThreshold: 0.1,
     DefaultOpenValue: 75,
+    tabBarHeight: 50,
 };
 
 let OrderCenterEnum = {
@@ -760,6 +761,7 @@ global.appLogout = function () {
 };
 
 global.iPhoneBottom = isIPhoneX() ? 34 : 0;
+global.appTop = isIPhoneX() ? 88 : 64;
 
 let appStyles = StyleSheet.create({
     container: {

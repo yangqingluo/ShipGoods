@@ -84,7 +84,7 @@ export default class TabBottom extends Component {
             style:{position: 'absolute',}
         };
         return (
-            <View style={{height: 50}}>
+            <View style={{height: appData.tabBarHeight}}>
                 {isIOS() ?
                     <View style={styles.tabShadow}/>
                     :
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     },
     tabShadow: {
         width: screenWidth,
-        height: 50 + iPhoneBottom,
+        height: appData.tabBarHeight + iPhoneBottom,
         position: 'absolute',
         borderTopWidth: 0.5,
         borderTopColor: "#00000006",
