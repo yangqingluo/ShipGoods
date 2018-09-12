@@ -85,7 +85,7 @@ const _styles = StyleSheet.create({
     },
     modal: {
         position:'absolute',
-        width: 0.6 * screenWidth,
+        width: appData.rightMenuWidth,
         height: screenHeight - appTop,
         top: 0,
         right: 0,

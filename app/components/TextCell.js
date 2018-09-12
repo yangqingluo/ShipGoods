@@ -19,7 +19,7 @@ export default class TextCell extends PureComponent<Props> {
     render() {
         let {info, showText, selected, lines} = this.props;
         return (
-            <TouchableOpacity style={[styles.container, {width: (-20 + screenWidth * 2 / 3) / lines}]} onPress={() => this.props.onCellSelected(info)}>
+            <TouchableOpacity style={[styles.container, {width: (-20 + appData.rightMenuWidth) / lines}]} onPress={() => this.props.onCellSelected(info)}>
                 <View style={[styles.viewContainer, {backgroundColor: selected ? appData.appBlueColor : "#f3f6f9"}]}>
                     <Text style={{fontSize:14, textAlign: 'center', color:selected ? 'white' : appData.appTextColor}}>{showText}</Text>
                 </View>

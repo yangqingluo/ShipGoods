@@ -256,6 +256,7 @@ let appData = {
     appOnEndReachedThreshold: 0.1,
     DefaultOpenValue: 75,
     tabBarHeight: 50,
+    rightMenuWidth: width * (2.0 / 3.0),
 };
 
 let OrderCenterEnum = {

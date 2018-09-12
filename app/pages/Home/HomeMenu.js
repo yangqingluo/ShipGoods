@@ -47,6 +47,7 @@ export default class Menu extends Component {
     }
 
     componentDidMount() {
+        this.refreshDatasource();
         if (appAllGoods.length === 0) {
             let data = {pid:'0', deep:1};
             NetUtil.post(appUrl + 'index.php/Mobile/Goods/get_all_goods/', data)
