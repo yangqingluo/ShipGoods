@@ -62,7 +62,25 @@ export default class MineVC extends Component {
             Communications.phonecall(appData.appCustomerServicePhone, true);
         }
         else if (key === 'MyShip') {
-            navigate(key, { title: '我的船队', callBack: null});
+            if (objectNotNull(userData) && userData.authstate) {
+                let state = parseInt(userData.authstate);
+                switch (state) {
+                    case AuthStateEnum.Authing:
+                        this.refToast.show("您的资质认证正在审核，请耐心等待");
+                        break;
+
+                    case AuthStateEnum.Authed:
+                        navigate(key, { title: '我的船队', callBack: null});
+                        break;
+
+                    default:
+                        PublicAlert('未认证，请前去认证！','',
+                            [{text:"取消"},
+                                {text:"去认证", onPress:backAndGoToAuth}]
+                        );
+                        break;
+                }
+            }
         }
         else if (key === 'MoreSettings') {
             navigate(key);
