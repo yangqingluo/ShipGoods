@@ -97,6 +97,11 @@ export default class MainTabVC extends Component {
             this.appRefreshUserInfo();
             global.appIsFirst = false;
         }
+        PublicLog("*********我已经登录了加载了主界面");
+    }
+
+    componentWillUnmount() {
+        PublicLog("*********我已经退出登录了");
     }
 
     async appRefreshUserInfo() {

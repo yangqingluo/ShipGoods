@@ -7,6 +7,9 @@
   },
   "dependencies": {
     "antd-mobile": "^2.1.8",
+    "eslint": "^5.5.0",
+    "jcore-react-native": "^1.2.9",
+    "jpush-react-native": "^2.2.9",
     "prop-types": "^15.6.1",
     "react": "16.3.1",
     "react-dom": "^16.2.0",

@@ -103,6 +103,11 @@ android {
         targetSdkVersion 23
         versionCode 18
         versionName "2.3"
+        manifestPlaceholders = [
+                JPUSH_APPKEY: "759e502e8a3b6708fa90c6af",
+                APP_CHANNEL : "default"
+        ]
+
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -146,6 +151,8 @@ android {
 }
 
 dependencies {
+    compile project(':jcore-react-native')
+    compile project(':jpush-react-native')
     compile project(':react-native-svg')
     compile project(':react-native-device-info')
     compile project(':react-native-image-picker')
