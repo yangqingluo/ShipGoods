@@ -23,7 +23,7 @@ export default class SelectPortVC extends Component {
             // title: navigation.state.params.title,
             headerTitle: (
                 <View style={styles.inputBack}>
-                    <Image source={require('../images/icon_search.png')} style={{width: 20, height: 20, marginLeft:10, resizeMode: "cover"}}/>
+                    <Image source={require('../images/icon_search.png')} style={{width: 20, height: 20, resizeMode: "cover"}}/>
                     <CustomInput underlineColorAndroid="transparent"
                                  style={styles.textInput}
                                  returnKeyType={"search"}
@@ -276,20 +276,24 @@ export default class SelectPortVC extends Component {
 }
 const styles = StyleSheet.create({
     inputBack: {
-        width: 0.8 * screenWidth,
-        height: 30,
-        borderRadius: 15,
+        flex: 1,
+        minWidth: isIOS() ? screenWidth - 80 : 10,
+        height: 32,
+        borderRadius: 16,
+        paddingHorizontal: 10,
         backgroundColor: "#e5e5e5",
         flexDirection: 'row',
+        justifyContent: 'center',
         alignItems: 'center',
     },
     textInput: {
         // marginTop: 10,
-        // minHeight: 120,
+        minHeight: 32,
         flex: 1,
         fontSize: 13,
         paddingHorizontal: 10,
         // paddingVertical: 15,
         color: appData.appTextColor,
+        textAlignVertical: "center",
     },
 });
