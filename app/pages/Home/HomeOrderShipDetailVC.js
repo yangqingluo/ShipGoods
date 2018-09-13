@@ -16,6 +16,7 @@ import StarScore from '../../components/StarScore';
 import ReplyCell from './HomeReplyCell';
 import Communications from '../../util/AKCommunications';
 import CustomAlert from '../../components/CustomAlert';
+import IndicatorModal from '../../components/IndicatorModal';
 import Toast from "react-native-easy-toast";
 import px2dp from "../../util";
 
@@ -99,9 +100,11 @@ export default class HomeShipDetailVC extends Component {
             book_id: this.state.info.book_id,
         };
 
+        this.refIndicator.show();
         NetUtil.post(appUrl + 'index.php/Mobile/Goods/agree_ship_offer/', data)
             .then(
                 (result)=>{
+                    this.refIndicator.hide();
                     if (result.code === 0) {
                         PublicAlert('订单已生成', '',
                             [{text:"确定", onPress:this.goBackToMain.bind(this)}]
@@ -111,6 +114,7 @@ export default class HomeShipDetailVC extends Component {
                         this.refToast.show(result.message);
                     }
                 },(error)=>{
+                    this.refIndicator.hide();
                     this.refToast.show(error);
                 });
     }
@@ -126,9 +130,11 @@ export default class HomeShipDetailVC extends Component {
                 book_id: this.state.info.book_id,
             };
 
+            this.refIndicator.show();
             NetUtil.post(appUrl + 'index.php/Mobile/Goods/goods_reply/', data)
                 .then(
                     (result)=>{
+                        this.refIndicator.hide();
                         if (result.code === 0) {
                             this.refToast.show("回复成功");
                             this.requestData();
@@ -137,6 +143,7 @@ export default class HomeShipDetailVC extends Component {
                             this.refToast.show(result.message);
                         }
                     },(error)=>{
+                        this.refIndicator.hide();
                         this.refToast.show(error);
                     });
         }
@@ -324,6 +331,7 @@ export default class HomeShipDetailVC extends Component {
                     </TouchableOpacity>
                 </View>
                 <Toast ref={o => this.refToast = o} position={'center'}/>
+                <IndicatorModal ref={o => this.refIndicator = o}/>
                 <CustomAlert ref={o => this.refSelectAlert = o} message={"同意该船东报价，\n该货盘将进入订单页！"} />
                 <CustomAlert ref={o => this.refReplyAlert = o} showTextInput={true} placeholder={"回复船东："}/>
             </View> );
