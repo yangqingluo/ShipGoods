@@ -19,6 +19,7 @@ export default class SelectPriceVC extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            onlyPrice: this.props.navigation.state.params.onlyPrice || false,
             price: this.props.navigation.state.params.price || '',
             is_bargain: this.props.navigation.state.params.is_bargain || 0,
             is_shipprice: this.props.navigation.state.params.is_shipprice || 0,
@@ -74,48 +75,78 @@ export default class SelectPriceVC extends Component {
                     style={styles.scrollView}
                 >
                     <View style={{height:2}} />
-                    {isShipPrice ?
-                        <View>
-                            <View style = {styles.cell}>
-                                <Text style={styles.text}>{"船东开价"}</Text>
-                            </View>
-                            <View style={{height:43, justifyContent: "center", alignItems: "center", backgroundColor: appData.appGrayColor}}>
-                            </View>
+                    {this.state.onlyPrice ?
+                        <View style={[styles.priceCell, {marginTop: 40}]}>
+                            <Text style={styles.priceText}/>
+                            <TextInput underlineColorAndroid="transparent"
+                                       keyboardType={"numeric"}
+                                       style={styles.textInput}
+                                       placeholder={'价格键入'}
+                                       placeholderTextColor={appData.appSecondaryTextColor}
+                                       onChangeText={this.textInputChanged.bind(this)}
+                                       value={this.state.price}
+                            >
+                            </TextInput>
+                            <Text style={styles.priceText}>{'¥元/吨'}</Text>
                         </View>
+
                         :
-                        <View>
-                            <View style = {styles.priceCell}>
-                                <Text style={styles.priceText} />
-                                <TextInput underlineColorAndroid="transparent"
-                                           keyboardType={"numeric"}
-                                           style={styles.textInput}
-                                           placeholder={'价格键入'}
-                                           placeholderTextColor={appData.appSecondaryTextColor}
-                                           onChangeText={this.textInputChanged.bind(this)}
-                                           value = {this.state.price}
-                                >
-                                </TextInput>
-                                <Text style={styles.priceText}>{'¥元/吨(不含港建)'}</Text>
-                            </View>
-                            <TouchableOpacity onPress={this.onBargainBtnAction.bind(this)}>
-                                <View style={{height:43, justifyContent: "center", alignItems: "center", backgroundColor: appData.appGrayColor}}>
-                                    <Icon name={'ios-checkmark-circle'} size={20} style={{minWidth:120, marginRight:5, textAlign:"center", fontSize: 14}} color={bargainTextColor}>
-                                        {' 不议价'}
-                                    </Icon>
+                        (<View>
+                            {isShipPrice ? <View>
+                                    <View style={styles.cell}>
+                                        <Text style={styles.text}>{"船东开价"}</Text>
+                                    </View>
+                                    <View style={{
+                                        height: 43,
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        backgroundColor: appData.appGrayColor
+                                    }}>
+                                    </View>
                                 </View>
-                            </TouchableOpacity>
-                        </View>}
-                    <View style={{width: 240, height:80, marginTop:60, alignSelf: "center", flexDirection: 'row',}}>
-                        <TouchableOpacity onPress={this.onPriceBtnAction.bind(this, 0)} style={{flex:1, alignItems: "center", justifyContent: "center"}}>
-                            <Icon name={'ios-checkmark-circle'} size={32} style={{minWidth:32}} color={notShipPriceTextColor}/>
-                            <Text style={{color:notShipPriceTextColor, fontSize:16, textAlign: 'right',}}>{'我开价'}</Text>
-                        </TouchableOpacity>
-                        <View style={{top:26, width: 86, height:6, borderRadius:3, backgroundColor:'#ebebeb'}} />
-                        <TouchableOpacity onPress={this.onPriceBtnAction.bind(this, 1)} style={{flex:1, alignItems: "center", justifyContent: "center"}}>
-                            <Icon name={'ios-checkmark-circle'} size={32} style={{minWidth:32}} color={shipPriceTextColor}/>
-                            <Text style={{color:shipPriceTextColor, fontSize:16, textAlign: 'right',}}>{'船东开价'}</Text>
-                        </TouchableOpacity>
-                    </View>
+                                :
+                                <View>
+                                    <View style={styles.priceCell}>
+                                        <Text style={styles.priceText}/>
+                                        <TextInput underlineColorAndroid="transparent"
+                                                   keyboardType={"numeric"}
+                                                   style={styles.textInput}
+                                                   placeholder={'价格键入'}
+                                                   placeholderTextColor={appData.appSecondaryTextColor}
+                                                   onChangeText={this.textInputChanged.bind(this)}
+                                                   value={this.state.price}
+                                        >
+                                        </TextInput>
+                                        <Text style={styles.priceText}>{'¥元/吨(不含港建)'}</Text>
+                                    </View>
+                                    <TouchableOpacity onPress={this.onBargainBtnAction.bind(this)}>
+                                        <View style={{
+                                            height: 43,
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            backgroundColor: appData.appGrayColor
+                                        }}>
+                                            <Icon name={'ios-checkmark-circle'} size={20}
+                                                  style={{minWidth: 120, marginRight: 5, textAlign: "center", fontSize: 14}}
+                                                  color={bargainTextColor}>
+                                                {' 不议价'}
+                                            </Icon>
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>}
+                            <View style={{width: 240, height:80, marginTop:60, alignSelf: "center", flexDirection: 'row',}}>
+                                <TouchableOpacity onPress={this.onPriceBtnAction.bind(this, 0)} style={{flex:1, alignItems: "center", justifyContent: "center"}}>
+                                    <Icon name={'ios-checkmark-circle'} size={32} style={{minWidth:32}} color={notShipPriceTextColor}/>
+                                    <Text style={{color:notShipPriceTextColor, fontSize:16, textAlign: 'right',}}>{'我开价'}</Text>
+                                </TouchableOpacity>
+                                <View style={{top:26, width: 86, height:6, borderRadius:3, backgroundColor:'#ebebeb'}} />
+                                <TouchableOpacity onPress={this.onPriceBtnAction.bind(this, 1)} style={{flex:1, alignItems: "center", justifyContent: "center"}}>
+                                    <Icon name={'ios-checkmark-circle'} size={32} style={{minWidth:32}} color={shipPriceTextColor}/>
+                                    <Text style={{color:shipPriceTextColor, fontSize:16, textAlign: 'right',}}>{'船东开价'}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>)
+                    }
                 </ScrollView>
                 <View style={{position: "absolute", bottom: 20, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
                     <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)}>

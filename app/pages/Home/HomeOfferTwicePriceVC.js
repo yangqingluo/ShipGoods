@@ -219,11 +219,6 @@ export default class HomeOfferTwicePriceVC extends Component {
                 return info.book.ship_name;
             }
         }
-        // else if (item.idKey === "offer") {
-        //     if (objectNotNull(info.book)) {
-        //         return info.book.offer;
-        //     }
-        // }
         else if (item.idKey === 'arrive_time') {
             if (objectNotNull(info.book)) {
                 return info.book.arrive_time + " ± " + info.book.arrive_delay + "天";
@@ -265,7 +260,7 @@ export default class HomeOfferTwicePriceVC extends Component {
         else if (item.idKey === "offer") {
             if (objectNotNull(info.book)) {
                 return <Text style={{color: appData.appRedColor, fontSize: 14, fontWeight: appData.fontWeightBold}}>
-                    {info.book.offer}
+                    {info.book.offer + " 元/吨"}
                 </Text>
             }
         }

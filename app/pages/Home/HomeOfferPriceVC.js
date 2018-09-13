@@ -27,8 +27,8 @@ export default class HomeOfferPriceVC extends Component {
             type: this.props.navigation.state.params.type || OfferOrderEnum.ShipOrder,
             priceType: this.props.navigation.state.params.priceType || OfferPriceEnum.BargainPrice,
             ship: this.props.navigation.state.params.ship || null,//船
-            offer: 0.0,
-            arrive_time: new Date(),//预计到港时间
+            offer: '',
+            arrive_time: null,//预计到港时间
             arrive_delay: 0,//到港延迟
             last_goods: '',//上载货品
             book_tonnage: '',//本载可装货量
@@ -40,7 +40,7 @@ export default class HomeOfferPriceVC extends Component {
             if (this.isFirstPrice()) {
                 this.config = [
                     {idKey:"ship_name", name:"船舶信息", logo:require('../../images/icon_blue.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectShip")},
-                    {idKey:"offer", name:"运价", logo:require('../../images/icon_red.png'), disable:false, hideArrowForward:true},
+                    {idKey:"offer", name:"运价（到船）", logo:require('../../images/icon_red.png'), disable:false, hideArrowForward:true},
                     {idKey:"arrive_time", name:"到港时间", logo:require('../../images/icon_orange.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectArriveTime")},
                     {idKey:"last_goods",name:"上载货品", logo:require('../../images/icon_green.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectLastGoods")},
                     {idKey:"book_tonnage",name:"本载可装货量", logo:require('../../images/icon_red.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectBookTonnage")},
@@ -49,7 +49,7 @@ export default class HomeOfferPriceVC extends Component {
             else {
                 this.config = [
                     {idKey:"ship_name", name:"船舶信息", logo:require('../../images/icon_blue.png'), disable:false, hideArrowForward:true},
-                    {idKey:"offer", name:"运价", logo:require('../../images/icon_red.png'), disable:false, hideArrowForward:true},
+                    {idKey:"offer", name:"运价（到船）", logo:require('../../images/icon_red.png'), disable:false, hideArrowForward:true},
                     {idKey:"arrive_time", name:"到港时间", logo:require('../../images/icon_orange.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectArriveTime")},
                     {idKey:"last_goods",name:"上载货品", logo:require('../../images/icon_green.png'), disable:false, hideArrowForward:true},
                     {idKey:"book_tonnage",name:"本载可装货量", logo:require('../../images/icon_red.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectBookTonnage")},
@@ -60,7 +60,7 @@ export default class HomeOfferPriceVC extends Component {
             this.config = this.isGoodsOrder() ?
                 [
                     {idKey:"ship_name", name:"船舶信息", logo:require('../../images/icon_blue.png'), disable:false, hideArrowForward:true},
-                    {idKey:"offer", name:"运价", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
+                    {idKey:"offer", name:"运价（到船）", logo:require('../../images/icon_red.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectOffer")},
                     {idKey:"arrive_time", name:"到港时间", logo:require('../../images/icon_orange.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectArriveTime")},
                     {idKey:"last_goods",name:"上载货品", logo:require('../../images/icon_green.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectLastGoods")},
                     {idKey:"book_tonnage",name:"本载可装货量", logo:require('../../images/icon_red.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectBookTonnage")},
@@ -68,7 +68,7 @@ export default class HomeOfferPriceVC extends Component {
                 :
                 [
                     {idKey:"ship_name", name:"选择船只", logo:require('../../images/icon_blue.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectShip")},
-                    {idKey:"offer", name:"运价", logo:require('../../images/icon_red.png'), disable:true, numeric:true},
+                    {idKey:"offer", name:"运价（到船）", logo:require('../../images/icon_red.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectOffer")},
                     {idKey:"arrive_time", name:"到港时间", logo:require('../../images/icon_orange.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectArriveTime")},
                     {idKey:"last_goods",name:"上载货品", logo:require('../../images/icon_green.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectLastGoods")},
                     {idKey:"book_tonnage",name:"本载可装货量", logo:require('../../images/icon_red.png'), disable:false, onCellSelected:this.cellSelected.bind(this, "SelectBookTonnage")},
@@ -188,11 +188,11 @@ export default class HomeOfferPriceVC extends Component {
         if (ship === null) {
             this.refToast.show("请选择船舶");
         }
-        else if (lastGoodsSelectedList.length === 0) {
-            this.refToast.show("请选择上载货品");
-        }
         else if (arrive_time === null) {
             this.refToast.show("请选择到港时间");
+        }
+        else if (lastGoodsSelectedList.length === 0) {
+            this.refToast.show("请选择上载货品");
         }
         else if (book_tonnage.length === 0) {
             this.refToast.show("请设置本载可运货量");
@@ -282,8 +282,15 @@ export default class HomeOfferPriceVC extends Component {
                     callBack:this.callBackFromBookTonnageVC.bind(this)
                 });
         }
-        else {
-
+        else if (key === "SelectOffer") {
+            navigate(
+                "SelectPrice",
+                {
+                    title: '运价（到船）',
+                    price: this.state.offer,
+                    onlyPrice: true,
+                    callBack:this.callBackFromPriceVC.bind(this)
+                });
         }
     };
 
@@ -305,6 +312,12 @@ export default class HomeOfferPriceVC extends Component {
     callBackFromBookTonnageVC(book_tonnage) {
         this.setState({
             book_tonnage: book_tonnage,
+        })
+    }
+
+    callBackFromPriceVC(price, is_bargain, is_shipprice) {
+        this.setState({
+            offer: price,
         })
     }
 
@@ -359,10 +372,8 @@ export default class HomeOfferPriceVC extends Component {
         if (item.idKey === 'ship_name' && this.state.ship !== null) {
             return this.state.ship.ship_name;
         }
-        else if (item.idKey === 'offer') {
-            if (this.isAgreePrice()) {
-                return this.state.offer + "";
-            }
+        else if (item.idKey === 'offer' && !stringIsEmpty(this.state.offer)) {
+            return this.state.offer + " 元/吨";
         }
         else if (item.idKey === 'last_goods' && this.state.last_goods.length > 0) {
             return this.state.last_goods;

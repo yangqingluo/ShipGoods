@@ -35,7 +35,7 @@ export default class ReleaseVC extends Component {
             upload_oil_list: [],//上载油品
             download_oil_list: [],//意向油品
             empty_port: null,//空船港
-            empty_time: new Date(),//空船期
+            empty_time: null,//空船期
             empty_delay: 0,//空船延迟
             course: '',//运输航向 1：南下 2：北上 3：上江 4：下江 5：运河（多选，用“##”隔开）
             remark: '',//备注
@@ -43,18 +43,18 @@ export default class ReleaseVC extends Component {
             courseList: [],
 
             tonnage: '',//否 装载吨位
-            ton_section: "5%", //否 吨位区间值
+            ton_section: "0%", //否 吨位区间值
             price: '',//否 单价
             loading_port: null,//否 装货港
             unloading_port: null, //否 卸货港
-            loading_time: new Date(), //否 发货时间
+            loading_time: null, //否 发货时间
             loading_delay: 0, //否 发货延迟
             is_bargain: 0, //否 是否接收议价 0：是（默认） 1：否
             is_shipprice: 0, //是 是否船东开价 0：否 1：是
             clean_deley: '', //否 完货后多少天结算 15/30/45/60
             wastage: '', //否 损耗
             goods: [], //货品
-            demurrage: '', //否 滞期费
+            demurrage: null, //否 滞期费
 
             wastageTitle: 0,
             wastageNumber: -1,
@@ -95,7 +95,7 @@ export default class ReleaseVC extends Component {
                 upload_oil_list: [],//上载油品
                 download_oil_list: [],//意向油品
                 empty_port: null,//空船港
-                empty_time: new Date(),//空船期
+                empty_time: null,//空船期
                 empty_delay: 0,//空船延迟
                 course: '',//运输航向 1：南下 2：北上 3：上江 4：下江 5：运河（多选，用“##”隔开）
                 remark: '',//备注
@@ -104,37 +104,24 @@ export default class ReleaseVC extends Component {
             });
         }
         else {
-            let data1 = 1;
-            let data2 = 20;
-            let m_string = '';
-            if (data1 > 0) {
-                m_string += shipWastageTypes[data1 - 1];
-            }
-            if (data2 >= 0) {
-                if (m_string.length > 0) {
-                    m_string += ' ';
-                }
-                m_string += shipWastageNumberTypes[data2];
-            }
-
             this.setState({
                 tonnage: '',//否 装载吨位
-                ton_section: "5%", //否 吨位区间值
+                ton_section: "0%", //否 吨位区间值
                 price: '',//否 单价
                 loading_port: null,//否 装货港
                 unloading_port: null, //否 卸货港
-                loading_time: new Date(), //否 发货时间
+                loading_time: null, //否 发货时间
                 loading_delay: 0, //否 发货延迟
                 is_bargain: 0, //否 是否接收议价 0：是（默认） 1：否
                 is_shipprice: 0, //是 是否船东开价 0：否 1：是
                 clean_deley: '', //否 完货后多少天结算 15/30/45/60
-                wastage: m_string, //否 损耗
+                wastage: '', //否 损耗
                 goods: [], //货品
-                demurrage: '20000', //否 滞期费
+                demurrage: '', //否 滞期费
                 remark: '',//备注
 
-                wastageTitle: data1,
-                wastageNumber: data2,
+                wastageTitle: null,
+                wastageNumber: null,
             })
         }
     }
@@ -229,22 +216,22 @@ export default class ReleaseVC extends Component {
         if (goods.length === 0) {
             this.refToast.show("请选择货品");
         }
-        else if (tonnage.length === 0) {
+        else if (stringIsEmpty(tonnage)) {
             this.refToast.show("请设置货量");
         }
-        else if (price.length === 0) {
+        else if (stringIsEmpty(price)) {
             this.refToast.show("请设置运价");
         }
         else if (loading_port === null) {
-            this.refToast.show("请选择装船港");
+            this.refToast.show("请选择装货港");
         }
         else if (unloading_port === null) {
-            this.refToast.show("请选择卸船港");
+            this.refToast.show("请选择卸货港");
         }
         else if (loading_time === null) {
             this.refToast.show("请选择发货时间");
         }
-        else if (wastage.length === 0) {
+        else if (stringIsEmpty(wastage)) {
             this.refToast.show("请设置损耗");
         }
         else if (stringIsEmpty(demurrage)) {
@@ -331,7 +318,7 @@ export default class ReleaseVC extends Component {
         }
         else if (key === "SelectDemurrage") {
             // this.demurrageTypeActionSheet.show();
-            this.refDemurrageTypePicker.show(this.state.demurrage,
+            this.refDemurrageTypePicker.show(this.state.demurrage || '20000',
                 (choice, index)=>{
                     this.setState({
                         demurrage: choice
@@ -381,13 +368,26 @@ export default class ReleaseVC extends Component {
                 });
         }
         else if (key === "SelectWastage") {
+            let data1 = 1;
+            let data2 = 20;
+            let m_string = '';
+            if (data1 > 0) {
+                m_string += shipWastageTypes[data1 - 1];
+            }
+            if (data2 >= 0) {
+                if (m_string.length > 0) {
+                    m_string += ' ';
+                }
+                m_string += shipWastageNumberTypes[data2];
+            }
+
             navigate(
                 "SelectWastageVC",
                 {
                     title: '选择损耗',
                     key: key,
-                    wastageTitle: this.state.wastageTitle,
-                    wastageNumber: this.state.wastageNumber,
+                    wastageTitle: this.state.wastageTitle || data1,
+                    wastageNumber: this.state.wastageNumber || data2,
                     callBack:this.callBackFromWastageVC.bind(this)
                 });
         }
@@ -395,7 +395,7 @@ export default class ReleaseVC extends Component {
             navigate(
                 "SelectPrice",
                 {
-                    title: '选择运价',
+                    title: '运价',
                     price: this.state.price,
                     is_bargain: this.state.is_bargain,
                     is_shipprice: this.state.is_shipprice,
@@ -408,7 +408,7 @@ export default class ReleaseVC extends Component {
                 {
                     title: '货量吨位',
                     tonnage: this.state.tonnage,
-                    ton_section: this.state.ton_section,
+                    ton_section: this.state.ton_section || "0%",
                     callBack:this.callBackFromTonnageVC.bind(this)
                 });
         }
@@ -641,14 +641,6 @@ export default class ReleaseVC extends Component {
         }
     }
 
-    onSelectInvoiceType(index) {
-        if (index > 0) {
-            this.setState({
-                course: index
-            });
-        }
-    }
-
     onSelectCleanDelayType(index) {
         if (index > 0) {
             this.setState({
@@ -774,14 +766,6 @@ export default class ReleaseVC extends Component {
                         </View>
                     </TouchableOpacity>
                 </View>
-                <ActionSheet
-                    ref={o => this.areaTypeActionSheet = o}
-                    title={'请选择运输航向'}
-                    options={shipCourseTypes}
-                    cancelButtonIndex={0}
-                    // destructiveButtonIndex={1}
-                    onPress={this.onSelectInvoiceType.bind(this)}
-                />
                 <ActionSheet
                     ref={o => this.cleanDelayTypeActionSheet = o}
                     title={'请选择结算时间'}
