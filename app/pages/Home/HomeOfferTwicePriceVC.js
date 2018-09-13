@@ -17,6 +17,7 @@ import ReplyCell from './HomeReplyCell';
 import Communications from '../../util/AKCommunications';
 import CustomAlert from '../../components/CustomAlert';
 import Toast from "react-native-easy-toast";
+import IndicatorModal from '../../components/IndicatorModal';
 import px2dp from "../../util";
 
 
@@ -128,13 +129,16 @@ export default class HomeOfferTwicePriceVC extends Component {
 
         if (message.length > 0) {
             let data = {
+                reply_type: userData.usertype,
                 reply_content: message,
                 book_id: this.state.info.book_id,
             };
 
+            this.refIndicator.show();
             NetUtil.post(appUrl + 'index.php/Mobile/Goods/goods_reply/', data)
                 .then(
                     (result)=>{
+                        this.refIndicator.hide();
                         if (result.code === 0) {
                             this.refToast.show("回复成功");
                             this.requestData();
@@ -143,6 +147,7 @@ export default class HomeOfferTwicePriceVC extends Component {
                             this.refToast.show(result.message);
                         }
                     },(error)=>{
+                        this.refIndicator.hide();
                         this.refToast.show(error);
                     });
         }
@@ -413,6 +418,7 @@ export default class HomeOfferTwicePriceVC extends Component {
                     </View>
                 : null}
                 <Toast ref={o => this.refToast = o} position={'center'}/>
+                <IndicatorModal ref={o => this.refIndicator = o}/>
                 <CustomAlert ref={o => this.refChangePriceAlert = o} showTextInput={true} numeric={true} placeholder={"修改报价："}/>
                 <CustomAlert ref={o => this.refReplyAlert = o} showTextInput={true} placeholder={"回复货主："}/>
             </View> );

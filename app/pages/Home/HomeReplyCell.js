@@ -24,11 +24,16 @@ export default class HomeReplyCell extends PureComponent {
 
     render() {
         let item = this.props.info.item;
+        let {reply_type} = item;
+        let replyTitle = "我的回复：";
+        if (userData.usertype !== reply_type) {
+            replyTitle = isShipOwner() ? "货主回复：" : "船东回复：";
+        }
         return (
             <View>
                 <TouchableOpacity style={styles.cellContainer}>
                     <Text style={{flex:1, fontSize:14}}>
-                        <Text style={{color:"#ff5700a6"}}>{isShipOwner() ? "货主回复：" : "我的回复："}</Text>
+                        <Text style={{color:"#ff5700a6"}}>{replyTitle}</Text>
                         <Text style={{color:"#ff9d69"}}>{item.content}</Text>
                     </Text>
                     <Text style={styles.rightTextContainer}>{createTimeFormat(item.reply_time, "yyyy-MM-dd HH:mm")}</Text>

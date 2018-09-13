@@ -121,6 +121,7 @@ export default class HomeShipDetailVC extends Component {
 
         if (message.length > 0) {
             let data = {
+                reply_type: userData.usertype,
                 reply_content: message,
                 book_id: this.state.info.book_id,
             };

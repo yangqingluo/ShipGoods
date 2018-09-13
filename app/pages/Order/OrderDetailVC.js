@@ -269,7 +269,6 @@ export default class OrderJudgementVC extends Component {
                 if (trans_state > 0 && trans_state <= transportInfo.translist.length) {
                     let trans = transportInfo.translist[trans_state - 1];
                     if (objectNotNull(trans)) {
-                        // PublicAlert(JSON.stringify(trans));
                         if (objectNotNull(trans.remark)) {
                             remark = trans.remark;
                         }
