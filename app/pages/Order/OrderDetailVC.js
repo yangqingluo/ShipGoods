@@ -258,17 +258,18 @@ export default class OrderJudgementVC extends Component {
         if (objectNotNull(transportInfo)) {
             let radius = 16;
             let len = (screenWidth - 26 * 2 - radius * 4) / 3 /appData.appDashWidth;
-            let state = parseInt(transportInfo.trans_state);
-            let color1 = shipTransportStateJudge(state, 1) ? appData.appBlueColor : appData.appDeepGrayColor;
-            let color5 = shipTransportStateJudge(state, 5) ? appData.appBlueColor : appData.appDeepGrayColor;
-            let color6 = shipTransportStateJudge(state, 6) ? appData.appBlueColor : appData.appDeepGrayColor;
-            let color10 = shipTransportStateJudge(state, 10) ? appData.appBlueColor : appData.appDeepGrayColor;
-            let remark = transportInfo.trans_remark;
+            let trans_state = parseInt(transportInfo.trans_state);
+            let color1 = shipTransportStateJudge(trans_state, 1) ? appData.appBlueColor : appData.appDeepGrayColor;
+            let color5 = shipTransportStateJudge(trans_state, 5) ? appData.appBlueColor : appData.appDeepGrayColor;
+            let color6 = shipTransportStateJudge(trans_state, 6) ? appData.appBlueColor : appData.appDeepGrayColor;
+            let color10 = shipTransportStateJudge(trans_state, 10) ? appData.appBlueColor : appData.appDeepGrayColor;
+            let remark = transportInfo.trans_remark || "";
             let statetext = transportInfo.statetext || "";
             if (objectNotNull(transportInfo.translist)) {
-                if (state > 0 && state <= transportInfo.translist.length) {
-                    let trans = transportInfo.translist[state];
+                if (trans_state > 0 && trans_state <= transportInfo.translist.length) {
+                    let trans = transportInfo.translist[trans_state - 1];
                     if (objectNotNull(trans)) {
+                        // PublicAlert(JSON.stringify(trans));
                         if (objectNotNull(trans.remark)) {
                             remark = trans.remark;
                         }
@@ -359,8 +360,8 @@ export default class OrderJudgementVC extends Component {
         }
 
         if (detailInfo.order_state === '0') {
+            let transportDone = shipTransportStateJudge(parseInt(detailInfo.trans_state), 10);
             if (isShipOwner()) {
-                let transportDone = shipTransportStateJudge(parseInt(detailInfo.trans_state), 10);
                 return (
                     transportDone ?
                         <View style={styles.footerContainer}>
@@ -381,14 +382,21 @@ export default class OrderJudgementVC extends Component {
             }
             else {
                 return (
-                    <View style={styles.footerContainer}>
-                        <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: '#dfdfdf', marginRight:10}]} onPress={this.onCellBottomBtnAction.bind(this, OrderBtnEnum.CheckTransport)}>
-                            <Text style={{fontSize:16, color:'#3c3c3c'}}>{"查看货运"}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: appData.appBlueColor}]} onPress={this.onCellBottomBtnAction.bind(this, OrderBtnEnum.CollectGoods)}>
-                            <Text style={{fontSize:16, color:appData.appBlueColor}}>{"确认收货"}</Text>
-                        </TouchableOpacity>
-                    </View>
+                    transportDone ?
+                        <View style={styles.footerContainer}>
+                            <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: '#dfdfdf', marginRight:10}]} onPress={this.onCellBottomBtnAction.bind(this, OrderBtnEnum.CheckTransport)}>
+                                <Text style={{fontSize:16, color:'#3c3c3c'}}>{"查看货运"}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: appData.appBlueColor}]} onPress={this.onCellBottomBtnAction.bind(this, OrderBtnEnum.CollectGoods)}>
+                                <Text style={{fontSize:16, color:appData.appBlueColor}}>{"确认收货"}</Text>
+                            </TouchableOpacity>
+                        </View>
+                        :
+                        <View style={styles.footerContainer}>
+                            <TouchableOpacity style={[appStyles.orderBtnContainer, {borderColor: '#dfdfdf', marginRight:10}]} onPress={this.onCellBottomBtnAction.bind(this, OrderBtnEnum.CheckTransport)}>
+                                <Text style={{fontSize:16, color:'#3c3c3c'}}>{"查看货运"}</Text>
+                            </TouchableOpacity>
+                        </View>
                 );
             }
         }

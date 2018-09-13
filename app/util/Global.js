@@ -542,6 +542,10 @@ global.shipTransportStateJudge = function(current, standard) : boolean {
     return current > standard;
 };
 
+global.orderIsTransport = function(is_transport) : boolean {
+    return (is_transport === '1');
+};
+
 global.offerIsOffer = function(is_offer) : boolean {
     return (is_offer === '1');
 };
