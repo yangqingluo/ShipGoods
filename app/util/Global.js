@@ -23,6 +23,15 @@ const Font = {
     FontAwesome
 };
 
+String.prototype.startWith=function(str){
+    var reg=new RegExp("^"+str);
+    return reg.test(this);
+};
+//测试ok，直接使用str.endWith("abc")方式调用即可
+String.prototype.endWith=function(str){
+    var reg=new RegExp(str+"$");
+    return reg.test(this);
+};
 
 Date.prototype.pattern=function(fmt) {
     let o = {
@@ -682,7 +691,7 @@ global.isIOS = function() : boolean {
 };
 
 global.isIPhoneX = function() : boolean {
-    return global.isIOS() && DeviceInfo.getModel().startsWith("iPhone X");
+    return global.isIOS() && DeviceInfo.getModel().startWith("iPhone X");
 };
 
 global.appIsFirst = true;

@@ -429,7 +429,7 @@ export default class OrderJudgementVC extends Component {
         }
         else if (item.idKey === 'price') {
             let priceText = info.offer;
-            if (!priceText.startsWith("¥")) {
+            if (!priceText.startWith("¥")) {
                 priceText = "¥" + priceText + " 元/吨";
             }
             return priceText;

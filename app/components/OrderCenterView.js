@@ -20,7 +20,7 @@ export default class OrderCenterView extends PureComponent<Props> {
             }
         }
 
-        if (priceText !== "船东开价" && !priceText.startsWith("¥")) {
+        if (priceText !== "船东开价" && !priceText.startWith("¥")) {
             priceText = "¥" + priceText + " 元/吨";
         }
 
