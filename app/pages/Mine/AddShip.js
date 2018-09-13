@@ -41,6 +41,8 @@ export default class AddShip extends Component {
             projects: [],//主要项目证书
         };
         this.config = [];
+        this.maxLicence = 2;
+        this.maxProjects = 1;
     }
 
     cellSelected(key, data = {}){
@@ -70,16 +72,16 @@ export default class AddShip extends Component {
                 });
         }
         else if (key === 'ship_lience') {
-            if (this.state.ship_lience.length >= 2) {
-                this.refToast.show("最多只能上传" + 2 + "张国籍图片");
+            if (this.state.ship_lience.length >= this.maxLicence) {
+                this.refToast.show("最多只能上传" + this.maxLicence + "张国籍图片");
             }
             else {
                 this.toSelectPhoto('ship_lience');
             }
         }
         else if (key === 'projects') {
-            if (this.state.projects.length >= 1) {
-                this.refToast.show("最多只能上传" + 1 + "张主要项目证书图片");
+            if (this.state.projects.length >= this.maxProjects) {
+                this.refToast.show("最多只能上传" + this.maxProjects + "张主要项目证书图片");
             }
             else {
                 this.toSelectPhoto('projects');
@@ -157,10 +159,9 @@ export default class AddShip extends Component {
         else if (this.state.area === 0) {
             this.refToast.show("请选择航行区域");
         }
-        else if (this.state.ship_lience.length !== 2) {
-            this.refToast.show("请上传船舶国籍证书2张");
+        else if (this.state.ship_lience.length !== this.maxLicence) {
+            this.refToast.show("请上传船舶国籍证书" + this.maxLicence + "张");
         }
-
         else {
             let dataList = this.state.goods.map(
                 (info) => {
@@ -408,6 +409,9 @@ export default class AddShip extends Component {
     renderSubViewForIndex(item, index) {
         if (item.idKey === 'ship_lience') {
             let ship_lience = arrayNotEmpty(this.state.ship_lience) ? [].concat(this.state.ship_lience) : [];
+            if (ship_lience.length < this.maxLicence) {
+                ship_lience.push("add");
+            }
             return <FlatList
                 numColumns ={2}
                 data={ship_lience}
@@ -421,7 +425,9 @@ export default class AddShip extends Component {
         }
         else if (item.idKey === 'projects') {
             let projects = arrayNotEmpty(this.state.projects) ? [].concat(this.state.projects) : [];
-            // projects.push("add");
+            if (projects.length < this.maxProjects) {
+                projects.push("add");
+            }
             return <FlatList
                 numColumns ={2}
                 data={projects}
