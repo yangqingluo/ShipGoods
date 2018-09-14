@@ -119,7 +119,6 @@ export default class MainTabVC extends Component {
             DeviceEventEmitter.emit('hasNewNotice', '通知来了');
         });
 
-
         // 点击推送事件,打开通知
         JPushModule.addReceiveOpenNotificationListener((message) => {
             PublicAlert("ReceiveOpenNotificationListener: " + JSON.stringify(message));

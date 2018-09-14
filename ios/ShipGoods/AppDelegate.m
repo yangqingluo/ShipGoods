@@ -65,7 +65,6 @@
   completionHandler();
 }
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   // 3.0.0及以后版本注册可以这样写，也可以继续用旧的注册方式
