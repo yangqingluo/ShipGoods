@@ -4,9 +4,12 @@ import {
     StyleSheet,
     Text,
     View,
-    TouchableOpacity, Image
+    TouchableOpacity,
+    Image,
+    DeviceEventEmitter,
 } from 'react-native';
 
+import JPushModule from 'jpush-react-native';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import TabBottom from '../components/CustomTapBottom';
 import CustomMenu from "../components/CustomMenu";
@@ -97,12 +100,67 @@ export default class MainTabVC extends Component {
             this.appRefreshUserInfo();
             global.appIsFirst = false;
         }
-        PublicLog("*********我已经登录了加载了主界面");
+
+        if (!isIOS()) {
+            // 通知 JPushModule 初始化完成，发送缓存事件。
+            JPushModule.notifyJSDidLoad((resultCode) => {
+
+            });
+        }
+
+        // 接收自定义消息事件
+        JPushModule.addReceiveCustomMsgListener((message) => {
+            PublicAlert("ReceiveCustomMsgListener:" + JSON.stringify(message));
+        });
+
+        // 接收推送事件
+        JPushModule.addReceiveNotificationListener((message) => {
+            PublicAlert("ReceiveNotificationListener: " + JSON.stringify(message));
+            DeviceEventEmitter.emit('hasNewNotice', '通知来了');
+        });
+
+
+        // 点击推送事件,打开通知
+        JPushModule.addReceiveOpenNotificationListener((message) => {
+            PublicAlert("ReceiveOpenNotificationListener: " + JSON.stringify(message));
+
+        });
     }
 
     componentWillUnmount() {
-        PublicLog("*********我已经退出登录了");
+        this.removeReceivedJPush();
     }
+
+    //移除监听消息通知
+    removeReceivedJPush() {
+        JPushModule.removeReceiveCustomMsgListener();
+        JPushModule.removeReceiveNotificationListener();
+        JPushModule.removeReceiveOpenNotificationListener();
+        // 清除所有通知
+        JPushModule.clearAllNotifications();
+        DeviceEventEmitter.removeAllListeners();
+    }
+
+    // setTag() {
+    //     if (objectNotNull(this.state.tag)) {
+    //         /*
+    //         * 请注意这个接口要传一个数组过去，这里只是个简单的示范
+    //         */
+    //         JPushModule.setTags(["VIP", "NOTVIP"], () => {
+    //             console.log("Set tag succeed");
+    //         }, () => {
+    //             console.log("Set tag failed");
+    //         });
+    //     }
+    // }
+    //
+    // getAlias() {
+    //     JPushModule.getAlias((alias) => {
+    //         PublicAlert("Get alias succeed: " + JSON.stringify(alias));
+    //     }, () => {
+    //         PublicAlert("Get alias failed.");
+    //     });
+    // }
 
     async appRefreshUserInfo() {
         let data = {suid: userData.uid};

@@ -70,8 +70,7 @@ export default class LoginVC extends Component {
                     (result)=>{
                         this.refIndicator.hide();
                         if (result.code === 0) {
-                            saveUserData(result.data);
-                            this.props.navigation.dispatch(PublicResetAction('Main'));
+                            appLogin(result.data, this.props.navigation);
                         }
                         else {
                             this.refs.toast.show(result.message);

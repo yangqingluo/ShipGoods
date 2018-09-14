@@ -8,6 +8,7 @@ import {
     Dimensions,
 } from 'react-native';
 import Storage from 'react-native-storage';
+import JPushModule from 'jpush-react-native';
 import NetUtil from './NetUtil'
 import {NavigationActions} from "react-navigation";
 import DeviceInfo from 'react-native-device-info';
@@ -23,13 +24,13 @@ const Font = {
     FontAwesome
 };
 
-String.prototype.startWith=function(str){
-    var reg=new RegExp("^"+str);
+String.prototype.startWith = function(str) {
+    let reg = new RegExp("^" + str);
     return reg.test(this);
 };
 //测试ok，直接使用str.endWith("abc")方式调用即可
-String.prototype.endWith=function(str){
-    var reg=new RegExp(str+"$");
+String.prototype.endWith = function(str) {
+    let reg = new RegExp(str + "$");
     return reg.test(this);
 };
 
@@ -769,9 +770,34 @@ global.appResetState = function () {
     global.userData = null;
 };
 
+global.appLogin = function (data, navigation) {
+    setAlias(data.username);
+    saveUserData(data);
+    navigation.dispatch(PublicResetAction('Main'));
+};
+
 global.appLogout = function () {
+    deleteAlias();
     appMainTab.props.navigation.dispatch(PublicResetAction('Login'));
     global.appResetState();
+};
+
+global.setAlias = function (alias) {
+    if (objectNotNull(alias)) {
+        JPushModule.setAlias(alias, () => {
+            // PublicAlert("Set alias succeed: " + alias);
+        }, () => {
+            // PublicAlert("Set alias failed: " + alias);
+        });
+    }
+};
+
+global.deleteAlias = function () {
+    JPushModule.deleteAlias((alias) => {
+        // PublicAlert("Delete alias succeed: " + JSON.stringify(alias));
+    }, () => {
+        // PublicAlert("Delete alias failed.");
+    });
 };
 
 global.iPhoneBottom = isIPhoneX() ? 34 : 0;
