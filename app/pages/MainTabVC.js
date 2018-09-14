@@ -21,6 +21,24 @@ import MineVC from './MineVC';
 import {StackNavigator} from "react-navigation";
 import NetUtil from "../util/NetUtil";
 
+let RedirectType = {
+    Default: 0,
+    ShipPostDetail: 1,//船东-我的发布-详情
+    ShipOrderDetail: 2,//船东-订单-详情
+    ShipRelease: 3,//船东-发布
+    ShipAuth: 4,//船东-认证
+    ShipPricedDetail: 5,//船东-已报价-详情
+    ShipOrderHistoryDetail: 6,//船东-订单-历史订单-详情
+    ShipFavorDetail: 7,//船东-我的收藏-详情
+    GoodsGoodsDetailOfferList:8,//货主-我的货-详情-报价列表
+    GoodsOrderingTransport:9,//货主-订单-执行中-货运详情
+    GoodsRelease:10,//货主-发布
+    GoodsAuth:11,//货主-认证
+    GoodsOfferedDetail:12,//货主-已报价-详情
+    GoodsOrdering:13,//货主-订单-执行中
+};
+
+
 const HomeNavigator = StackNavigator({
         HomeVC: {screen: HomeVC},
     }
@@ -117,12 +135,13 @@ export default class MainTabVC extends Component {
         JPushModule.addReceiveNotificationListener((message) => {
             PublicAlert("ReceiveNotificationListener: " + JSON.stringify(message));
             DeviceEventEmitter.emit('hasNewNotice', '通知来了');
+            this.doReceivedMessage(message);
         });
 
         // 点击推送事件,打开通知
         JPushModule.addReceiveOpenNotificationListener((message) => {
             PublicAlert("ReceiveOpenNotificationListener: " + JSON.stringify(message));
-
+            this.doReceivedMessage(message);
         });
     }
 
@@ -160,6 +179,19 @@ export default class MainTabVC extends Component {
     //         PublicAlert("Get alias failed.");
     //     });
     // }
+
+    doReceivedMessage(message) {
+        // let {extras} = message;
+        // let {uid, redirect_type} = message;
+        // if (objectNotNull(uid) && uid === userData.uid && !stringIsEmpty(redirect_type)) {
+        //     switch (parseInt(redirect_type)) {
+        //         case RedirectType.GoodsAuth:
+        //         case RedirectType.ShipAuth:
+        //             backAndGoToAuth();
+        //             break;
+        //     }
+        // }
+    }
 
     async appRefreshUserInfo() {
         let data = {suid: userData.uid};
