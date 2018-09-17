@@ -266,8 +266,9 @@ export default class OrderJudgementVC extends Component {
             let remark = transportInfo.trans_remark || "";
             let statetext = transportInfo.statetext || "";
             if (objectNotNull(transportInfo.translist)) {
-                if (trans_state > 0 && trans_state <= transportInfo.translist.length) {
-                    let trans = transportInfo.translist[trans_state - 1];
+                let index = trans_state - 1;
+                if (index > 0 && index <= transportInfo.translist.length) {
+                    let trans = transportInfo.translist[index - 1];
                     if (objectNotNull(trans)) {
                         if (objectNotNull(trans.remark)) {
                             remark = trans.remark;
