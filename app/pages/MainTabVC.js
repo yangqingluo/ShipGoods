@@ -128,19 +128,19 @@ export default class MainTabVC extends Component {
 
         // 接收自定义消息事件
         JPushModule.addReceiveCustomMsgListener((message) => {
-            PublicAlert("ReceiveCustomMsgListener:" + JSON.stringify(message));
+            // PublicAlert("ReceiveCustomMsgListener:" + JSON.stringify(message));
         });
 
         // 接收推送事件
         JPushModule.addReceiveNotificationListener((message) => {
-            PublicAlert("ReceiveNotificationListener: " + JSON.stringify(message));
+            // PublicAlert("ReceiveNotificationListener: " + JSON.stringify(message));
             DeviceEventEmitter.emit('hasNewNotice', '通知来了');
             this.doReceivedMessage(message);
         });
 
         // 点击推送事件,打开通知
         JPushModule.addReceiveOpenNotificationListener((message) => {
-            PublicAlert("ReceiveOpenNotificationListener: " + JSON.stringify(message));
+            // PublicAlert("ReceiveOpenNotificationListener: " + JSON.stringify(message));
             this.doReceivedMessage(message);
         });
     }

@@ -16,6 +16,7 @@ import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 import com.xinfu.shipowner.invokenative.DplusReactPackage;
 import com.xinfu.shipowner.invokenative.RNUMConfigure;
+import cn.jpush.reactnativejpush.JPushPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,7 +38,8 @@ public class MainApplication extends Application implements ReactApplication {
             new ImagePickerPackage(),
             new VectorIconsPackage(),
             new RNSpinkitPackage(),
-              new DplusReactPackage()
+              new DplusReactPackage(),
+              new JPushPackage(false, false)
       );
     }
 

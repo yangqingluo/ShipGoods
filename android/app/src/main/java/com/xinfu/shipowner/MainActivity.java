@@ -13,6 +13,9 @@ import com.facebook.react.ReactActivity;
 import com.umeng.socialize.UMShareAPI;
 import com.xinfu.shipowner.invokenative.ShareModule;
 import com.xinfu.shipowner.version.UpdateManager;
+import cn.jpush.reactnativejpush.JPushPackage;
+import cn.jpush.android.api.*;
+
 
 import java.io.File;
 
@@ -58,6 +61,7 @@ public class MainActivity extends ReactActivity {
             ActivityCompat.requestPermissions(this, mPermissionList, 123);
         }
         ShareModule.initSocialSDK(this);
+        JPushInterface.init(this);
 
         handler = new receiveVersionHandler();
 
@@ -107,5 +111,17 @@ public class MainActivity extends ReactActivity {
                 }
             }
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
     }
 }
