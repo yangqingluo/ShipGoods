@@ -70,9 +70,14 @@ export function scaleSize(size: Number) {
  * @param size 传入设计稿上的px
  * @returns {Number} 返回实际sp ,会随系统缩放比例改变，如不需要请去掉 * fontScale
  */
-export function setSpText(size: Number) {
+// export function setSpText(size: Number) {
+//     const scale = Math.min(_scaleWidth, _scaleHeight);
+//     return size * scale * fontScale;
+// }
+export function setSpText(size: number) {
     const scale = Math.min(_scaleWidth, _scaleHeight);
-    return size * scale * fontScale;
+    size = Math.round((size * scale + 0.5) * pixelRatio / fontScale);
+    return size / 2;
 }
 
 export function setSpText2(size: Number) {

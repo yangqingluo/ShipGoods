@@ -14,6 +14,7 @@ import NetUtil from './NetUtil'
 import {NavigationActions} from "react-navigation";
 import DeviceInfo from 'react-native-device-info';
 import px2dp from "./index";
+import {setSpText, setSpText2} from "./ScreenUtil";
 const {width,height}=Dimensions.get('window');
 // iPhoneX
 const X_WIDTH = 375;
@@ -312,7 +313,7 @@ global.OfferOrderEnum = OfferOrderEnum;
 global.AuthStateEnum = AuthStateEnum;
 global.SortTypeEnum = SortTypeEnum;
 global.appFont = Font;
-global.appFontFit = px2dp;
+global.appFontFit = setSpText;
 global.appUrl = 'http://shiphire.com.cn/';//服务器url
 global.appShareUrl = 'http://shiphire.com.cn/shared/mobile/';
 global.appShareImage = 'res/ic_launcher';

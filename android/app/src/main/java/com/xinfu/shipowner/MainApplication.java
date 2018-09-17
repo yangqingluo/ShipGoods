@@ -39,7 +39,7 @@ public class MainApplication extends Application implements ReactApplication {
             new VectorIconsPackage(),
             new RNSpinkitPackage(),
               new DplusReactPackage(),
-              new JPushPackage(false, false)
+              new JPushPackage(true, true)
       );
     }
 
