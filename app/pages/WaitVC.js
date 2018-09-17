@@ -12,6 +12,7 @@ export default class WaitVC extends Component {
     componentDidMount() {
         this.checkLogin();    // 比如调用asyncstorage
     }
+
     checkLogin() {
         //刷新的时候重新获得用户数据
         storage.load({

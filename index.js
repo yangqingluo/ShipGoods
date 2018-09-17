@@ -116,8 +116,8 @@ const MyNavigator = StackNavigator({
     }
     , {
         navigationOptions: {
-            headerTitleStyle: { color: appData.appLittleTextColor, fontSize: 18, alignSelf:'center', justifyContent:'center', fontWeight:appData.fontWeightMedium},
-            // headerBackTitleStyle: { color: '#000', fontSize: 12},
+            headerTitleStyle: { color: appData.appLittleTextColor, fontSize:appFontFit(18), alignSelf:'center', justifyContent:'center', fontWeight:appData.fontWeightMedium},
+            // headerBackTitleStyle: { color: '#000', fontSize:appFontFit(12)},
             headerTintColor:'#222',
             // gesturesEnabled: true,//是否支持滑动返回收拾，iOS默认支持，安卓默认关闭
         },

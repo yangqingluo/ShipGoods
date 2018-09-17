@@ -44,7 +44,7 @@ const HomeNavigator = StackNavigator({
     }
     , {
         navigationOptions: {
-            headerTitleStyle: { color: appData.appLittleTextColor, fontSize: 18, alignSelf:'center', justifyContent:'center', fontWeight:appData.fontWeightMedium},
+            headerTitleStyle: { color: appData.appLittleTextColor, fontSize:appFontFit(18), alignSelf:'center', justifyContent:'center', fontWeight:appData.fontWeightMedium},
             headerTintColor:'#222',
         },
         mode: 'card',  // 页面切换模式, 左右是card(相当于iOS中的push效果), 上下是modal(相当于iOS中的modal效果)
@@ -57,7 +57,7 @@ const OrderNavigator = StackNavigator({
     }
     , {
         navigationOptions: {
-            headerTitleStyle: { color: appData.appLittleTextColor, fontSize: 18, alignSelf:'center', justifyContent:'center', fontWeight:appData.fontWeightMedium},
+            headerTitleStyle: { color: appData.appLittleTextColor, fontSize:appFontFit(18), alignSelf:'center', justifyContent:'center', fontWeight:appData.fontWeightMedium},
             headerTintColor:'#222',
         },
         mode: 'card',  // 页面切换模式, 左右是card(相当于iOS中的push效果), 上下是modal(相当于iOS中的modal效果)
@@ -72,7 +72,7 @@ const ReleaseNavigator = StackNavigator({
     }
     , {
         navigationOptions: {
-            headerTitleStyle: { color: appData.appLittleTextColor, fontSize: 18, alignSelf:'center', justifyContent:'center', fontWeight:appData.fontWeightMedium},
+            headerTitleStyle: { color: appData.appLittleTextColor, fontSize:appFontFit(18), alignSelf:'center', justifyContent:'center', fontWeight:appData.fontWeightMedium},
             headerTintColor:'#222',
         },
         mode: 'card',  // 页面切换模式, 左右是card(相当于iOS中的push效果), 上下是modal(相当于iOS中的modal效果)
@@ -86,7 +86,7 @@ const MessageNavigator = StackNavigator({
     }
     , {
         navigationOptions: {
-            headerTitleStyle: { color: appData.appLittleTextColor, fontSize: 18, alignSelf:'center', justifyContent:'center', fontWeight:appData.fontWeightMedium},
+            headerTitleStyle: { color: appData.appLittleTextColor, fontSize:appFontFit(18), alignSelf:'center', justifyContent:'center', fontWeight:appData.fontWeightMedium},
             headerTintColor:'#222',
         },
         mode: 'card',  // 页面切换模式, 左右是card(相当于iOS中的push效果), 上下是modal(相当于iOS中的modal效果)
@@ -99,7 +99,7 @@ const MineNavigator = StackNavigator({
     }
     , {
         navigationOptions: {
-            headerTitleStyle: { color: appData.appLittleTextColor, fontSize: 18, alignSelf:'center', justifyContent:'center', fontWeight:appData.fontWeightMedium},
+            headerTitleStyle: { color: appData.appLittleTextColor, fontSize:appFontFit(18), alignSelf:'center', justifyContent:'center', fontWeight:appData.fontWeightMedium},
             headerTintColor:'#222',
         },
         mode: 'card',  // 页面切换模式, 左右是card(相当于iOS中的push效果), 上下是modal(相当于iOS中的modal效果)

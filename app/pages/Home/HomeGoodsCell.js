@@ -56,22 +56,22 @@ export default class HomeGoodsCell extends Component {
                     : () => this.props.onCellSelected(info)}>
                     <View style={{flex: 1, backgroundColor:'white'}}>
                         <View style={{backgroundColor:'#81c6ff', flexDirection: 'row', justifyContent: "space-between", height:26}}>
-                            <Text style={{fontSize:10, color:'white', marginLeft:3, marginTop:8}}>{'发票编号：' + info.item.billing_sn}</Text>
-                            <Text style={{fontSize:10, color:'white', marginRight:6, marginTop:8}}>{info.item.create_timetext}</Text>
+                            <Text style={{fontSize:appFontFit(10), color:'white', marginLeft:3, marginTop:8}}>{'发票编号：' + info.item.billing_sn}</Text>
+                            <Text style={{fontSize:appFontFit(10), color:'white', marginRight:6, marginTop:8}}>{info.item.create_timetext}</Text>
                         </View>
                         <View style={{backgroundColor:'#f2f9ff', flexDirection: 'row',  alignItems: "center", justifyContent: "space-between", height:51}}>
-                            <Text style={{fontSize:14, color:appData.appTextColor, marginLeft:28, fontWeight:'bold'}}>{info.item.empty_port_name + ' / ' + info.item.ship_name}</Text>
-                            <Text style={{fontSize:14, color:appData.appBlueColor, marginRight:18, fontWeight:'bold'}}>{info.item.tonnage + ' T'}</Text>
+                            <Text style={{fontSize:appFontFit(14), color:appData.appTextColor, marginLeft:28, fontWeight:'bold'}}>{info.item.empty_port_name + ' / ' + info.item.ship_name}</Text>
+                            <Text style={{fontSize:appFontFit(14), color:appData.appBlueColor, marginRight:18, fontWeight:'bold'}}>{info.item.tonnage + ' T'}</Text>
                         </View>
                         <View style={styles.cellItemContainer}>
-                            <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{"空船期"}</Text>
-                            <Text style={{fontSize:14, color:appData.appLightTextColor}}>{info.item.empty_timetext + "±" + info.item.empty_delay}</Text>
+                            <Text style={{fontSize:appFontFit(14), color:appData.appSecondaryTextColor}}>{"空船期"}</Text>
+                            <Text style={{fontSize:appFontFit(14), color:appData.appLightTextColor}}>{info.item.empty_timetext + "±" + info.item.empty_delay}</Text>
                         </View>
                         {/*{downloadOilList.length > 0 ?*/}
                             {/*<View>*/}
                                 {/*<View style={styles.cellSeparator}/>*/}
                                 {/*<View style={styles.cellItemContainer}>*/}
-                                    {/*<Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{"意向货品"}</Text>*/}
+                                    {/*<Text style={{fontSize:appFontFit(14), color:appData.appSecondaryTextColor}}>{"意向货品"}</Text>*/}
                                     {/*<Text style={styles.cellItemRightText}>{downloadOilList.join(' ')}</Text>*/}
                                 {/*</View>*/}
                             {/*</View>*/}
@@ -80,7 +80,7 @@ export default class HomeGoodsCell extends Component {
                             {/*<View>*/}
                                 {/*<View style={styles.cellSeparator}/>*/}
                                 {/*<View style={styles.cellItemContainer}>*/}
-                                    {/*<Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{"上载货品"}</Text>*/}
+                                    {/*<Text style={{fontSize:appFontFit(14), color:appData.appSecondaryTextColor}}>{"上载货品"}</Text>*/}
                                     {/*<Text style={styles.cellItemRightText}>{uploadOilList.join(' ')}</Text>*/}
                                 {/*</View>*/}
                             {/*</View>*/}
@@ -89,19 +89,19 @@ export default class HomeGoodsCell extends Component {
                             <View style={styles.cellSeparator}/>
                             {shipIsShowType(dieseloil, gasoline, ship_type) ?
                                 <View style={styles.cellItemContainer}>
-                                    <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{'船舶类型 '}</Text>
-                                    <Text style={{fontSize:14, color:appData.appLightTextColor}}>{getArrayTypesText(shipTypes, parseInt(ship_type) - 1)}</Text>
+                                    <Text style={{fontSize:appFontFit(14), color:appData.appSecondaryTextColor}}>{'船舶类型 '}</Text>
+                                    <Text style={{fontSize:appFontFit(14), color:appData.appLightTextColor}}>{getArrayTypesText(shipTypes, parseInt(ship_type) - 1)}</Text>
                                 </View>
                                 :
                                 <View style={styles.cellItemContainer}>
                                     <View style={{flexDirection: 'row',  alignItems: "center", justifyContent: "flex-start"}}>
-                                        <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{'可运柴油 '}</Text>
-                                        <Text style={{fontSize:14, color:appData.appLightTextColor}}>{objectIsZero(dieseloil) ? "" : dieseloil + ' T'}</Text>
+                                        <Text style={{fontSize:appFontFit(14), color:appData.appSecondaryTextColor}}>{'可运柴油 '}</Text>
+                                        <Text style={{fontSize:appFontFit(14), color:appData.appLightTextColor}}>{objectIsZero(dieseloil) ? "" : dieseloil + ' T'}</Text>
                                     </View>
                                     {shipIsOilThreeLevel(ship_type) ? null :
                                         <View style={{flexDirection: 'row',  alignItems: "center", justifyContent: "flex-end"}}>
-                                            <Text style={{fontSize:14, color:appData.appSecondaryTextColor}}>{'可运汽油 '}</Text>
-                                            <Text style={{fontSize:14, color:appData.appLightTextColor, textAlign: "right"}}>{objectIsZero(gasoline) ? "" : gasoline + ' T'}</Text>
+                                            <Text style={{fontSize:appFontFit(14), color:appData.appSecondaryTextColor}}>{'可运汽油 '}</Text>
+                                            <Text style={{fontSize:appFontFit(14), color:appData.appLightTextColor, textAlign: "right"}}>{objectIsZero(gasoline) ? "" : gasoline + ' T'}</Text>
                                         </View>
                                     }
                                 </View>
@@ -110,7 +110,7 @@ export default class HomeGoodsCell extends Component {
                     </View>
                 </TouchableHighlight>
                 <View style={{height:30, flexDirection: 'row',  alignItems: "center", justifyContent: "flex-end"}}>
-                    <Text style={{fontSize:11, color:appData.appSecondaryTextColor}}>{'浏览'+ info.item.view_num + ' 收藏' + info.item.collect_num}</Text>
+                    <Text style={{fontSize:appFontFit(11), color:appData.appSecondaryTextColor}}>{'浏览'+ info.item.view_num + ' 收藏' + info.item.collect_num}</Text>
                 </View>
                 {isOrdered ? <Image source={require('../../images/icon_ding.png')} style={{width: 87, height: 69, top: 0, right: 84, resizeMode: "cover", position: 'absolute',}} /> : null}
             </View>
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     },
     cellItemRightText: {
         flex:1,
-        fontSize:14,
+        fontSize:appFontFit(14),
         color:appData.appLightTextColor,
         marginLeft:5,
         textAlign: "right",

@@ -40,7 +40,7 @@ export default class OrderCenterView extends PureComponent<Props> {
                     </View>
                 </View>
                 <View style={{backgroundColor: '#81c6ff', height:26, alignItems: "center", justifyContent: "center"}}>
-                    <Text style={{fontSize:12, color:'white', fontWeight:'bold'}}>
+                    <Text style={styles.priceContainer}>
                         {priceText}
                     </Text>
                 </View>
@@ -53,8 +53,13 @@ export default class OrderCenterView extends PureComponent<Props> {
 const styles = StyleSheet.create({
     textContainer: {
         flex: 1,
-        fontSize:14,
+        fontSize: appFontFit(14),
         color: appData.appTextColor,
+    },
+    priceContainer: {
+        fontSize: appFontFit(12),
+        color:'white',
+        fontWeight: appData.fontWeightBold,
     },
     arrowContainer: {
         width:32,

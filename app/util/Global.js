@@ -6,6 +6,7 @@ import {
     View,
     StyleSheet,
     Dimensions,
+    Text,
 } from 'react-native';
 import Storage from 'react-native-storage';
 import JPushModule from 'jpush-react-native';
@@ -33,6 +34,8 @@ String.prototype.endWith = function(str) {
     let reg = new RegExp(str + "$");
     return reg.test(this);
 };
+
+// Text.defaultProps.allowFontScaling=false;
 
 Date.prototype.pattern=function(fmt) {
     let o = {
@@ -203,19 +206,11 @@ global.PublicAlert = GlobalAlert;
 global.PublicResetAction = resetAction;
 
 global.saveUserData = (data) => {
-    // let oldStatus = true;
-    // if (objectNotNull(global.userData)) {
-    //     oldStatus = global.isAuthed();
-    // }
     global.storage.save({
         key: 'userData', // 注意:请不要在key中使用_下划线符号!
         data: data,
     });
     global.userData = data;
-    // let nowStatus = global.isAuthed();
-    // if (!oldStatus && nowStatus) {
-    //     PublicAlert("您已经认证通过");
-    // }
 };
 
 
@@ -317,6 +312,7 @@ global.OfferOrderEnum = OfferOrderEnum;
 global.AuthStateEnum = AuthStateEnum;
 global.SortTypeEnum = SortTypeEnum;
 global.appFont = Font;
+global.appFontFit = px2dp;
 global.appUrl = 'http://shiphire.com.cn/';//服务器url
 global.appShareUrl = 'http://shiphire.com.cn/shared/mobile/';
 global.appShareImage = 'res/ic_launcher';

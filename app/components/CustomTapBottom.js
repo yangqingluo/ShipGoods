@@ -62,7 +62,7 @@ export default class TabBottom extends Component {
                             width:radius,
                             height:radius}}
                                source={icon}/>}
-                    <Text style={{color: color, fontSize: 10, fontWeight: appData.fontWeightMedium, marginTop: 5}}>
+                    <Text style={{color: color, fontSize:appFontFit(10), fontWeight: appData.fontWeightMedium, marginTop: 5}}>
                         {this.props.tabNames[i]}
                     </Text>
                 </TouchableOpacity>

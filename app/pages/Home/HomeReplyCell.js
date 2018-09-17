@@ -32,7 +32,7 @@ export default class HomeReplyCell extends PureComponent {
         return (
             <View>
                 <TouchableOpacity style={styles.cellContainer}>
-                    <Text style={{flex:1, fontSize:14}}>
+                    <Text style={{flex:1, fontSize:appFontFit(14)}}>
                         <Text style={{color:"#ff5700a6"}}>{replyTitle}</Text>
                         <Text style={{color:"#ff9d69"}}>{item.content}</Text>
                     </Text>
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     },
     rightTextContainer: {
         width:110,
-        fontSize:12,
+        fontSize:appFontFit(12),
         color:"#a5a5a5",
         textAlign:"right"
     },
