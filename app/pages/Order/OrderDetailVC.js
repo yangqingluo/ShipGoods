@@ -14,6 +14,7 @@ import Communications from "../../util/AKCommunications";
 import DashLine from '../../components/DashLine';
 import CustomAlert from '../../components/CustomAlert';
 import Toast from 'react-native-easy-toast';
+import IndicatorModal from '../../components/IndicatorModal';
 import ActionSheet from 'react-native-actionsheet';
 
 const Icon = appFont["Ionicons"];
@@ -101,9 +102,11 @@ export default class OrderJudgementVC extends Component {
     requestTransport = () => {
         let data = {or_id: this.props.navigation.state.params.info.or_id};
 
+        this.refIndicator.show();
         NetUtil.post(appUrl + 'index.php/Mobile/Order/get_transport_detail/', data)
             .then(
                 (result)=>{
+                    this.refIndicator.hide();
                     if (result.code === 0) {
                         this.setState({
                             transportInfo: result.data,
@@ -116,6 +119,7 @@ export default class OrderJudgementVC extends Component {
                         })
                     }
                 },(error)=>{
+                    this.refIndicator.hide();
                     this.setState({
                         refreshingTransport: false,
                     })
@@ -128,9 +132,11 @@ export default class OrderJudgementVC extends Component {
             or_id: info.or_id,
         };
 
+        this.refIndicator.show();
         NetUtil.post(appUrl + 'index.php/Mobile/Order/change_order_state/', data)
             .then(
                 (result)=>{
+                    this.refIndicator.hide();
                     this.refToast.show(result.message);
                     if (result.code === 0) {
                         this.props.navigation.setParams({
@@ -142,6 +148,7 @@ export default class OrderJudgementVC extends Component {
                     //     this.refToast.show(result.message);
                     // }
                 },(error)=>{
+                    this.refIndicator.hide();
                     this.refToast.show(error);
                 });
     };
@@ -152,9 +159,11 @@ export default class OrderJudgementVC extends Component {
             or_id: this.state.detailInfo.or_id,
         };
 
+        this.refIndicator.show();
         NetUtil.post(appUrl + 'index.php/Mobile/Order/close_order/', data)
             .then(
                 (result)=>{
+                    this.refIndicator.hide();
                     if (result.code === 0) {
                         PublicAlert(result.message, '订单已关闭',
                             [{text:"确定", onPress:this.goBack.bind(this)}]
@@ -164,6 +173,7 @@ export default class OrderJudgementVC extends Component {
                         this.refToast.show(result.message);
                     }
                 },(error)=>{
+                    this.refIndicator.hide();
                     this.refToast.show(error);
                 });
     }
@@ -529,6 +539,7 @@ export default class OrderJudgementVC extends Component {
                 <CustomAlert ref={o => this.refSelectAlert = o} title={"确认收货"} message={"请收到货确认无误以后确认收货"} />
                 <CustomAlert ref={o => this.refCloseOrderAlert = o} title={"关闭订单"} message={"请确认关闭订单"} />
                 <Toast ref={o => this.refToast = o} position={'center'}/>
+                <IndicatorModal ref={o => this.refIndicator = o}/>
             </View>
         );
     }

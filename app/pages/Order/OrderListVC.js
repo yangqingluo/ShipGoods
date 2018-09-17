@@ -11,6 +11,7 @@ import OrderCell from './OrderCell';
 import ListLoadFooter, {canLoad, FooterTypeEnum} from '../../components/ListLoadFooter';
 import CustomAlert from '../../components/CustomAlert';
 import Toast from 'react-native-easy-toast';
+import IndicatorModal from '../../components/IndicatorModal';
 
 type Props = {
     order_state: "0",
@@ -55,9 +56,11 @@ export default class OrderListVC extends Component {
         }
         let data = {page: this.state.page, state: this.props.order_state};
 
+        this.refIndicator.show();
         NetUtil.post(appUrl + 'index.php/Mobile/Order/get_my_order/', data)
             .then(
                 (result)=>{
+                    this.refIndicator.hide();
                     if (result.code === 0) {
                         let list = [];
                         if (!isReset) {
@@ -88,6 +91,7 @@ export default class OrderListVC extends Component {
                         refreshing: isReset ? false : this.state.refreshing,
                         showFooter: FooterTypeEnum.default,
                     });
+                    this.refIndicator.hide();
                     this.refToast.show(result.message);
                 });
     };
@@ -98,9 +102,11 @@ export default class OrderListVC extends Component {
             or_id: info.or_id,
         };
 
+        this.refIndicator.show();
         NetUtil.post(appUrl + 'index.php/Mobile/Order/change_order_state/', data)
             .then(
                 (result)=>{
+                    this.refIndicator.hide();
                     this.refToast.show(result.message);
                     if (result.code === 0) {
                         this.requestData();
@@ -110,6 +116,7 @@ export default class OrderListVC extends Component {
                     //     this.refToast.show(result.message);
                     // }
                 },(error)=>{
+                    this.refIndicator.hide();
                     this.refToast.show(error);
                 });
     };
@@ -201,6 +208,7 @@ export default class OrderListVC extends Component {
                 />
                 <CustomAlert ref={o => this.refSelectAlert = o} title={"确认收货"} message={"请收到货确认无误以后确认收货"} />
                 <Toast ref={o => this.refToast = o} position={'center'}/>
+                <IndicatorModal ref={o => this.refIndicator = o}/>
             </View>
         );
     }
