@@ -36,7 +36,7 @@ String.prototype.endWith = function(str) {
     return reg.test(this);
 };
 
-// Text.defaultProps.allowFontScaling=false;
+Text.defaultProps.allowFontScaling=false;
 
 Date.prototype.pattern=function(fmt) {
     let o = {

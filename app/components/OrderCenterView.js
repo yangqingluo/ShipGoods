@@ -24,6 +24,8 @@ export default class OrderCenterView extends PureComponent<Props> {
             priceText = "¥" + priceText + " 元/吨";
         }
 
+        // let size = 14;
+        // PublicAlert(size + "***" + appFontFit(size));
         return (
             <View style={style} >
                 <View style={{backgroundColor: '#f2f9ff', paddingLeft:34, paddingRight:10, paddingVertical: 10, minHeight:73}}>

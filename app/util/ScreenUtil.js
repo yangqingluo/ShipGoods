@@ -75,9 +75,12 @@ export function scaleSize(size: Number) {
 //     return size * scale * fontScale;
 // }
 export function setSpText(size: number) {
-    const scale = Math.min(_scaleWidth, _scaleHeight);
-    size = Math.round((size * scale + 0.5) * pixelRatio / fontScale);
-    return size / 2;
+    // PublicAlert(pixelRatio + "***" + fontScale);
+    // const scale = Math.min(_scaleWidth, _scaleHeight);
+    // size = Math.round(size * scale * pixelRatio / fontScale);
+    // return size / 2;
+
+    return size;
 }
 
 export function setSpText2(size: Number) {
