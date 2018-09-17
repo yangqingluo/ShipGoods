@@ -13,14 +13,12 @@ export default class EditShip extends AddShip {
     }
 
     componentDidMount() {
-        // this.requestData();
-
         let ship = this.props.navigation.state.params.ship;
         this.setState({
             detailInfo: null,
 
             ship_name: ship.ship_name,//船名
-            ship_lience: ship.ship_lience,//船舶国际证书
+            ship_lience: stringIsEmpty(ship.ship_lience) ? [] : ship.ship_lience.split(","),//船舶国际证书
             tonnage: ship.tonnage,//吨位
             storage: ship.storage,//仓容
             dieseloil: ship.dieseloil,//可载柴油吨位
@@ -34,34 +32,34 @@ export default class EditShip extends AddShip {
         });
     }
 
-    requestData = () => {
-        this.setState({refreshing: true});
-        this.requestRecommend(true);
-    };
-
-    requestRecommend = async (isReset) => {
-        let data = {ship_id: this.props.navigation.state.params.ship.ship_id};
-
-        NetUtil.post(appUrl + 'index.php/Mobile/Ship/get_ship_detail/', data)
-            .then(
-                (result)=>{
-                    if (result.code === 0) {
-                        this.setState({
-                            detailInfo: result.data,
-                            refreshing: false,
-                        })
-                    }
-                    else {
-                        this.setState({
-                            refreshing: false,
-                        })
-                    }
-                },(error)=>{
-                    this.setState({
-                        refreshing: false,
-                    })
-                });
-    };
+    // requestData = () => {
+    //     this.setState({refreshing: true});
+    //     this.requestRecommend(true);
+    // };
+    //
+    // requestRecommend = async (isReset) => {
+    //     let data = {ship_id: this.props.navigation.state.params.ship.ship_id};
+    //
+    //     NetUtil.post(appUrl + 'index.php/Mobile/Ship/get_ship_detail/', data)
+    //         .then(
+    //             (result)=>{
+    //                 if (result.code === 0) {
+    //                     this.setState({
+    //                         detailInfo: result.data,
+    //                         refreshing: false,
+    //                     });
+    //                 }
+    //                 else {
+    //                     this.setState({
+    //                         refreshing: false,
+    //                     })
+    //                 }
+    //             },(error)=>{
+    //                 this.setState({
+    //                     refreshing: false,
+    //                 })
+    //             });
+    // };
 
     goBack() {
         if (objectNotNull(this.props.navigation.state.params.callBack)) {
