@@ -12,7 +12,7 @@ import ListLoadFooter, {canLoad, FooterTypeEnum} from '../../components/ListLoad
 
 export default class MyPostVC extends Component {
     static navigationOptions = ({ navigation }) => ({
-        title: "我的发布",
+        headerTitle: "我的发布",
     });
 
     constructor(props){

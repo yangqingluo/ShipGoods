@@ -12,7 +12,7 @@ import ActionSheet from 'react-native-actionsheet';
 export default class SelectWastageVC extends Component {
     static navigationOptions = ({ navigation }) => (
         {
-            title: navigation.state.params.title,
+            headerTitle: navigation.state.params.title,
         });
 
     constructor(props) {

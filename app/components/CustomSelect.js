@@ -12,7 +12,7 @@ import SelectCell from './SelectCell'
 export default class CustomSelect extends Component {
     static navigationOptions = ({ navigation }) => (
         {
-            title: navigation.state.params.title,
+            headerTitle: navigation.state.params.title,
             headerRight: <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
                 <TouchableOpacity
                     onPress={navigation.state.params.clickParams}

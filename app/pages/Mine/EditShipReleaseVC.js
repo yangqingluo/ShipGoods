@@ -14,7 +14,7 @@ import Release from "../ReleaseVC";
 export default class EditShipReleaseVC extends Release {
     // static navigationOptions = ({ navigation }) => (
     //     {
-    //         title: "编辑发布",
+    //         headerTitle: "编辑发布",
     //         headerRight: <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
     //             <TouchableOpacity
     //                 onCellSelected={navigation.state.params.clickSureBtn}

@@ -21,7 +21,7 @@ const Icon = appFont["Ionicons"];
 
 export default class OrderJudgementVC extends Component {
     static navigationOptions = ({ navigation }) => ({
-        title: "订单详情",
+        headerTitle: "订单详情",
         headerRight: (!isShipOwner() && navigation.state.params.order_state === '0') ?
             <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
                 <TouchableOpacity onPress={navigation.state.params.clickMoreBtn} style={{minWidth:40}}>

@@ -15,7 +15,7 @@ import IndicatorModal from "../../components/IndicatorModal";
 
 export default class MyBookVC extends Component {
     static navigationOptions = ({ navigation }) => ({
-        title: "我的预约",
+        headerTitle: "我的预约",
     });
 
     constructor(props){

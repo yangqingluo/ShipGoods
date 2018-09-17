@@ -17,7 +17,7 @@ import IndicatorModal from '../../components/IndicatorModal';
 
 export default class OrderTransportEditVC extends Component {
     static navigationOptions = ({ navigation }) => ({
-        title: "货运详情",
+        headerTitle: "货运详情",
     });
 
     constructor(props){

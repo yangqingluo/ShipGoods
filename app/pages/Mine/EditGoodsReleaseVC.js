@@ -14,7 +14,7 @@ import Release from "../ReleaseVC";
 export default class EditGoodsReleaseVC extends Release {
     // static navigationOptions = ({ navigation }) => (
     //     {
-    //         title: "编辑货品",
+    //         headerTitle: "编辑货品",
     //         headerRight: <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
     //             <TouchableOpacity
     //                 onCellSelected={navigation.state.params.clickSureBtn}

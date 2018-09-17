@@ -10,8 +10,8 @@ let WEBVIEW_REF = 'webview';
 
 export default class PublicWebVC extends Component {
     static navigationOptions = ({ navigation }) => ({
-            title: navigation.state.params.title
-        });
+        headerTitle: navigation.state.params.title
+    });
 
     state = {
         status: 'No Page Loaded',

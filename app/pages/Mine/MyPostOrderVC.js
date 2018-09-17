@@ -4,7 +4,7 @@ import OrderCell from '../Home/HomeOrderCell';
 
 export default class MyPostOrderVC extends HomeOrderVC {
     static navigationOptions = ({ navigation }) => ({
-        title: navigation.state.params.title,
+        headerTitle: navigation.state.params.title,
     });
 
     requestRecommend = async (isReset) => {

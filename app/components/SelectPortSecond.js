@@ -17,7 +17,7 @@ import PortFirstCell from './PortFirstCell'
 export default class SelectPortSecond extends Component {
     static navigationOptions = ({ navigation }) => (
         {
-            title: navigation.state.params.title,
+            headerTitle: navigation.state.params.title,
         });
 
     constructor(props){

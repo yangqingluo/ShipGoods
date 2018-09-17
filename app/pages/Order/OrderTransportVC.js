@@ -13,7 +13,7 @@ import OrderTransportCell from './OrderTransportCell'
 
 export default class OrderTransportVC extends Component {
     static navigationOptions = ({ navigation }) => ({
-        title: "货运详情"
+        headerTitle: "货运详情"
     });
 
     constructor(props){

@@ -24,7 +24,7 @@ import IndicatorModal from '../../components/IndicatorModal';
 export default class AddShip extends Component {
     static navigationOptions = ({ navigation }) => (
         {
-            title: "添加船舶"
+            headerTitle: "添加船舶"
         });
     constructor(props){
         super(props);

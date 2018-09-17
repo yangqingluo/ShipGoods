@@ -15,7 +15,7 @@ import Toast from "react-native-easy-toast";
 export default class DetailVC extends Component {
     static navigationOptions = ({ navigation }) => (
         {
-            title: '我的船队',
+            headerTitle: '我的船队',
             headerRight: <View style={{flexDirection: 'row', justifyContent: 'center' , alignItems: 'center'}}>
                 <TouchableOpacity
                     onPress={navigation.state.params.clickParams}

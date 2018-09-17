@@ -5,7 +5,7 @@ import AddShip from "./AddShip";
 export default class EditShip extends AddShip {
     static navigationOptions = ({ navigation }) => (
         {
-            title: "编辑船舶"
+            headerTitle: "编辑船舶"
         });
 
     constructor(props){

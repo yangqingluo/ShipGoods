@@ -5,7 +5,7 @@ import OrderCell from '../Home/HomeOrderCell';
 export default class MyShipPriceVC extends HomeOrderVC {
     static navigationOptions = ({ navigation }) => (
         {
-            title: '相关报价',
+            headerTitle: '相关报价',
         });
 
     requestRecommend = async (isReset) => {

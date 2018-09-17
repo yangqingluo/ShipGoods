@@ -15,7 +15,7 @@ import Toast from "react-native-easy-toast";
 export default class SelectTonnageVC extends Component {
     static navigationOptions = ({ navigation }) => (
         {
-            title: navigation.state.params.title,
+            headerTitle: navigation.state.params.title,
         });
     constructor(props) {
         super(props);

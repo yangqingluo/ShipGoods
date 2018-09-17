@@ -13,7 +13,7 @@ import Toast from "react-native-easy-toast";
 export default class DetailVC extends Component {
     static navigationOptions = ({ navigation }) => (
         {
-            title: "建议反馈"
+            headerTitle: "建议反馈"
         });
 
     constructor(props){

@@ -15,7 +15,7 @@ import Toast from "react-native-easy-toast";
 export default class SelectBookTonnageVC extends Component {
     static navigationOptions = ({ navigation }) => (
         {
-            title: navigation.state.params.title || '本载可装货量',
+            headerTitle: navigation.state.params.title || '本载可装货量',
         });
     constructor(props) {
         super(props);
