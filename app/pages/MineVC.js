@@ -66,7 +66,9 @@ export default class MineVC extends Component {
                 let state = parseInt(userData.authstate);
                 switch (state) {
                     case AuthStateEnum.Authing:
-                        this.refToast.show("您的资质认证正在审核，请耐心等待");
+                        PublicAlert('您的资质认证正在审核，请耐心等待','',
+                            [{text:"确定"}]
+                        );
                         break;
 
                     case AuthStateEnum.Authed:

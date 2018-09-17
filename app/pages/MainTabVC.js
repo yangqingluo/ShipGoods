@@ -216,15 +216,37 @@ export default class MainTabVC extends Component {
 
     onPressTabItemForIndex(i) {
         if (i === 2) {
-            if (isAuthed()) {
-                this.props.navigation.navigate("Release",
-                    {headerTitle: "发布"});
-            }
-            else {
-                PublicAlert('未认证不可发布，去认证？','',
-                    [{text:"取消"},
-                        {text:"确定", onPress:backAndGoToAuth}]
-                );
+            // if (isAuthed()) {
+            //     this.props.navigation.navigate("Release",
+            //         {headerTitle: "发布"});
+            // }
+            // else {
+            //     PublicAlert('未认证不可发布，去认证？','',
+            //         [{text:"取消"},
+            //             {text:"确定", onPress:backAndGoToAuth}]
+            //     );
+            // }
+            if (objectNotNull(userData) && userData.authstate) {
+                let state = parseInt(userData.authstate);
+                switch (state) {
+                    case AuthStateEnum.Authing:
+                        PublicAlert('您的资质认证正在审核，请耐心等待','',
+                            [{text:"确定"}]
+                        );
+                        break;
+
+                    case AuthStateEnum.Authed:
+                        this.props.navigation.navigate("Release",
+                            {headerTitle: "发布"});
+                        break;
+
+                    default:
+                        PublicAlert('未认证不可发布，去认证？','',
+                            [{text:"取消"},
+                                {text:"确定", onPress:backAndGoToAuth}]
+                        );
+                        break;
+                }
             }
         }
         else {
