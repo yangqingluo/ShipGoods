@@ -181,16 +181,25 @@ export default class MainTabVC extends Component {
     // }
 
     doReceivedMessage(message) {
-        // let {extras} = message;
-        // let {uid, redirect_type} = message;
-        // if (objectNotNull(uid) && uid === userData.uid && !stringIsEmpty(redirect_type)) {
-        //     switch (parseInt(redirect_type)) {
-        //         case RedirectType.GoodsAuth:
-        //         case RedirectType.ShipAuth:
-        //             backAndGoToAuth();
-        //             break;
-        //     }
-        // }
+        let {extras, aps} = message;
+        let {uid, redirect_type} = message;
+        let {alert} = aps;
+        if (objectNotNull(uid) && uid === userData.uid && !stringIsEmpty(redirect_type)) {
+            switch (parseInt(redirect_type)) {
+                case RedirectType.GoodsAuth:
+                case RedirectType.ShipAuth:
+                    backAndGoToAuth();
+                    break;
+
+                case RedirectType.GoodsRelease:
+                case RedirectType.ShipRelease:
+                    PublicAlert(alert || "认证通过，可以发布了", '',
+                        [{text:"取消"},
+                            {text:"去发布", onPress:backAndGoToRelease}]
+                    );
+                    break;
+            }
+        }
     }
 
     async appRefreshUserInfo() {

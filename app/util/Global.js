@@ -372,6 +372,18 @@ global.backAndGoToMyReleaseForGoodsOwner = function() : void {
     appHomeVC.reloadSubListOrderVC(true);
 };
 
+global.backAndGoToRelease = function() : void {
+    appMainTab.props.navigation.goBack('Main');
+    if (objectNotNull(appMainTab.refTab)) {
+        appMainTab.props.navigation.navigate("Release",
+            {headerTitle: "发布"});
+    }
+    else {
+        //TODO
+        appMainTab.props.navigation.navigate('Release');
+    }
+};
+
 global.renderSeparator = () => {
     return <View style={{height:0.5,backgroundColor:appData.appSeparatorColor}}/>;
 };
