@@ -796,10 +796,11 @@ global.appCreateRoutes = function (old_routes, another_routes, params) {
         let index = parseInt(keyList[keyList.length - 1]);
         let routes = old_routes.slice(0, 1);
         for (let i = 0; i < another_routes.length - 1; i++) {
+            index++;
             routes.push({
                 routeName: another_routes[i],
                 params: {},
-                key: keyList.splice(0, keyList.length - 1).concat([(index++) + ""]).join("-"),
+                key: keyList.splice(0, keyList.length - 1).concat([index + ""]).join("-"),
             });
         }
         routes.push({

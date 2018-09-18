@@ -179,7 +179,7 @@ export default class HomeOfferPriceVC extends Component {
             this.state.info.book_id = data.book_id;
         }
         // this.refToast.show(this.state.info.book_id + "****" + data.book_id);
-        appSecondPriceParams = {headerTitle: "二次报价", info: this.state.info};
+        global.appSecondPriceParams = {headerTitle: "二次报价", info: this.state.info};
         this.props.navigation.goBack('HomeOfferTwicePrice');
     };
 
