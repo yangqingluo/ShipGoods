@@ -813,7 +813,10 @@ global.appResetState = function () {
 global.appCreateRoutes = function (old_routes, another_routes, params) {
     if (arrayNotEmpty(old_routes) && arrayNotEmpty(another_routes)) {
         let keyList = old_routes[old_routes.length - 1].key.split("-");
-        let index = parseInt(keyList[keyList.length - 1]);
+
+        //TODO  暂时未找到导航栈里key当前序数
+        let index = 100000;
+        // let index = parseInt(keyList[keyList.length - 1]);
         let keyPrefix = keyList.splice(0, keyList.length - 1).join("-") + "-";
         let routes = old_routes.slice(0, 1);
         for (let i = 0; i < another_routes.length - 1; i++) {
@@ -832,6 +835,7 @@ global.appCreateRoutes = function (old_routes, another_routes, params) {
             key: keyPrefix + index,
         });
 
+        PublicAlert(JSON.stringify(routes));
         return routes;
     }
     return null;
