@@ -128,19 +128,19 @@ export default class MainTabVC extends Component {
 
         // 接收自定义消息事件
         JPushModule.addReceiveCustomMsgListener((message) => {
-            // PublicAlert("ReceiveCustomMsgListener:" + JSON.stringify(message));
+            // PublicAlert("ReceiveCustomMsgListener:", JSON.stringify(message));
         });
 
         // 接收推送事件
         JPushModule.addReceiveNotificationListener((message) => {
-            // PublicAlert("ReceiveNotificationListener: " + JSON.stringify(message));
+            // PublicAlert('ReceiveNotificationListener: ', JSON.stringify(message));
             DeviceEventEmitter.emit('hasNewNotice', '通知来了');
             this.doReceivedMessage(message);
         });
 
         // 点击推送事件,打开通知
         JPushModule.addReceiveOpenNotificationListener((message) => {
-            // PublicAlert("ReceiveOpenNotificationListener: " + JSON.stringify(message));
+            // PublicAlert("ReceiveOpenNotificationListener: ", JSON.stringify(message));
             this.doReceivedMessage(message);
         });
     }
@@ -181,19 +181,32 @@ export default class MainTabVC extends Component {
     // }
 
     doReceivedMessage(message) {
-        let {extras, aps} = message;
-        let {uid, redirect_type} = message;
-        let {alert} = aps;
+        let content = null;
+        let {extras, aps, alertContent} = message;
+        let {uid, redirect_type} = extras;
+        if (isIOS()) {
+            if (objectNotNull(aps)) {
+                content = aps.alert;
+            }
+        }
+        else {
+            content = alertContent;
+        }
+
+        PublicAlert(content || "推送", extras.uid + "*" + uid);
         if (objectNotNull(uid) && uid === userData.uid && !stringIsEmpty(redirect_type)) {
             switch (parseInt(redirect_type)) {
                 case RedirectType.GoodsAuth:
                 case RedirectType.ShipAuth:
-                    backAndGoToAuth();
+                    PublicAlert(content || "认证未通过", '',
+                        [{text:"取消"},
+                            {text:"去认证", onPress:backAndGoToAuth}]
+                    );
                     break;
 
                 case RedirectType.GoodsRelease:
                 case RedirectType.ShipRelease:
-                    PublicAlert(alert || "认证通过，可以发布了", '',
+                    PublicAlert(content || "认证通过，可以发布了", '',
                         [{text:"取消"},
                             {text:"去发布", onPress:backAndGoToRelease}]
                     );
