@@ -326,8 +326,12 @@ global.screenHeight = height;
 global.appSecondPriceParams = null;
 
 global.dismissKeyboard = require('dismissKeyboard');
-global.backAndGoToAuth = function() : void {
+
+global.backToMain = function() : void {
     appMainTab.props.navigation.goBack('Main');
+};
+global.backAndGoToAuth = function() : void {
+    backToMain();
     if (objectNotNull(appMainTab.refTab)) {
         appMainTab.onPressTabItemForIndex(4);
     }
@@ -338,7 +342,7 @@ global.backAndGoToAuth = function() : void {
 };
 
 global.backAndGoToOrder = function() : void {
-    appMainTab.props.navigation.goBack('Main');
+    backToMain();
     if (objectNotNull(appMainTab.refTab)) {
         appMainTab.onPressTabItemForIndex(1);
     }
@@ -348,7 +352,7 @@ global.backAndGoToOrder = function() : void {
 };
 
 global.backAndGoToMyReleaseForShipOwner = function() : void {
-    appMainTab.props.navigation.goBack('Main');
+    backToMain();
     if (objectNotNull(appMainTab.refTab)) {
         appMainTab.onPressTabItemForIndex(4);
     }
@@ -359,7 +363,7 @@ global.backAndGoToMyReleaseForShipOwner = function() : void {
 };
 
 global.backAndGoToMyReleaseForGoodsOwner = function() : void {
-    appMainTab.props.navigation.goBack('Main');
+    backToMain();
     if (objectNotNull(appMainTab.refTab)) {
         appMainTab.onPressTabItemForIndex(0);
     }
@@ -370,7 +374,7 @@ global.backAndGoToMyReleaseForGoodsOwner = function() : void {
 };
 
 global.backAndGoToRelease = function() : void {
-    appMainTab.props.navigation.goBack('Main');
+    backToMain();
     if (objectNotNull(appMainTab.refTab)) {
         appMainTab.props.navigation.navigate("Release",
             {headerTitle: "发布"});
@@ -720,6 +724,7 @@ global.appAllGoods = [];
 global.appHotPorts = [];
 global.appAllPortsFirst = [];
 global.appAllPortsSecond = [];
+global.appPushData = null;
 global.appHomeCondition = {
     empty_port: null,//空船港
     empty_time: null,//空船期
@@ -786,7 +791,7 @@ global.appResetState = function () {
 };
 
 global.appLogin = function (data, navigation) {
-    setAlias(data.username);
+    // setAlias(data.username);
     saveUserData(data);
     navigation.dispatch(PublicResetAction('Main'));
 };

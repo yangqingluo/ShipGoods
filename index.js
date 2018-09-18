@@ -146,7 +146,29 @@ MyNavigator.router.getStateForAction = (action, state) => {
         else {
             if (action.key === "HomeOfferTwicePrice") {
                 let routes = state.routes.slice(0, state.routes.length - 2);
-                routes.push({routeName: "HomeOfferTwicePrice"});
+                routes.push({routeName: action.key});
+                const purposeState = {
+                    ...state,
+                    routes: routes,
+                    index: routes.length - 1,
+                };
+                return purposeState;
+            }
+            else if (action.key === "MyPostDetail") {
+                let keyList = state.routes[state.routes.length - 1].key.split("-");
+                let index = parseInt(keyList[keyList.length - 1]);
+                let routes = state.routes.slice(0, 1);
+                routes.push({
+                    routeName: "MyPost",
+                    params: {},
+                    key: keyList.splice(0, keyList.length - 1).concat([index + ""]).join("-"),
+                });
+                routes.push({
+                    routeName: action.key,
+                    params: {
+                        info: {task_id: global.appPushData}
+                    }
+                });
                 const purposeState = {
                     ...state,
                     routes: routes,

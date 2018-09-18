@@ -88,7 +88,7 @@ export default class MineVC extends Component {
             navigate(key);
         }
         else if (key === 'MyFavors' || key === 'MyBook' || key === 'MyPost') {
-            navigate(key);
+            navigate(key, {});
         }
         else if (key === 'Share') {
             //分享

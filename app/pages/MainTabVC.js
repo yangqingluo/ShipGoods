@@ -119,6 +119,7 @@ export default class MainTabVC extends Component {
             global.appIsFirst = false;
         }
 
+        global.setAlias(userData.username);
         if (!isIOS()) {
             // 通知 JPushModule 初始化完成，发送缓存事件。
             JPushModule.notifyJSDidLoad((resultCode) => {
@@ -134,14 +135,13 @@ export default class MainTabVC extends Component {
         // 接收推送事件
         JPushModule.addReceiveNotificationListener((message) => {
             // PublicAlert('ReceiveNotificationListener: ', JSON.stringify(message));
-            // DeviceEventEmitter.emit('hasNewNotice', '通知来了');
-            this.doReceivedMessage(message);
+            this.doReceivedMessage(message, false);
         });
 
         // 点击推送事件,打开通知
         JPushModule.addReceiveOpenNotificationListener((message) => {
             // PublicAlert("ReceiveOpenNotificationListener: ", JSON.stringify(message));
-            this.doReceivedMessage(message);
+            this.doReceivedMessage(message, true);
         });
     }
 
@@ -180,7 +180,7 @@ export default class MainTabVC extends Component {
     //     });
     // }
 
-    doReceivedMessage(message) {
+    doReceivedMessage(message, isRedirect = false) {
         let content = null;
         let {extras, aps, alertContent} = message;
         if (isIOS()) {
@@ -216,13 +216,8 @@ export default class MainTabVC extends Component {
 
                 case RedirectType.ShipPostDetail:
                     if (objectNotNull(param_value)) {
-                        navigate('MyPostDetail',
-                            {
-                                info: {
-                                    task_id: param_value,
-                                },
-                                callBack: null,
-                            });
+                        global.appPushData = param_value;
+                        this.props.navigation.goBack("MyPostDetail");
                     }
                     break;
             }
