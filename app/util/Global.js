@@ -790,6 +790,27 @@ global.appResetState = function () {
     global.userData = null;
 };
 
+global.appCreateRoutes = function (old_routes, another_routes, params) {
+    if (arrayNotEmpty(old_routes) && arrayNotEmpty(another_routes)) {
+        let keyList = old_routes[old_routes.length - 1].key.split("-");
+        let index = parseInt(keyList[keyList.length - 1]);
+        let routes = old_routes.slice(0, 1);
+        for (let i = 0; i < another_routes.length - 1; i++) {
+            routes.push({
+                routeName: another_routes[i],
+                params: {},
+                key: keyList.splice(0, keyList.length - 1).concat([(index++) + ""]).join("-"),
+            });
+        }
+        routes.push({
+            routeName: another_routes[another_routes.length - 1],
+            params: params,
+        });
+        return routes;
+    }
+    return null;
+};
+
 global.appLogin = function (data, navigation) {
     // setAlias(data.username);
     saveUserData(data);
