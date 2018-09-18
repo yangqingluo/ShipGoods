@@ -221,6 +221,10 @@ MyNavigator.router.getStateForAction = (action, state) => {
     return defaultGetStateForAction(action, state)
 };
 
+export default class MainNav extends MyNavigator {
+    componentDidMount() {
+        global.appInitialProps = this.props;
+    }
+}
 
-
-AppRegistry.registerComponent('ShipGoods', () => MyNavigator);
+AppRegistry.registerComponent('ShipGoods', () => MainNav);

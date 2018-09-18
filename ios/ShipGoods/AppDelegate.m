@@ -67,32 +67,26 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  // 3.0.0及以后版本注册可以这样写，也可以继续用旧的注册方式
-  JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
-  entity.types = JPAuthorizationOptionAlert|JPAuthorizationOptionBadge|JPAuthorizationOptionSound;
-  if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
-    //可以添加自定义categories
-    //    if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) {
-    //      NSSet<UNNotificationCategory *> *categories;
-    //      entity.categories = categories;
-    //    }
-    //    else {
-    //      NSSet<UIUserNotificationCategory *> *categories;
-    //      entity.categories = categories;
-    //    }
+  NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+  NSMutableDictionary *props = [NSMutableDictionary new];
+  if (launchOptions != nil) {
+    //app关闭时，收到推送
+    NSMutableDictionary *extras = [NSMutableDictionary new];
+    NSDictionary *userInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+    for (NSString *key in userInfo.allKeys) {
+      if ([key isEqualToString:@"aps"]) {
+        props[key] = userInfo[key];
+      }
+      else {
+        extras[key] = userInfo[key];
+      }
+    }
+    if (extras.count) {
+      props[@"extras"] = extras;
+    }
   }
-  [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
-  [JPUSHService setupWithOption:launchOptions appKey:@"759e502e8a3b6708fa90c6af"
-                        channel:nil apsForProduction:nil];
-
-  NSURL *jsCodeLocation;
   
-  jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
-  
-  RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
-                                                      moduleName:@"ShipGoods"
-                                               initialProperties:nil
-                                                   launchOptions:launchOptions];
+  RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation moduleName:@"ShipGoods" initialProperties:props.count ? props : nil launchOptions:launchOptions];
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
   
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -121,6 +115,23 @@
   /*设置QQ平台的appID*/
   [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"1105761007" appSecret:nil redirectURL:nil];
   
+  // 3.0.0及以后版本注册可以这样写，也可以继续用旧的注册方式
+  JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
+  entity.types = JPAuthorizationOptionAlert|JPAuthorizationOptionBadge|JPAuthorizationOptionSound;
+  if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+    //可以添加自定义categories
+    //    if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) {
+    //      NSSet<UNNotificationCategory *> *categories;
+    //      entity.categories = categories;
+    //    }
+    //    else {
+    //      NSSet<UIUserNotificationCategory *> *categories;
+    //      entity.categories = categories;
+    //    }
+  }
+  [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
+  [JPUSHService setupWithOption:launchOptions appKey:@"759e502e8a3b6708fa90c6af"
+                        channel:nil apsForProduction:NO];
   return YES;
 }
 

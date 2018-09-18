@@ -119,7 +119,7 @@ export default class MainTabVC extends Component {
             global.appIsFirst = false;
         }
 
-        // global.setAlias(userData.username);
+        global.setAlias(userData.username);
         if (!isIOS()) {
             // 通知 JPushModule 初始化完成，发送缓存事件。
             JPushModule.notifyJSDidLoad((resultCode) => {
@@ -143,6 +143,11 @@ export default class MainTabVC extends Component {
             // PublicAlert("ReceiveOpenNotificationListener: ", JSON.stringify(message));
             this.doReceivedMessage(message, true);
         });
+
+        if (objectNotNull(appInitialProps.extras)) {
+            this.doReceivedMessage(appInitialProps, true);
+            global.appInitialProps = null;
+        }
     }
 
     componentWillUnmount() {

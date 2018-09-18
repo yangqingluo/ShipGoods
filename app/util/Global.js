@@ -870,6 +870,7 @@ global.deleteAlias = function () {
     });
 };
 
+global.appInitialProps = null;
 global.iPhoneBottom = isIPhoneX() ? 34 : 0;
 global.appTop = isIPhoneX() ? 88 : 64;
 
