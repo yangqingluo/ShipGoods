@@ -134,7 +134,7 @@ export default class MainTabVC extends Component {
         // 接收推送事件
         JPushModule.addReceiveNotificationListener((message) => {
             // PublicAlert('ReceiveNotificationListener: ', JSON.stringify(message));
-            DeviceEventEmitter.emit('hasNewNotice', '通知来了');
+            // DeviceEventEmitter.emit('hasNewNotice', '通知来了');
             this.doReceivedMessage(message);
         });
 
@@ -183,7 +183,6 @@ export default class MainTabVC extends Component {
     doReceivedMessage(message) {
         let content = null;
         let {extras, aps, alertContent} = message;
-        let {uid, redirect_type} = extras;
         if (isIOS()) {
             if (objectNotNull(aps)) {
                 content = aps.alert;
@@ -191,10 +190,13 @@ export default class MainTabVC extends Component {
         }
         else {
             content = alertContent;
+            if (typeof(extras) === "string") {
+                extras = JSON.parse(extras);
+            }
         }
-
-        PublicAlert(content || "推送", extras.uid + "*" + uid);
+        let {uid, redirect_type, param_value} = extras;
         if (objectNotNull(uid) && uid === userData.uid && !stringIsEmpty(redirect_type)) {
+            const {navigate} = this.props.navigation;
             switch (parseInt(redirect_type)) {
                 case RedirectType.GoodsAuth:
                 case RedirectType.ShipAuth:
@@ -211,6 +213,22 @@ export default class MainTabVC extends Component {
                             {text:"去发布", onPress:backAndGoToRelease}]
                     );
                     break;
+
+                case RedirectType.ShipPostDetail:
+                    if (objectNotNull(param_value)) {
+                        navigate('MyPostDetail',
+                            {
+                                info: {
+                                    task_id: param_value,
+                                },
+                                callBack: null,
+                            });
+                    }
+                    break;
+            }
+
+            if (objectNotNull(appMessageVC)) {
+                appMessageVC.reloadSubMessageVC();
             }
         }
     }

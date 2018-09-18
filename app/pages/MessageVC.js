@@ -14,11 +14,22 @@ export default class MessageVC extends Component {
         headerLeft: <Text style={{marginLeft: 10}}>友船友货</Text>,
     };
 
+    componentDidMount() {
+        global.appMessageVC = this;
+    }
+
+    reloadSubMessageVC = () => {
+        if (objectNotNull(this.subMessageVC)) {
+            this.subMessageVC.state.dataList = [];
+            this.subMessageVC.requestData();
+        }
+    };
+
     render() {
         const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
-                <MessageListVC style={{flex: 1}} />
+                <MessageListVC ref={o => this.subMessageVC = o} style={{flex: 1}} />
             </View>
         );
     }

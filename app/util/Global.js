@@ -713,6 +713,7 @@ global.appIsFirst = true;
 global.appHomeVC = null;
 global.appOrderVC = null;
 global.appReleaseVC = null;
+global.appMessageVC = null;
 global.appMineVC = null;
 global.appMainTab = null;
 global.appAllGoods = [];
