@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    AppRegistry,
+    AppState,
     StyleSheet,
     Text,
     View,
@@ -112,8 +112,15 @@ export default class MainTabVC extends Component {
         header: null,
     });
 
+    constructor(props) {
+        super(props);
+        //设置一个标记，表示从后台进入前台的时候，处理其他逻辑
+        this.flage = false
+    }
+
     componentDidMount() {
         global.appMainTab = this;
+        // AppState.addEventListener('change',this._handleAppStateChange);
         if (global.appIsFirst) {
             this.appRefreshUserInfo();
             global.appIsFirst = false;
@@ -156,6 +163,8 @@ export default class MainTabVC extends Component {
 
     //移除监听消息通知
     removeReceivedJPush() {
+        // AppState.removeEventListener('change', this._handleAppStateChange);
+
         JPushModule.removeReceiveCustomMsgListener();
         JPushModule.removeReceiveNotificationListener();
         JPushModule.removeReceiveOpenNotificationListener();
@@ -163,6 +172,23 @@ export default class MainTabVC extends Component {
         JPushModule.clearAllNotifications();
         DeviceEventEmitter.removeAllListeners();
     }
+
+    _handleAppStateChange = (nextAppState)=>{
+        if (nextAppState!= null && nextAppState === 'active') {
+            //如果是true ，表示从后台进入了前台 ，请求数据，刷新页面。或者做其他的逻辑
+            if (this.flage) {
+                //这里的逻辑表示 ，第一次进入前台的时候 ，不会进入这个判断语句中。
+                // 因为初始化的时候是false ，当进入后台的时候 ，flag才是true ，
+                // 当第二次进入前台的时候 ，这里就是true ，就走进来了。
+                // 测试通过
+                // alert("从后台进入前台");
+                // 这个地方进行网络请求等其他逻辑。
+            }
+            this.flage = false ;
+        }else if(nextAppState != null && nextAppState === 'background'){
+            this.flage = true;
+        }
+    };
 
     // setTag() {
     //     if (objectNotNull(this.state.tag)) {
