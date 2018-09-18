@@ -55,7 +55,7 @@ export default class MyPostOrderVC extends HomeOrderVC {
     onCellSelected = (info: Object) => {
         let {is_offer} = this.props.navigation.state.params;
         if (offerIsOffer(is_offer)) {
-            appSecondPriceParams = {info : info.item};
+            global.appSecondPriceParams = {info : info.item};
             this.props.navigation.navigate('HomeOfferTwicePrice',
                 {
                     info: info.item,

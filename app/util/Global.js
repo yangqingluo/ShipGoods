@@ -835,14 +835,13 @@ global.appCreateRoutes = function (old_routes, another_routes, params) {
             key: keyPrefix + index,
         });
 
-        PublicAlert(JSON.stringify(routes));
         return routes;
     }
     return null;
 };
 
 global.appLogin = function (data, navigation) {
-    // setAlias(data.username);
+    setAlias(data.username);
     saveUserData(data);
     navigation.dispatch(PublicResetAction('Main'));
 };

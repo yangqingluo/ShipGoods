@@ -106,7 +106,7 @@ export default class MyFavorsVC extends Component {
     onCellSelected = (info: Object) => {
         if (isShipOwner()) {
             if (offerIsOffer(info.item.is_offer)) {
-                appSecondPriceParams = {info : info.item};
+                global.appSecondPriceParams = {info: info.item};
                 this.props.navigation.navigate('HomeOfferTwicePrice',
                     {
                         info: info.item,

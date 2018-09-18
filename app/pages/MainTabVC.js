@@ -119,7 +119,7 @@ export default class MainTabVC extends Component {
             global.appIsFirst = false;
         }
 
-        global.setAlias(userData.username);
+        // global.setAlias(userData.username);
         if (!isIOS()) {
             // 通知 JPushModule 初始化完成，发送缓存事件。
             JPushModule.notifyJSDidLoad((resultCode) => {
@@ -221,6 +221,18 @@ export default class MainTabVC extends Component {
 
                 case RedirectType.ShipOrderDetail:
                     this.doPushToVCFunction(content, "OrderDetail", param_value);
+                    break;
+
+                case RedirectType.ShipPricedDetail:
+                    this.doPushToVCFunction(content, "ShipPricedDetail", param_value);
+                    break;
+
+                case RedirectType.ShipOrderHistoryDetail:
+                    this.doPushToVCFunction(content, "OrderDetail", param_value);
+                    break;
+
+                case RedirectType.ShipFavorDetail:
+                    this.doPushToVCFunction(content, "ShipFavorDetail", param_value);
                     break;
             }
 

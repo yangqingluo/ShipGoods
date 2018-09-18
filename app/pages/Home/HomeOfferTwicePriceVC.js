@@ -333,6 +333,8 @@ export default class HomeOfferTwicePriceVC extends Component {
         let isShipPrice = offerIsShipPrice(info.is_shipprice);
 
         let canChange = isShipPrice || isBargain;
+
+        let isOnlyId = objectOnlyId(info);
         return (
             <View style={appStyles.container}>
                 <ScrollView style={{flex: 1, backgroundColor:'#fff'}}
@@ -342,67 +344,60 @@ export default class HomeOfferTwicePriceVC extends Component {
                                     refreshing={this.state.refreshing}
                                 />}
                 >
-                    <View style={{height: 47, flexDirection: 'row', alignItems: "center", justifyContent: "space-between",}}>
-                        <View style={{flexDirection: 'row'}}>
-                            <Image source={require('../../images/icon_blue.png')} style={{width: 10, height: 12, resizeMode: "cover"}}/>
-                            <Text style={{fontSize: 10, color:appData.appSecondaryTextColor, marginLeft: 5}}>{'货物编号：' + info.goods_sn}</Text>
+                    {isOnlyId ? null
+                    :
+                    <View>
+                        <View style={{height: 47, flexDirection: 'row', alignItems: "center", justifyContent: "space-between",}}>
+                            <View style={{flexDirection: 'row'}}>
+                                <Image source={require('../../images/icon_blue.png')} style={{width: 10, height: 12, resizeMode: "cover"}}/>
+                                <Text style={{fontSize: 10, color:appData.appSecondaryTextColor, marginLeft: 5}}>{'货物编号：' + info.goods_sn}</Text>
+                            </View>
+                            <View style={{marginRight: 6, justifyContent: "flex-end"}}>
+                                <Text style={{fontSize: 12, color:appData.appBlueColor}}>{'已有' + info.offer_num + '人报价'}</Text>
+                            </View>
                         </View>
-                        <View style={{marginRight: 6, justifyContent: "flex-end"}}>
-                            <Text style={{fontSize: 12, color:appData.appBlueColor}}>{'已有' + info.offer_num + '人报价'}</Text>
-                        </View>
-                    </View>
-                    <View style={styles.centerContainer}>
-                        <View style={{backgroundColor: '#f2f9ff', paddingLeft:34, paddingRight:10, paddingVertical: 10, minHeight:73}}>
-                            <View style={{marginTop: 5, flex: 1, flexDirection: 'row', alignItems: "center"}}>
-                                <View style={{flex: 1, flexDirection: 'row', alignItems: "center"}}>
-                                    <Text style={styles.textContainer}>{info.loading_port_name}</Text>
-                                    <Image source={require('../../images/icon_arrow_right_half.png')} style={styles.arrowContainer}/>
+                        <View style={styles.centerContainer}>
+                            <View style={{backgroundColor: '#f2f9ff', paddingLeft:34, paddingRight:10, paddingVertical: 10, minHeight:73}}>
+                                <View style={{marginTop: 5, flex: 1, flexDirection: 'row', alignItems: "center"}}>
+                                    <View style={{flex: 1, flexDirection: 'row', alignItems: "center"}}>
+                                        <Text style={styles.textContainer}>{info.loading_port_name}</Text>
+                                        <Image source={require('../../images/icon_arrow_right_half.png')} style={styles.arrowContainer}/>
+                                    </View>
+                                    <Text style={styles.textContainer}>{info.unloading_port_name}</Text>
                                 </View>
-                                <Text style={styles.textContainer}>{info.unloading_port_name}</Text>
+                                <View style={{marginTop: 5, flex: 1, flexDirection: 'row', alignItems: "center"}}>
+                                    <Text style={styles.textContainer}>{info.loading_timetext + ' ± ' + info.loading_delay + '天'}</Text>
+                                    <Text style={styles.textContainer}>{createGoodsName(info) + ' ' + createGoodsTonnageName(info.tonnage, info.ton_section)}</Text>
+                                </View>
                             </View>
-                            <View style={{marginTop: 5, flex: 1, flexDirection: 'row', alignItems: "center"}}>
-                                <Text style={styles.textContainer}>{info.loading_timetext + ' ± ' + info.loading_delay + '天'}</Text>
-                                <Text style={styles.textContainer}>{createGoodsName(info) + ' ' + createGoodsTonnageName(info.tonnage, info.ton_section)}</Text>
+                            <TouchableOpacity onPress={() => {this.setState({
+                                showRenderList: !this.state.showRenderList,
+                            })}}>
+                                <View style={{backgroundColor: '#81c6ff', height: 26, flexDirection: 'row', alignItems: "center", justifyContent: "center"}}>
+                                    <Text style={{fontSize: 12, color:'white', fontWeight:'bold'}}>{offerIsShipPrice(info.is_shipprice) ? "船东开价" : info.price}</Text>
+                                    <Image source={showRenderList ? require('../../images/icon_rectangle_up.png') : require('../../images/icon_rectangle_down.png')} style={{marginLeft:5, width: 17, height: 11, resizeMode: "cover"}}/>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                        {showRenderList ?
+                            <View>
+                                {this._renderListItem()}
+                                <View style={{height: 12, backgroundColor: appData.appGrayColor}}/>
                             </View>
+                            : null}
+                        {this._renderGoodsListItem()}
+                        <View style={{marginTop:12, paddingHorizontal:18}}>
+                            {this._renderReplyList()}
                         </View>
-                        <TouchableOpacity onPress={() => {this.setState({
-                            showRenderList: !this.state.showRenderList,
-                        })}}>
-                            <View style={{backgroundColor: '#81c6ff', height: 26, flexDirection: 'row', alignItems: "center", justifyContent: "center"}}>
-                                <Text style={{fontSize: 12, color:'white', fontWeight:'bold'}}>{offerIsShipPrice(info.is_shipprice) ? "船东开价" : info.price}</Text>
-                                <Image source={showRenderList ? require('../../images/icon_rectangle_up.png') : require('../../images/icon_rectangle_down.png')} style={{marginLeft:5, width: 17, height: 11, resizeMode: "cover"}}/>
+                        {canChange ? null :
+                            <View style={{alignItems: "center", justifyContent: "space-between"}}>
+                                <Text style={{marginTop: 40, fontSize:20, color:appData.appBlueColor, fontWeight: appData.fontWeightMedium}}>{isShipOwner() ? "报价已推送至货主" : "货盘已推送至船东"}</Text>
                             </View>
-                        </TouchableOpacity>
-                    </View>
-                    {showRenderList ?
-                        <View>
-                            {this._renderListItem()}
-                            <View style={{height: 12, backgroundColor: appData.appGrayColor}}/>
-                        </View>
-                        : null}
-                    {this._renderGoodsListItem()}
-                    <View style={{marginTop:12, paddingHorizontal:18}}>
-                        {this._renderReplyList()}
-                    </View>
-                    {canChange ? null :
-                        <View style={{alignItems: "center", justifyContent: "space-between"}}>
-                            <Text style={{marginTop: 40, fontSize:20, color:appData.appBlueColor, fontWeight: appData.fontWeightMedium}}>{isShipOwner() ? "报价已推送至货主" : "货盘已推送至船东"}</Text>
-                        </View>
-                    }
-                    <View style={{height: 80}}/>
+                        }
+                        <View style={{height: 80}}/>
+                    </View>}
                 </ScrollView>
-                {canChange ?
-                    /*
-                    * <View style={{position: "absolute", bottom: 5, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
-                        <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)}>
-                            <View style={appStyles.sureBtnContainer}>
-                                <Text style={{color: "#fff"}}>{"修改报价"}</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <Text style={{marginTop:12, color: "#4a4a4aad", fontSize: 13}}>{"报价最多可修改2次"}</Text>
-                    </View>
-                    *
-                    * */
+                {canChange && !isOnlyId ?
                     <View style={{width: screenWidth, height: 45, flexDirection: 'row'}}>
                         <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(221), backgroundColor: appData.appBlueColor, justifyContent: "center", alignItems: "center"}}>
                             <Text style={styles.btnText}>{"修改报价"}</Text>

@@ -16,6 +16,7 @@ import StarScore from '../../components/StarScore';
 import Communications from '../../util/AKCommunications';
 import Toast from 'react-native-easy-toast';
 import px2dp from "../../util";
+import IndicatorModal from "../../components/IndicatorModal";
 
 
 class RightHeader extends Component {
@@ -83,9 +84,11 @@ export default class HomeOfferDetailVC extends Component {
     requestRecommend = async (isReset) => {
         let data = {task_id: this.state.info.task_id};
 
+        this.refIndicator.show();
         NetUtil.post(appUrl + 'index.php/Mobile/Ship/goods_task_detail/', data)
             .then(
                 (result)=>{
+                    this.refIndicator.hide();
                     if (result.code === 0) {
                         this.setState({
                             detailInfo: result.data,
@@ -96,12 +99,15 @@ export default class HomeOfferDetailVC extends Component {
                     else {
                         this.setState({
                             refreshing: false,
-                        })
+                        });
+                        this.refToast.show(result.message);
                     }
                 },(error)=>{
+                    this.refIndicator.hide();
                     this.setState({
                         refreshing: false,
-                    })
+                    });
+                    this.refToast.show(error);
                 });
     };
 
@@ -245,6 +251,7 @@ export default class HomeOfferDetailVC extends Component {
         let isShipPrice = offerIsShipPrice(this.state.detailInfo.is_shipprice);
         let isBargain = offerIsBargain(this.state.detailInfo.is_bargain);
         let {remark} = this.state.detailInfo;
+        let isOnlyId = objectOnlyId(info);
         return (
             <View style={appStyles.container}>
                 <ScrollView style={{flex: 1, backgroundColor:'#fff'}}
@@ -253,67 +260,74 @@ export default class HomeOfferDetailVC extends Component {
                                 onRefresh={this.requestData.bind(this)}
                             />}
                 >
-                    <View style={{height: 47, flexDirection: 'row', alignItems: "center", justifyContent: "space-between",}}>
-                        <View style={{flexDirection: 'row'}}>
-                            <Image source={require('../../images/icon_blue.png')} style={{width: 10, height: 12, resizeMode: "cover"}}/>
-                            <Text style={{fontSize: 10, color:appData.appSecondaryTextColor, marginLeft: 5}}>{'货物编号：' + info.goods_sn}</Text>
-                        </View>
-                        <View style={{marginRight: 6, justifyContent: "flex-end"}}>
-                            <Text style={{fontSize: 12, color:appData.appBlueColor}}>{'已有' + info.offer_num + '人报价'}</Text>
-                        </View>
-                    </View>
-                    <View style={styles.centerContainer}>
-                        <View style={{backgroundColor: '#f2f9ff', paddingLeft:34, paddingRight:10, paddingVertical: 10, minHeight:73}}>
-                            <View style={{marginTop: 5, flex: 1, flexDirection: 'row', alignItems: "center"}}>
-                                <View style={{flex: 1, flexDirection: 'row', alignItems: "center"}}>
-                                    <Text style={styles.textContainer}>{info.loading_port_name}</Text>
-                                    <Image source={require('../../images/icon_arrow_right_half.png')} style={styles.arrowContainer}/>
-                                </View>
-                                <Text style={styles.textContainer}>{info.unloading_port_name}</Text>
-                            </View>
-                            <View style={{marginTop: 5, flex: 1, flexDirection: 'row', alignItems: "center"}}>
-                                <Text style={styles.textContainer}>{info.loading_timetext + ' ± ' + info.loading_delay + '天'}</Text>
-                                <Text style={styles.textContainer}>{createGoodsName(info) + ' ' + createGoodsTonnageName(info.tonnage, info.ton_section)}</Text>
-                            </View>
-                        </View>
-                        <View style={{backgroundColor: '#81c6ff', height: 26, alignItems: "center", justifyContent: "center"}}>
-                            <Text style={{fontSize: 12, color:'white', fontWeight:'bold'}}>{offerIsShipPrice(info.is_shipprice) ? "船东开价" : info.price}</Text>
-                        </View>
-                    </View>
-                    {this._renderListItem()}
-                    <View style={{marginRight: 18, height: 30, flexDirection: 'row',  alignItems: "center", justifyContent: "flex-end"}}>
-                        <Text style={{fontSize: 11, color:appData.appSecondaryTextColor}}>{info.create_timetext + ' ' + '浏览'+ info.view_num + ' 收藏' + info.collect_num}</Text>
-                    </View>
-                    <View style={{paddingHorizontal: 18}}>
-                        <Image source={require('../../images/icon_beizhu.png')} style={{width: 57, height: 21, resizeMode: "cover"}}/>
-                        <Text underlineColorAndroid="transparent"
-                              style={styles.textInput}
-                              multiline={true}
-                              editable={false}
-                        >
-                            {objectNotNull(remark) ? remark : '此货品暂无备注'}
-                        </Text>
-                    </View>
-                </ScrollView>
-                {isShipPrice ?
-                    <View style={{position: "absolute", bottom: 20, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
-                        <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)}>
-                            <View style={appStyles.sureBtnContainer}>
-                                <Text style={{color: "#fff"}}>{"报价"}</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
+                    {isOnlyId ? null
                     :
-                    <View style={{width: screenWidth, height: 45, flexDirection: 'row'}}>
-                        <TouchableOpacity onPress={this.onAcceptBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(221), backgroundColor: appData.appBlueColor, justifyContent: "center", alignItems: "center"}}>
-                            <Text style={styles.btnText}>{"认同报价"}</Text>
-                        </TouchableOpacity>
-                        {isBargain ? <TouchableOpacity onPress={this.onBargainBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(154), backgroundColor: appData.appLightBlueColor, justifyContent: "center", alignItems: "center"}}>
-                            <Text style={styles.btnText}>{"议价"}</Text>
-                        </TouchableOpacity> : null}
-                    </View>
+                    <View>
+                        <View style={{height: 47, flexDirection: 'row', alignItems: "center", justifyContent: "space-between",}}>
+                            <View style={{flexDirection: 'row'}}>
+                                <Image source={require('../../images/icon_blue.png')} style={{width: 10, height: 12, resizeMode: "cover"}}/>
+                                <Text style={{fontSize: 10, color:appData.appSecondaryTextColor, marginLeft: 5}}>{'货物编号：' + info.goods_sn}</Text>
+                            </View>
+                            <View style={{marginRight: 6, justifyContent: "flex-end"}}>
+                                <Text style={{fontSize: 12, color:appData.appBlueColor}}>{'已有' + info.offer_num + '人报价'}</Text>
+                            </View>
+                        </View>
+                        <View style={styles.centerContainer}>
+                            <View style={{backgroundColor: '#f2f9ff', paddingLeft:34, paddingRight:10, paddingVertical: 10, minHeight:73}}>
+                                <View style={{marginTop: 5, flex: 1, flexDirection: 'row', alignItems: "center"}}>
+                                    <View style={{flex: 1, flexDirection: 'row', alignItems: "center"}}>
+                                        <Text style={styles.textContainer}>{info.loading_port_name}</Text>
+                                        <Image source={require('../../images/icon_arrow_right_half.png')} style={styles.arrowContainer}/>
+                                    </View>
+                                    <Text style={styles.textContainer}>{info.unloading_port_name}</Text>
+                                </View>
+                                <View style={{marginTop: 5, flex: 1, flexDirection: 'row', alignItems: "center"}}>
+                                    <Text style={styles.textContainer}>{info.loading_timetext + ' ± ' + info.loading_delay + '天'}</Text>
+                                    <Text style={styles.textContainer}>{createGoodsName(info) + ' ' + createGoodsTonnageName(info.tonnage, info.ton_section)}</Text>
+                                </View>
+                            </View>
+                            <View style={{backgroundColor: '#81c6ff', height: 26, alignItems: "center", justifyContent: "center"}}>
+                                <Text style={{fontSize: 12, color:'white', fontWeight:'bold'}}>{offerIsShipPrice(info.is_shipprice) ? "船东开价" : info.price}</Text>
+                            </View>
+                        </View>
+                        {this._renderListItem()}
+                        <View style={{marginRight: 18, height: 30, flexDirection: 'row',  alignItems: "center", justifyContent: "flex-end"}}>
+                            <Text style={{fontSize: 11, color:appData.appSecondaryTextColor}}>{info.create_timetext + ' ' + '浏览'+ info.view_num + ' 收藏' + info.collect_num}</Text>
+                        </View>
+                        <View style={{paddingHorizontal: 18}}>
+                            <Image source={require('../../images/icon_beizhu.png')} style={{width: 57, height: 21, resizeMode: "cover"}}/>
+                            <Text underlineColorAndroid="transparent"
+                                  style={styles.textInput}
+                                  multiline={true}
+                                  editable={false}
+                            >
+                                {objectNotNull(remark) ? remark : '此货品暂无备注'}
+                            </Text>
+                        </View>
+                    </View>}
+                </ScrollView>
+                {isOnlyId ? null
+                    :
+                    (isShipPrice ?
+                        <View style={{position: "absolute", bottom: 20, justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
+                            <TouchableOpacity onPress={this.onSubmitBtnAction.bind(this)}>
+                                <View style={appStyles.sureBtnContainer}>
+                                    <Text style={{color: "#fff"}}>{"报价"}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                        :
+                        <View style={{width: screenWidth, height: 45, flexDirection: 'row'}}>
+                            <TouchableOpacity onPress={this.onAcceptBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(221), backgroundColor: appData.appBlueColor, justifyContent: "center", alignItems: "center"}}>
+                                <Text style={styles.btnText}>{"认同报价"}</Text>
+                            </TouchableOpacity>
+                            {isBargain ? <TouchableOpacity onPress={this.onBargainBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(154), backgroundColor: appData.appLightBlueColor, justifyContent: "center", alignItems: "center"}}>
+                                <Text style={styles.btnText}>{"议价"}</Text>
+                            </TouchableOpacity> : null}
+                        </View>)
                 }
                 <Toast ref={o => this.refToast = o} position={'center'}/>
+                <IndicatorModal ref={o => this.refIndicator = o}/>
             </View> );
     }
 }

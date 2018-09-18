@@ -111,7 +111,7 @@ export default class HomeOfferVC extends HomeOrderVC {
 
     onCellSelected = (info: Object) => {
         if (offerIsOffer(this.props.is_offer)) {
-            appSecondPriceParams = {info : info.item};
+            global.appSecondPriceParams = {info : info.item};
             appMainTab.props.navigation.navigate('HomeOfferTwicePrice',
                 {
                     info: info.item,

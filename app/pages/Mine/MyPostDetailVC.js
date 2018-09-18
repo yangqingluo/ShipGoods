@@ -245,6 +245,8 @@ export default class MyPostDetailVC extends Component {
         //     );
         // }
 
+        let isOnlyId = objectOnlyId(info);
+
         return (
             <View style={appStyles.container}>
                 <ScrollView style={{flex: 1, backgroundColor:'#fff'}}
@@ -254,99 +256,87 @@ export default class MyPostDetailVC extends Component {
                                     refreshing={this.state.refreshing}
                                 />}
                 >
-                    <View style={styles.viewContainer}>
-                        <View style={{flexDirection: 'row'}}>
-                            {logo? (<Image source={logo} style={{width: 10, height: 12, resizeMode: "stretch", overflow:"hidden"}}/>) : null}
-                            <Text style={{color:"#9a9a9a", marginLeft:5, fontSize:10, fontWeight:appData.fontWeightMedium}}>{"发单编号" + info.billing_sn}</Text>
+                    {isOnlyId ? null
+                    :
+                    <View>
+                        <View style={styles.viewContainer}>
+                            <View style={{flexDirection: 'row'}}>
+                                {logo? (<Image source={logo} style={{width: 10, height: 12, resizeMode: "stretch", overflow:"hidden"}}/>) : null}
+                                <Text style={{color:"#9a9a9a", marginLeft:5, fontSize:10, fontWeight:appData.fontWeightMedium}}>{"发单编号" + info.billing_sn}</Text>
+                            </View>
+                            <Text style={{color:appData.appTextColor, right:13, fontSize:14, fontWeight:appData.fontWeightMedium, textAlign: 'right',}}>{info.ship_name + " / " + info.tonnage + "吨"}</Text>
                         </View>
-                        <Text style={{color:appData.appTextColor, right:13, fontSize:14, fontWeight:appData.fontWeightMedium, textAlign: 'right',}}>{info.ship_name + " / " + info.tonnage + "吨"}</Text>
-                    </View>
-                    <View style={styles.centerViewContainer}>
-                        <View style={{backgroundColor: appData.appBlueColor, width:9}}/>
-                        <View style={{flex: 1, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.04)',}}>
-                            <View style={styles.cellContainer}>
+                        <View style={styles.centerViewContainer}>
+                            <View style={{backgroundColor: appData.appBlueColor, width:9}}/>
+                            <View style={{flex: 1, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.04)',}}>
+                                <View style={styles.cellContainer}>
+                                    <View style={[styles.cellContainer, {alignItems: "center"}]}>
+                                        <Image source={require('../../images/icon_word_gang.png')} style={{width: 19, height: 29, marginLeft:12, resizeMode: "stretch"}}/>
+                                        <Text style={{color:appData.appTextColor, marginLeft:6, fontSize:14}}>{info.empty_port_name}</Text>
+                                    </View>
+                                    <View style={[styles.cellContainer, {alignItems: "center", minWidth:100}]}>
+                                        <Image source={require('../../images/icon_time.png')} style={{width: 16, height: 16, marginLeft:12, resizeMode: "stretch"}}/>
+                                        <Text style={{marginLeft:6, fontSize:14}}>
+                                            <Text style={{color:appData.appSecondaryTextColor}}>{"空船期 "}</Text>
+                                            <Text style={{color:appData.appTextColor}}>{info.empty_time + "±" + info.empty_delay}</Text>
+                                        </Text>
+                                    </View>
+                                </View>
                                 <View style={[styles.cellContainer, {alignItems: "center"}]}>
-                                    <Image source={require('../../images/icon_word_gang.png')} style={{width: 19, height: 29, marginLeft:12, resizeMode: "stretch"}}/>
-                                    <Text style={{color:appData.appTextColor, marginLeft:6, fontSize:14}}>{info.empty_port_name}</Text>
+                                    <Image source={require('../../images/icon_clip.png')} style={{width: 16, height: 16, marginLeft:12, resizeMode: "stretch"}}/>
+                                    {shipIsShowType(dieseloil, gasoline, ship_type) ?
+                                        <Text style={{marginLeft:6, fontSize:14}}>
+                                            <Text style={{color:appData.appSecondaryTextColor}}>{'船舶类型 '}</Text>
+                                            <Text style={{color:appData.appTextColor}}>{getArrayTypesText(shipTypes, parseInt(ship_type) - 1)}</Text>
+                                        </Text>
+                                        :
+                                        <Text style={{marginLeft:6, fontSize:14}}>
+                                            <Text style={{color:appData.appSecondaryTextColor}}>{'可运柴油 '}</Text>
+                                            <Text style={{color:appData.appTextColor}}>{objectIsZero(dieseloil) ? "" : dieseloil + '吨'}</Text>
+                                            {shipIsOilThreeLevel(ship_type) ? null : <Text style={{color:appData.appSecondaryTextColor}}>{' 可运汽油 '}</Text>}
+                                            {shipIsOilThreeLevel(ship_type) ? null : <Text style={{color:appData.appTextColor}}>{objectIsZero(gasoline) ? "" : gasoline + '吨'}</Text>}
+                                        </Text>
+                                    }
                                 </View>
-                                <View style={[styles.cellContainer, {alignItems: "center", minWidth:100}]}>
-                                    <Image source={require('../../images/icon_time.png')} style={{width: 16, height: 16, marginLeft:12, resizeMode: "stretch"}}/>
-                                    <Text style={{marginLeft:6, fontSize:14}}>
-                                        <Text style={{color:appData.appSecondaryTextColor}}>{"空船期 "}</Text>
-                                        <Text style={{color:appData.appTextColor}}>{info.empty_time + "±" + info.empty_delay}</Text>
-                                    </Text>
-                                </View>
-                            </View>
-                            {/*{downloadOilList.length > 0 ?*/}
-                                {/*<View style={[styles.cellContainer, {alignItems: "center"}]}>*/}
-                                    {/*<Image source={require('../../images/icon_clip.png')} style={{width: 16, height: 16, marginLeft:12, resizeMode: "stretch"}}/>*/}
-                                    {/*<Text style={{marginLeft:6, fontSize:14}}>*/}
-                                        {/*<Text style={{color:appData.appSecondaryTextColor}}>{'意向货品 '}</Text>*/}
-                                        {/*<Text style={{color:appData.appTextColor}}>{downloadOilList.join(' ')}</Text>*/}
-                                    {/*</Text>*/}
-                                {/*</View>*/}
-                                {/*:null}*/}
-                            {/*{uploadOilList.length > 0 ?*/}
-                                {/*<View style={[styles.cellContainer, {alignItems: "center"}]}>*/}
-                                    {/*<Image source={require('../../images/icon_clip.png')} style={{width: 16, height: 16, marginLeft:12, resizeMode: "stretch"}}/>*/}
-                                    {/*<Text style={{marginLeft:6, fontSize:14}}>*/}
-                                        {/*<Text style={{color:appData.appSecondaryTextColor}}>{'上载货品 '}</Text>*/}
-                                        {/*<Text style={{color:appData.appTextColor}}>{uploadOilList.join(' ')}</Text>*/}
-                                    {/*</Text>*/}
-                                {/*</View>*/}
-                                {/*:null}*/}
-                            <View style={[styles.cellContainer, {alignItems: "center"}]}>
-                                <Image source={require('../../images/icon_clip.png')} style={{width: 16, height: 16, marginLeft:12, resizeMode: "stretch"}}/>
-                                {shipIsShowType(dieseloil, gasoline, ship_type) ?
-                                    <Text style={{marginLeft:6, fontSize:14}}>
-                                        <Text style={{color:appData.appSecondaryTextColor}}>{'船舶类型 '}</Text>
-                                        <Text style={{color:appData.appTextColor}}>{getArrayTypesText(shipTypes, parseInt(ship_type) - 1)}</Text>
-                                    </Text>
-                                    :
-                                    <Text style={{marginLeft:6, fontSize:14}}>
-                                        <Text style={{color:appData.appSecondaryTextColor}}>{'可运柴油 '}</Text>
-                                        <Text style={{color:appData.appTextColor}}>{objectIsZero(dieseloil) ? "" : dieseloil + '吨'}</Text>
-                                        {shipIsOilThreeLevel(ship_type) ? null : <Text style={{color:appData.appSecondaryTextColor}}>{' 可运汽油 '}</Text>}
-                                        {shipIsOilThreeLevel(ship_type) ? null : <Text style={{color:appData.appTextColor}}>{objectIsZero(gasoline) ? "" : gasoline + '吨'}</Text>}
-                                    </Text>
-                                }
                             </View>
                         </View>
-                    </View>
-                    <View style={{height:20}} />
-                    {this._renderListItem()}
-                    <View style={{paddingLeft: 10, paddingRight: 20}}>
-                        <TouchableOpacity onPress={this.cellSelected.bind(this, "SelectOffer")}>
-                            <View style={styles.offerContainer}>
-                                <Text style={{color: appData.appBlueColor, fontSize: 14}}>
-                                    {"已有" + info.appoint_num + "人预约"}
-                                </Text>
-                                {/*<appFont.Ionicons style={{position: "absolute", right: 0, opacity: 1.0}} name="ios-arrow-forward-outline" size={18} color="#bbb" />*/}
+                        <View style={{height:20}} />
+                        {this._renderListItem()}
+                        <View style={{paddingLeft: 10, paddingRight: 20}}>
+                            <TouchableOpacity onPress={this.cellSelected.bind(this, "SelectOffer")}>
+                                <View style={styles.offerContainer}>
+                                    <Text style={{color: appData.appBlueColor, fontSize: 14}}>
+                                        {"已有" + info.appoint_num + "人预约"}
+                                    </Text>
+                                    {/*<appFont.Ionicons style={{position: "absolute", right: 0, opacity: 1.0}} name="ios-arrow-forward-outline" size={18} color="#bbb" />*/}
+                                </View>
+                            </TouchableOpacity>
+                            <View style={{height: 1, marginLeft: 10}}>
+                                <DashLine backgroundColor={appData.appSeparatorLightColor} len={(screenWidth - 40)/ appData.appDashWidth}/>
                             </View>
-                        </TouchableOpacity>
-                        <View style={{height: 1, marginLeft: 10}}>
-                            <DashLine backgroundColor={appData.appSeparatorLightColor} len={(screenWidth - 40)/ appData.appDashWidth}/>
                         </View>
-                    </View>
+                    </View>}
                 </ScrollView>
-                <View style={{position: "absolute", bottom: 0, width: screenWidth, height: 54, flexDirection: 'row', justifyContent: "space-between", borderTopColor: appData.appSeparatorColor, borderTopWidth:1}}>
-                    <View style={{flexDirection: 'row'}}>
-                        <TouchableOpacity onPress={this.onShareBtnAction.bind(this)} style={{flexDirection: 'row', justifyContent: "center", alignItems: "center"}}>
-                            <Image source={require('../../images/icon_share_h.png')} style={{marginLeft: 16, width: 16, height: 18, resizeMode: "cover"}}/>
-                            <Text style={styles.btnText}>{"分享"}</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{flexDirection: 'row'}}>
-                        <TouchableOpacity onPress={this.onEditBtnAction.bind(this)} style={{flexDirection: 'row', justifyContent: "flex-end", alignItems: "center"}}>
-                            <Image source={require('../../images/icon_bianj.png')} style={{width: 15, height: 12, resizeMode: "cover"}}/>
-                            <Text style={[styles.btnText, {marginRight: 27}]}>{"编辑"}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={this.onDeleteBtnAction.bind(this)} style={{flexDirection: 'row', justifyContent: "flex-end", alignItems: "center"}}>
-                            <Image source={require('../../images/icon_dele.png')} style={{width: 13, height: 17, resizeMode: "cover"}}/>
-                            <Text style={[styles.btnText, {marginRight: 21}]}>{"删除"}</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                {isOnlyId ? null
+                :
+                    <View style={{position: "absolute", bottom: 0, width: screenWidth, height: 54, flexDirection: 'row', justifyContent: "space-between", borderTopColor: appData.appSeparatorColor, borderTopWidth:1}}>
+                        <View style={{flexDirection: 'row'}}>
+                            <TouchableOpacity onPress={this.onShareBtnAction.bind(this)} style={{flexDirection: 'row', justifyContent: "center", alignItems: "center"}}>
+                                <Image source={require('../../images/icon_share_h.png')} style={{marginLeft: 16, width: 16, height: 18, resizeMode: "cover"}}/>
+                                <Text style={styles.btnText}>{"分享"}</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{flexDirection: 'row'}}>
+                            <TouchableOpacity onPress={this.onEditBtnAction.bind(this)} style={{flexDirection: 'row', justifyContent: "flex-end", alignItems: "center"}}>
+                                <Image source={require('../../images/icon_bianj.png')} style={{width: 15, height: 12, resizeMode: "cover"}}/>
+                                <Text style={[styles.btnText, {marginRight: 27}]}>{"编辑"}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={this.onDeleteBtnAction.bind(this)} style={{flexDirection: 'row', justifyContent: "flex-end", alignItems: "center"}}>
+                                <Image source={require('../../images/icon_dele.png')} style={{width: 13, height: 17, resizeMode: "cover"}}/>
+                                <Text style={[styles.btnText, {marginRight: 21}]}>{"删除"}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>}
                 <Toast ref={o => this.refToast = o} position={'center'}/>
                 <CustomAlert ref={o => this.refDeleteAlert = o} message={"您确定删除此发布内容吗？"} />
                 <IndicatorModal ref={o => this.refIndicator = o}/>

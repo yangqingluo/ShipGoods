@@ -228,6 +228,7 @@ export default class HomeOrderDetailVC extends Component {
         let info = this.state.detailInfo;
         let price = parseInt(info.price);
         let isBargain = offerIsBargain(this.state.detailInfo.is_bargain);
+        let isOnlyId = objectOnlyId(info);
         return (
             <View style={appStyles.container}>
                 <ScrollView style={{flex: 1, backgroundColor:'#fff'}}
@@ -237,46 +238,52 @@ export default class HomeOrderDetailVC extends Component {
                                     refreshing={this.state.refreshing}
                                 />}
                 >
-                    <View style={{height: 47, flexDirection: 'row', alignItems: "center", justifyContent: "space-between",}}>
-                        <View style={{flexDirection: 'row'}}>
-                            <Image source={require('../../images/icon_blue.png')} style={{width: 10, height: 12, resizeMode: "cover"}}/>
-                            <Text style={{fontSize: 10, color:appData.appSecondaryTextColor, marginLeft: 5}}>{'货物编号：' + info.goods_sn}</Text>
-                        </View>
-                    </View>
-                    <OrderCenterView info={info} style={styles.centerContainer}/>
-                    {this._renderListItem()}
-                    <View style={{paddingLeft: 10, paddingRight: 20}}>
-                        <TouchableOpacity onPress={this.cellSelected.bind(this, "SelectOffer")}>
-                            <View style={styles.offerContainer}>
-                                <Text style={{color: appData.appBlueColor, fontSize: 14}}>
-                                    {"已有" + info.offer_num + "艘船报价"}
-                                </Text>
-                                <appFont.Ionicons style={{position: "absolute", right: 0, opacity: 1.0}} name="ios-arrow-forward-outline" size={18} color="#bbb" />
+                    {isOnlyId ? null
+                    :
+                    <View>
+                        <View style={{height: 47, flexDirection: 'row', alignItems: "center", justifyContent: "space-between",}}>
+                            <View style={{flexDirection: 'row'}}>
+                                <Image source={require('../../images/icon_blue.png')} style={{width: 10, height: 12, resizeMode: "cover"}}/>
+                                <Text style={{fontSize: 10, color:appData.appSecondaryTextColor, marginLeft: 5}}>{'货物编号：' + info.goods_sn}</Text>
                             </View>
-                        </TouchableOpacity>
-                        <View style={{height: 1, marginLeft: 10}}>
-                            <DashLine backgroundColor={appData.appSeparatorLightColor} len={(screenWidth - 40)/ appData.appDashWidth}/>
                         </View>
-                    </View>
+                        <OrderCenterView info={info} style={styles.centerContainer}/>
+                        {this._renderListItem()}
+                        <View style={{paddingLeft: 10, paddingRight: 20}}>
+                            <TouchableOpacity onPress={this.cellSelected.bind(this, "SelectOffer")}>
+                                <View style={styles.offerContainer}>
+                                    <Text style={{color: appData.appBlueColor, fontSize: 14}}>
+                                        {"已有" + info.offer_num + "艘船报价"}
+                                    </Text>
+                                    <appFont.Ionicons style={{position: "absolute", right: 0, opacity: 1.0}} name="ios-arrow-forward-outline" size={18} color="#bbb" />
+                                </View>
+                            </TouchableOpacity>
+                            <View style={{height: 1, marginLeft: 10}}>
+                                <DashLine backgroundColor={appData.appSeparatorLightColor} len={(screenWidth - 40)/ appData.appDashWidth}/>
+                            </View>
+                        </View>
+                    </View>}
                 </ScrollView>
-                <View style={{position: "absolute", bottom: 0, width: screenWidth, height: 54, flexDirection: 'row', justifyContent: "space-between", borderTopColor: appData.appSeparatorColor, borderTopWidth:1}}>
-                    <View style={{flexDirection: 'row'}}>
-                        <TouchableOpacity onPress={this.onShareBtnAction.bind(this)} style={{flexDirection: 'row', justifyContent: "center", alignItems: "center"}}>
-                            <Image source={require('../../images/icon_share_h.png')} style={{marginLeft: 16, width: 16, height: 18, resizeMode: "cover"}}/>
-                            <Text style={styles.btnText}>{"分享"}</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{flexDirection: 'row'}}>
-                        <TouchableOpacity onPress={this.onEditBtnAction.bind(this)} style={{flexDirection: 'row', justifyContent: "flex-end", alignItems: "center"}}>
-                            <Image source={require('../../images/icon_bianj.png')} style={{width: 15, height: 12, resizeMode: "cover"}}/>
-                            <Text style={[styles.btnText, {marginRight: 27}]}>{"编辑"}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={this.onDeleteBtnAction.bind(this)} style={{flexDirection: 'row', justifyContent: "flex-end", alignItems: "center"}}>
-                            <Image source={require('../../images/icon_dele.png')} style={{width: 13, height: 17, resizeMode: "cover"}}/>
-                            <Text style={[styles.btnText, {marginRight: 21}]}>{"删除"}</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                {isOnlyId ? null
+                :
+                    <View style={{position: "absolute", bottom: 0, width: screenWidth, height: 54, flexDirection: 'row', justifyContent: "space-between", borderTopColor: appData.appSeparatorColor, borderTopWidth:1}}>
+                        <View style={{flexDirection: 'row'}}>
+                            <TouchableOpacity onPress={this.onShareBtnAction.bind(this)} style={{flexDirection: 'row', justifyContent: "center", alignItems: "center"}}>
+                                <Image source={require('../../images/icon_share_h.png')} style={{marginLeft: 16, width: 16, height: 18, resizeMode: "cover"}}/>
+                                <Text style={styles.btnText}>{"分享"}</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{flexDirection: 'row'}}>
+                            <TouchableOpacity onPress={this.onEditBtnAction.bind(this)} style={{flexDirection: 'row', justifyContent: "flex-end", alignItems: "center"}}>
+                                <Image source={require('../../images/icon_bianj.png')} style={{width: 15, height: 12, resizeMode: "cover"}}/>
+                                <Text style={[styles.btnText, {marginRight: 27}]}>{"编辑"}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={this.onDeleteBtnAction.bind(this)} style={{flexDirection: 'row', justifyContent: "flex-end", alignItems: "center"}}>
+                                <Image source={require('../../images/icon_dele.png')} style={{width: 13, height: 17, resizeMode: "cover"}}/>
+                                <Text style={[styles.btnText, {marginRight: 21}]}>{"删除"}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>}
                 <Toast ref={o => this.refToast = o} position={'center'}/>
                 <IndicatorModal ref={o => this.refIndicator = o}/>
             </View> );
