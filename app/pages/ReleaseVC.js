@@ -715,7 +715,8 @@ export default class ReleaseVC extends Component {
             }
         }
         else if (item.idKey === 'tonnage' && this.state.tonnage.length > 0) {
-            return this.state.tonnage  + "吨" + '±' + this.state.ton_section;
+            return createGoodsTonnageName(this.state.tonnage, this.state.ton_section);
+            // return this.state.tonnage  + "吨" + '±' + this.state.ton_section;
         }
         else if (item.idKey === 'wastage') {
             return this.state.wastage;

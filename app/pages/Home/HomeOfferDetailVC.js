@@ -273,7 +273,7 @@ export default class HomeOfferDetailVC extends Component {
                             </View>
                             <View style={{marginTop: 5, flex: 1, flexDirection: 'row', alignItems: "center"}}>
                                 <Text style={styles.textContainer}>{info.loading_timetext + ' ± ' + info.loading_delay + '天'}</Text>
-                                <Text style={styles.textContainer}>{createGoodsName(info) + ' ' + info.tonnage + '吨'+ '±' + info.ton_section}</Text>
+                                <Text style={styles.textContainer}>{createGoodsName(info) + ' ' + createGoodsTonnageName(info.tonnage, info.ton_section)}</Text>
                             </View>
                         </View>
                         <View style={{backgroundColor: '#81c6ff', height: 26, alignItems: "center", justifyContent: "center"}}>

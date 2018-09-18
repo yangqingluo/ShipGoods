@@ -658,6 +658,11 @@ global.createGoodsName = function(info) : String {
     return "";
 };
 
+global.createGoodsTonnageName = function(tonnage, section) : String {
+    let sectionName = (stringIsEmpty(section)|| section === '0' || section === '0%') ? '' : ('±' + section);
+    return tonnage  + '吨' + sectionName;
+};
+
 global.sortNotNull = function(sort) : boolean {
     return objectNotNull(sort) && sort !== SortTypeEnum.Default;
 };
