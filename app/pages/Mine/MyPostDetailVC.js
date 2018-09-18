@@ -54,9 +54,11 @@ export default class MyPostDetailVC extends Component {
     requestRecommend = async (isReset) => {
         let data = {task_id: this.state.info.task_id};
 
+        this.refIndicator.show();
         NetUtil.post(appUrl + 'index.php/Mobile/Goods/ship_task_detail/', data)
             .then(
                 (result)=>{
+                    this.refIndicator.hide();
                     if (result.code === 0) {
                         this.setState({
                             detailInfo: result.data,
@@ -66,12 +68,15 @@ export default class MyPostDetailVC extends Component {
                     else {
                         this.setState({
                             refreshing: false,
-                        })
+                        });
+                        this.refToast.show(result.message);
                     }
                 },(error)=>{
+                    this.refIndicator.hide();
                     this.setState({
                         refreshing: false,
-                    })
+                    });
+                    this.refToast.show(error);
                 });
     };
 

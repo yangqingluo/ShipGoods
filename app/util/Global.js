@@ -693,6 +693,26 @@ global.createNextSort = function(sort, ASCFirst = false) : SortTypeEnum {
     return mArray[nextIndex];
 };
 
+
+global.countObjectProps = function(obj : Object) : number {
+    // ES6 遍历对象属性方法
+    // 1.for ... in 循环遍历对象自身的和继承的可枚举属性(不含Symbol属性).
+    // 2.Obejct.keys(obj),返回一个数组,包括对象自身的(不含继承的)所有可枚举属性(不含Symbol属性).
+    // 3.Object.getOwnPropertyNames(obj),返回一个数组,包含对象自身的所有属性(不含Symbol属性,但是包括不可枚举属性).
+    // 4.Object.getOwnPropertySymbols(obj),返回一个数组,包含对象自身的所有Symbol属性.
+    // 5.Reflect.ownKeys(obj),返回一个数组,包含对象自身的所有属性,不管属性名是Symbol或字符串,也不管是否可枚举.
+    // 6.Reflect.enumerate(obj),返回一个Iterator对象,遍历对象自身的和继承的所有可枚举属性(不含Symbol属性),与for ... in 循环相同.
+    let count = 0;
+    for (let data in obj) {
+        count++;
+    }
+    return count;
+};
+
+global.objectOnlyId = function(obj : Object) : boolean {
+    return countObjectProps(obj) <= 1;
+};
+
 global.deepCopy = function(obj : Object) : Object {
     let newobj = {};
     for (let attr in obj) {
@@ -794,19 +814,24 @@ global.appCreateRoutes = function (old_routes, another_routes, params) {
     if (arrayNotEmpty(old_routes) && arrayNotEmpty(another_routes)) {
         let keyList = old_routes[old_routes.length - 1].key.split("-");
         let index = parseInt(keyList[keyList.length - 1]);
+        let keyPrefix = keyList.splice(0, keyList.length - 1).join("-") + "-";
         let routes = old_routes.slice(0, 1);
         for (let i = 0; i < another_routes.length - 1; i++) {
             index++;
             routes.push({
                 routeName: another_routes[i],
                 params: {},
-                key: keyList.splice(0, keyList.length - 1).concat([index + ""]).join("-"),
+                key: keyPrefix + index,
             });
         }
+
+        index++;
         routes.push({
             routeName: another_routes[another_routes.length - 1],
             params: params,
+            key: keyPrefix + index,
         });
+
         return routes;
     }
     return null;

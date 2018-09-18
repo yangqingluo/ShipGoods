@@ -132,6 +132,30 @@ const defaultGetStateForAction = MyNavigator.router.getStateForAction;
 MyNavigator.router.getStateForAction = (action, state) => {
     // goBack返回指定页面
     if (state && action.type === 'Navigation/BACK' && action.key) {
+        let routes = null;
+        if (action.key === "MyPostDetail") {
+            routes = appCreateRoutes(state.routes,
+                ["MyPost", action.key],
+                {
+                    info: {task_id: global.appPushData}
+                });
+        }
+        else if (action.key === "OrderDetail") {
+            routes = appCreateRoutes(state.routes,
+                [action.key],
+                {
+                    info: {or_id: global.appPushData},
+                });
+        }
+        if (arrayNotEmpty(routes)) {
+            const purposeState = {
+                ...state,
+                routes: routes,
+                index: routes.length - 1,
+            };
+            return purposeState;
+        }
+
         const backRoute = state.routes.find((route) => route.routeName === action.key);
         if (backRoute) {
             const backRouteIndex = state.routes.indexOf(backRoute);
@@ -143,7 +167,7 @@ MyNavigator.router.getStateForAction = (action, state) => {
             };
             return purposeState;
         }
-        else {
+        else if (state.routes.length > 1) {
             if (action.key === "HomeOfferTwicePrice") {
                 let routes = state.routes.slice(0, state.routes.length - 2);
                 routes.push({routeName: action.key});
@@ -153,21 +177,6 @@ MyNavigator.router.getStateForAction = (action, state) => {
                     index: routes.length - 1,
                 };
                 return purposeState;
-            }
-            else if (action.key === "MyPostDetail") {
-                let routes = appCreateRoutes(state.routes,
-                    ["MyPost", action.key],
-                    {
-                        info: {task_id: global.appPushData}
-                    });
-                if (arrayNotEmpty(routes)) {
-                    const purposeState = {
-                        ...state,
-                        routes: routes,
-                        index: routes.length - 1,
-                    };
-                    return purposeState;
-                }
             }
             else if (action.key === "GoBackSkip") {
                 let routes = state.routes.slice(0, state.routes.length - 2);

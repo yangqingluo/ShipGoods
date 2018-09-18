@@ -215,16 +215,30 @@ export default class MainTabVC extends Component {
                     break;
 
                 case RedirectType.ShipPostDetail:
-                    if (objectNotNull(param_value)) {
-                        global.appPushData = param_value;
-                        this.props.navigation.goBack("MyPostDetail");
-                    }
+                    this.doPushToVCFunction(content, "MyPostDetail", param_value);
+                    break;
+
+
+                case RedirectType.ShipOrderDetail:
+                    this.doPushToVCFunction(content, "OrderDetail", param_value);
                     break;
             }
 
             if (objectNotNull(appMessageVC)) {
                 appMessageVC.reloadSubMessageVC();
             }
+        }
+    }
+
+    doPushToVCFunction(title, key, param_value) {
+        if (objectNotNull(param_value)) {
+            PublicAlert(title || "新的动态", '',
+                [{text:"取消"},
+                    {text:"去查看", onPress:()=>{
+                            global.appPushData = param_value;
+                            this.props.navigation.goBack(key);
+                        }}]
+            );
         }
     }
 

@@ -19,7 +19,7 @@ import ActionSheet from 'react-native-actionsheet';
 
 const Icon = appFont["Ionicons"];
 
-export default class OrderJudgementVC extends Component {
+export default class OrderDetailVC extends Component {
     static navigationOptions = ({ navigation }) => ({
         headerTitle: "订单详情",
         headerRight: (!isShipOwner() && navigation.state.params.order_state === '0') ?
@@ -499,7 +499,7 @@ export default class OrderJudgementVC extends Component {
 
     render() {
         let {detailInfo} = this.state;
-        let shipOwner = isShipOwner();
+        let isOnlyId = objectOnlyId(detailInfo);
         return (
             <View style={appStyles.container}>
                 <ScrollView style={{flex: 1}}
@@ -510,24 +510,29 @@ export default class OrderJudgementVC extends Component {
                                 />
                             }
                 >
-                    {this.renderHeader()}
-                    {this._renderListItem(this.config)}
-                    <View style={{height: 10, backgroundColor: appData.appGrayColor}}/>
-                    {this._renderListItem(this.config2)}
-                    <View style={{height: 10, backgroundColor: appData.appGrayColor}}/>
-                    {this._renderListItem(this.config3)}
-                    <Text style={[styles.snText, {marginTop:8}]}>
-                        {"货物编号：" + detailInfo.goods_sn}
-                    </Text>
-                    <Text style={[styles.snText, {marginTop:2}]}>
-                        {"订单编号：" + detailInfo.or_sn}
-                    </Text>
-                    <Text style={[styles.snText, {marginTop:2}]}>
-                        {"成交时间：" + detailInfo.confirm_time}
-                    </Text>
-                    <View style={{height: 80}}/>
+                    {isOnlyId ?
+                        null
+                    :
+                        <View>
+                            {this.renderHeader()}
+                            {this._renderListItem(this.config)}
+                            <View style={{height: 10, backgroundColor: appData.appGrayColor}}/>
+                            {this._renderListItem(this.config2)}
+                            <View style={{height: 10, backgroundColor: appData.appGrayColor}}/>
+                            {this._renderListItem(this.config3)}
+                            <Text style={[styles.snText, {marginTop:8}]}>
+                                {"货物编号：" + detailInfo.goods_sn}
+                            </Text>
+                            <Text style={[styles.snText, {marginTop:2}]}>
+                                {"订单编号：" + detailInfo.or_sn}
+                            </Text>
+                            <Text style={[styles.snText, {marginTop:2}]}>
+                                {"成交时间：" + detailInfo.confirm_time}
+                            </Text>
+                            <View style={{height: 80}}/>
+                        </View>}
                 </ScrollView>
-                {this.renderFooter()}
+                {isOnlyId ? null : this.renderFooter()}
                 <ActionSheet
                     ref={o => this.refActionSheet = o}
                     title={'关闭订单'}
