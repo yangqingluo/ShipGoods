@@ -265,6 +265,10 @@ export default class MainTabVC extends Component {
                 case RedirectType.ShipFavorDetail:
                     this.doPushToVCFunction(content, "ShipFavorDetail", param_value);
                     break;
+
+                default:
+                    PublicAlert(JSON.stringify(message));
+                    break
             }
 
             if (objectNotNull(appMessageVC)) {

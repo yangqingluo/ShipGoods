@@ -161,12 +161,20 @@ MyNavigator.router.getStateForAction = (action, state) => {
                 });
         }
         else if (action.key === "ShipFavorDetail") {
-            let info = {task_id: appPushData};
+            let {task_id, book_id, is_offer} = appPushData;
+
+            let info = {
+                task_id: task_id,
+                book_id: book_id,
+                is_offer: is_offer,
+            };
+
+            global.appSecondPriceParams = {info: info};
             routes = appCreateRoutes(state.routes,
-                ["HomeOfferDetail"],
+                [offerIsOffer(is_offer) ? "HomeOfferTwicePrice" : "HomeOfferDetail"],
                 {
                     info: info,
-                    is_offer: '0',
+                    is_offer: is_offer,
                 });
         }
 
