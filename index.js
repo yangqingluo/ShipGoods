@@ -137,18 +137,21 @@ MyNavigator.router.getStateForAction = (action, state) => {
             routes = appCreateRoutes(state.routes,
                 ["MyPost", action.key],
                 {
-                    info: {task_id: global.appPushData}
+                    info: {task_id: appPushData}
                 });
         }
         else if (action.key === "OrderDetail") {
             routes = appCreateRoutes(state.routes,
                 [action.key],
                 {
-                    info: {or_id: global.appPushData},
+                    info: {or_id: appPushData},
                 });
         }
         else if (action.key === "ShipPricedDetail") {
-            let info = {task_id: global.appPushData};
+            let info = {
+                task_id: appPushData.task_id,
+                book_id: appPushData.book_id,
+            };
             global.appSecondPriceParams = {info : info};
             routes = appCreateRoutes(state.routes,
                 ["HomeOfferTwicePrice"],
@@ -158,7 +161,7 @@ MyNavigator.router.getStateForAction = (action, state) => {
                 });
         }
         else if (action.key === "ShipFavorDetail") {
-            let info = {task_id: global.appPushData};
+            let info = {task_id: appPushData};
             routes = appCreateRoutes(state.routes,
                 ["HomeOfferDetail"],
                 {
