@@ -343,6 +343,10 @@ global.backAndGoToAuth = function() : void {
 
 global.backAndGoToOrder = function() : void {
     backToMain();
+    doTabGoToOrder();
+};
+
+global.doTabGoToOrder = function() : void {
     if (objectNotNull(appMainTab.refTab)) {
         appMainTab.onPressTabItemForIndex(1);
     }

@@ -278,6 +278,20 @@ export default class MainTabVC extends Component {
                 }
                     break;
 
+                case RedirectType.GoodsOfferedDetail: {
+
+                }
+                    break;
+
+                case RedirectType.GoodsOrdering: {
+                    doTabGoToOrder();
+                    if (objectNotNull(appOrderVC)) {
+                        appOrderVC.reloadSubOrderingVC(true);
+                    }
+                    this.doPushToVCFunction(content, "OrderDetail", param_value);
+                }
+                    break;
+
                 default:
                     PublicAlert(JSON.stringify(message));
                     break
