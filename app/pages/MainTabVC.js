@@ -266,6 +266,10 @@ export default class MainTabVC extends Component {
                     this.doPushToVCFunction(content, "ShipFavorDetail", param_value);
                     break;
 
+                case RedirectType.GoodsGoodsDetailOfferList:
+                    this.doPushToVCFunction(content, "GoodsGoodsDetailOfferList", param_value);
+                    break;
+
                 default:
                     PublicAlert(JSON.stringify(message));
                     break

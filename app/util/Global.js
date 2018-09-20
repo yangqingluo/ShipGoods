@@ -811,7 +811,7 @@ global.appResetState = function () {
 };
 
 global.appCreateRoutes = function (old_routes, another_routes, params) {
-    if (arrayNotEmpty(old_routes) && arrayNotEmpty(another_routes)) {
+    if (arrayNotEmpty(old_routes) && arrayNotEmpty(another_routes) && arrayNotEmpty(params) && another_routes.length === params.length) {
         let keyList = old_routes[old_routes.length - 1].key.split("-");
 
         //TODO  暂时未找到导航栈里key当前序数
@@ -823,7 +823,7 @@ global.appCreateRoutes = function (old_routes, another_routes, params) {
             index++;
             routes.push({
                 routeName: another_routes[i],
-                params: {},
+                params: params[i],
                 key: keyPrefix + index,
             });
         }
@@ -831,7 +831,7 @@ global.appCreateRoutes = function (old_routes, another_routes, params) {
         index++;
         routes.push({
             routeName: another_routes[another_routes.length - 1],
-            params: params,
+            params: params[params.length - 1],
             key: keyPrefix + index,
         });
 

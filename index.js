@@ -133,49 +133,64 @@ MyNavigator.router.getStateForAction = (action, state) => {
     // goBack返回指定页面
     if (state && action.type === 'Navigation/BACK' && action.key) {
         let routes = null;
-        if (action.key === "MyPostDetail") {
-            routes = appCreateRoutes(state.routes,
-                ["MyPost", action.key],
-                {
-                    info: {task_id: appPushData}
-                });
-        }
-        else if (action.key === "OrderDetail") {
-            routes = appCreateRoutes(state.routes,
-                [action.key],
-                {
-                    info: {or_id: appPushData},
-                });
-        }
-        else if (action.key === "ShipPricedDetail") {
-            let info = {
-                task_id: appPushData.task_id,
-                book_id: appPushData.book_id,
-            };
-            global.appSecondPriceParams = {info : info};
-            routes = appCreateRoutes(state.routes,
-                ["HomeOfferTwicePrice"],
-                {
-                    info: info,
-                    is_offer: '1',
-                });
-        }
-        else if (action.key === "ShipFavorDetail") {
-            let {task_id, book_id, is_offer} = appPushData;
+        switch (action.key) {
+            case "MyPostDetail": {
+                routes = appCreateRoutes(state.routes,
+                    ["MyPost", action.key],
+                    [{}, {info: {task_id: appPushData}}]);
+            }
+                break;
+            case "OrderDetail": {
+                routes = appCreateRoutes(state.routes,
+                    [action.key],
+                    {
+                        info: {or_id: appPushData},
+                    });
+            }
+                break;
+            case "ShipPricedDetail": {
+                let info = {
+                    task_id: appPushData.task_id,
+                    book_id: appPushData.book_id,
+                };
+                global.appSecondPriceParams = {info : info};
+                routes = appCreateRoutes(state.routes,
+                    ["HomeOfferTwicePrice"],
+                    {
+                        info: info,
+                        is_offer: '1',
+                    });
+            }
+                break;
+            case "ShipFavorDetail": {
+                let {task_id, book_id, is_offer} = appPushData;
 
-            let info = {
-                task_id: task_id,
-                book_id: book_id,
-                is_offer: is_offer,
-            };
-
-            global.appSecondPriceParams = {info: info};
-            routes = appCreateRoutes(state.routes,
-                [offerIsOffer(is_offer) ? "HomeOfferTwicePrice" : "HomeOfferDetail"],
-                {
-                    info: info,
+                let info = {
+                    task_id: task_id,
+                    book_id: book_id,
                     is_offer: is_offer,
-                });
+                };
+
+                global.appSecondPriceParams = {info: info};
+                routes = appCreateRoutes(state.routes,
+                    [offerIsOffer(is_offer) ? "HomeOfferTwicePrice" : "HomeOfferDetail"],
+                    {
+                        info: info,
+                        is_offer: is_offer,
+                    });
+            }
+                break;
+            case "GoodsGoodsDetailOfferList": {
+                let info = {
+                    task_id: appPushData,
+                };
+                let param = {info : info};
+                routes = appCreateRoutes(state.routes,
+                    ["HomeOrderDetail", "HomeOrderShipList"],
+                    [param, param]
+                );
+            }
+                break;
         }
 
         if (arrayNotEmpty(routes)) {
