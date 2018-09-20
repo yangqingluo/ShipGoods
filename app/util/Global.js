@@ -368,13 +368,17 @@ global.backAndGoToMyReleaseForShipOwner = function() : void {
 
 global.backAndGoToMyReleaseForGoodsOwner = function() : void {
     backToMain();
+    doTabGoToHome();
+    appHomeVC.reloadSubListOrderVC(true);
+};
+
+global.doTabGoToHome = function() : void {
     if (objectNotNull(appMainTab.refTab)) {
         appMainTab.onPressTabItemForIndex(0);
     }
     else {
         appMainTab.props.navigation.navigate('HomeVC');
     }
-    appHomeVC.reloadSubListOrderVC(true);
 };
 
 global.backAndGoToRelease = function() : void {

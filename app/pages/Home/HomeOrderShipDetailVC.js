@@ -21,7 +21,7 @@ import Toast from "react-native-easy-toast";
 import px2dp from "../../util";
 
 
-export default class HomeShipDetailVC extends Component {
+export default class HomeOrderShipDetailVC extends Component {
     static navigationOptions = ({ navigation }) => ({
         headerTitle: '报价船详情',
     });
@@ -58,9 +58,11 @@ export default class HomeShipDetailVC extends Component {
     requestRecommend = async (isReset) => {
         let data = {book_id: this.state.info.book_id, type: 2};
 
+        this.refIndicator.show();
         NetUtil.post(appUrl + 'index.php/Mobile/Goods/get_offer_detail/', data)
             .then(
                 (result)=>{
+                    this.refIndicator.hide();
                     if (result.code === 0) {
                         this.setState({
                             detailInfo: result.data,
@@ -70,12 +72,15 @@ export default class HomeShipDetailVC extends Component {
                     else {
                         this.setState({
                             refreshing: false,
-                        })
+                        });
+                        this.refToast.show(result.message);
                     }
                 },(error)=>{
+                    this.refIndicator.hide();
                     this.setState({
                         refreshing: false,
-                    })
+                    });
+                    this.refToast.show(error);
                 });
     };
 
@@ -288,6 +293,7 @@ export default class HomeShipDetailVC extends Component {
     render() {
         const { navigate } = this.props.navigation;
         let info = this.state.detailInfo;
+        let isOnlyId = objectOnlyId(info);
         return (
             <View style={appStyles.container}>
                 <ScrollView style={{flex: 1, backgroundColor:'#fff'}}
@@ -297,30 +303,34 @@ export default class HomeShipDetailVC extends Component {
                                     refreshing={this.state.refreshing}
                                 />}
                 >
-                    <View style={{backgroundColor:'#81c6ff', flexDirection: 'row', justifyContent: "space-between", height:26}}>
-                        <Text style={{fontSize:10, color:'white', marginLeft:10, marginTop:8}}>{'发票编号：' + info.goods_sn}</Text>
-                        <Text style={{fontSize:10, color:'white', marginRight:10, marginTop:8}}>{info.add_timetext}</Text>
-                    </View>
-                    <View style={{backgroundColor:'#f2f9ff', flexDirection: 'row',  alignItems: "center", justifyContent: "space-between", height:51}}>
-                        <Text style={{fontSize:14, color:appData.appTextColor, marginLeft:18, fontWeight:'bold'}}>{info.ship_name}</Text>
-                        <Text style={{fontSize:12, color:appData.appRedColor, marginRight:18, fontWeight:'bold'}}>{info.offer + ' 元 / 吨'}</Text>
-                    </View>
-                    {this._renderListItem()}
-                    <View style={{height: 10}} />
-                    <View style={{paddingHorizontal:18}}>
-                        <Image source={require('../../images/icon_beizhu.png')} style={{width: 57, height: 21, resizeMode: "cover"}}/>
-                        <Text underlineColorAndroid="transparent"
-                              style={styles.textInput}
-                              multiline={true}
-                              editable={false}
-                        >
-                            {this.remarkForInfo()}
-                        </Text>
-                    </View>
-                    <View style={{marginTop:12, paddingHorizontal:18}}>
-                        {this._renderReplyList()}
-                    </View>
-                    <View style={{height: 60}} />
+                    {isOnlyId ? null
+                    :
+                    <View>
+                        <View style={{backgroundColor:'#81c6ff', flexDirection: 'row', justifyContent: "space-between", height:26}}>
+                            <Text style={{fontSize:10, color:'white', marginLeft:10, marginTop:8}}>{'发票编号：' + info.goods_sn}</Text>
+                            <Text style={{fontSize:10, color:'white', marginRight:10, marginTop:8}}>{info.add_timetext}</Text>
+                        </View>
+                        <View style={{backgroundColor:'#f2f9ff', flexDirection: 'row',  alignItems: "center", justifyContent: "space-between", height:51}}>
+                            <Text style={{fontSize:14, color:appData.appTextColor, marginLeft:18, fontWeight:'bold'}}>{info.ship_name}</Text>
+                            <Text style={{fontSize:12, color:appData.appRedColor, marginRight:18, fontWeight:'bold'}}>{info.offer + ' 元 / 吨'}</Text>
+                        </View>
+                        {this._renderListItem()}
+                        <View style={{height: 10}} />
+                        <View style={{paddingHorizontal:18}}>
+                            <Image source={require('../../images/icon_beizhu.png')} style={{width: 57, height: 21, resizeMode: "cover"}}/>
+                            <Text underlineColorAndroid="transparent"
+                                  style={styles.textInput}
+                                  multiline={true}
+                                  editable={false}
+                            >
+                                {this.remarkForInfo()}
+                            </Text>
+                        </View>
+                        <View style={{marginTop:12, paddingHorizontal:18}}>
+                            {this._renderReplyList()}
+                        </View>
+                        <View style={{height: 60}} />
+                    </View>}
                 </ScrollView>
                 <View style={{width: screenWidth, height: 45, flexDirection: 'row'}}>
                     <TouchableOpacity onPress={this.onAgreeBtnAction.bind(this)} style={{flex:1, minWidth: px2dp(221), backgroundColor: appData.appBlueColor, justifyContent: "center", alignItems: "center"}}>

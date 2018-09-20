@@ -173,11 +173,12 @@ MyNavigator.router.getStateForAction = (action, state) => {
 
                 global.appSecondPriceParams = {info: info};
                 routes = appCreateRoutes(state.routes,
-                    [offerIsOffer(is_offer) ? "HomeOfferTwicePrice" : "HomeOfferDetail"],
-                    [{
-                        info: info,
-                        is_offer: is_offer,
-                    }]);
+                    ["MyFavors", offerIsOffer(is_offer) ? "HomeOfferTwicePrice" : "HomeOfferDetail"],
+                    [{},
+                        {
+                            info: info,
+                            is_offer: is_offer,
+                        }]);
             }
                 break;
             case "GoodsGoodsDetailOfferList": {
@@ -200,6 +201,21 @@ MyNavigator.router.getStateForAction = (action, state) => {
                 routes = appCreateRoutes(state.routes,
                     ["OrderTransport"],
                     [param]);
+            }
+                break;
+
+            case "GoodsOfferedDetail": {
+                let {task_id, book_id} = appPushData;
+                let paramTask = {info : {
+                        task_id: task_id,
+                    }};
+                let paramBook = {info : {
+                        book_id: book_id,
+                    }};
+                routes = appCreateRoutes(state.routes,
+                    ["HomeOrderDetail", "HomeOrderShipList", "HomeOrderShipDetail"],
+                    [paramTask, paramTask, paramBook]
+                );
             }
                 break;
         }

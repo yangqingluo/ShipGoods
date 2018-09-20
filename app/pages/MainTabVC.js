@@ -271,6 +271,7 @@ export default class MainTabVC extends Component {
                     break;
 
                 case RedirectType.GoodsOrderingTransport: {
+                    doTabGoToOrder();
                     if (objectNotNull(appOrderVC)) {
                         appOrderVC.reloadSubOrderingVC(true);
                     }
@@ -279,7 +280,11 @@ export default class MainTabVC extends Component {
                     break;
 
                 case RedirectType.GoodsOfferedDetail: {
-
+                    doTabGoToHome();
+                    if (objectNotNull(appHomeVC)) {
+                        appHomeVC.reloadSubListOrderVC(true);
+                    }
+                    this.doPushToVCFunction(content, "GoodsOfferedDetail", param_value);
                 }
                     break;
 
