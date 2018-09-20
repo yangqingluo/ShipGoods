@@ -270,6 +270,14 @@ export default class MainTabVC extends Component {
                     this.doPushToVCFunction(content, "GoodsGoodsDetailOfferList", param_value);
                     break;
 
+                case RedirectType.GoodsOrderingTransport: {
+                    if (objectNotNull(appOrderVC)) {
+                        appOrderVC.reloadSubOrderingVC(true);
+                    }
+                    this.doPushToVCFunction(content, "GoodsOrderingTransport", param_value);
+                }
+                    break;
+
                 default:
                     PublicAlert(JSON.stringify(message));
                     break

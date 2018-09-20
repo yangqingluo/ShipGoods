@@ -143,9 +143,9 @@ MyNavigator.router.getStateForAction = (action, state) => {
             case "OrderDetail": {
                 routes = appCreateRoutes(state.routes,
                     [action.key],
-                    {
+                    [{
                         info: {or_id: appPushData},
-                    });
+                    }]);
             }
                 break;
             case "ShipPricedDetail": {
@@ -156,10 +156,10 @@ MyNavigator.router.getStateForAction = (action, state) => {
                 global.appSecondPriceParams = {info : info};
                 routes = appCreateRoutes(state.routes,
                     ["HomeOfferTwicePrice"],
-                    {
+                    [{
                         info: info,
                         is_offer: '1',
-                    });
+                    }]);
             }
                 break;
             case "ShipFavorDetail": {
@@ -174,10 +174,10 @@ MyNavigator.router.getStateForAction = (action, state) => {
                 global.appSecondPriceParams = {info: info};
                 routes = appCreateRoutes(state.routes,
                     [offerIsOffer(is_offer) ? "HomeOfferTwicePrice" : "HomeOfferDetail"],
-                    {
+                    [{
                         info: info,
                         is_offer: is_offer,
-                    });
+                    }]);
             }
                 break;
             case "GoodsGoodsDetailOfferList": {
@@ -189,6 +189,17 @@ MyNavigator.router.getStateForAction = (action, state) => {
                     ["HomeOrderDetail", "HomeOrderShipList"],
                     [param, param]
                 );
+            }
+                break;
+
+            case "GoodsOrderingTransport": {
+                let info = {
+                    or_id: appPushData,
+                };
+                let param = {info : info};
+                routes = appCreateRoutes(state.routes,
+                    ["OrderTransport"],
+                    [param]);
             }
                 break;
         }
