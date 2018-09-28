@@ -133,26 +133,26 @@ export default class HomeOfferPriceVC extends Component {
                                     }
                                 );
 
-                                if (objectNotNull(this.state.book)) {
+                                // if (objectNotNull(this.state.book)) {
+                                //     this.setState({
+                                //         ship: data,
+                                //         offer: data.price,
+                                //         last_goods: list.join(','),
+                                //         lastGoodsSelectedList: lastGoodsSelectedList,
+                                //         arrive_time: data.arrive_time && new Date(parseInt(data.arrive_time) * 1000),
+                                //         arrive_delay: data.arrive_delay && parseInt(data.arrive_delay),
+                                //         refreshing: false,
+                                //     });
+                                // }
+                                // else {
                                     this.setState({
                                         ship: data,
                                         offer: data.price,
                                         last_goods: list.join(','),
                                         lastGoodsSelectedList: lastGoodsSelectedList,
-                                        arrive_time: data.arrive_time && new Date(parseInt(data.arrive_time) * 1000),
-                                        arrive_delay: data.arrive_delay && parseInt(data.arrive_delay),
                                         refreshing: false,
                                     });
-                                }
-                                else {
-                                    this.setState({
-                                        ship: data,
-                                        offer: data.price,
-                                        last_goods: list.join(','),
-                                        lastGoodsSelectedList: lastGoodsSelectedList,
-                                        refreshing: false,
-                                    });
-                                }
+                                // }
                             }
                             else {
                                 this.setState({
