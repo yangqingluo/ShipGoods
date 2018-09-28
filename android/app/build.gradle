@@ -101,8 +101,8 @@ android {
         applicationId "com.xinfu.shipowner"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 18
-        versionName "2.3"
+        versionCode 19
+        versionName "2.4"
         manifestPlaceholders = [
                 JPUSH_APPKEY: "759e502e8a3b6708fa90c6af",
                 APP_CHANNEL : "default"

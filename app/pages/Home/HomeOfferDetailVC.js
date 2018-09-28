@@ -177,6 +177,7 @@ export default class HomeOfferDetailVC extends Component {
                     title: title,
                     info: stringIsEmpty(this.state.info.book_id) ? this.state.detailInfo : this.state.info,
                     type: this.props.navigation.state.params.type,
+                    book: this.state.detailInfo.book,
                     priceType: type,
                 });
         }

@@ -27,6 +27,7 @@ export default class HomeOfferPriceVC extends Component {
             type: this.props.navigation.state.params.type || OfferOrderEnum.ShipOrder,
             priceType: this.props.navigation.state.params.priceType || OfferPriceEnum.BargainPrice,
             ship: this.props.navigation.state.params.ship || null,//船
+            book: this.props.navigation.state.params.book || null,
             offer: '',
             arrive_time: null,//预计到港时间
             arrive_delay: 0,//到港延迟
@@ -77,7 +78,10 @@ export default class HomeOfferPriceVC extends Component {
     }
 
     componentDidMount() {
-        if (this.isAgreePrice() || this.isGoodsOrder()) {
+        if (objectNotNull(this.state.book)) {
+            this.requestData();
+        }
+        else if (this.isAgreePrice() || this.isGoodsOrder()) {
             if (this.isFirstPrice()) {
                 this.setState({
                     offer: this.state.info.prices,
@@ -95,8 +99,15 @@ export default class HomeOfferPriceVC extends Component {
     };
 
     requestRecommend = async (isReset) => {
-        let {info} = this.state;
-        if (stringIsEmpty(info.book_id)) {
+        let {info, book} = this.state;
+        let {book_id} = info;
+        if (stringIsEmpty(book_id)) {
+            if (!stringIsEmpty(book.book_id)) {
+                book_id = book.book_id;
+            }
+        }
+
+        if (stringIsEmpty(book_id)) {
             this.setState({
                 refreshing: false,
             });
@@ -104,14 +115,16 @@ export default class HomeOfferPriceVC extends Component {
             return;
         }
 
-        let data = {book_id: info.book_id};
+        this.refIndicator.show();
+        let data = {book_id: book_id};
         NetUtil.post(appUrl + 'index.php/Mobile/ship/get_default_ship', data)
             .then(
                 (result)=>{
+                    this.refIndicator.hide();
                     if (result.code === 0) {
                         let data = result.data;
-
-                        if (this.isAgreePrice()) {
+                        
+                        if (this.isAgreePrice() || objectNotNull(this.state.book)) {
                             if (objectNotNull(data.last_goods_name)) {
                                 let lastGoodsSelectedList = [data.last_goods_name];
                                 let list = lastGoodsSelectedList.map(
@@ -125,6 +138,8 @@ export default class HomeOfferPriceVC extends Component {
                                     offer: data.price,
                                     last_goods: list.join(','),
                                     lastGoodsSelectedList: lastGoodsSelectedList,
+                                    arrive_time: data.arrive_time && new Date(parseInt(data.arrive_time) * 1000),
+                                    arrive_delay: data.arrive_delay && parseInt(data.arrive_delay),
                                     refreshing: false,
                                 });
                             }
@@ -154,6 +169,7 @@ export default class HomeOfferPriceVC extends Component {
                         this.refToast.show(result.message);
                     }
                 },(error)=>{
+                    this.refIndicator.hide();
                     this.setState({
                         refreshing: false,
                     });
@@ -175,7 +191,7 @@ export default class HomeOfferPriceVC extends Component {
 
     toGotoTwicePriceVC = (data) =>{
         //to fix 报价后book_id和info.book_id不一致
-        if (!objectNotNull(this.state.info.book_id)) {
+        if (stringIsEmpty(this.state.info.book_id)) {
             this.state.info.book_id = data.book_id;
         }
         // this.refToast.show(this.state.info.book_id + "****" + data.book_id);
@@ -340,7 +356,7 @@ export default class HomeOfferPriceVC extends Component {
                 .then(
                     (result)=>{
                         if (result.code === 0) {
-                            appAllGoods = result.data;
+                            global.appAllGoods = result.data;
                             this.toGoToGoodsVC();
                         }
                         else {
