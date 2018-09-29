@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     Image,
     DeviceEventEmitter,
+    BackHandler,
 } from 'react-native';
 
 import JPushModule from 'jpush-react-native';
@@ -119,6 +120,7 @@ export default class MainTabVC extends Component {
     }
 
     componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
         global.appMainTab = this;
         // AppState.addEventListener('change',this._handleAppStateChange);
         if (global.appIsFirst) {
@@ -151,13 +153,14 @@ export default class MainTabVC extends Component {
             this.doReceivedMessage(message, true);
         });
 
-        if (objectNotNull(appInitialProps.extras)) {
+        if (objectNotNull(appInitialProps) && objectNotNull(appInitialProps.extras)) {
             this.doReceivedMessage(appInitialProps, true);
             global.appInitialProps = null;
         }
     }
 
     componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid);
         this.removeReceivedJPush();
     }
 
@@ -189,6 +192,39 @@ export default class MainTabVC extends Component {
             this.flage = true;
         }
     };
+
+    onBackAndroid = () => {
+        const {navigate} = this.props.navigation;
+        // if (!navigate) return false;
+        PublicAlert("", JSON.stringify(this.props));
+        return false;
+        // const routers = navigator.getCurrentRoutes();
+        // // 当前页面不为root页面时的处理
+        // if (routers.length > 1) {
+        //     const top = routers[routers.length - 1];
+        //     if (top.ignoreBack || top.component.ignoreBack) {
+        //         // 路由或组件上决定这个界面忽略back键
+        //         return true;
+        //     }
+        //     const handleBack = top.handleBack || top.component.handleBack;
+        //     if (handleBack) {
+        //         // 路由或组件上决定这个界面自行处理back键
+        //         return handleBack();
+        //     }
+        //     // 默认行为： 退出当前界面。
+        //     navigator.pop();
+        //     return true;
+        // }
+        // // 当前页面为root页面时的处理
+        // if (this.lastBackPressed && (this.lastBackPressed + 2000 >= Date.now())) {
+        //     //最近2秒内按过back键，可以退出应用。
+        //     NativeCommonTools.onBackPressed();
+        //     return true;
+        // }
+        // this.lastBackPressed = Date.now();
+        // ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT);
+        // return true;
+    }
 
     // setTag() {
     //     if (objectNotNull(this.state.tag)) {

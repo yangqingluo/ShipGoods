@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import {AppRegistry} from 'react-native';
+import {
+    AppRegistry,
+} from 'react-native';
 import {StackNavigator, NavigationActions} from 'react-navigation';
 
 import './app/util/Global'
@@ -280,4 +282,4 @@ export default class MainNav extends MyNavigator {
     }
 }
 
-AppRegistry.registerComponent('ShipGoods', () => MainNav);
+AppRegistry.registerComponent('ShipGoods', () => isIOS() ? MainNav : MyNavigator);
