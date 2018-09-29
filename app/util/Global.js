@@ -585,6 +585,10 @@ global.offerIsOrdered = function(status) : boolean {
     return (status === '1');
 };
 
+global.valueIsTrue = function(value) : boolean {
+    return (value === "1");
+};
+
 global.commentIscomment = function(iscomment) : boolean {
     return (iscomment === '11');
 };

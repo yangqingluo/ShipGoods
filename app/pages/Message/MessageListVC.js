@@ -93,24 +93,25 @@ export default class OrderListVC extends Component {
 
     onCellSelected = (info: Object) => {
         let {item} = info;
-        if (item.isnew === '0') {
-            let data = {nid: item.nid};
+        let {isnew, nid, content, redirect_type, param_value} = item;
+        if (valueIsTrue(isnew)) {
+            let data = {nid: nid};
 
             NetUtil.post(appUrl + 'index.php/Mobile/Notification/change_notification_state/', data)
                 .then(
                     (result)=>{
-                        this.refToast.show(result.message);
                         if (result.code === 0) {
-
+                            info.item.isnew = "0";
+                            this.forceUpdate();
                         }
                         else {
-
+                            this.refToast.show(result.message);
                         }
                     },(error)=>{
                         this.refToast.show(error);
                     });
         }
-
+        appMainTab.doAnalyzeMessage(content, redirect_type, param_value);
     };
 
     renderCell = (info: Object) => {

@@ -227,84 +227,87 @@ export default class MainTabVC extends Component {
         }
         let {uid, redirect_type, param_value} = extras;
         if (objectNotNull(uid) && uid === userData.uid && !stringIsEmpty(redirect_type)) {
-            const {navigate} = this.props.navigation;
-            switch (parseInt(redirect_type)) {
-                case RedirectType.GoodsAuth:
-                case RedirectType.ShipAuth:
-                    PublicAlert(content || "认证未通过", '',
-                        [{text:"取消"},
-                            {text:"去认证", onPress:backAndGoToAuth}]
-                    );
-                    break;
-
-                case RedirectType.GoodsRelease:
-                case RedirectType.ShipRelease:
-                    PublicAlert(content || "认证通过，可以发布了", '',
-                        [{text:"取消"},
-                            {text:"去发布", onPress:backAndGoToRelease}]
-                    );
-                    break;
-
-                case RedirectType.ShipPostDetail:
-                    this.doPushToVCFunction(content, "MyPostDetail", param_value);
-                    break;
-
-
-                case RedirectType.ShipOrderDetail:
-                    this.doPushToVCFunction(content, "OrderDetail", param_value);
-                    break;
-
-                case RedirectType.ShipPricedDetail:
-                    this.doPushToVCFunction(content, "ShipPricedDetail", param_value);
-                    break;
-
-                case RedirectType.ShipOrderHistoryDetail:
-                    this.doPushToVCFunction(content, "OrderDetail", param_value);
-                    break;
-
-                case RedirectType.ShipFavorDetail:
-                    this.doPushToVCFunction(content, "ShipFavorDetail", param_value);
-                    break;
-
-                case RedirectType.GoodsGoodsDetailOfferList:
-                    this.doPushToVCFunction(content, "GoodsGoodsDetailOfferList", param_value);
-                    break;
-
-                case RedirectType.GoodsOrderingTransport: {
-                    doTabGoToOrder();
-                    if (objectNotNull(appOrderVC)) {
-                        appOrderVC.reloadSubOrderingVC(true);
-                    }
-                    this.doPushToVCFunction(content, "GoodsOrderingTransport", param_value);
-                }
-                    break;
-
-                case RedirectType.GoodsOfferedDetail: {
-                    doTabGoToHome();
-                    if (objectNotNull(appHomeVC)) {
-                        appHomeVC.reloadSubListOrderVC(true);
-                    }
-                    this.doPushToVCFunction(content, "GoodsOfferedDetail", param_value);
-                }
-                    break;
-
-                case RedirectType.GoodsOrdering: {
-                    doTabGoToOrder();
-                    if (objectNotNull(appOrderVC)) {
-                        appOrderVC.reloadSubOrderingVC(true);
-                    }
-                    this.doPushToVCFunction(content, "OrderDetail", param_value);
-                }
-                    break;
-
-                default:
-                    PublicAlert(JSON.stringify(message));
-                    break
-            }
+            this.doAnalyzeMessage(content, redirect_type, param_value);
 
             if (objectNotNull(appMessageVC)) {
                 appMessageVC.reloadSubMessageVC();
             }
+        }
+    }
+
+    doAnalyzeMessage(content, redirect_type, param_value) {
+        const {navigate} = this.props.navigation;
+        switch (parseInt(redirect_type)) {
+            case RedirectType.GoodsAuth:
+            case RedirectType.ShipAuth:
+                PublicAlert(content || "认证未通过", '',
+                    [{text:"取消"},
+                        {text:"去认证", onPress:backAndGoToAuth}]
+                );
+                break;
+
+            case RedirectType.GoodsRelease:
+            case RedirectType.ShipRelease:
+                PublicAlert(content || "认证通过，可以发布了", '',
+                    [{text:"取消"},
+                        {text:"去发布", onPress:backAndGoToRelease}]
+                );
+                break;
+
+            case RedirectType.ShipPostDetail:
+                this.doPushToVCFunction(content, "MyPostDetail", param_value);
+                break;
+
+
+            case RedirectType.ShipOrderDetail:
+                this.doPushToVCFunction(content, "OrderDetail", param_value);
+                break;
+
+            case RedirectType.ShipPricedDetail:
+                this.doPushToVCFunction(content, "ShipPricedDetail", param_value);
+                break;
+
+            case RedirectType.ShipOrderHistoryDetail:
+                this.doPushToVCFunction(content, "OrderDetail", param_value);
+                break;
+
+            case RedirectType.ShipFavorDetail:
+                this.doPushToVCFunction(content, "ShipFavorDetail", param_value);
+                break;
+
+            case RedirectType.GoodsGoodsDetailOfferList:
+                this.doPushToVCFunction(content, "GoodsGoodsDetailOfferList", param_value);
+                break;
+
+            case RedirectType.GoodsOrderingTransport: {
+                doTabGoToOrder();
+                if (objectNotNull(appOrderVC)) {
+                    appOrderVC.reloadSubOrderingVC(true);
+                }
+                this.doPushToVCFunction(content, "GoodsOrderingTransport", param_value);
+            }
+                break;
+
+            case RedirectType.GoodsOfferedDetail: {
+                doTabGoToHome();
+                if (objectNotNull(appHomeVC)) {
+                    appHomeVC.reloadSubListOrderVC(true);
+                }
+                this.doPushToVCFunction(content, "GoodsOfferedDetail", param_value);
+            }
+                break;
+
+            case RedirectType.GoodsOrdering: {
+                doTabGoToOrder();
+                if (objectNotNull(appOrderVC)) {
+                    appOrderVC.reloadSubOrderingVC(true);
+                }
+                this.doPushToVCFunction(content, "OrderDetail", param_value);
+            }
+                break;
+
+            default:
+                break
         }
     }
 

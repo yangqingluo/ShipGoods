@@ -24,7 +24,7 @@ export default class MessageCell extends Component {
 
     render() {
         let {info} = this.props;
-        let isnew = (info.item.isnew === '1');
+        let isnew = valueIsTrue(info.item.isnew);
         return (
             <View>
                 <View style={{height: appData.appSeparatorHeight, backgroundColor: appData.appSeparatorLightColor}}/>
