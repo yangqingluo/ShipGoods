@@ -102,15 +102,15 @@ public class MainActivity extends ReactActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 123) {
-            for (int i = 0; i < permissions.length; i++) {
-                if (grantResults[i] == PERMISSION_GRANTED) {
+//        if (requestCode == 123) {
+//            for (int i = 0; i < permissions.length; i++) {
+//                if (grantResults[i] == PERMISSION_GRANTED) {
 //                    Toast.makeText(this, "" + "权限" + permissions[i] + "申请成功", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "" + "权限" + permissions[i] + "申请失败", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
+//                } else {
+//                    Toast.makeText(this, "" + "权限" + permissions[i] + "申请失败", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        }
     }
 
     @Override
