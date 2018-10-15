@@ -12,6 +12,7 @@ import {
 import PropTypes from 'prop-types';
 import {BoxShadow, BorderShadow} from 'react-native-shadow';
 
+let redRadius = 5;
 export default class TabBottom extends Component {
 
     static propType = {
@@ -65,6 +66,8 @@ export default class TabBottom extends Component {
                     <Text style={{color: color, fontSize:appFontFit(10), fontWeight: appData.fontWeightMedium, marginTop: 5}}>
                         {this.props.tabNames[i]}
                     </Text>
+                    {i === 3 ?
+                        <View style={styles.redPoint} /> : null}
                 </TouchableOpacity>
             </View>
         );
@@ -133,5 +136,14 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    redPoint: {
+        width: 2 * redRadius,
+        height: 2 * redRadius,
+        borderRadius: redRadius,
+        backgroundColor: "#f00",
+        position: 'absolute',
+        top: 5,
+        right: 20,
     },
 });
