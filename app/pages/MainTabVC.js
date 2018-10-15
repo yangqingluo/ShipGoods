@@ -24,19 +24,22 @@ import NetUtil from "../util/NetUtil";
 
 let RedirectType = {
     Default: 0,
-    ShipPostDetail: 1,//船东-我的发布-详情
-    ShipOrderDetail: 2,//船东-订单-详情
-    ShipRelease: 3,//船东-发布
-    ShipAuth: 4,//船东-认证
-    ShipPricedDetail: 5,//船东-已报价-详情
-    ShipOrderHistoryDetail: 6,//船东-订单-历史订单-详情
-    ShipFavorDetail: 7,//船东-我的收藏-详情
-    GoodsGoodsDetailOfferList:8,//货主-我的货-详情-报价列表
-    GoodsOrderingTransport:9,//货主-订单-执行中-货运详情
-    GoodsRelease:10,//货主-发布
-    GoodsAuth:11,//货主-认证
-    GoodsOfferedDetail:12,//货主-已报价-详情
-    GoodsOrdering:13,//货主-订单-执行中
+    ShipPostDetail: 1001,//船东-我的发布-详情
+    ShipPriceInvalid: 1002,//船东-报价的货盘已被订掉
+    ShipOrderDetail: 1003,//船东-订单-详情
+    ShipRelease: 1004,//船东-发布
+    ShipAuth: 1005,//船东-认证
+    ShipPricedDetail: 1006,//船东-已报价-详情
+    ShipOrderHistoryDetail: 1007,//船东-订单-历史订单-详情
+    ShipFavorDetail: 1008,//船东-我的收藏-详情
+    GoodsGoodsDetailOfferList:2001,//货主-我的货-详情-报价列表
+    GoodsOrderingTransport:2002,//货主-订单-执行中-货运详情
+    GoodsRelease:2003,//货主-发布
+    GoodsAuth:2004,//货主-认证
+    GoodsOfferedDetail:2005,//货主-已报价-详情(船主回复)
+    GoodsOrdering:2006,//货主-订单-执行中(货运完成，确认收货)
+    GoodsOrderInvalid:2007,//货主预约的船已被订掉
+    GoodsOrderPriceChanged:2008,//货主-船东修改报价
 };
 
 
