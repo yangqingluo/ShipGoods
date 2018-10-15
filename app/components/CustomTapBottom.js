@@ -12,7 +12,6 @@ import {
 import PropTypes from 'prop-types';
 import {BoxShadow, BorderShadow} from 'react-native-shadow';
 
-let redRadius = 5;
 export default class TabBottom extends Component {
 
     static propType = {
@@ -105,6 +104,7 @@ export default class TabBottom extends Component {
     }
 }
 
+let redRadius = 4;
 const styles = StyleSheet.create({
     tabs: {
         flexDirection: 'row',
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
         borderRadius: redRadius,
         backgroundColor: "#f00",
         position: 'absolute',
-        top: 5,
+        top: 3,
         right: 20,
     },
 });
