@@ -172,6 +172,8 @@ export default class MainTabVC extends Component {
     removeReceivedJPush() {
         // AppState.removeEventListener('change', this._handleAppStateChange);
 
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
+
         JPushModule.removeReceiveCustomMsgListener();
         JPushModule.removeReceiveNotificationListener();
         JPushModule.removeReceiveOpenNotificationListener();
