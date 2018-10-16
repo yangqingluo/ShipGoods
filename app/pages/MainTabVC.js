@@ -32,7 +32,7 @@ let RedirectType = {
     ShipPricedDetail: 1006,//船东-已报价-详情
     ShipOrderHistoryDetail: 1007,//船东-订单-历史订单-详情
     ShipFavorDetail: 1008,//船东-我的收藏-详情
-    GoodsGoodsDetailOfferListShipDetail: 8,//货主-我的货-详情-报价列表-报价船详情
+    GoodsGoodsDetailOfferListShipDetail: 2001,//货主-我的货-详情-报价列表-报价船详情
     GoodsOrderingTransport: 2002,//货主-订单-执行中-货运详情
     GoodsRelease: 2003,//货主-发布
     GoodsAuth: 2004,//货主-认证
@@ -298,6 +298,7 @@ export default class MainTabVC extends Component {
                 break;
 
             case RedirectType.GoodsGoodsDetailOfferListShipDetail:
+            case RedirectType.GoodsOrderPriceChanged:
                 if (objectNotNull(appHomeVC)) {
                     appHomeVC.switchPage(1);
                 }
