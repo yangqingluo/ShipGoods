@@ -30,6 +30,7 @@ export default class HomeOrderShipDetailVC extends Component {
         super(props);
         this.state = {
             info: this.props.navigation.state.params.info,
+            type: this.props.navigation.state.params.type || 2,
             detailInfo: this.props.navigation.state.params.info,
             refreshing: false,
         };
@@ -56,7 +57,7 @@ export default class HomeOrderShipDetailVC extends Component {
     };
 
     requestRecommend = async (isReset) => {
-        let data = {book_id: this.state.info.book_id, type: 2};
+        let data = {book_id: this.state.info.book_id, type: this.state.type};
 
         this.refIndicator.show();
         NetUtil.post(appUrl + 'index.php/Mobile/Goods/get_offer_detail/', data)

@@ -193,14 +193,20 @@ MyNavigator.router.getStateForAction = (action, state) => {
                         }]);
             }
                 break;
-            case "GoodsGoodsDetailOfferList": {
-                let info = {
-                    task_id: appPushData,
+            case "GoodsGoodsDetailOfferListShipDetail": {
+                let {task_id, book_id, type} = appPushData;
+                let paramOrder = {info : {
+                        task_id: task_id,
+                    }};
+                let paramShip = {
+                    info : {
+                        book_id: book_id,
+                    },
+                    type : type,
                 };
-                let param = {info : info};
                 routes = appCreateRoutes(state.routes,
-                    ["HomeOrderDetail", "HomeOrderShipList"],
-                    [param, param]
+                    ["HomeOrderDetail", "HomeOrderShipList", "HomeOrderShipDetail"],
+                    [paramOrder, paramOrder, paramShip]
                 );
             }
                 break;

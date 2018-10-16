@@ -32,14 +32,14 @@ let RedirectType = {
     ShipPricedDetail: 1006,//船东-已报价-详情
     ShipOrderHistoryDetail: 1007,//船东-订单-历史订单-详情
     ShipFavorDetail: 1008,//船东-我的收藏-详情
-    GoodsGoodsDetailOfferList:2001,//货主-我的货-详情-报价列表
-    GoodsOrderingTransport:2002,//货主-订单-执行中-货运详情
-    GoodsRelease:2003,//货主-发布
-    GoodsAuth:2004,//货主-认证
-    GoodsOfferedDetail:2005,//货主-已报价-详情(船主回复)
-    GoodsOrdering:2006,//货主-订单-执行中(货运完成，确认收货)
-    GoodsOrderInvalid:2007,//货主预约的船已被订掉
-    GoodsOrderPriceChanged:2008,//货主-船东修改报价
+    GoodsGoodsDetailOfferListShipDetail: 8,//货主-我的货-详情-报价列表-报价船详情
+    GoodsOrderingTransport: 2002,//货主-订单-执行中-货运详情
+    GoodsRelease: 2003,//货主-发布
+    GoodsAuth: 2004,//货主-认证
+    GoodsOfferedDetail: 2005,//货主-已报价-详情(船主回复)
+    GoodsOrdering: 2006,//货主-订单-执行中(货运完成，确认收货)
+    GoodsOrderInvalid: 2007,//货主预约的船已被订掉
+    GoodsOrderPriceChanged: 2008,//货主-船东修改报价
 };
 
 
@@ -297,8 +297,12 @@ export default class MainTabVC extends Component {
                 this.doPushToVCFunction(content, "ShipFavorDetail", param_value);
                 break;
 
-            case RedirectType.GoodsGoodsDetailOfferList:
-                this.doPushToVCFunction(content, "GoodsGoodsDetailOfferList", param_value);
+            case RedirectType.GoodsGoodsDetailOfferListShipDetail:
+                if (objectNotNull(appHomeVC)) {
+                    appHomeVC.switchPage(1);
+                }
+                doTabGoToHome();
+                this.doPushToVCFunction(content, "GoodsGoodsDetailOfferListShipDetail", param_value);
                 break;
 
             case RedirectType.GoodsOrderingTransport: {
