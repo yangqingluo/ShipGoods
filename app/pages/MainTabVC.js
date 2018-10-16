@@ -124,6 +124,8 @@ export default class MainTabVC extends Component {
 
     componentDidMount() {
         global.appMainTab = this;
+        BackHandler.addEventListener('hardwareBackPress',
+            this.onBackButtonPressAndroid);
         // AppState.addEventListener('change',this._handleAppStateChange);
         if (global.appIsFirst) {
             this.appRefreshUserInfo();
@@ -192,6 +194,17 @@ export default class MainTabVC extends Component {
             this.flage = false ;
         }else if(nextAppState != null && nextAppState === 'background'){
             this.flage = true;
+        }
+    };
+
+    onBackButtonPressAndroid = () => {
+        if (this.props.navigation.isFocused()) {
+            // if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+            //     //最近2秒内按过back键，可以退出应用。
+            //     return false;
+            // }
+            this.lastBackPressed = Date.now();
+            return true;
         }
     };
 
