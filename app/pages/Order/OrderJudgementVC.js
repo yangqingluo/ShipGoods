@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import StarScore from '../../components/StarScore';
 import Toast from "react-native-easy-toast";
+import CustomInput from "../../components/CustomInput";
 
 export default class OrderJudgementVC extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -240,6 +241,8 @@ export default class OrderJudgementVC extends Component {
                             <TextInput underlineColorAndroid="transparent"
                                        style={styles.textInput}
                                        multiline={true}
+                                       returnKeyType="done"
+                                       blurOnSubmit={true}
                                        placeholder={placeholder}
                                        placeholderTextColor={appData.appSecondaryTextColor}
                                        onChangeText={(text) => {

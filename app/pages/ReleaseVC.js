@@ -544,7 +544,7 @@ export default class ReleaseVC extends Component {
                 (result)=>{
                     this.refIndicator.hide();
                     if (result.code === 0) {
-                        appAllGoods = result.data;
+                        global.appAllGoods = result.data;
                         callback();
                     }
                     else {
@@ -749,6 +749,8 @@ export default class ReleaseVC extends Component {
                         <CustomInput underlineColorAndroid="transparent"
                                      style={styles.textInput}
                                      multiline={true}
+                                     returnKeyType="done"
+                                     blurOnSubmit={true}
                                      placeholder={"请在此输入您的备注"}
                                      placeholderTextColor={appData.appSecondaryTextColor}
                                      onChangeText={(text) => {
