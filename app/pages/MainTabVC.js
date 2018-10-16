@@ -129,6 +129,7 @@ export default class MainTabVC extends Component {
             this.appRefreshUserInfo();
             global.appIsFirst = false;
         }
+        this.appRefreshMsgCount();
 
         global.setAlias(userData.username);
         if (!isIOS()) {
@@ -216,6 +217,9 @@ export default class MainTabVC extends Component {
     // }
 
     doReceivedMessage(message, isRedirect = false) {
+        appMsgCount++;
+        this.refTabBottom.forceUpdate();
+        this.appRefreshMsgCount();
         let content = null;
         let {extras, aps, alertContent} = message;
         if (isIOS()) {
@@ -240,6 +244,12 @@ export default class MainTabVC extends Component {
     }
 
     doAnalyzeMessage(content, redirect_type, param_value) {
+        if (!objectNotNull(param_value)) {
+            return;
+        }
+        if (typeof(param_value) === "string" && param_value.search("{") !== -1) {
+            param_value = JSON.parse(param_value);
+        }
         const {navigate} = this.props.navigation;
         switch (parseInt(redirect_type)) {
             case RedirectType.GoodsAuth:
@@ -317,13 +327,13 @@ export default class MainTabVC extends Component {
 
     doPushToVCFunction(title, key, param_value) {
         if (objectNotNull(param_value)) {
-            PublicAlert(title || "新的动态", '',
-                [{text:"取消"},
-                    {text:"去查看", onPress:()=>{
+            // PublicAlert(title || "新的动态", '',
+            //     [{text:"取消"},
+            //         {text:"去查看", onPress:()=>{
                             global.appPushData = param_value;
                             this.props.navigation.goBack(key);
-                        }}]
-            );
+            //             }}]
+            // );
         }
     }
 
@@ -334,6 +344,18 @@ export default class MainTabVC extends Component {
                 (result)=>{
                     if (result.code === 0) {
                         saveUserData(result.data);
+                    }
+                },(error)=>{
+                });
+    };
+
+    async appRefreshMsgCount() {
+        let data = {};
+        NetUtil.post(appUrl + 'index.php/Mobile/Notification/getNewNotificationCount/', data)
+            .then(
+                (result)=>{
+                    if (result.code === 0) {
+
                     }
                 },(error)=>{
                 });
@@ -396,7 +418,8 @@ export default class MainTabVC extends Component {
                     locked={true}
                     scrollWithoutAnimation={true}
                     renderTabBar={() =>
-                        <TabBottom tabNames={tabTitles}
+                        <TabBottom ref={o => this.refTabBottom = o}
+                                   tabNames={tabTitles}
                                    tabItemFlex={1}
                                    tabIconNames={tabIcon}
                         />}

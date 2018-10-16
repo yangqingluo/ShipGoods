@@ -65,7 +65,7 @@ export default class TabBottom extends Component {
                     <Text style={{color: color, fontSize:appFontFit(10), fontWeight: appData.fontWeightMedium, marginTop: 5}}>
                         {this.props.tabNames[i]}
                     </Text>
-                    {i === 3 ?
+                    {(i === 3 && appMsgCount > 0) ?
                         <View style={styles.redPoint} /> : null}
                 </TouchableOpacity>
             </View>

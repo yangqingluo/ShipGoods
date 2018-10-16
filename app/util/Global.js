@@ -757,6 +757,7 @@ global.appHotPorts = [];
 global.appAllPortsFirst = [];
 global.appAllPortsSecond = [];
 global.appPushData = null;
+global.appMsgCount = 0;
 global.appHomeCondition = {
     empty_port: null,//空船港
     empty_time: null,//空船期
@@ -819,7 +820,18 @@ global.appResetState = function () {
     storage.remove({
         key: 'userData'
     });
+    global.appMsgCount = 0;
     global.userData = null;
+};
+
+global.appReadOneMessage = function() {
+    appMsgCount--;
+    if (appMsgCount < 0) {
+        appMsgCount = 0;
+    }
+    if (objectNotNull(appMainTab) && objectNotNull(appMainTab.refTabBottom)) {
+        appMainTab.refTabBottom.forceUpdate();
+    }
 };
 
 global.appCreateRoutes = function (old_routes, another_routes, params) {

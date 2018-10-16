@@ -110,7 +110,9 @@ export default class OrderListVC extends Component {
                     },(error)=>{
                         this.refToast.show(error);
                     });
+            global.appReadOneMessage();
         }
+        // PublicAlert(JSON.stringify(info));
         appMainTab.doAnalyzeMessage(content, redirect_type, param_value);
     };
 
