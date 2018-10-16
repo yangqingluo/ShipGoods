@@ -24,7 +24,7 @@ import NetUtil from "../util/NetUtil";
 
 let RedirectType = {
     Default: 0,
-    ShipPostDetail: 1001,//船东-我的发布-详情
+    ShipToPriceDetail: 1001,//船东-等待报价-详情
     ShipPriceInvalid: 1002,//船东-报价的货盘已被订掉
     ShipOrderDetail: 1003,//船东-订单-详情
     ShipRelease: 1004,//船东-发布
@@ -268,8 +268,12 @@ export default class MainTabVC extends Component {
                 );
                 break;
 
-            case RedirectType.ShipPostDetail:
-                this.doPushToVCFunction(content, "MyPostDetail", param_value);
+            case RedirectType.ShipToPriceDetail:
+                if (objectNotNull(appHomeVC)) {
+                    appHomeVC.switchPage(0);
+                }
+                doTabGoToHome();
+                this.doPushToVCFunction(content, "ShipToPriceDetail", param_value);
                 break;
 
 
@@ -278,6 +282,10 @@ export default class MainTabVC extends Component {
                 break;
 
             case RedirectType.ShipPricedDetail:
+                if (objectNotNull(appHomeVC)) {
+                    appHomeVC.switchPage(1);
+                }
+                doTabGoToHome();
                 this.doPushToVCFunction(content, "ShipPricedDetail", param_value);
                 break;
 

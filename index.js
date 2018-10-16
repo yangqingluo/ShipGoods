@@ -136,12 +136,22 @@ MyNavigator.router.getStateForAction = (action, state) => {
     if (state && action.type === 'Navigation/BACK' && action.key) {
         let routes = null;
         switch (action.key) {
-            case "MyPostDetail": {
+            // case "MyPostDetail": {
+            //     routes = appCreateRoutes(state.routes,
+            //         ["MyPost", action.key],
+            //         [{}, {info: {task_id: appPushData}}]);
+            // }
+            //     break;
+            case "ShipToPriceDetail": {
                 routes = appCreateRoutes(state.routes,
-                    ["MyPost", action.key],
-                    [{}, {info: {task_id: appPushData}}]);
+                    ["HomeOfferDetail"],
+                    [{
+                        info: {task_id: appPushData},
+                        is_offer: '0',
+                    }]);
             }
                 break;
+
             case "OrderDetail": {
                 routes = appCreateRoutes(state.routes,
                     [action.key],

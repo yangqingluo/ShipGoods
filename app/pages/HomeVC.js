@@ -170,10 +170,18 @@ export default class HomeVC extends Component {
             this.subListOrderVC.state.dataList = [];
             this.subListOrderVC.requestData();
         }
-        if (switchPage && objectNotNull(this.refTab)) {
-            this.refTab.goToPage(1);
+        if (switchPage) {
+            this.switchPage(1);
         }
     };
+
+    switchPage(index = -1) {
+        if (index === 0 || index === 1) {
+            if (objectNotNull(this.refTab)) {
+                this.refTab.goToPage(index);
+            }
+        }
+    }
 
     updateMenuState(isOpen) {
         this.setState({ isOpen });
