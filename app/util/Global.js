@@ -824,6 +824,13 @@ global.appResetState = function () {
     global.userData = null;
 };
 
+global.appResetMessageCount = function(count) {
+    global.appMsgCount = count;
+    if (objectNotNull(appMainTab) && objectNotNull(appMainTab.refTabBottom)) {
+        appMainTab.refTabBottom.forceUpdate();
+    }
+};
+
 global.appReadOneMessage = function() {
     appMsgCount--;
     if (appMsgCount < 0) {

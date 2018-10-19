@@ -383,7 +383,7 @@ export default class MainTabVC extends Component {
             .then(
                 (result)=>{
                     if (result.code === 0) {
-
+                        global.appResetMessageCount(result.data);
                     }
                 },(error)=>{
                 });
