@@ -8,6 +8,7 @@ import {
     Image,
     DeviceEventEmitter,
     BackHandler,
+    Vibration,
 } from 'react-native';
 
 import JPushModule from 'jpush-react-native';
@@ -149,6 +150,7 @@ export default class MainTabVC extends Component {
         // 接收推送事件
         JPushModule.addReceiveNotificationListener((message) => {
             // PublicAlert('ReceiveNotificationListener: ', JSON.stringify(message));
+            Vibration.vibrate();
             this.doReceivedMessage(message, false);
         });
 
